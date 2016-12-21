@@ -55,4 +55,8 @@ public class JavaResourceImportParser extends AbstractImportParser {
 		}
 		return null;
 	}
+	
+	public void addSearchPath(String path) {
+		searchPaths.add(path);
+	}
 }

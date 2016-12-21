@@ -19,6 +19,13 @@
 
 package org.phatonin.yadrol.core.values;
 
+/**
+ * Subclass of value visitor where scalar types are handled the same.
+ *
+ * @param <R> return type.
+ * @param <P> parameter type.
+ * @param <E> exception type.
+ */
 public abstract class ContainerVisitor<R,P,E extends Throwable> extends ValueVisitor<R,P,E> {
 	@Override
 	public R visit(String value, P param) throws E {

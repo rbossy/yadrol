@@ -25,6 +25,11 @@ import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+ * URL import managers resolves Internet addresses and read the Yadrol script at the given location.
+ * 
+ *
+ */
 public class URLImportManager extends AbstractImportParser {
 	public URLImportManager() {
 		super();
@@ -36,7 +41,6 @@ public class URLImportManager extends AbstractImportParser {
 		if (!"http".equals(url.getProtocol())) {
 			return null;
 		}
-		
 		HttpURLConnection connect = (HttpURLConnection) url.openConnection();
 		int status = connect.getResponseCode();
 		if (status != 200) {

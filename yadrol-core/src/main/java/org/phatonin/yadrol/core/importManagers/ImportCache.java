@@ -30,7 +30,7 @@ import org.phatonin.yadrol.core.ImportManager;
 public class ImportCache implements ImportManager {
 	private final Map<String,Map<String,Object>> cache = new HashMap<String,Map<String,Object>>();
 	private final ImportManager importManager;
-	
+
 	public ImportCache(ImportManager importManager) {
 		super();
 		this.importManager = importManager;

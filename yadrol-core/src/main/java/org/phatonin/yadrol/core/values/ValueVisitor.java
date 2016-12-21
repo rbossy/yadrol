@@ -22,6 +22,13 @@ package org.phatonin.yadrol.core.values;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Abstract visitor class for values.
+ * 
+ * @param <R> return type.
+ * @param <P> parameter type.
+ * @param <E> exception type.
+ */
 public abstract class ValueVisitor<R,P,E extends Throwable> {
 	public abstract R visitUndef(P param) throws E;
 	public abstract R visit(String value, P param) throws E;

@@ -28,6 +28,11 @@ import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.Expression;
 import org.phatonin.yadrol.core.ImportManager;
 
+/**
+ * Composite import manager.
+ * The resolution tries each sub-manager until one resolves the address, in the order they have been added.
+ *
+ */
 public class ImportManagers implements ImportManager {
 	private final List<ImportManager> importManagers = new ArrayList<ImportManager>();
 	
@@ -42,6 +47,10 @@ public class ImportManagers implements ImportManager {
 		return null;
 	}
 
+	/**
+	 * Add the specified sub-manager.
+	 * @param mgr the import manager.
+	 */
 	public void addImportManager(ImportManager mgr) {
 		importManagers.add(mgr);
 	}

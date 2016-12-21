@@ -25,10 +25,20 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Import manager for local file system addresses.
+ * The file system import manager will try relative addresses in each of its search paths until it finds a file.
+ * By default the search paths are empty, not even the working directory.
+ *
+ */
 public class FileSystemImportManager extends AbstractImportParser {
 	private final List<File> searchPaths = new ArrayList<File>();
 	private final boolean allowAbsolute;
 
+	/**
+	 * Create a file system import manager.
+	 * @param allowAbsolute either this import manager accepts absolute paths as addresses.
+	 */
 	public FileSystemImportManager(boolean allowAbsolute) {
 		super();
 		this.allowAbsolute = allowAbsolute;
@@ -64,14 +74,26 @@ public class FileSystemImportManager extends AbstractImportParser {
 		return file.exists() && file.canRead();
 	}
 	
+	/**
+	 * Add the specified path to the search paths.
+	 * @param path the path.
+	 */
 	public void addSearchPath(File path) {
 		searchPaths.add(path);
 	}
 	
+	/**
+	 * Add the specified path to the search paths.
+	 * @param path the path.
+	 */
 	public void addSearchPath(String path) {
 		searchPaths.add(new File(path));
 	}
 	
+	/**
+	 * Add the specified paths to the search paths.
+	 * @param path the paths, separated by File.pathSeparator.
+	 */
 	public void addSearchPaths(String paths) {
 		for (String path : paths.split(File.pathSeparator)) {
 			addSearchPath(path);

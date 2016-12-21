@@ -22,7 +22,15 @@ package org.phatonin.yadrol.core.values;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Types of values and of evaluation.
+ * 
+ *
+ */
 public enum ValueType {
+	/**
+	 * Default evaluation type.
+	 */
 	DEFAULT {
 		@Override
 		public String toString() {
@@ -30,6 +38,9 @@ public enum ValueType {
 		}
 	},
 	
+	/**
+	 * Unspecified type.
+	 */
 	ANY {
 		@Override
 		public String toString() {
@@ -37,6 +48,9 @@ public enum ValueType {
 		}
 	},
 	
+	/**
+	 * Undef type.
+	 */
 	UNDEF {
 		@Override
 		public String toString() {
@@ -86,10 +100,20 @@ public enum ValueType {
 		}
 	};
 	
+	/**
+	 * Returns the type of the specified value.
+	 * @param value the value.
+	 * @return the type of the specified value, will not return <code>DEFAULT</code> or <code>ANY</code>.
+	 */
 	public static ValueType get(Object value) {
 		return VISITOR.visit(value, null);
 	}
 
+	/**
+	 * Converts the specified string into a type.
+	 * @param s the type name.
+	 * @return the type.
+	 */
 	public static ValueType fromString(String s) {
 		switch (s) {
 			case "default": return DEFAULT;

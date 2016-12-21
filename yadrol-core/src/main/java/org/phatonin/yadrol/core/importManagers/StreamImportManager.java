@@ -22,20 +22,39 @@ package org.phatonin.yadrol.core.importManagers;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
+/**
+ * An import manager that resolves a single address.
+ * If the address is required, this returns the script contained in the stream specified to the constructor.
+ * This manager can resolve only once.
+ *
+ */
 public class StreamImportManager extends AbstractImportParser {
 	private final String address;
 	private final Reader reader;
-	
+
+	/**
+	 * Create a stream import manager.
+	 * @param address the address that this manager resolves.
+	 * @param reader the Yadrol script.
+	 */
 	public StreamImportManager(String address, Reader reader) {
 		super();
 		this.address = address;
 		this.reader = reader;
 	}
 	
+	/**
+	 * Create a stream import manager that resolves to a script read from standard input.
+	 * @param address the address that this manager resolves.
+	 */
 	public StreamImportManager(String address) {
 		this(address, new InputStreamReader(System.in));
 	}
 	
+	/**
+	 * Create a stream import manager that resolves the <code>null</code> address to a script read from standard input.
+	 * @param address the address that this manager resolves.
+	 */	
 	public StreamImportManager() {
 		this(null);
 	}

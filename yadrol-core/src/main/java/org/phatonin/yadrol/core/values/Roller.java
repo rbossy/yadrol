@@ -31,13 +31,36 @@ import org.phatonin.yadrol.core.EvaluationContext;
 import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.Expression;
 
+/**
+ * Utility class for rolling.
+ * The methods of this class are used by expressions Die and Dice.
+ * 
+ *
+ */
 public class Roller {
 	public static final String DICE_FUNCTION_NUMBER_ARGUMENT = "N";
 	
+	/**
+	 * Roll a die of the specified type.
+	 * @param expression die expression that requires the roll.
+	 * @param ctx evaluation context.
+	 * @param type die type.
+	 * @return the roll result.
+	 * @throws EvaluationException if the specified die type is invalid (undef, string, boolean), or a function that raised this exception.
+	 */
 	public static Object roll(Expression expression, EvaluationContext ctx, Object type) throws EvaluationException {
 		return new RollVisitor(expression).visit(type, ctx);
 	}
-	
+
+	/**
+	 * Roll the specified number of dice of the specified type.
+	 * @param expression dice expression that requires the roll.
+	 * @param ctx evaluation context.
+	 * @param n number of dice.
+	 * @param type dice type.
+	 * @return the roll result.
+	 * @throws EvaluationException if the specified dice type is invalid (undef, string, boolean), or a function that raised this exception.
+	 */
 	public static List<Object> roll(Expression expression, EvaluationContext ctx, long n, Object type) throws EvaluationException {
 		Function fun = EvaluationContext.asFunction(type);
 		if (fun != null && isDiceFunction(fun)) {
@@ -61,7 +84,13 @@ public class Roller {
 		}
 		return result;
 	}
-	
+
+	/**
+	 * Pick a random number between 1 and the specified number.
+	 * @param ctx evaluation context.
+	 * @param type number of faces.
+	 * @return a random number between 1 and <code>n</code>, inclusive.
+	 */
 	public static long rollInteger(EvaluationContext ctx, long type) {
 		Random rnd = ctx.getRandom();
 		long n = rnd.nextLong();
@@ -69,6 +98,12 @@ public class Roller {
 		return (an % type) + 1;
 	}
 	
+	/**
+	 * Pick a random element from the specified list.
+	 * @param ctx evaluation context.
+	 * @param type the list.
+	 * @return an element of the specified list, null if the list is empty.
+	 */
 	public static Object rollList(EvaluationContext ctx, List<Object> type) {
 		if (type.isEmpty()) {
 			return null;
@@ -76,7 +111,13 @@ public class Roller {
 		Random rnd = ctx.getRandom();
 		return type.get(rnd.nextInt(type.size()));
 	}
-	
+
+	/**
+	 * Pick a random key-value pair from the specified map.
+	 * @param ctx evaluation context.
+	 * @param type the map.
+	 * @return a map containing a single entry identical to one of the specified map, an empty map if the specified map is empty.
+	 */
 	public static Map<String,Object> rollMap(EvaluationContext ctx, Map<String,Object> type) {
 		if (type.isEmpty()) {
 			return null;
@@ -92,7 +133,15 @@ public class Roller {
 		result.put(e.getKey(), e.getValue());
 		return result;
 	}
-	
+
+	/**
+	 * Call the specified function without arguments.
+	 * @param expression the expression that requires the call.
+	 * @param ctx evaluation context.
+	 * @param type the function.
+	 * @return the result of the call.
+	 * @throws EvaluationException if the evaluation of the body of the specified function raises an exception.
+	 */
 	public static Object rollFunction(Expression expression, EvaluationContext ctx, Function type) throws EvaluationException {
 		List<Object> positionalArgs = Collections.emptyList();
 		Map<String,Object> namedArgs = Collections.emptyMap();

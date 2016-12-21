@@ -30,11 +30,22 @@ import org.phatonin.yadrol.core.ImportManager;
 import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.parser.YadrolParser;
 
+/**
+ * Abstract class of import managers that parses a stream containing a Yadrol script.
+ * 
+ *
+ */
 public abstract class AbstractImportParser implements ImportManager {
 	protected AbstractImportParser() {
 		super();
 	}
 	
+	/**
+	 * Resolves the specified address as a stream.
+	 * @param address the address.
+	 * @return the stream containing a Yadrol script.
+	 * @throws Exception
+	 */
 	protected abstract Reader resolveStream(String address) throws Exception;
 
 	@Override

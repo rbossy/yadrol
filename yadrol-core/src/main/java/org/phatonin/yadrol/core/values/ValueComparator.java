@@ -24,6 +24,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Singleton that compares two values.
+ * <p>undef &lt; string &lt; boolean &lt; integer &lt; list &lt; map &lt; function.</p>
+ * <p>Two strings are compared by the lexicographical order.</p>
+ * <p><code>false</code> &lt; <code>true</code>.</p>
+ * <p>Two integers are compared as expected, duh.</p>
+ * <p>Two lists are compared element by element.</p>
+ * <p>Two maps are compared value by value.</p>
+ * <p>Two functions are compared in an undefined way, though the comparison is stable.</p>
+ *
+ */
 public enum ValueComparator implements Comparator<Object> {
 	INSTANCE;
 	

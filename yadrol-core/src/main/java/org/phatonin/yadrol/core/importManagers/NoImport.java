@@ -26,6 +26,11 @@ import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.Expression;
 import org.phatonin.yadrol.core.ImportManager;
 
+/**
+ * A singleton import manager that resolves no address.
+ * 
+ *
+ */
 public enum NoImport implements ImportManager {
 	INSTANCE;
 

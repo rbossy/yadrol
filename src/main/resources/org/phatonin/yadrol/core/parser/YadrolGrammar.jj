@@ -1,0 +1,606 @@
+/**
+   Copyright 2016, Robert Bossy
+
+   This file is part of Yadrol.
+
+   Yadrol is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   Yadrol is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with Yadrol.  If not, see <http://www.gnu.org/licenses/>.
+**/
+
+/**
+ * JavaCC template file created by SF JavaCC plugin 1.5.28+ wizard for JavaCC 1.5.0+
+ */options{
+  JAVA_UNICODE_ESCAPE = true; // (default false)  static = false;
+}PARSER_BEGIN(YadrolParser)package org.phatonin.yadrol.core.parser;
+
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.LinkedHashMap;
+import java.util.concurrent.atomic.AtomicReference;
+
+import org.phatonin.yadrol.core.Expression;
+import org.phatonin.yadrol.core.Location;
+import org.phatonin.yadrol.core.OutputMode;
+import org.phatonin.yadrol.core.expressions.*;
+import org.phatonin.yadrol.core.values.ValueType;
+
+public class YadrolParser {
+  private String source;
+  private int columnOffset;
+
+  public String getSource() {
+    return source;  }
+
+//  public void setSource(String source) {//    this.source = source;//  }
+  
+  private Location getLocation(Token t, int offset) {    return new Location(source, t.beginLine, t.beginColumn + columnOffset + offset);  }
+  
+  private Location getLocation(Token t) {
+    return getLocation(t, 0);
+  }
+
+  public Expression expression(String source, int columnOffset) throws ParseException {
+    this.source = source;
+    this.columnOffset = columnOffset;
+    return expression();  }
+ 
+  private static String unquote(Token t) {
+    String s = t.image.substring(1, t.image.length() - 1);
+    StringBuilder sb = new StringBuilder();
+    boolean escape = false;
+    for (int i = 0; i < s.length(); ++i) {
+      char c = s.charAt(i);
+      if (escape) {
+        switch (c) {
+          case 'n':
+            sb.append('\n');
+            break;          case 't':
+            sb.append('\t');
+            break;
+          case 'r':
+            sb.append('\r');
+            break;
+          default:
+            sb.append(c);
+        }
+        escape = false;
+        continue;      }
+      if (c == '\\') {
+        escape = true;
+        continue;      }
+      sb.append(c);
+    }
+    return sb.toString();  }
+
+  private static String getAssignVariable(Expression expr) {
+    if (expr instanceof Assign) {
+      Assign assign = (Assign) expr;
+      Expression lvalue = assign.getLvalue();
+      if (lvalue instanceof Variable) {
+        Variable var = (Variable) lvalue;
+        return var.getName();      }    }
+    return null;  }
+}PARSER_END(YadrolParser)SKIP :{  " "| "\r"| "\t"| "\n"
+| "\u200b"| "\u00a0"
+}TOKEN : /* OPERATORS */{
+  < BREAK : ("--" ("-")+) >
+
+| < SEMICOLON : ";" >
+
+| < IMPORT : "import" >
+| < FROM   : "from" >
+
+| < OUTPUT : ("roll"|"sample") >
+
+| < IF     : "if" >
+| < THEN   : "then" >
+| < ELSE   : "else" >
+| < FOR    : "for" >
+| < IN     : "in" >
+| < REPEAT : "repeat" >
+| < WHILE  : "while" >
+| < LIMIT  : "limit" >
+
+| < APPEND : "<<" >
+| < RANGE  : ".." >
+| < COUNT  : "count" >
+| < CONVERT : ("string"|"boolean"|"integer"|"list"|"map") >
+| < REORDER : ("sorted"|"reversed"|"shuffled") >
+
+| < OR      : "or" >
+| < AND     : "and" >
+| < NOT     : "not" >
+
+| < COMPARE : ("==="|"!==") >
+| < NUM_COMPARE : ("=="|"!="|"<"|">"|"<="|">=") >
+
+| < ASSIGN : "=" >
+
+| < PLUS : ("+"|"-") >
+| < MULT : ("*"|"/"|"%") >
+
+| < BEST : ("highest"|"lowest") >
+| < OF   : "of" >
+
+| < DRAW : "draw" >
+
+| < DICE               : "d" >
+| < DICE_UPPER         : ("d" ["A"-"Z"] (["0"-"9","A"-"Z","_","a"-"z"])*) >
+| < UPPER_DICE         : (["A"-"Z"] "d") >
+| < UPPER_DICE_UPPER   : (["A"-"Z"] "d" ["A"-"Z"] (["0"-"9","A"-"Z","_","a"-"z"])*) >
+| < DICE_NUMBER        : ("d" (["0"-"9"])+) >
+| < NUMBER_DICE        : ((["0"-"9"])+ "d") >
+| < NUMBER_DICE_NUMBER : ((["0"-"9"])+ "d" (["0"-"9"])+) >
+| < UPPER_DICE_NUMBER  : (["A"-"Z"] "d"  (["0"-"9"])+)>
+| < NUMBER_DICE_UPPER  : ((["0"-"9"])+ "d" ["A"-"Z"] (["0"-"9","A"-"Z","_","a"-"z"])*) >
+
+| < LPAREN   : "(" >
+| < RPAREN   : ")" >
+| < LBRACKET : "[" >
+| < RBRACKET : "]" >
+| < COMMA    : "," >
+| < COLON    : ":" >
+| < DOT      : "." >
+
+| < NATIVE  : "native" >
+| < UNDEF   : "undef" >
+| < SCOPE   : ("local"|"outer"|"global") >
+| < BOOLEAN : ("false"|"true") >
+| < NUMBER  : (["0"-"9"])+ >
+| < FUN     : "fun" >
+| < LCURLY  : "{" >
+| < RCURLY  : "}" >
+| < UNQUOTED : (["A"-"Z","_","a"-"z"] (["0"-"9","A"-"Z","_","a"-"z"])*) >
+| < SQUOTED  : ("\'" ((~["\'"])|("\\" ["\'","n","t","r"]))* "\'") >
+| < DQUOTED  : ("\"" ((~["\""])|("\\" ["\"","n","t","r","$"]))* "\"") >
+}
+public Expression[] parse(String source, int columnOffset):{
+  List<Expression> result = new ArrayList<Expression>();
+  Expression e;
+  this.source = source;
+  this.columnOffset = columnOffset;
+}{
+  e=expression() { result.add(e); } (< BREAK > e=expression() { result.add(e); })* < EOF >  { return result.toArray(new Expression[result.size()]); }}
+
+private Expression expression():{
+  Expression e;
+}{
+  e=sequence()  { return e; }
+}
+
+private Expression sequence():{
+  Expression result;
+  List<Expression> expressions = new ArrayList<Expression>();
+  Expression e;
+}{
+  result=top() { expressions.add(result); } (< SEMICOLON > (e=top() { expressions.add(e); })?)*  {
+    if (expressions.size() > 1) {
+      return new Sequence(expressions);    }
+    return result;
+  }}
+
+private Expression top():{
+  Expression result;}{
+  result=output() { return result; }| result=_import() { return result; }
+}
+
+private Import _import():{
+  String address;
+  List<String> names = new ArrayList<String>();
+  String alias = null;
+  String name;
+  Token t;
+  AtomicReference<Location> locRef = new AtomicReference<Location>();}{
+  t=< IMPORT > (LOOKAHEAD(2) alias=identifier(locRef) < ASSIGN >)? address=identifier(locRef) (< COLON > (LOOKAHEAD(2) name=identifier(locRef) { names.add(name); })+)?
+  { return new Import(getLocation(t), address, names, alias); }
+}
+
+private Expression output():
+{
+  Expression e;
+  Token t;
+}{
+  t=< OUTPUT > e=assign() e=outputOptions(t, e)  { return e; }
+  
+| e=assign()  { return e; }}
+
+private Expression outputOptions(Token t, Expression e):
+{  ValueType type = ValueType.DEFAULT;
+  StringInterpolation name = null;
+  AtomicReference<Location> locRef = new AtomicReference<Location>();
+}{
+  type=type(locRef) (name=string(locRef))?  { return new Output(getLocation(t), name, e, type, OutputMode.fromString(t.image)); }
+
+| name=string(locRef)  { return new Output(getLocation(t), name, e, type, OutputMode.fromString(t.image)); }
+
+|  { return new Output(getLocation(t), name, e, type, OutputMode.fromString(t.image)); }
+}
+
+private Expression assign():{
+  Expression result;
+  Expression e;}{
+  result=control() (< ASSIGN > { if (!result.isAssignable()) throw generateParseException(); } e=control() { result = new Assign(result, e); })?  { return result; }}
+
+private Expression control():{
+  Expression result;
+  Expression e;
+  Expression list;
+  Expression condition = new BooleanConstant(Location.NONE, true);
+  Token t;
+  String itemVar = ForLoop.DEFAULT_ITEM_VARIABLE;
+  AtomicReference<String> indexVar = new AtomicReference<String>();
+  String var;
+  AtomicReference<Location> locRef = new AtomicReference<Location>();
+  long limit;
+}{
+  result=or() (< FOR > (LOOKAHEAD(2) itemVar=forLoopVars(indexVar) < IN >)? list=or() (< IF > condition=loopCondition(itemVar))? { result = new ForLoop(indexVar.get(), itemVar, result, list, condition); })?  { return result; }
+
+| t=< FOR > (LOOKAHEAD(2) itemVar=forLoopVars(indexVar) < IN >)? list=or() < IF > condition=loopCondition(itemVar)  { return new ForLoop(indexVar.get(), itemVar, new Variable(getLocation(t), itemVar), list, condition); }
+
+| t=< REPEAT > e=or() result=repeatCondition(getLocation(t), e)  { return result; }
+
+| t=< WHILE > condition=or() < REPEAT > e=or() limit=limit()  { return new Repeat(getLocation(t), e, condition, true, limit); }
+
+| t=< IF > condition=or() < THEN > result=or() < ELSE > e=or()  { return new Conditional(getLocation(t), condition, result, e); }}
+
+private String forLoopVars(AtomicReference<String> indexVar):{
+  String result;
+  String s;
+  AtomicReference<Location> locRef = new AtomicReference<Location>();}{
+  result=identifier(locRef) (< COMMA > s=identifier(locRef) { indexVar.set(result); result = s; })?
+  { return result; }}
+
+private Repeat repeatCondition(Location location, Expression e):{
+  Expression condition;
+  long limit = Long.MAX_VALUE;  AtomicReference<Location> locRef = new AtomicReference<Location>();
+  String repeatVar = getAssignVariable(e);
+  if (repeatVar == null) {
+    repeatVar = Repeat.DEFAULT_VARIABLE_ASSIGN;
+    e = new Assign(new Variable(e.getLocation(), repeatVar), e);  }
+}{
+  < IF > condition=loopCondition(repeatVar)  { return new Repeat(location, e, condition, false, 1); }
+  
+| < WHILE > condition=loopCondition(repeatVar) limit=limit()  { return new Repeat(location, e, condition, false, limit); }}
+
+private long limit():{
+  long result = Long.MAX_VALUE;
+  AtomicReference<Location> locRef = new AtomicReference<Location>();}{
+  (< LIMIT > result=integer(locRef))?
+  { return result; }}
+
+private Expression loopCondition(String leftVar):{
+  Expression result;}{
+  result=or()  { return result; }
+
+| result=halfComparison(leftVar)  { return result; }}
+
+private Expression halfComparison(String leftVar):
+{
+  Expression right;
+  String op;
+  AtomicReference<Location> locRef = new AtomicReference<Location>();
+}
+{
+  op=comparisonOperator(locRef) right=append()
+  { return new Comparison(locRef.get(), Comparison.operatorFromString(op), new Variable(locRef.get(), leftVar), right); }
+}
+
+private Expression or():{
+  Expression result;
+  List<Expression> operands = new ArrayList<Expression>();
+  Expression e;
+}{
+  result=and() { operands.add(result); } (< OR > e=and() { operands.add(e); })*  {
+    if (operands.size() > 1) {
+      return new BooleanOr(operands);    }
+    return result;
+  }
+}
+
+private Expression and():{
+  Expression result;
+  List<Expression> operands = new ArrayList<Expression>();
+  Expression e;}{  result=not() { operands.add(result); } (< AND > e=not() { operands.add(e); })*  {
+    if (operands.size() > 1) {
+      return new BooleanAnd(operands);    }
+    return result;
+  }
+}
+
+private Expression not():{
+  Token t;
+  Expression e;
+}{
+  t=< NOT > e=comparison()
+  { return new BooleanNot(getLocation(t), e); }
+| e=comparison()  { return e; }}
+
+private Expression comparison():{
+  Expression result;
+  Expression e;
+  String op;
+  AtomicReference<Location> locRef = new AtomicReference<Location>();
+}{
+  result=indexOf() (op=comparisonOperator(locRef) e=indexOf() { result = new Comparison(result.getLocation(), Comparison.operatorFromString(op), result, e); })?  { return result; }
+}
+
+private String comparisonOperator(AtomicReference<Location> locRef):{
+  Token t;}{
+  t=< COMPARE >  { locRef.set(getLocation(t)); return t.image; }
+  
+| t=< NUM_COMPARE >  { locRef.set(getLocation(t)); return t.image; }
+}
+
+private Expression indexOf():
+{
+  Expression result;
+  Expression e;}{
+  result=append() (< IN > e=append() { result = new IndexOf(result, e); })?  { return result; }}
+
+private Expression append():{
+  Expression result;
+  Expression e;}{
+  result=range() (< APPEND > e=range() { result = new Append(result, e); })?  { return result; }}
+
+private Expression range():{  Expression result;
+  Expression e;
+}{
+  result=plus() (< RANGE > e=plus() { result = new Range(result, e); })?  { return result; }
+}
+
+private Expression plus():{
+  Expression result;
+  Expression e;
+  Token t;}{
+  result=mult() (t=< PLUS > e=mult() { result = new Arithmetic(Arithmetic.Operator.fromString(t.image), result, e); })*
+  { return result; }}
+
+private Expression mult():{  Expression result;
+  Expression e;
+  Token t;
+}{
+  result=sign() (t=< MULT > e=sign() { result = new Arithmetic(Arithmetic.Operator.fromString(t.image), result, e); })*  { return result; }
+}
+
+private Expression sign():{
+  Expression e;
+  Token t;}{
+  t=< PLUS > e=best()
+  { return new Sign(getLocation(t), Sign.Operator.fromString(t.image), e); }
+
+| e=best()  { return e; }}
+
+private Expression best():{
+  Expression result;
+  Expression n = null;
+  Token t;}{
+  result=dice()  { return result; }
+  
+| t=< BEST > (n=assign())? < OF > result=dice()  {
+    if (n == null) {
+      return new Best(getLocation(t), Best.Operator.fromString(t.image), result);    }
+    return new BestMultiple(getLocation(t), Best.Operator.fromString(t.image), n, result);  }}
+
+private Expression draw():{
+  Expression result;
+  Token t;
+  Expression n = null;}{
+  result=dice()
+
+| t=< DRAW > (n=assign())? < FROM > result=dice()  {
+    if (n == null) {
+      return new Draw(getLocation(t), result);    }
+    return new DrawMultiple(getLocation(t), n, result);  }}
+
+private Expression dice():{
+  Expression n;
+  Expression type;
+  Token t;
+  int d;
+  AtomicReference<Location> locRef = new AtomicReference<Location>();}{
+  n=unary() (type=diceType(locRef) { return new Dice(n, type); })?  { return n; }
+  
+| type=diceType(locRef)
+  { return new Die(locRef.get(), type); }
+
+| t=< UPPER_DICE > type=unary()  { return new Dice(new Variable(getLocation(t), t.image.substring(0, 1)), type); }
+  
+| t=< NUMBER_DICE > { n = new IntegerConstant(getLocation(t), Long.parseLong(t.image.substring(0, t.image.length() - 1))); } type=unary()  { return new Dice(n, type); }
+
+| t=< UPPER_DICE_UPPER > { n = new Variable(getLocation(t), t.image.substring(0, 1)); type = new Variable(getLocation(t, 2), t.image.substring(2)); } (type=subscriptContinuation(type))*  { return new Dice(n, type); }
+  
+| t=< UPPER_DICE_NUMBER >
+  { return new Dice(new Variable(getLocation(t), t.image.substring(0, 1)), new IntegerConstant(getLocation(t, 2), Long.parseLong(t.image.substring(2)))); }
+  
+| t=< NUMBER_DICE_UPPER > { d = t.image.indexOf("d"); n = new IntegerConstant(getLocation(t), Long.parseLong(t.image.substring(0, d))); type = new Variable(getLocation(t, d + 1), t.image.substring(d+1)); } (type=subscriptContinuation(type))*
+  { return new Dice(n, type); }
+  
+| t=< NUMBER_DICE_NUMBER >  {
+    d = t.image.indexOf("d");
+    return new Dice(new IntegerConstant(getLocation(t), Long.parseLong(t.image.substring(0, d))), new IntegerConstant(getLocation(t, d + 1), Long.parseLong(t.image.substring(d+1))));
+  }
+}
+
+private Expression diceType(AtomicReference<Location> locRef):{
+  Expression e;
+  Token t;}{  t=< DICE > e=unary()  { locRef.set(getLocation(t)); return e; }
+
+| t=< DICE_UPPER > { locRef.set(getLocation(t)); e = new Variable(getLocation(t, 1), t.image.substring(1)); } (e=subscriptContinuation(e))*  { return e; }
+  
+| t=< DICE_NUMBER>
+  { locRef.set(getLocation(t)); return new IntegerConstant(getLocation(t, 1), Long.parseLong(t.image.substring(1))); }
+}
+
+private Expression unary():{
+  Expression e;
+  Token t;
+  AtomicReference<Location> locRef = new AtomicReference<Location>();
+  ValueType type;}{
+  e=subscript()  { return e; }
+  
+| t=< COUNT > e=subscript()
+  { return new Count(getLocation(t), e); }
+
+| t=< REORDER > e=subscript()  { return new ListReorder(getLocation(t), ListReorder.Operator.fromString(t.image), e); }
+
+| type=type(locRef) e=subscript()  {
+    switch (type) {
+      case BOOLEAN: return new ConvertBoolean(locRef.get(), e);
+      case STRING: return new ConvertString(locRef.get(), e);
+      case INTEGER: return new ConvertInteger(locRef.get(), e);
+      case LIST: return new ConvertList(locRef.get(), e);      case MAP: return new ConvertMap(locRef.get(), e);
+      case ANY: throw generateParseException();
+    }
+    throw new RuntimeException();  }
+}
+
+private ValueType type(AtomicReference<Location> locRef):{
+  Token t;}{
+  t=< CONVERT >  {
+    locRef.set(getLocation(t));
+    return ValueType.fromString(t.image);  }}
+
+private Expression subscript():
+{
+  Expression result;
+  Expression sub;
+}
+{
+  result=atom() (result=subscriptContinuation(result))*
+  { return result; }
+}
+
+private Expression subscriptContinuation(Expression left):{
+  Expression right;
+  String key;
+  AtomicReference<Location> locRef = new AtomicReference<Location>();  List<Expression> positionalArgs = new ArrayList<Expression>();
+  Map<String,Expression> namedArgs = new LinkedHashMap<String,Expression>();
+}{
+  < LBRACKET > right=expression() < RBRACKET >  { return new Subscript(left, right); }
+
+| < DOT > key=identifier(locRef)  { return new Subscript(left, new StringConstant(locRef.get(), key)); }
+
+| < LPAREN > (callArgs(positionalArgs, namedArgs))? < RPAREN >  { return new Call(left, positionalArgs, namedArgs); }}
+
+private void callArgs(List<Expression> positionalArgs, Map<String,Expression> namedArgs):
+{
+  boolean named = false;
+}
+{
+  named=callArg(positionalArgs, namedArgs, named) (< COMMA > named=callArg(positionalArgs, namedArgs, named))*
+}
+
+private boolean callArg(List<Expression> positionalArgs, Map<String,Expression> namedArgs, boolean named):
+{
+  String name = null;
+  Expression e;
+  AtomicReference<Location> locRef = new AtomicReference<Location>();
+}
+{
+  (LOOKAHEAD(2) name=identifier(locRef) < COLON >)? e=expression()
+  {
+    if (name == null) {
+      if (named) {
+        throw generateParseException();
+      }
+      positionalArgs.add(e);
+      return false;
+    }
+    namedArgs.put(name, e);
+    return true;
+  }
+}
+
+private Expression atom():{
+  Expression result;
+  Token t;
+  String s;
+  List<Expression> list;
+  Map<String,Expression> map;
+  List<String> positionalArgs = new ArrayList<String>();
+  Map<String,Expression> namedArgs = new LinkedHashMap<String,Expression>();
+  long n;
+  AtomicReference<Location> locRef = new AtomicReference<Location>();
+}{
+  < LPAREN > result=expression() < RPAREN >
+  { return result; }
+
+| t=< UNDEF >  { return new Undef(getLocation(t)); }
+
+| result=string(locRef)  { return result; }
+  
+| t=< BOOLEAN >  { return new BooleanConstant(getLocation(t), Boolean.getBoolean(t.image)); }
+
+| n=integer(locRef)  { return new IntegerConstant(locRef.get(), n); }
+| t=< SCOPE >  { return new ScopeVariables(getLocation(t), ScopeVariables.Operator.fromString(t.image)); }
+
+| t=< LBRACKET > list=list() < RBRACKET >  { return new ListConstructor(getLocation(t), list); }
+
+| t=< LCURLY > map=map() < RCURLY >  { return new MapConstructor(getLocation(t), map); }
+
+| t=< FUN > < LPAREN > (lambdaArgs(positionalArgs, namedArgs))? < RPAREN > < LCURLY > result=expression() < RCURLY >
+  { return new Lambda(getLocation(t), positionalArgs, namedArgs, result); }
+
+| t=< NATIVE > s=identifier(locRef)  { return new Native(getLocation(t), s); }
+| s=identifier(locRef)  { return new Variable(locRef.get(), s); }
+}
+
+private List<Expression> list():{
+  List<Expression> result = new ArrayList<Expression>();
+  Expression e;}{
+  (e=expression() { result.add(e); } (< COMMA > e=expression() { result.add(e); })*)?
+  { return result; }}
+
+private Map<String,Expression> map():{
+  Map<String,Expression> result = new LinkedHashMap<String,Expression>();
+}{
+  (entry(result) (< COMMA > entry(result))*)?  { return result; }}
+
+private void entry(Map<String,Expression> map):{  String name;
+  Expression e;
+  AtomicReference<Location> locRef = new AtomicReference<Location>();
+}{
+  name=identifier(locRef) < COLON > e=expression()  { map.put(name, e); }}
+
+private void lambdaArgs(List<String> positionalArgs, Map<String,Expression> namedArgs):{
+  boolean named = false;}{
+  named=lambdaArg(positionalArgs, namedArgs, named) (< COMMA > named=lambdaArg(positionalArgs, namedArgs, named))*}
+
+private boolean lambdaArg(List<String> positionalArgs, Map<String,Expression> namedArgs, boolean named):{
+  String name;
+  Expression e = null;
+  AtomicReference<Location> locRef = new AtomicReference<Location>();
+}{
+  name=identifier(locRef) (< COLON > e=expression())?  {
+    if (e == null) {
+      if (named) {
+        throw generateParseException();      }
+      positionalArgs.add(name);
+      return false;    }
+    namedArgs.put(name, e);
+    return true;  }}
+
+private String identifier(AtomicReference<Location> locRef):{
+  Token t;}{
+  t=< UNQUOTED > { locRef.set(getLocation(t)); return t.image; }| t=< SQUOTED > { locRef.set(getLocation(t)); return unquote(t); }
+}
+
+private StringInterpolation string(AtomicReference<Location> locRef):{
+  Token t;}{
+  t=< DQUOTED >  { return new StringInterpolation(getLocation(t), t.image.substring(1, t.image.length() - 1)); }}
+
+private long integer(AtomicReference<Location> locRef):{
+  Token t;}{  t=< NUMBER >
+  { locRef.set(getLocation(t)); return Long.parseLong(t.image); }
+}

@@ -25,6 +25,11 @@ import org.phatonin.yadrol.core.Expression;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 
+/**
+ * <code>lvalue = rvalue</code>
+ * 
+ *
+ */
 public class Assign extends AbstractExpression {
 	private final Expression lvalue;
 	private final Expression rvalue;

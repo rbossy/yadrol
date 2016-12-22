@@ -28,6 +28,11 @@ import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 
+/**
+ * <code>draw from list</code>
+ * 
+ *
+ */
 public class Draw extends AbstractExpression {
 	private final Expression list;
 

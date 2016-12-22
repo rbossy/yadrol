@@ -29,6 +29,11 @@ import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.values.ContainerVisitor;
 
+/**
+ * <code>target &lt;&lt; source</code>
+ * 
+ *
+ */
 public class Append extends AbstractExpression {
 	private final Expression target;
 	private final Expression source;

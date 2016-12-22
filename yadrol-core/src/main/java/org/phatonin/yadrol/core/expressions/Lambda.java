@@ -32,6 +32,11 @@ import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.values.Function;
 
+/**
+ * fun (parg1, parg2, ..., name1: narg1, name2: narg2, ...) { body }
+ * 
+ *
+ */
 public class Lambda extends AbstractFunctionExpression {
 	private final String[] positionalArgs;
 	private final Map<String,Expression> namedArgs;

@@ -29,6 +29,12 @@ import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 
+/**
+ * <code>repeat expression if condition</code>
+ * <code>repeat expression while condition [limit limit]</code>
+ * <code>while condition repeat expression [limit limit]</code>
+ *
+ */
 public class Repeat extends AbstractListExpression {
 	public static final String DEFAULT_VARIABLE_ASSIGN = "_";
 	
@@ -60,7 +66,7 @@ public class Repeat extends AbstractListExpression {
 	@Override
 	public AbstractListExpression reduce() throws EvaluationException {
 		if (isPureConstant()) {
-			return pureConstructor();
+			return pureExpression();
 		}
 		return new Repeat(getLocation(), expression.reduce(), condition.reduce(), preCondition, limit);
 	}

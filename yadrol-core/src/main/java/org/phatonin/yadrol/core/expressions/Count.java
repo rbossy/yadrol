@@ -31,6 +31,11 @@ import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.values.ContainerVisitor;
 import org.phatonin.yadrol.core.values.Function;
 
+/**
+ * <code>count container</code>
+ * 
+ *
+ */
 public class Count extends AbstractIntegerExpression {
 	private final Expression container;
 
@@ -46,7 +51,7 @@ public class Count extends AbstractIntegerExpression {
 	@Override
 	public AbstractIntegerExpression reduce() throws EvaluationException {
 		if (isPureConstant()) {
-			return pureConstant();
+			return pureExpression();
 		}
 		return new Count(getLocation(), container.reduce());
 	}

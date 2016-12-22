@@ -31,21 +31,25 @@ import java.util.regex.Pattern;
 import org.phatonin.yadrol.core.EvaluationContext;
 import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.Expression;
-import org.phatonin.yadrol.core.ExpressionListUtils;
 import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.values.Function;
 import org.phatonin.yadrol.core.values.ValueType;
 
+/**
+ * Base class for expressions.
+ * 
+ *
+ */
 public abstract class AbstractExpression implements Expression {
 	private Location location;
 	
-	public AbstractExpression() {
+	protected AbstractExpression() {
 		super();
 	}
 
-	public AbstractExpression(Location location) {
+	protected AbstractExpression(Location location) {
 		super();
 		this.location = location;
 	}
@@ -122,6 +126,12 @@ public abstract class AbstractExpression implements Expression {
 	@Override
 	public abstract boolean equals(Object obj);
 	
+	/**
+	 * Reduce each expression in the specified map.
+	 * @param map
+	 * @return
+	 * @throws EvaluationException
+	 */
 	protected static Map<String,Expression> reduce(Map<String,Expression> map) throws EvaluationException {
 		for (Map.Entry<String,Expression> e : map.entrySet()) {
 			e.setValue(e.getValue().reduce());
@@ -129,16 +139,12 @@ public abstract class AbstractExpression implements Expression {
 		return map;
 	}
 	
-	protected Expression reduce(Expression[] expressions, Expression zeroLength) throws EvaluationException {
-		switch (expressions.length) {
-			case 0: return zeroLength;
-			case 1: return expressions[0].reduce();
-			default:
-				ExpressionListUtils.reduce(expressions);
-				return this;
-		}
-	}
-	
+	/**
+	 * Either all expressions in the specified collection are pure constants.
+	 * @param expressions
+	 * @return
+	 * @throws EvaluationException
+	 */
 	protected static boolean isPureConstant(Collection<Expression> expressions) throws EvaluationException {
 		for (Expression e : expressions) {
 			if (!e.isPureConstant()) {
@@ -148,6 +154,12 @@ public abstract class AbstractExpression implements Expression {
 		return true;
 	}
 	
+	/**
+	 * Either all expressions in the specified map are pure constants.
+	 * @param expressions
+	 * @return
+	 * @throws EvaluationException
+	 */
 	protected static boolean isPureConstant(Map<String,Expression> expressions) throws EvaluationException {
 		for (Expression e : expressions.values()) {
 			if (!e.isPureConstant()) {
@@ -157,10 +169,22 @@ public abstract class AbstractExpression implements Expression {
 		return true;
 	}
 	
+	/**
+	 * Either all expressions in the specified array are pure constants.
+	 * @param expressions
+	 * @return
+	 * @throws EvaluationException
+	 */
 	protected static boolean isPureConstant(Expression... expressions) throws EvaluationException {
 		return isPureConstant(Arrays.asList(expressions));
 	}
 	
+	/**
+	 * Calls {@link Expression#substituteVariables(Scope)} on each element of the specified list.
+	 * @param expressions
+	 * @return
+	 * @throws EvaluationException
+	 */
 	protected static List<Expression> substituteVariables(List<Expression> expressions, Scope scope) {
 		List<Expression> result = new ArrayList<Expression>(expressions.size());
 		for (Expression e : expressions) {
@@ -169,10 +193,22 @@ public abstract class AbstractExpression implements Expression {
 		return result;
 	}
 	
+	/**
+	 * Calls {@link Expression#substituteVariables(Scope)} on each element of the specified array.
+	 * @param expressions
+	 * @return
+	 * @throws EvaluationException
+	 */
 	protected static List<Expression> substituteVariables(Expression[] expressions, Scope scope) {
 		return substituteVariables(Arrays.asList(expressions), scope);
 	}
 	
+	/**
+	 * Calls {@link Expression#substituteVariables(Scope)} on each value of the specified map.
+	 * @param expressions
+	 * @return
+	 * @throws EvaluationException
+	 */
 	protected static Map<String,Expression> substituteVariables(Map<String,Expression> map, Scope scope) {
 		Map<String,Expression> result = new HashMap<String,Expression>();
 		for (Map.Entry<String,Expression> e : map.entrySet()) {
@@ -181,11 +217,21 @@ public abstract class AbstractExpression implements Expression {
 		return result;
 	}
 	
+	/**
+	 * Evaluates this expression and converts the result back to a constant or a constructor.
+	 * @return
+	 * @throws EvaluationException if this expression is not a pure constant.
+	 */
 	protected Expression pureExpression() throws EvaluationException {
 		Object value = evaluate(null, null);
 		return EvaluationContext.valueToExpression(value);
 	}
 	
+	/**
+	 * Returns either this expression needs to be enclosed with parentheses wrt the specified precedence.
+	 * @param prec
+	 * @return
+	 */
 	protected boolean requiresParentheses(Precedence prec) {
 		return prec.compareTo(getPrecedence()) > 0;
 	}
@@ -212,17 +258,39 @@ public abstract class AbstractExpression implements Expression {
 		return !requiresParentheses(Precedence.UNARY);
 	}
 
+	/**
+	 * Converts a binary operator to string.
+	 * @param sb
+	 * @param operator
+	 * @param left
+	 * @param right
+	 * @param prec
+	 */
 	protected static void binaryOperator(StringBuilder sb, CharSequence operator, Expression left, Expression right, Precedence prec) {
 		left.toString(sb, prec);
 		sb.append(operator);
 		right.toString(sb, prec);
 	}
 	
+	/**
+	 * Converts an unary operator to string.
+	 * @param sb
+	 * @param operator
+	 * @param expr
+	 * @param prec
+	 */
 	protected static void unaryOperator(StringBuilder sb, String operator, Expression expr, Precedence prec) {
 		sb.append(operator);
 		expr.toString(sb, prec);
 	}
 	
+	/**
+	 * Converts a n-ary operator to string.
+	 * @param sb
+	 * @param operator
+	 * @param expressions
+	 * @param prec
+	 */
 	protected static void nAryOperator(StringBuilder sb, String operator, Expression[] expressions, Precedence prec) {
 		boolean first = true;
 		for (Expression e : expressions) {
@@ -236,12 +304,22 @@ public abstract class AbstractExpression implements Expression {
 		}
 	}
 	
+	/**
+	 * Converts the specified expression array to string (separated by commas).
+	 * @param sb
+	 * @param expressions
+	 */
 	protected static void expressionListToString(StringBuilder sb, Expression[] expressions) {
 		nAryOperator(sb, ", ", expressions, Precedence.SEQUENCE);
 	}
 	
 	private static final Pattern UNQUOTED_IDENTIFIER = Pattern.compile("[A-Z_a-z][0-9A-Z_a-z]*");
 	
+	/**
+	 * Converts the specified variable identifier to string.
+	 * @param sb
+	 * @param name
+	 */
 	protected static void identifierToString(StringBuilder sb, String name) {
 		Matcher m = UNQUOTED_IDENTIFIER.matcher(name);
 		if (m.matches()) {
@@ -272,6 +350,11 @@ public abstract class AbstractExpression implements Expression {
 		}
 	}
 	
+	/**
+	 * Convert the specified string constant into a string litteral.
+	 * @param sb
+	 * @param value
+	 */
 	protected static void stringConstant(StringBuilder sb, String value) {
 		sb.append('"');
 		for (int i = 0; i < value.length(); ++i) {
@@ -296,6 +379,12 @@ public abstract class AbstractExpression implements Expression {
 		sb.append('"');
 	}
 	
+	/**
+	 * Convert the specified expression map to string.
+	 * @param sb
+	 * @param map
+	 * @param args
+	 */
 	protected static void expressionMapToString(StringBuilder sb, Map<String,Expression> map, boolean args) {
 		boolean first = true;
 		for (Map.Entry<String,Expression> e : map.entrySet()) {
@@ -318,8 +407,16 @@ public abstract class AbstractExpression implements Expression {
 		}
 	}
 	
+	/**
+	 * Convert this expression to string.
+	 * @param sb
+	 */
 	protected abstract void toStringWithoutParen(StringBuilder sb);
 	
+	/**
+	 * Returns the precedence of the operator used to build this expression.
+	 * @return
+	 */
 	protected abstract Precedence getPrecedence();
 
 	@Override
@@ -334,18 +431,35 @@ public abstract class AbstractExpression implements Expression {
 		return location;
 	}
 	
+	/**
+	 * Set this expression location.
+	 * @param location
+	 */
 	public void setLocation(Location location) {
 		this.location = location;
 	}
 	
+	/**
+	 * Set this expression location as the same as the specified expression.
+	 * @param expr
+	 */
 	protected void infixLocation(Expression expr) {
 		setLocation(expr.getLocation());
 	}
 	
+	/**
+	 * Set this expression location as the same as the first expression in the specified array.
+	 * @param expressions
+	 */
 	protected void infixLocation(Expression[] expressions) {
 		setLocation(expressions.length == 0 ? Location.NONE : expressions[0].getLocation());
 	}
 	
+	/**
+	 * Complete the expression stack of the specified evaluation exception.
+	 * @param e
+	 * @return
+	 */
 	protected EvaluationException completeStack(EvaluationException e) {
 		e.appendToExpressionStack(this);
 		return e;

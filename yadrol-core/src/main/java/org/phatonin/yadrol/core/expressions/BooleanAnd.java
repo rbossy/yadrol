@@ -29,6 +29,11 @@ import org.phatonin.yadrol.core.Expression;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 
+/**
+ * <code>expr1 and expr2 and ...</code>
+ * 
+ *
+ */
 public class BooleanAnd extends AbstractBooleanExpression {
 	private final Expression[] operands;
 

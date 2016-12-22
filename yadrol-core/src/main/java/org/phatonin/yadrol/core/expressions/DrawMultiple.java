@@ -29,6 +29,11 @@ import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 
+/**
+ * <code>draw n from list</code>
+ * 
+ *
+ */
 public class DrawMultiple extends AbstractListExpression {
 	private final Expression n;
 	private final Expression list;
@@ -79,7 +84,7 @@ public class DrawMultiple extends AbstractListExpression {
 	@Override
 	public AbstractListExpression reduce() throws EvaluationException {
 		if (isPureConstant()) {
-			return pureConstructor();
+			return pureExpression();
 		}
 		return new DrawMultiple(getLocation(), n.reduce(), list.reduce());
 	}

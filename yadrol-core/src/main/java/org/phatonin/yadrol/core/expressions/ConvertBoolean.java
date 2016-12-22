@@ -27,6 +27,11 @@ import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.values.ValueType;
 
+/**
+ * <code>boolean expression</code>
+ * 
+ *
+ */
 public class ConvertBoolean extends AbstractBooleanExpression {
 	private final Expression expression;
 
@@ -42,7 +47,7 @@ public class ConvertBoolean extends AbstractBooleanExpression {
 	@Override
 	public AbstractBooleanExpression reduce() throws EvaluationException {
 		if (isPureConstant()) {
-			return pureConstant();
+			return pureExpression();
 		}
 		if (expression.getReturnType() == ValueType.BOOLEAN) {
 			return (AbstractBooleanExpression) expression.reduce();

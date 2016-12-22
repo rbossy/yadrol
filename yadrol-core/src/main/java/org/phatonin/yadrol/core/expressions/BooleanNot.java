@@ -26,6 +26,11 @@ import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 
+/**
+ * <code>not operand</code>
+ * 
+ *
+ */
 public class BooleanNot extends AbstractBooleanExpression {
 	private final Expression operand;
 
@@ -41,7 +46,7 @@ public class BooleanNot extends AbstractBooleanExpression {
 	@Override
 	public AbstractBooleanExpression reduce() throws EvaluationException {
 		if (isPureConstant()) {
-			return pureConstant();
+			return pureExpression();
 		}
 		return new BooleanNot(getLocation(), operand.reduce());
 	}

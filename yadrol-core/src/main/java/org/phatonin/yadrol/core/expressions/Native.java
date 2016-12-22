@@ -31,6 +31,11 @@ import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.values.Function;
 import org.phatonin.yadrol.core.values.ValueType;
 
+/**
+ * <code>native "address"</code>
+ * 
+ *
+ */
 public class Native extends AbstractExpression {
 	private final String address;
 	private Expression expression;

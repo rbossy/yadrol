@@ -29,12 +29,17 @@ import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.values.Function;
 import org.phatonin.yadrol.core.values.ValueType;
 
+/**
+ * Base class for function expressions.
+ * 
+ *
+ */
 public abstract class AbstractFunctionExpression extends AbstractExpression {
-	public AbstractFunctionExpression(Location location) {
+	protected AbstractFunctionExpression(Location location) {
 		super(location);
 	}
 
-	public AbstractFunctionExpression() {
+	protected AbstractFunctionExpression() {
 		super();
 	}
 

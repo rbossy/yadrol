@@ -28,6 +28,11 @@ import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.values.Roller;
 
+/**
+ * <code>NdX</code>
+ * 
+ *
+ */
 public class Dice extends AbstractListExpression {
 	private final Expression n;
 	private final Expression type;
@@ -49,7 +54,7 @@ public class Dice extends AbstractListExpression {
 	@Override
 	public AbstractListExpression reduce() throws EvaluationException {
 		if (isPureConstant()) {
-			return pureConstructor();
+			return pureExpression();
 		}
 		return new Dice(n.reduce(), type.reduce());
 	}

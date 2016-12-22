@@ -27,6 +27,11 @@ import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.values.ValueType;
 
+/**
+ * <code>integer expression</code>
+ * 
+ *
+ */
 public class ConvertInteger extends AbstractIntegerExpression {
 	private final Expression expression;
 
@@ -42,7 +47,7 @@ public class ConvertInteger extends AbstractIntegerExpression {
 	@Override
 	public AbstractIntegerExpression reduce() throws EvaluationException {
 		if (isPureConstant()) {
-			return pureConstant();
+			return pureExpression();
 		}
 		if (expression.getReturnType() == ValueType.INTEGER) {
 			return (AbstractIntegerExpression) expression.reduce();

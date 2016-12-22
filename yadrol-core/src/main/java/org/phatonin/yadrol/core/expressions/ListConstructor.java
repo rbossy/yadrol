@@ -31,6 +31,11 @@ import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 
+/**
+ * <code>[ elt1, elt2, ... ]</code>
+ * 
+ *
+ */
 public class ListConstructor extends AbstractListExpression {
 	private final Expression[] elements;
 

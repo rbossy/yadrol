@@ -28,6 +28,13 @@ import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 
+/**
+ * <code>local</code>
+ * <code>outer</code>
+ * <code>global</code>
+ * 
+ *
+ */
 public class ScopeVariables extends AbstractMapExpression {
 	public static enum Operator {
 		LOCAL {

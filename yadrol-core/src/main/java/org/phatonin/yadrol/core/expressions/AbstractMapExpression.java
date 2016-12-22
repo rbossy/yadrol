@@ -29,12 +29,17 @@ import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.values.Function;
 import org.phatonin.yadrol.core.values.ValueType;
 
+/**
+ * Base class for map expressions.
+ * 
+ *
+ */
 public abstract class AbstractMapExpression extends AbstractExpression {
 	protected AbstractMapExpression(Location location) {
 		super(location);
 	}
 
-	public AbstractMapExpression() {
+	protected AbstractMapExpression() {
 		super();
 	}
 
@@ -84,7 +89,8 @@ public abstract class AbstractMapExpression extends AbstractExpression {
 	@Override
 	public abstract AbstractMapExpression reduce() throws EvaluationException;
 	
-	protected AbstractMapExpression pureConstructor() throws EvaluationException {
+	@Override
+	protected AbstractMapExpression pureExpression() throws EvaluationException {
 		Map<String,Object> value = evaluateMap(null, null);
 		return EvaluationContext.mapToExpression(value);
 	}

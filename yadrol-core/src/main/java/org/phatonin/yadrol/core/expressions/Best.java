@@ -29,6 +29,12 @@ import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.values.ValueComparator;
 
+/**
+ * <code>highest of expression</code>
+ * <code>lowest of expression</code>
+ * 
+ *
+ */
 public class Best extends AbstractExpression {
 	public static enum Operator {
 		HIGHEST {

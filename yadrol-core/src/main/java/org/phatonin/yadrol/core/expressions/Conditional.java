@@ -30,6 +30,11 @@ import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.values.Function;
 import org.phatonin.yadrol.core.values.ValueType;
 
+/**
+ * <code>if condition then trueBranch else falseBranch</code>
+ * 
+ *
+ */
 public class Conditional extends AbstractExpression {
 	private final Expression condition;
 	private final Expression trueBranch;

@@ -28,6 +28,12 @@ import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.values.ValueType;
 
+/**
+ * <code>roll expression [evaluationType] [name]</code>
+ * <code>sample expression [evaluationType] [name]</code>
+ * 
+ *
+ */
 public class Output extends AbstractExpression {
 	private final StringInterpolation name;
 	private final Expression expression;

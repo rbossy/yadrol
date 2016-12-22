@@ -28,6 +28,11 @@ import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.values.Roller;
 import org.phatonin.yadrol.core.values.ValueType;
 
+/**
+ * <code>dX</code>
+ * 
+ *
+ */
 public class Die extends AbstractExpression {
 	private final Expression type;
 

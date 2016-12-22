@@ -29,12 +29,17 @@ import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.values.Function;
 import org.phatonin.yadrol.core.values.ValueType;
 
+/**
+ * Base class for undef expressions.
+ * 
+ *
+ */
 public abstract class AbstractUndefExpression extends AbstractExpression {
-	public AbstractUndefExpression(Location location) {
+	protected AbstractUndefExpression(Location location) {
 		super(location);
 	}
 
-	public AbstractUndefExpression() {
+	protected AbstractUndefExpression() {
 		super();
 	}
 

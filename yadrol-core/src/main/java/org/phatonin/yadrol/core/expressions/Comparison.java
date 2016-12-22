@@ -26,6 +26,18 @@ import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 
+/**
+ * <code>left === right</code>
+ * <code>left !== right</code>
+ * <code>left == right</code>
+ * <code>left != right</code>
+ * <code>left &lt; right</code>
+ * <code>left &gt; right</code>
+ * <code>left &lt;= right</code>
+ * <code>left &gt;= right</code>
+ * 
+ *
+ */
 public class Comparison extends AbstractBooleanExpression {
 	public static interface Operator {
 		boolean test(EvaluationContext ctx, Scope scope, Expression left, Expression right) throws EvaluationException;
@@ -215,7 +227,7 @@ public class Comparison extends AbstractBooleanExpression {
 	@Override
 	public AbstractBooleanExpression reduce() throws EvaluationException {
 		if (isPureConstant()) {
-			return pureConstant();
+			return pureExpression();
 		}
 		return new Comparison(getLocation(), operator, left.reduce(), right.reduce());
 	}

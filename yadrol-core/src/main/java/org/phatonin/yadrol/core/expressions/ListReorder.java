@@ -32,6 +32,13 @@ import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.values.ValueComparator;
 
+/**
+ * <code>sort list</code>
+ * <code>shuffle list</code>
+ * <code>revert list</code>
+ * 
+ *
+ */
 public class ListReorder extends AbstractListExpression {
 	public static enum Operator {
 		SORT {
@@ -129,7 +136,7 @@ public class ListReorder extends AbstractListExpression {
 	@Override
 	public AbstractListExpression reduce() throws EvaluationException {
 		if (isPureConstant()) {
-			return pureConstructor();
+			return pureExpression();
 		}
 		return new ListReorder(getLocation(), operator, list.reduce());
 	}

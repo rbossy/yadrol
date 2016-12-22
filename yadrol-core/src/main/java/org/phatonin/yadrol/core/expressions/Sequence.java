@@ -33,6 +33,11 @@ import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.values.Function;
 import org.phatonin.yadrol.core.values.ValueType;
 
+/**
+ * <code>expr1 ; code2 ; ...</code>
+ * 
+ *
+ */
 public class Sequence extends AbstractExpression {
 	private final Expression[] expressions;
 

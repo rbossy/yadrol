@@ -31,6 +31,11 @@ import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.values.ContainerVisitor;
 import org.phatonin.yadrol.core.values.ValueComparator;
 
+/**
+ * <code>element in container</code>
+ * 
+ *
+ */
 public class IndexOf extends AbstractExpression {
 	private final Expression element;
 	private final Expression container;

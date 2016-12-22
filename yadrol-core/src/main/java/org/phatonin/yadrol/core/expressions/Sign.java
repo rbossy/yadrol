@@ -26,6 +26,12 @@ import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 
+/**
+ * <code>+ operand</code>
+ * <code>- operand</code>
+ * 
+ *
+ */
 public class Sign extends AbstractIntegerExpression {
 	public static enum Operator {
 		PLUS {
@@ -83,7 +89,7 @@ public class Sign extends AbstractIntegerExpression {
 	@Override
 	public AbstractIntegerExpression reduce() throws EvaluationException {
 		if (isPureConstant()) {
-			return pureConstant();
+			return pureExpression();
 		}
 		if (operator == Operator.PLUS) {
 			return new ConvertInteger(getLocation(), operand).reduce();

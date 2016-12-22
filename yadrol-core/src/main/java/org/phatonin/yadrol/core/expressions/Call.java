@@ -34,6 +34,11 @@ import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.values.Function;
 import org.phatonin.yadrol.core.values.ValueType;
 
+/**
+ * function(parg1, parg2, ..., name1: narg1, name2: narg2, ...)
+ * 
+ *
+ */
 public class Call extends AbstractExpression {
 	private final Expression function;
 	private final Expression[] positionalArgs;

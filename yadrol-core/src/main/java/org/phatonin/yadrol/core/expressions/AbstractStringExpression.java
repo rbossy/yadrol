@@ -29,8 +29,13 @@ import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.values.Function;
 import org.phatonin.yadrol.core.values.ValueType;
 
+/**
+ * Base class for string expressions.
+ * 
+ *
+ */
 public abstract class AbstractStringExpression extends AbstractExpression {
-	public AbstractStringExpression(Location location) {
+	protected AbstractStringExpression(Location location) {
 		super(location);
 	}
 
@@ -80,7 +85,7 @@ public abstract class AbstractStringExpression extends AbstractExpression {
 	@Override
 	public abstract AbstractStringExpression reduce() throws EvaluationException;
 	
-	protected AbstractStringExpression pureConstant() throws EvaluationException {
+	protected AbstractStringExpression pureExpression() throws EvaluationException {
 		String value = evaluateString(null, null);
 		return new StringConstant(getLocation(), value);
 	}

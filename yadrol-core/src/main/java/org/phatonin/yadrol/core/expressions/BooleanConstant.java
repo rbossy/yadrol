@@ -26,6 +26,12 @@ import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 
+/**
+ * <code>true</code>
+ * <code>false</code>
+ * 
+ *
+ */
 public class BooleanConstant extends AbstractBooleanExpression {
 	private final boolean value;
 	

@@ -29,12 +29,17 @@ import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.values.Function;
 import org.phatonin.yadrol.core.values.ValueType;
 
+/**
+ * Base class for boolean expressions.
+ * 
+ *
+ */
 public abstract class AbstractBooleanExpression extends AbstractExpression {
-	public AbstractBooleanExpression(Location location) {
+	protected AbstractBooleanExpression(Location location) {
 		super(location);
 	}
 
-	public AbstractBooleanExpression() {
+	protected AbstractBooleanExpression() {
 		super();
 	}
 
@@ -84,7 +89,8 @@ public abstract class AbstractBooleanExpression extends AbstractExpression {
 	@Override
 	public abstract AbstractBooleanExpression reduce() throws EvaluationException;
 	
-	protected AbstractBooleanExpression pureConstant() throws EvaluationException {
+	@Override
+	protected AbstractBooleanExpression pureExpression() throws EvaluationException {
 		boolean value = evaluateBoolean(null, null);
 		return new BooleanConstant(getLocation(), value);
 	}

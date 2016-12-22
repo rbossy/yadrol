@@ -29,12 +29,17 @@ import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.values.Function;
 import org.phatonin.yadrol.core.values.ValueType;
 
+/**
+ * Base class for integer expressions.
+ * 
+ *
+ */
 public abstract class AbstractIntegerExpression extends AbstractExpression {
-	public AbstractIntegerExpression(Location location) {
+	protected AbstractIntegerExpression(Location location) {
 		super(location);
 	}
 
-	public AbstractIntegerExpression() {
+	protected AbstractIntegerExpression() {
 		super();
 	}
 
@@ -84,7 +89,8 @@ public abstract class AbstractIntegerExpression extends AbstractExpression {
 	@Override
 	public abstract AbstractIntegerExpression reduce() throws EvaluationException;
 	
-	protected AbstractIntegerExpression pureConstant() throws EvaluationException {
+	@Override
+	protected AbstractIntegerExpression pureExpression() throws EvaluationException {
 		long value = evaluateInteger(null, null);
 		return new IntegerConstant(getLocation(), value);
 	}

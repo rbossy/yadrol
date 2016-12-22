@@ -29,6 +29,11 @@ import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 
+/**
+ * <code>{ key1: value1, key2: value2, ... }</code>
+ * 
+ *
+ */
 public class MapConstructor extends AbstractMapExpression {
 	private final Map<String,Expression> entries;
 
@@ -58,7 +63,7 @@ public class MapConstructor extends AbstractMapExpression {
 	@Override
 	public AbstractMapExpression reduce() throws EvaluationException {
 		if (isPureConstant()) {
-			return pureConstructor();
+			return pureExpression();
 		}
 		for (Map.Entry<String,Expression> e : entries.entrySet()) {
 			Expression expr = e.getValue().reduce();

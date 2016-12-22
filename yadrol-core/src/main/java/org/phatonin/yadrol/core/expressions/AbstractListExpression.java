@@ -29,12 +29,17 @@ import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.values.Function;
 import org.phatonin.yadrol.core.values.ValueType;
 
+/**
+ * Base class for list expressions.
+ * 
+ *
+ */
 public abstract class AbstractListExpression extends AbstractExpression {
-	public AbstractListExpression(Location location) {
+	protected AbstractListExpression(Location location) {
 		super(location);
 	}
 
-	public AbstractListExpression() {
+	protected AbstractListExpression() {
 		super();
 	}
 
@@ -84,7 +89,8 @@ public abstract class AbstractListExpression extends AbstractExpression {
 	@Override
 	public abstract AbstractListExpression reduce() throws EvaluationException;
 	
-	protected AbstractListExpression pureConstructor() throws EvaluationException {
+	@Override
+	protected AbstractListExpression pureExpression() throws EvaluationException {
 		List<Object> value = evaluateList(null, null);
 		return EvaluationContext.listToExpression(value);
 	}

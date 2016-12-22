@@ -26,6 +26,11 @@ import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 
+/**
+ * <code>name</code>
+ * 
+ *
+ */
 public class Variable extends AbstractExpression {
 	private final String name;
 

@@ -34,6 +34,9 @@ import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.values.ContainerVisitor;
 
+/**
+ * <code>[out] for [indexVariable,] itemVariable in container [if condition]</code>
+ */
 public class ForLoop extends AbstractExpression {
 	public static final String DEFAULT_ITEM_VARIABLE = "_";
 	

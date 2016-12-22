@@ -32,6 +32,12 @@ import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.values.Function;
 import org.phatonin.yadrol.core.values.ValueVisitor;
 
+/**
+ * <code>list[subscript]</code>
+ * <code>list.subscript</code>
+ * 
+ *
+ */
 public class Subscript extends AbstractExpression {
 	private final Expression list;
 	private final Expression subscript;

@@ -33,6 +33,12 @@ import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.expressions.Best.Operator;
 import org.phatonin.yadrol.core.values.ValueComparator;
 
+/**
+ * <code>highest n of expression</code>
+ * <code>lowest n of expression</code>
+ * 
+ *
+ */
 public class BestMultiple extends AbstractListExpression {
 	private final Best.Operator operator;
 	private final Expression n;
@@ -60,7 +66,7 @@ public class BestMultiple extends AbstractListExpression {
 	@Override
 	public AbstractListExpression reduce() throws EvaluationException {
 		if (isPureConstant()) {
-			return pureConstructor();
+			return pureExpression();
 		}
 		return new BestMultiple(getLocation(), operator, n.reduce(), expression.reduce());
 	}

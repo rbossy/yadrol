@@ -29,6 +29,11 @@ import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.values.ValueType;
 
+/**
+ * <code>list expression</code>
+ * 
+ *
+ */
 public class ConvertList extends AbstractListExpression {
 	private final Expression expression;
 
@@ -44,7 +49,7 @@ public class ConvertList extends AbstractListExpression {
 	@Override
 	public AbstractListExpression reduce() throws EvaluationException {
 		if (isPureConstant()) {
-			return pureConstructor();
+			return pureExpression();
 		}
 		if (expression.getReturnType() == ValueType.LIST) {
 			return (AbstractListExpression) expression.reduce();

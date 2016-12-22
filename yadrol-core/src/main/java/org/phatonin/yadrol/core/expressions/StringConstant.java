@@ -26,6 +26,11 @@ import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 
+/**
+ * <code>"value"</code>
+ * 
+ *
+ */
 public class StringConstant extends AbstractStringExpression {
 	private final String value;
 

@@ -29,6 +29,11 @@ import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.values.ValueType;
 
+/**
+ * <code>map expression</code>
+ * 
+ *
+ */
 public class ConvertMap extends AbstractMapExpression {
 	private final Expression expression;
 
@@ -44,7 +49,7 @@ public class ConvertMap extends AbstractMapExpression {
 	@Override
 	public AbstractMapExpression reduce() throws EvaluationException {
 		if (isPureConstant()) {
-			return pureConstructor();
+			return pureExpression();
 		}
 		if (expression.getReturnType() == ValueType.MAP) {
 			return (AbstractMapExpression) expression.reduce();

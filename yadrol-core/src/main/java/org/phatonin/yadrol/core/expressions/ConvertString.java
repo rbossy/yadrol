@@ -27,6 +27,11 @@ import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.values.ValueType;
 
+/**
+ * <code>string expression</code>
+ * 
+ *
+ */
 public class ConvertString extends AbstractStringExpression {
 	private final Expression expression;
 
@@ -42,7 +47,7 @@ public class ConvertString extends AbstractStringExpression {
 	@Override
 	public AbstractStringExpression reduce() throws EvaluationException {
 		if (isPureConstant()) {
-			return pureConstant();
+			return pureExpression();
 		}
 		if (expression.getReturnType() == ValueType.STRING) {
 			return (AbstractStringExpression) expression.reduce();

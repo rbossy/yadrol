@@ -34,6 +34,11 @@ import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.parser.ParseException;
 import org.phatonin.yadrol.core.parser.YadrolParser;
 
+/**
+ * <code>"originalString"</code>
+ * 
+ *
+ */
 public class StringInterpolation extends AbstractStringExpression {
 	private static interface Generator {
 		void generate(EvaluationContext ctx, Scope scope, StringBuilder sb) throws EvaluationException;
@@ -261,7 +266,7 @@ public class StringInterpolation extends AbstractStringExpression {
 	@Override
 	public AbstractStringExpression reduce() throws EvaluationException {
 		if (isPureConstant()) {
-			return pureConstant();
+			return pureExpression();
 		}
 		return new StringInterpolation(getLocation(), originalString, generator.reduce());
 	}

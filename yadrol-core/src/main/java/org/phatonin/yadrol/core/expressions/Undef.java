@@ -26,7 +26,11 @@ import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 
-
+/**
+ * <code>undef</code>
+ * 
+ *
+ */
 public class Undef extends AbstractUndefExpression {
 	public Undef(Location location) {
 		super(location);

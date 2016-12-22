@@ -34,6 +34,11 @@ import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 
+/**
+ * <code>import [alias =] "address" [: name1, name2, ...]</code>
+ * 
+ *
+ */
 public class Import extends AbstractUndefExpression {
 	private final String address;
 	private final String[] names;

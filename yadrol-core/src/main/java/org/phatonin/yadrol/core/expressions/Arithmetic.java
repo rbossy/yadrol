@@ -25,6 +25,15 @@ import org.phatonin.yadrol.core.Expression;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 
+/**
+ * <code>left + right</code>
+ * <code>left - right</code>
+ * <code>left * right</code
+ * <code>left / right</code>
+ * <code>left % right</code>
+ * 
+ *
+ */
 public class Arithmetic extends AbstractIntegerExpression {
 	public static enum Operator {
 		PLUS {
@@ -127,7 +136,7 @@ public class Arithmetic extends AbstractIntegerExpression {
 	@Override
 	public AbstractIntegerExpression reduce() throws EvaluationException {
 		if (isPureConstant()) {
-			return pureConstant();
+			return pureExpression();
 		}
 		if (left.isPureConstant()) {
 			long lvalue = left.evaluateInteger(null, null);

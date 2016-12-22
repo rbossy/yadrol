@@ -28,6 +28,11 @@ import org.phatonin.yadrol.core.Expression;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 
+/**
+ * <code>start .. end</code>
+ * 
+ *
+ */
 public class Range extends AbstractListExpression {
 	private final Expression start;
 	private final Expression end;
@@ -49,7 +54,7 @@ public class Range extends AbstractListExpression {
 	@Override
 	public AbstractListExpression reduce() throws EvaluationException {
 		if (isPureConstant()) {
-			return pureConstructor();
+			return pureExpression();
 		}
 		return new Range(start.reduce(), end.reduce());
 	}

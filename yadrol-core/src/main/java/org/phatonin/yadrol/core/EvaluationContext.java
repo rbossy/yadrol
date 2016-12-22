@@ -22,7 +22,6 @@ package org.phatonin.yadrol.core;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -141,7 +140,6 @@ public class EvaluationContext {
 	}
 
 	private void addDiceRecord(Object type, List<Object> result) {
-		System.err.println("dice record");
 		DiceRecord rec = new DiceRecord(type, result);
 		diceRecords.add(rec);
 		if (currentRollRecord != null) {
@@ -387,7 +385,7 @@ public class EvaluationContext {
 	}
 	
 	private MultiCount getMultiCount(Object v, CountSelector selector) {
-		Map<String,Number> counts = new HashMap<String,Number>();
+		Map<String,Number> counts = new LinkedHashMap<String,Number>();
 		for (SampleRecord rec : sampleRecords) {
 			String name = rec.getName();
 			Distribution dist = rec.getDistribution();

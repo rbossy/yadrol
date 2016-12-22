@@ -50,13 +50,6 @@ enum OptionParser {
 		}
 	},
 	
-	SAMPLE("-sample", 0) {
-		@Override
-		public void process(CLIOptions options, String[] args) {
-			options.setOutputMode(OutputMode.SAMPLE);
-		}
-	},
-	
 	NATIVE_TYPE("-native", 0) {
 		@Override
 		public void process(CLIOptions options, String[] args) {
@@ -72,13 +65,6 @@ enum OptionParser {
 				throw new RuntimeException();
 			}
 			options.setSampleSize(sampleSize);
-		}
-	},
-	
-	REDUCE("-reduce", 0) {
-		@Override
-		public void process(CLIOptions options, String[] args) {
-			options.setReduce(true);
 		}
 	},
 	

@@ -55,7 +55,7 @@ public class LatexDisplay extends DisplayManager {
 				out.print(" & ");
 				if (counts.containsKey(name)) {
 					Number n = counts.get(name);
-					out.format("%.2f", n);
+					out.format("%.3f", n);
 				}
 			}
 			out.println("\\\\");

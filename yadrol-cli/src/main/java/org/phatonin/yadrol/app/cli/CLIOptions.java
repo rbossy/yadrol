@@ -46,6 +46,7 @@ public class CLIOptions extends YadrolOptions {
 		if (paths != null) {
 			fsImportManager.addSearchPaths(paths);
 		}
+		setReduce(true);
 	}
 
 	public CLIOptions() {

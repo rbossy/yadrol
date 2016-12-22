@@ -21,20 +21,39 @@ package org.phatonin.yadrol.core;
 
 import java.util.List;
 
+/**
+ * A dice record object stores the result of roll one or several dice of the same type.
+ * 
+ *
+ */
 public class DiceRecord {
 	private final Object type;
 	private final List<Object> result;
 	
+	/**
+	 * Create a dice record.
+	 * @param type type of the dice rolled.
+	 * @param result result of the roll.
+	 */
 	public DiceRecord(Object type, List<Object> result) {
 		super();
 		this.type = type;
 		this.result = result;
 	}
 
+	/**
+	 * Returns the type of the dice rolled.
+	 * @return the type of the dice rolled.
+	 */
 	public Object getType() {
 		return type;
 	}
 
+	/**
+	 * Returns the result of the rolls.
+	 * The list is modifiable.
+	 * @return the result of the rolls.
+	 */
 	public List<Object> getResult() {
 		return result;
 	}

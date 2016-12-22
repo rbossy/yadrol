@@ -66,7 +66,7 @@ public class Lambda extends AbstractFunctionExpression {
 	}
 
 	@Override
-	public boolean isPureConstant() {
+	public boolean isPureConstant() throws EvaluationException {
 		return false;
 	}
 

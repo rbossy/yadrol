@@ -23,6 +23,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Exception raised during the evaluation.
+ * 
+ *
+ */
 @SuppressWarnings("serial")
 public class EvaluationException extends Exception {
 	private final List<Expression> expressionStack = new ArrayList<Expression>();
@@ -52,10 +57,18 @@ public class EvaluationException extends Exception {
 		expressionStack.add(expression);
 	}
 
+	/**
+	 * Returns the stack of expressions from which this exception was raised.
+	 * @return
+	 */
 	public List<Expression> getExpressionStack() {
 		return Collections.unmodifiableList(expressionStack);
 	}
 	
+	/**
+	 * Appends the specified expression to the expression stack.
+	 * @param expression
+	 */
 	public void appendToExpressionStack(Expression expression) {
 		expressionStack.add(expression);
 	}

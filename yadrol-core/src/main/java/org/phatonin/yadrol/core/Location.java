@@ -19,14 +19,27 @@
 
 package org.phatonin.yadrol.core;
 
-
+/**
+ * A location represents an address in a script file.
+ * 
+ *
+ */
 public class Location {
+	/**
+	 * None location.
+	 */
 	public static final Location NONE = new Location(null, 0, 0);
 	
 	private final String source;
 	private final int lineno;
 	private final int column;
 	
+	/**
+	 * Create a location.
+	 * @param source source (e.g. path to the file or URL)
+	 * @param lineno line number.
+	 * @param column column number.
+	 */
 	public Location(String source, int lineno, int column) {
 		super();
 		this.source = source;
@@ -34,14 +47,26 @@ public class Location {
 		this.column = column;
 	}
 
+	/**
+	 * Returns the source (e.g. path to the file or URL).
+	 * @return
+	 */
 	public String getSource() {
 		return source;
 	}
 
+	/**
+	 * Returns the line number.
+	 * @return
+	 */
 	public int getLineno() {
 		return lineno;
 	}
 
+	/**
+	 * Returns the column number.
+	 * @return
+	 */
 	public int getColumn() {
 		return column;
 	}

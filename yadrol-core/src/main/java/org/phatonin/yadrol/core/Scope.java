@@ -22,11 +22,22 @@ package org.phatonin.yadrol.core;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Scope objects represent variable scopes within which expressions are evaluated.
+ * 
+ *
+ */
 public class Scope {
 	private final Scope parent;
 	private final Map<String,Object> variables;
 	private final long depth;
 
+	/**
+	 * Create a scope.
+	 * @param parent parent scope (<code>null</code> if global).
+	 * @param variables variables defined in this scope.
+	 * @param depth depth of this scope.
+	 */
 	public Scope(Scope parent, Map<String,Object> variables, long depth) {
 		super();
 		this.parent = parent;
@@ -34,22 +45,42 @@ public class Scope {
 		this.depth = depth;
 	}
 
+	/**
+	 * Create a scope with the same depth as its parent.
+	 * @param parent parent scope (<code>null</code> if global).
+	 * @param variables variables defined in this scope.
+	 */
 	public Scope(Scope parent, Map<String,Object> variables) {
 		this(parent, variables, parent == null ? 0 : parent.depth);
 	}
 
+	/**
+	 * Create a scope with the same depth as its parent and no defined variables.
+	 * @param parent parent scope (<code>null</code> if global).
+	 */
 	public Scope(Scope parent) {
 		this(parent, new HashMap<String,Object>());
 	}
 	
+	/**
+	 * Create a global scope.
+	 */
 	public Scope() {
 		this(null);
 	}
 	
+	/**
+	 * Returns the parent scope of this scope.
+	 * @return the parent scope of this scope.
+	 */
 	public Scope getParent() {
 		return parent;
 	}
 
+	/**
+	 * Returns the depth of this scope.
+	 * @return the depth of this scope.
+	 */
 	public long getDepth() {
 		return depth;
 	}
@@ -63,6 +94,11 @@ public class Scope {
 		return this;
 	}
 
+	/**
+	 * Checks if a variable with the specified name is defined in this scope, or an ancestor scope.
+	 * @param name
+	 * @return
+	 */
 	public boolean hasVariable(String name) {
 		for (Scope scope = this; scope != null; scope = scope.parent) {
 			if (scope.variables.containsKey(name)) {
@@ -72,16 +108,32 @@ public class Scope {
 		return false;
 	}
 
+	/**
+	 * Returns the value of the variable with the specified name in this scope or an ancestor scope.
+	 * @param name
+	 * @return the variable value or <code>null</code> if it is not defined.
+	 */
 	public Object getVariable(String name) {
 		Scope scope = lookupVariable(name);
 		return scope.variables.get(name);
 	}
 
+	/**
+	 * Set the value of the specified variable.
+	 * If the variable is already defined in an ancestor scope, then its value is overwritten.
+	 * Otherwise this method creates a new variable in this scope.
+	 * @param name
+	 * @param value
+	 */
 	public void setVariable(String name, Object value) {
 		Scope scope = lookupVariable(name);
 		scope.variables.put(name, value);
 	}
 	
+	/**
+	 * Returns all variables defined in this scope.
+	 * @return all variables defined in this scope. The returned map is modifiable and changes are reflected in the scope.
+	 */
 	public Map<String,Object> getVariables() {
 		return variables;
 	}

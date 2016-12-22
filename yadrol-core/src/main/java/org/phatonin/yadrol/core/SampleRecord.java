@@ -21,6 +21,11 @@ package org.phatonin.yadrol.core;
 
 import org.phatonin.yadrol.core.values.ValueType;
 
+/**
+ * Sample records store the distribution of repeated evaluation of an expression.
+ * 
+ *
+ */
 public class SampleRecord extends OutputRecord {
 	private final Distribution distribution = new Distribution();
 
@@ -28,6 +33,10 @@ public class SampleRecord extends OutputRecord {
 		super(name, expression, evaluationType);
 	}
 
+	/**
+	 * Returns the distribution of evaluation results.
+	 * @return
+	 */
 	public Distribution getDistribution() {
 		return distribution;
 	}

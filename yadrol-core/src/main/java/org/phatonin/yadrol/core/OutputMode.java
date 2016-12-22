@@ -21,7 +21,15 @@ package org.phatonin.yadrol.core;
 
 import org.phatonin.yadrol.core.values.ValueType;
 
+/**
+ * Output mode.
+ * 
+ *
+ */
 public enum OutputMode {
+	/**
+	 * Evaluates expression once and stores the result in a RollRecord.
+	 */
 	ROLL {
 		@Override
 		public Object record(Expression expression, EvaluationContext ctx, Scope scope, ValueType evaluationType, String name) throws EvaluationException {
@@ -38,6 +46,9 @@ public enum OutputMode {
 		}
 	},
 	
+	/**
+	 * Repeatedly evaluates the expression once and stores the result in a SampleRecord.
+	 */
 	SAMPLE {
 		@Override
 		public Object record(Expression expression, EvaluationContext ctx, Scope scope, ValueType evaluationType, String name) throws EvaluationException {
@@ -55,6 +66,9 @@ public enum OutputMode {
 		}
 	},
 	
+	/**
+	 * Uses whatever mode is defined in the evaluation context.
+	 */
 	DEFAULT {
 		@Override
 		public Object record(Expression expression, EvaluationContext ctx, Scope scope, ValueType evaluationType, String name) throws EvaluationException {
@@ -68,6 +82,16 @@ public enum OutputMode {
 	}
 	;
 	
+	/**
+	 * Evaluates the specified expression and records the result.
+	 * @param expression
+	 * @param ctx
+	 * @param scope
+	 * @param evaluationType
+	 * @param name
+	 * @return
+	 * @throws EvaluationException
+	 */
 	public abstract Object record(Expression expression, EvaluationContext ctx, Scope scope, ValueType evaluationType, String name) throws EvaluationException;
 
 	public static OutputMode fromString(String op) {

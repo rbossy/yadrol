@@ -19,6 +19,11 @@
 
 package org.phatonin.yadrol.core;
 
+/**
+ * Operator precedences.
+ * The order of declaration of constants determine the precedence of the operator.
+ *
+ */
 public enum Precedence {
 	SEQUENCE,
 	OUTPUT,

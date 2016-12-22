@@ -19,6 +19,11 @@
 
 package org.phatonin.yadrol.core;
 
+/**
+ * A count object contains the occurrence statistics for a single value.
+ * 
+ *
+ */
 public class Count {
 	private final Object value;
 	private long frequency;
@@ -28,35 +33,67 @@ public class Count {
 	private double relativeAtLeastFrequency;
 	private double relativeAtMostFrequency;
 
+	/**
+	 * Create a count for the specified value.
+	 * @param value
+	 */
 	public Count(Object value) {
 		super();
 		this.value = value;
 	}
 
+	/**
+	 * Returns the value for which this count stores occurrences.
+	 * @return
+	 */
 	public Object getValue() {
 		return value;
 	}
 
+	/**
+	 * Returns the number of occurrences of this value.
+	 * @return
+	 */
 	public long getFrequency() {
 		return frequency;
 	}
 	
+	/**
+	 * Returns the total number of occurrences for the values above or equal the value of this count.
+	 * @return
+	 */
 	public long getAtLeastFrequency() {
 		return atLeastFrequency;
 	}
 	
+	/**
+	 * Returns the total number of occurrences for the values below or equal the value of this count.
+	 * @return
+	 */
 	public long getAtMostFrequency() {
 		return atMostFrequency;
 	}
 	
+	/**
+	 * Returns the relative frequency of this value.
+	 * @return
+	 */
 	public double getRelativeFrequency() {
 		return relativeFrequency;
 	}
 	
+	/**
+	 * Returns the relative frequency for the values above or equal the value of this count.
+	 * @return
+	 */
 	public double getRelativeAtLeastFrequency() {
 		return relativeAtLeastFrequency;
 	}
 	
+	/**
+	 * Returns the relative frequency for the values below or equal the value of this count.
+	 * @return
+	 */
 	public double getRelativeAtMostFrequency() {
 		return relativeAtMostFrequency;
 	}

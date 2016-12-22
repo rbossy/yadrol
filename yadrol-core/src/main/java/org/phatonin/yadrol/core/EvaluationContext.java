@@ -44,6 +44,11 @@ import org.phatonin.yadrol.core.values.ValueComparator;
 import org.phatonin.yadrol.core.values.ValueType;
 import org.phatonin.yadrol.core.values.ValueVisitor;
 
+/**
+ * The evaluation context contains information on how expressions were evaluated and how they should be evaluated.
+ * 
+ *
+ */
 public class EvaluationContext {
 	private final Random random;
 	private long seed;
@@ -61,40 +66,76 @@ public class EvaluationContext {
 	private OutputMode defaultOutputMode = OutputMode.ROLL;
 	private long maxCallDepth = 100;
 
+	/**
+	 * Create an evaluation context with default values, initializing the random number generator with the specified seed.
+	 * @param seed RNG seed
+	 */
 	public EvaluationContext(Long seed) {
 		this.seed = seed == null ? System.currentTimeMillis() : seed;
 		this.random = new Random(this.seed);
 	}
 	
+	/**
+	 * Create an evaluation context with default values, initializing the random number generator with the system clock.
+	 */
 	public EvaluationContext() {
 		this(null);
 	}
-	
+
+	/**
+	 * Returns the RNG.
+	 * @return the RNG.
+	 */
 	public Random getRandom() {
 		return random;
 	}
 	
+	/**
+	 * Returns the initial seed of the RNG.
+	 * @return the initial seed of the RNG.
+	 */
 	public long getSeed() {
 		return seed;
 	}
 
+	/**
+	 * Re-initializes the RNG with the specified seed.
+	 * @param seed the seed.
+	 */
 	public void setSeed(long seed) {
 		this.seed = seed;
 		random.setSeed(seed);
 	}
 
+	/**
+	 * Returns the global scope.
+	 * The global scope is the outermost variable scope.
+	 * @return the global scope.
+	 */
 	public Scope getGlobalScope() {
 		return globalScope;
 	}
 
+	/**
+	 * Returns all dice records.
+	 * @return all dice records.
+	 */
 	public List<DiceRecord> getDiceRecords() {
 		return Collections.unmodifiableList(diceRecords);
 	}
 
+	/**
+	 * Returns either this context is recording dice rolls.
+	 * @return either this context is recording dice rolls.
+	 */
 	public boolean isLogDice() {
 		return logDice;
 	}
 
+	/**
+	 * Set either this context will record dice rolls.
+	 * @param logDice either this context will record dice rolls.
+	 */
 	public void setLogDice(boolean logDice) {
 		this.logDice = logDice;
 	}
@@ -108,12 +149,22 @@ public class EvaluationContext {
 		}
 	}
 
+	/**
+	 * Records a dice roll.
+	 * @param type type of the dice.
+	 * @param result result of the roll.
+	 */
 	public void logDice(Object type, List<Object> result) {
 		if (logDice) {
 			addDiceRecord(type, result);
 		}
 	}
 	
+	/**
+	 * Records a single die roll.
+	 * @param type type of the die.
+	 * @param result result of the roll.
+	 */
 	public void logDice(Object type, Object result) {
 		if (logDice) {
 			List<Object> listResult = new ArrayList<Object>(1);
@@ -122,54 +173,107 @@ public class EvaluationContext {
 		}
 	}
 
+	/**
+	 * Returns this context import manager.
+	 * @return this context import manager.
+	 */
 	public ImportManager getImportManager() {
 		return importManager;
 	}
 
+	/**
+	 * Set this context import manager.
+	 * @param importManager the import manager.
+	 */
 	public void setImportManager(ImportManager importManager) {
 		this.importManager = importManager;
 	}
 
+	/**
+	 * Returns the number of repeated evaluations to compute a sample distribution.
+	 * @return the number of repeated evaluations to compute a sample distribution.
+	 */
 	public long getSampleSize() {
 		return sampleSize;
 	}
 
+	/**
+	 * Returns the maximum call depth allowed.
+	 * @return the maximum call depth allowed.
+	 */
 	public long getMaxCallDepth() {
 		return maxCallDepth;
 	}
 
+	/**
+	 * Set the maximum call depth allowed.
+	 * @param maxCallDepth the maximum call depth allowed.
+	 */
 	public void setMaxCallDepth(long maxCallDepth) {
 		this.maxCallDepth = maxCallDepth;
 	}
 
+	/**
+	 * Set the number of repeated evaluations to compute a sample distribution.
+	 * @param sampleSize the number of repeated evaluations to compute a sample distribution.
+	 */
 	public void setSampleSize(long sampleSize) {
 		this.sampleSize = sampleSize;
 	}
 	
-	public long getMaxRepeat() {
+	/**
+	 * Returns the maximum number of iterations in a <code>reroll</code> expression.
+	 * @return the maximum number of iterations in a <code>reroll</code> expression.
+	 */
+	public long getMaxReroll() {
 		return maxReroll;
 	}
 
+	/**
+	 * Set the maximum number of iterations in a <code>reroll</code> expression.
+	 * @param maxReroll the maximum number of iterations in a <code>reroll</code> expression.
+	 */
 	public void setMaxReroll(long maxReroll) {
 		this.maxReroll = maxReroll;
 	}
 
+	/**
+	 * Returns either any roll has been recorded yet.
+	 * @return either any roll has been recorded yet.
+	 */
 	public boolean hasRollRecord() {
 		return !rollRecords.isEmpty();
 	}
 	
+	/**
+	 * Returns either any sample has been recorded yet.
+	 * @return either any sample has been recorded yet.
+	 */
 	public boolean hasSampleRecord() {
 		return !sampleRecords.isEmpty();
 	}
 	
+	/**
+	 * Returns either any roll or sample has been recorded yet.
+	 * @return either any roll or sample has been recorded yet.
+	 */
 	public boolean hasOutputRecord() {
 		return hasRollRecord() || hasSampleRecord();
 	}
 	
+	/**
+	 * Returns the default output mode.
+	 * @return the default output mode.
+	 */
 	public OutputMode getDefaultOutputMode() {
 		return defaultOutputMode;
 	}
 
+	/**
+	 * Set the default output mode.
+	 * @param defaultOutputMode the default output mode.
+	 * @throws IllegalArgumentException if the specified output mode is <code>DEFAULT</code>.
+	 */
 	public void setDefaultOutputMode(OutputMode defaultOutputMode) {
 		if (defaultOutputMode == OutputMode.DEFAULT) {
 			throw new IllegalArgumentException();
@@ -207,6 +311,10 @@ public class EvaluationContext {
 		this.currentSampleRecord = null;
 	}
 
+	/**
+	 * Clear dice, roll and sample records.
+	 * Roll and sample records held in this context are lost forever after calling this method.
+	 */
 	public void clear() {
 		diceRecords.clear();
 		currentRollRecord = null;
@@ -215,10 +323,19 @@ public class EvaluationContext {
 		sampleRecords.clear();
 	}
 
+	/**
+	 * Returns the default evaluation type.
+	 * @return the default evaluation type.
+	 */
 	public ValueType getDefaultEvaluationType() {
 		return defaultEvaluationType;
 	}
 
+	/**
+	 * Set the default evaluation type.
+	 * @param defaultEvaluationType the default evaluation type.
+	 * @throws IllegalArgumentException if the specified evaluation type is <code>DEFAULT</code>.
+	 */
 	public void setDefaultEvaluationType(ValueType defaultEvaluationType) {
 		if (defaultEvaluationType == ValueType.DEFAULT) {
 			throw new IllegalArgumentException();
@@ -226,14 +343,31 @@ public class EvaluationContext {
 		this.defaultEvaluationType = defaultEvaluationType;
 	}
 
+	/**
+	 * Returns all roll records.
+	 * Rolls are in the order in which they were evaluated.
+	 * The returned list is unmodifiable.
+	 * @return all roll records.
+	 */
 	public List<RollRecord> getRollRecords() {
 		return Collections.unmodifiableList(rollRecords);
 	}
 
+	/**
+	 * Returns all sample records.
+	 * Samples are in the order in which they were evaluated.
+	 * The returned list is unmodifiable.
+	 * @return all sample records.
+	 */
 	public List<SampleRecord> getSampleRecords() {
 		return Collections.unmodifiableList(sampleRecords);
 	}
 	
+	/**
+	 * Mash together sample records into a list of multi-counts.
+	 * @param selector value to select from the distributions.
+	 * @return a list of multi-counts.
+	 */
 	public List<MultiCount> getMultiCounts(CountSelector selector) {
 		Collection<Object> values = collectValues();
 		ensureAllValues(values);
@@ -291,27 +425,56 @@ public class EvaluationContext {
 
 
 
-
+	/**
+	 * Convert <code>undef</code> into a boolean.
+	 * @return <code>false</code>.
+	 */
 	public static boolean undefToBoolean() {
 		return false;
 	}
 	
+	/**
+	 * Convert the specified integer into a boolean.
+	 * @param value the integer.
+	 * @return either the specified integer is non-zero.
+	 */
 	public static boolean integerToBoolean(long value) {
 		return value != 0;
 	}
 	
+	/**
+	 * Convert the specified string into a boolean.
+	 * @param value the string.
+	 * @return either the specified string is non-empty.
+	 */
 	public static boolean stringToBoolean(String value) {
 		return !value.isEmpty();
 	}
 	
+	/**
+	 * Convert the specified list into a boolean.
+	 * @param value the list.
+	 * @return either the specified list is non-empty.
+	 */
 	public static boolean listToBoolean(List<Object> value) {
 		return !value.isEmpty();
 	}
 	
+	/**
+	 * Convert the specified map into a boolean.
+	 * @param value the map.
+	 * @return either the specified map is non-empty.
+	 */
 	public static boolean mapToBoolean(Map<String,Object> value) {
 		return !value.isEmpty();
 	}
 	
+	/**
+	 * Convert the specified function into a boolean.
+	 * @param scope the scope in which the conversion is required.
+	 * @param value the function.
+	 * @return if the specified function takes no argument, then it is called and the result returned as a boolean, otherwise <code>false</code>.
+	 */
 	public boolean functionToBoolean(Scope scope, Function value) throws EvaluationException {
 		if (value.getPositionalArgs().isEmpty()) {
 			Expression body = value.getBody();
@@ -322,39 +485,77 @@ public class EvaluationContext {
 		return false;
 	}
 	
-	public static void undefToString(@SuppressWarnings("unused") StringBuilder sb) {
+	/**
+	 * Append to the specified string builder the conversion of <code>undef</code> into a string.
+	 * @param sb the string builder.
+	 */
+	public static void undefToString(StringBuilder sb) {
 	}
 	
+	/**
+	 * Append to the specified string builder the conversion of the specified boolean into a string.
+	 * @param sb the string builder.
+	 * @param value the boolean.
+	 */
 	public static void booleanToString(StringBuilder sb, boolean value) {
 		if (value) {
 			sb.append("true");
 		}
 	}
 	
+	/**
+	 * Append to the specified string builder the specified string.
+	 * @param sb the string builder.
+	 * @param value the string.
+	 */
 	public static void stringToString(StringBuilder sb, String value) {
 		sb.append(value);
 	}
 	
+	/**
+	 * Append to the specified string builder the conversion of the specified integer into a string.
+	 * @param sb the string builder.
+	 * @param value the integer.
+	 */
 	public static void integerToString(StringBuilder sb, long value) {
 		sb.append(value);
 	}
 	
+	/**
+	 * Append to the specified string builder the conversion of the specified list into a string.
+	 * @param sb the string builder.
+	 * @param value the list.
+	 */
 	public void listToString(StringBuilder sb, Scope scope, List<Object> value) throws EvaluationException {
 		for (Object v : value) {
 			valueToString(sb, scope, v);
 		}
 	}
 	
+	/**
+	 * Append to the specified string builder the conversion of the specified map into a string.
+	 * @param sb the string builder.
+	 * @param value the map.
+	 */
 	public void mapToString(StringBuilder sb, Scope scope, Map<String,Object> value) throws EvaluationException {
 		for (Object v : value.values()) {
 			valueToString(sb, scope, v);
 		}
 	}
 	
+	/**
+	 * Convert <code>undef</code> into a string.
+	 * @return the empty string.
+	 */
 	public static String undefToString() {
 		return "";
 	}
 	
+	/**
+	 * Convert the specified boolean into a string.
+	 * @param value the boolean.
+	 * @return the empty string if the specified value is <code>false</code>, <code>"true"</code> otherwise.
+	 */
 	public static String booleanToString(boolean value) {
 		if (value) {
 			return "true";
@@ -362,22 +563,46 @@ public class EvaluationContext {
 		return "";
 	}
 	
+	/**
+	 * Convert the specified integer into a string.
+	 * @param value the integer.
+	 * @return <code>Long.toString(value)</code>.
+	 */
 	public static String integerToString(long value) {
 		return Long.toString(value);
 	}
 	
+	/**
+	 * Convert the specified list into a string.
+	 * @param scope the scope in which the conversion is required. This parameter is used if there are function values in the specified list.
+	 * @param value the list.
+	 * @return the specified list converted into a string.
+	 */
 	public String listToString(Scope scope, List<Object> value) throws EvaluationException {
 		StringBuilder sb = new StringBuilder();
 		listToString(sb, scope, value);
 		return sb.toString();
 	}
 	
+	/**
+	 * Convert the specified map into a string.
+	 * @param scope the scope in which the conversion is required. This parameter is used if there are function values in the specified map.
+	 * @param value the map.
+	 * @return the specified map converted into a string.
+	 */
 	public String mapToString(Scope scope, Map<String,Object> value) throws EvaluationException {
 		StringBuilder sb = new StringBuilder();
 		mapToString(sb, scope, value);
 		return sb.toString();
 	}
 	
+	/**
+	 * Convert the specified function into a string.
+	 * @param scope scope in which this conversion is required.
+	 * @param value the function.
+	 * @return if the specified function takes no argument, then it is called as a string and the result is returned, an unspecified string otherwise.
+	 * @throws EvaluationException if the body of the function raises an exception.
+	 */
 	public String functionToString(Scope scope, Function value) throws EvaluationException {
 		if (value.getPositionalArgs().isEmpty()) {
 			Expression body = value.getBody();
@@ -388,18 +613,38 @@ public class EvaluationContext {
 		return value.toString();
 	}
 	
-	public static void functionToString(StringBuilder sb, Function value) {
-		sb.append(value.toString());
+	/**
+	 * Append to the specified string builder the conversion of the specified function into a string.
+	 * @param sb the string builder.
+	 * @param value the function.
+	 * @throws EvaluationException if the body of the function raises an exception.
+	 */
+	public void functionToString(StringBuilder sb, Scope scope, Function value) throws EvaluationException {
+		sb.append(functionToString(scope, value));
 	}
 
+	/**
+	 * 
+	 * @return <code>0</code>
+	 */
 	public static long undefToInteger() {
 		return 0L;
 	}
 	
+	/**
+	 * 
+	 * @param value
+	 * @return <code>1</code> if the specified value is <code>true</code>, <code>0</code> otherwise.
+	 */
 	public static long booleanToInteger(boolean value) {
 		return value ? 1L : 0L;
 	}
 	
+	/**
+	 * 
+	 * @param value
+	 * @return <code>Long.parseLong(value)</code>, or <code>0</code> if the specified string does not represent an integer value.
+	 */
 	public static long stringToInteger(String value) {
 		try {
 			return Long.parseLong(value);
@@ -409,6 +654,13 @@ public class EvaluationContext {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param scope
+	 * @param value
+	 * @return the sum of the conversion of each element to integer.
+	 * @throws EvaluationException
+	 */
 	public long listToInteger(Scope scope, List<Object> value) throws EvaluationException {
 		long result = 0L;
 		for (Object v : value) {
@@ -417,6 +669,13 @@ public class EvaluationContext {
 		return result;
 	}
 	
+	/**
+	 * 
+	 * @param scope
+	 * @param value
+	 * @return the sum of the conversion of each value to integer.
+	 * @throws EvaluationException
+	 */
 	public long mapToInteger(Scope scope, Map<String,Object> value) throws EvaluationException {
 		long result = 0L;
 		for (Object v : value.values()) {
@@ -425,6 +684,13 @@ public class EvaluationContext {
 		return result;
 	}
 	
+	/**
+	 * 
+	 * @param scope
+	 * @param value
+	 * @return if the specified function takes no argument, then this method calls it as an integer, otherwise an undefined value.
+	 * @throws EvaluationException
+	 */
 	public long functionToInteger(Scope scope, Function value) throws EvaluationException {
 		if (value.getPositionalArgs().isEmpty()) {
 			Expression body = value.getBody();
@@ -440,27 +706,58 @@ public class EvaluationContext {
 		result.add(value);
 		return result;
 	}
-	
+
+	/**
+	 * 
+	 * @return an empty list.
+	 */
 	public static List<Object> undefToList() {
 		return new ArrayList<Object>(0);
 	}
 	
+	/**
+	 * 
+	 * @param value
+	 * @return a singleton list containing the specified value.
+	 */
 	public static List<Object> booleanToList(boolean value) {
 		return singleton(value);
 	}
 	
+	/**
+	 * 
+	 * @param value
+	 * @return a singleton list containing the specified value.
+	 */
 	public static List<Object> integerToList(long value) {
 		return singleton(value);
 	}
-	
+
+	/**
+	 * 
+	 * @param value
+	 * @return a singleton list containing the specified value.
+	 */
 	public static List<Object> stringToList(String value) {
 		return singleton(value);
 	}
 	
+	/**
+	 * 
+	 * @param value
+	 * @return a list containing all the values of the specified map.
+	 */
 	public static List<Object> mapToList(Map<String,Object> value) {
 		return new ArrayList<Object>(value.values());
 	}
-	
+
+	/**
+	 * 
+	 * @param scope
+	 * @param value
+	 * @return if the specified function takes no argument the it is called as a list, otherwise a singleton list containing the specified function.
+	 * @throws EvaluationException
+	 */
 	public List<Object> functionToList(Scope scope, Function value) throws EvaluationException {
 		if (value.getPositionalArgs().isEmpty()) {
 			Expression body = value.getBody();
@@ -476,23 +773,47 @@ public class EvaluationContext {
 		result.put("_", value);
 		return result;
 	}
-	
+
+	/**
+	 * 
+	 * @return an empty map.
+	 */
 	public static Map<String,Object> undefToMap() {
 		return new LinkedHashMap<String,Object>();
 	}
 	
+	/**
+	 * 
+	 * @param value
+	 * @return a singleton map with <code>"_"</code> as key, and the specified value.
+	 */
 	public static Map<String,Object> stringToMap(String value) {
 		return singletonMap(value);
 	}
 	
+	/**
+	 * 
+	 * @param value
+	 * @return a singleton map with <code>"_"</code> as key, and the specified value.
+	 */
 	public static Map<String,Object> booleanToMap(boolean value) {
 		return singletonMap(value);
 	}
 	
+	/**
+	 * 
+	 * @param value
+	 * @return a singleton map with <code>"_"</code> as key, and the specified value.
+	 */
 	public static Map<String,Object> integerToMap(long value) {
 		return singletonMap(value);
 	}
-	
+
+	/**
+	 * 
+	 * @param value
+	 * @return a map containing each element of the specified list as values, the keys are the conversions of the value indexes to a string.
+	 */
 	public static Map<String,Object> listToMap(List<Object> value) {
 		Map<String,Object> result = new LinkedHashMap<String,Object>();
 		for (int i = 0; i < value.size(); ++i) {
@@ -501,6 +822,13 @@ public class EvaluationContext {
 		return result;
 	}
 	
+	/**
+	 * 
+	 * @param scope
+	 * @param value
+	 * @return if the specified function takes no argument the it is called as a map, otherwise a singleton map containing the specified function.
+	 * @throws EvaluationException
+	 */
 	public Map<String,Object> functionToMap(Scope scope, Function value) throws EvaluationException {
 		if (value.getPositionalArgs().isEmpty()) {
 			Expression body = value.getBody();
@@ -510,23 +838,47 @@ public class EvaluationContext {
 		}
 		return singletonMap(value);
 	}
-	
+
+	/**
+	 * 
+	 * @return Undef instance.
+	 */
 	public static Expression undefToExpression() {
 		return new Undef(Location.NONE);
 	}
 	
+	/**
+	 * 
+	 * @param value
+	 * @return StringConstant instance.
+	 */
 	public static Expression stringToExpression(String value) {
 		return new StringConstant(Location.NONE, value);
 	}
 	
+	/**
+	 * 
+	 * @param value
+	 * @return BooleanConstant instance.
+	 */
 	public static Expression booleanToExpression(boolean value) {
 		return new BooleanConstant(Location.NONE, value);
 	}
-	
+
+	/**
+	 * 
+	 * @param value
+	 * @return IntegerConstant instance.
+	 */
 	public static Expression integerToExpression(long value) {
 		return new IntegerConstant(Location.NONE, value);
 	}
 	
+	/**
+	 * 
+	 * @param value
+	 * @return ListConstructor instance.
+	 */
 	public static AbstractListExpression listToExpression(List<Object> value) {
 		List<Expression> elements = new ArrayList<Expression>(value.size());
 		for (Object v : value) {
@@ -535,7 +887,12 @@ public class EvaluationContext {
 		}
 		return new ListConstructor(Location.NONE, elements);
 	}
-	
+
+	/**
+	 * 
+	 * @param value
+	 * @return MapConstructor instance.
+	 */
 	public static AbstractMapExpression mapToExpression(Map<String,Object> value) {
 		Map<String,Expression> entries = new LinkedHashMap<String,Expression>();
 		for (Map.Entry<String,Object> e : value.entrySet()) {
@@ -547,6 +904,11 @@ public class EvaluationContext {
 		return new MapConstructor(Location.NONE, entries);
 	}
 	
+	/**
+	 * 
+	 * @param value
+	 * @return Lambda instance.
+	 */
 	public static Expression functionToExpression(Function value) {
 		List<String> positionalArgs = value.getPositionalArgs();
 		Map<String,Expression> namedArgs = new LinkedHashMap<String,Expression>();
@@ -563,58 +925,135 @@ public class EvaluationContext {
 		return new Function(null, positionalArgs, namedArgs, body, null);
 	}
 
+	/**
+	 * 
+	 * @return a function that takes no argument and returns <code>undef</code>
+	 */
 	public static Function undefToFunction() {
 		return asFunction(undefToExpression());
 	}
 	
+	/**
+	 * 
+	 * @param value
+	 * @return a function that takes no argument and returns the specified value.
+	 */
 	public static Function stringToFunction(String value) {
 		return asFunction(stringToExpression(value));
 	}
 	
+	/**
+	 * 
+	 * @param value
+	 * @return a function that takes no argument and returns the specified value.
+	 */
 	public static Function booleanToFunction(boolean value) {
 		return asFunction(booleanToExpression(value));
 	}
 	
+	/**
+	 * 
+	 * @param value
+	 * @return a function that takes no argument and returns the specified value.
+	 */
 	public static Function integerToFunction(long value) {
 		return asFunction(integerToExpression(value));
 	}
 	
+	/**
+	 * 
+	 * @param value
+	 * @return a function that takes no argument and returns the specified value.
+	 */
 	public static Function listToFunction(List<Object> value) {
 		return asFunction(listToExpression(value));
 	}
 	
+	/**
+	 * 
+	 * @param value
+	 * @return a function that takes no argument and returns the specified value.
+	 */
 	public static Function mapToFunction(Map<String,Object> value) {
 		return asFunction(mapToExpression(value));
 	}
-	
+
+	/**
+	 * Convert the specified value to a string value.
+	 * @param value
+	 * @return
+	 * @throws EvaluationException
+	 */
 	public String valueToString(Object value) throws EvaluationException {
 		return TO_STRING.visit(value, null);
 	}
 	
+	/**
+	 * Append to the specified string builder the conversion of the specified value to a string value.
+	 * @param value
+	 * @return
+	 * @throws EvaluationException
+	 */
 	public void valueToString(StringBuilder sb, Scope scope, Object value) throws EvaluationException {
 		new ToStringBuilder(sb).visit(value, scope);
 	}
 	
+	/**
+	 * Convert the specified value to an integer value.
+	 * @param value
+	 * @return
+	 * @throws EvaluationException
+	 */
 	public long valueToInteger(Scope scope, Object value) throws EvaluationException {
 		return TO_INTEGER.visit(value, scope);
 	}
 	
+	/**
+	 * Convert the specified value to a list.
+	 * @param value
+	 * @return
+	 * @throws EvaluationException
+	 */
 	public List<Object> valueToList(Scope scope, Object value) throws EvaluationException {
 		return TO_LIST.visit(value, scope);
 	}
 	
+	/**
+	 * Convert the specified value to a map.
+	 * @param value
+	 * @return
+	 * @throws EvaluationException
+	 */
 	public Map<String,Object> valueToMap(Scope scope, Object value) throws EvaluationException {
 		return TO_MAP.visit(value, scope);
 	}
 	
+	/**
+	 * Returns a constant expression or a constructor that evaluates into the specified value.
+	 * @param value
+	 * @return
+	 * @throws EvaluationException
+	 */
 	public static Expression valueToExpression(Object value) {
 		return TO_EXPRESSION.visit(value, null);
 	}
 	
+	/**
+	 * Returns a function that takes no argument, and returns the specified value.
+	 * @param value
+	 * @return
+	 * @throws EvaluationException
+	 */
 	public static Function valueToFunction(Object value) {
 		return TO_FUNCTION.visit(value, null);
 	}
 
+	/**
+	 * Convert the specified value to a boolean value.
+	 * @param value
+	 * @return
+	 * @throws EvaluationException
+	 */
 	public boolean valueToBoolean(Scope scope, Object value) throws EvaluationException {
 		return TO_BOOLEAN.visit(value, scope);
 	}
@@ -929,6 +1368,12 @@ public class EvaluationContext {
 		}
 	};
 	
+	/**
+	 * Builds a copy of the specified list.
+	 * @param list
+	 * @param deep either to make a deep copy of each element.
+	 * @return
+	 */
 	public static List<Object> copy(List<Object> list, boolean deep) {
 		List<Object> result = new ArrayList<Object>(list.size());
 		if (deep) {
@@ -942,14 +1387,30 @@ public class EvaluationContext {
 		return result;
 	}
 
+	/**
+	 * Builds a shallow copy of the specified list.
+	 * @param list
+	 * @return
+	 */
 	public static List<Object> copy(List<Object> list) {
 		return copy(list, false);
 	}
 
+	/**
+	 * Builds a deep copy of the specified list.
+	 * @param list
+	 * @return
+	 */
 	public static List<Object> deepCopy(List<Object> list) {
 		return copy(list, true);
 	}
 	
+	/**
+	 * Build a copy of the specified map.
+	 * @param map
+	 * @param deep either to make a deep copy of each value.
+	 * @return
+	 */
 	public static Map<String,Object> copy(Map<String,Object> map, boolean deep) {
 		Map<String,Object> result = new LinkedHashMap<String,Object>();
 		if (deep) {
@@ -963,22 +1424,48 @@ public class EvaluationContext {
 		return result;
 	}
 
+	/**
+	 * Build a shallow copy of the specified map.
+	 * @param map
+	 * @return
+	 */
 	public static Map<String,Object> copy(Map<String,Object> map) {
 		return copy(map, false);
 	}
 
+	/**
+	 * Build a deep copy of the specified map.
+	 * @param map
+	 * @return
+	 */
 	public static Map<String,Object> deepCopy(Map<String,Object> map) {
 		return copy(map, true);
 	}
 	
+	/**
+	 * Build a shallow copy of the specified value.
+	 * @param value
+	 * @return
+	 */
 	public static Object copy(Object value) {
 		return copy(value, false);
 	}
 	
+	/**
+	 * Build a copy of the specified value.
+	 * @param value
+	 * @param deep either to make a deep copy of each element if the specified value is a list, or of each value if the specified value is a map.
+	 * @return
+	 */
 	public static Object copy(Object value, boolean deep) {
 		return COPY_VISITOR.visit(value, deep);
 	}
 	
+	/**
+	 * Build a deep copy of the specified value.
+	 * @param value
+	 * @return
+	 */
 	public static Object deepCopy(Object value) {
 		return copy(value, true);
 	}
@@ -1020,28 +1507,58 @@ public class EvaluationContext {
 		}
 	};
 	
+	/**
+	 * Cast the specified value as a boolean.
+	 * @param value
+	 * @return the specified value if it is a boolean, otherwise <code>null</code>.
+	 */
 	public static Boolean asBoolean(Object value) {
 		return value instanceof Boolean ? (Boolean) value : null;
 	}
 	
+	/**
+	 * Cast the specified value as a string.
+	 * @param value
+	 * @return the specified value if it is a string, otherwise <code>null</code>.
+	 */
 	public static String asString(Object value) {
 		return value instanceof String ? (String) value : null;
 	}
 	
+	/**
+	 * Cast the specified value as a list.
+	 * @param value
+	 * @return the specified value if it is a list, otherwise <code>null</code>.
+	 */
 	@SuppressWarnings("unchecked")
 	public static List<Object> asList(Object value) {
 		return value instanceof List ? (List<Object>) value : null;
 	}
 	
+	/**
+	 * Cast the specified value as a map.
+	 * @param value
+	 * @return the specified value if it is a map, otherwise <code>null</code>.
+	 */
 	@SuppressWarnings("unchecked")
 	public static Map<String,Object> asMap(Object value) {
 		return value instanceof Map ? (Map<String,Object>) value : null;
 	}
 	
+	/**
+	 * Cast the specified value as a function.
+	 * @param value
+	 * @return the specified value if it is a function, otherwise <code>null</code>.
+	 */
 	public static Function asFunction(Object value) {
 		return value instanceof Function ? (Function) value : null;
 	}
 	
+	/**
+	 * Cast the specified value as an integer.
+	 * @param value
+	 * @return the specified value if it is an integer, otherwise <code>null</code>.
+	 */
 	public static Long asInteger(Object value) {
 		if (value instanceof Long) {
 			return (Long) value;

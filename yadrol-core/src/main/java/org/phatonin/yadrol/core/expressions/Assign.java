@@ -49,7 +49,7 @@ public class Assign extends AbstractExpression {
 	}
 
 	@Override
-	public boolean isPureConstant() {
+	public boolean isPureConstant() throws EvaluationException {
 		return false;
 	}
 

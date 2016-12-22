@@ -27,15 +27,27 @@ import java.util.TreeMap;
 import org.phatonin.yadrol.core.values.ValueComparator;
 import org.phatonin.yadrol.core.values.ValueType;
 
+/**
+ * Distribution of value occurrences.
+ * 
+ *
+ */
 public class Distribution {
 	private final Map<Object,Count> counts = new TreeMap<Object,Count>(ValueComparator.INSTANCE);
 	private long total;
 	private boolean computed = false;
 
+	/**
+	 * Create an empty distribution.
+	 */
 	public Distribution() {
 		super();
 	}
 	
+	/**
+	 * Increase the count by one for the specified value.
+	 * @param value
+	 */
 	public void incr(Object value) {
 		Count count = ensureCount(value);
 		count.incr();
@@ -53,24 +65,49 @@ public class Distribution {
 		return result;
 	}
 	
+	/**
+	 * Returns all values in this distribution that have at least one occurrence.
+	 * @return
+	 */
 	public Collection<Object> getValues() {
 		return Collections.unmodifiableCollection(counts.keySet());
 	}
 	
+	/**
+	 * Returns the count object for the specified value.
+	 * @param value
+	 * @return
+	 */
 	public Count getCount(Object value) {
 		return counts.get(value);
 	}
 	
+	/**
+	 * Returns all counts in this distribution.
+	 * @return
+	 */
 	public Collection<Count> getCounts() {
 		return Collections.unmodifiableCollection(counts.values());
 	}
 	
+	/**
+	 * Removes all values and counts in this distribution.
+	 */
 	public void clear() {
 		counts.clear();
 		total = 0;
 		computed = false;
 	}
 	
+	/**
+	 * Fill this distribution by evaluating repeatedly the specified expression.
+	 * @param expr
+	 * @param ctx
+	 * @param scope
+	 * @param type
+	 * @param repeats
+	 * @throws EvaluationException
+	 */
 	public void sample(Expression expr, EvaluationContext ctx, Scope scope, ValueType type, long repeats) throws EvaluationException {
 		boolean logDice = ctx.isLogDice();
 		ctx.setLogDice(false);
@@ -81,18 +118,44 @@ public class Distribution {
 		ctx.setLogDice(logDice);
 	}
 	
+	/**
+	 * Fill this distribution by evaluating repeatedly the specified expression, using the global scope of the specified evaluation context.
+	 * @param expr
+	 * @param ctx
+	 * @param type
+	 * @param repeats
+	 * @throws EvaluationException
+	 */
 	public void sample(Expression expr, EvaluationContext ctx, ValueType type, long repeats) throws EvaluationException {
 		sample(expr, ctx, ctx.getGlobalScope(), type, repeats);
 	}
 	
+	/**
+	 * Fill this distribution by evaluating repeatedly the specified expression, using the default value type of the specified evaluation context.
+	 * @param expr
+	 * @param ctx
+	 * @param scope
+	 * @param repeats
+	 * @throws EvaluationException
+	 */
 	public void sample(Expression expr, EvaluationContext ctx, Scope scope, long repeats) throws EvaluationException {
-		sample(expr, ctx, scope, null, repeats);
+		sample(expr, ctx, scope, ValueType.DEFAULT, repeats);
 	}
-	
+
+	/**
+	 * Fill this distribution by evaluating repeatedly the specified expression, using the global scope and the default value type of the specified evaluation context.
+	 * @param expr
+	 * @param ctx
+	 * @param repeats
+	 * @throws EvaluationException
+	 */
 	public void sample(Expression expr, EvaluationContext ctx, long repeats) throws EvaluationException {
 		sample(expr, ctx, ctx.getGlobalScope(), null, repeats);
 	}
 
+	/**
+	 * Compute secondary scores in this distribution counts.
+	 */
 	public void compute() {
 		if (computed) {
 			return;
@@ -105,10 +168,22 @@ public class Distribution {
 		computed = true;
 	}
 
+	/**
+	 * Returns the total number of occurrences in this distribution.
+	 * @return
+	 */
 	public long getTotal() {
 		return total;
 	}
 
+	/**
+	 * Computes the mean of all values weighted by their occurrences.
+	 * Each value is converted into an integer.
+	 * @param ctx
+	 * @param scope
+	 * @return
+	 * @throws EvaluationException
+	 */
 	public double mean(EvaluationContext ctx, Scope scope) throws EvaluationException {
 		compute();
 		double result = 0.0;
@@ -121,6 +196,14 @@ public class Distribution {
 		return result;
 	}
 	
+	/**
+	 * Computes the standard deviation of the mean.
+	 * Each value is converted into an integer.
+	 * @param ctx
+	 * @param scope
+	 * @return
+	 * @throws EvaluationException
+	 */
 	public double stddev(EvaluationContext ctx, Scope scope) throws EvaluationException {
 		double mean = mean(ctx, scope);
 		double result = 0.0;
@@ -133,6 +216,10 @@ public class Distribution {
 		return Math.sqrt(result);
 	}
 	
+	/**
+	 * Returns the count that has the highest number of occurrences.
+	 * @return
+	 */
 	public Count mode() {
 		Count result = null;
 		for (Count count : counts.values()) {
@@ -143,6 +230,10 @@ public class Distribution {
 		return result;
 	}
 	
+	/**
+	 * Returns the higher median count in this distribution.
+	 * @return
+	 */
 	public Count medianSup() {
 		compute();
 		for (Count count : counts.values()) {
@@ -153,6 +244,10 @@ public class Distribution {
 		return null;
 	}
 	
+	/**
+	 * Returns the lower median count in this distribution.
+	 * @return
+	 */
 	public Count medianInf() {
 		compute();
 		for (Count count : counts.values()) {

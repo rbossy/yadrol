@@ -32,6 +32,11 @@ import org.phatonin.yadrol.core.expressions.Import;
 import org.phatonin.yadrol.core.importManagers.NoImport;
 import org.phatonin.yadrol.core.values.ValueType;
 
+/**
+ * Yadrol application options.
+ * 
+ *
+ */
 public class YadrolOptions {
 	public static final long DEFAULT_SAMPLE_SIZE = 30000;
 
@@ -47,55 +52,108 @@ public class YadrolOptions {
 	private ImportManager importManager = NoImport.INSTANCE;
 	private final List<Import> imports = new ArrayList<Import>();
 
+	/**
+	 * Create an option set with default values.
+	 * The specified source is used to show errors in options.
+	 * @param source
+	 */
 	public YadrolOptions(String source) {
 		super();
 		this.source = source;
 	}
 
+	/**
+	 * Default output mode ({@link OutputMode#SAMPLE}).
+	 * @return
+	 */
 	public OutputMode getOutputMode() {
 		return outputMode;
 	}
 
+	/**
+	 * Sample size, number of repeated evaluations to build a distribution (<code>30 000</code>).
+	 * @return
+	 */
 	public long getSampleSize() {
 		return sampleSize;
 	}
 
+	/**
+	 * Either to reduce the expression (<code>false</code>).
+	 * @return
+	 */
 	public boolean isReduce() {
 		return reduce;
 	}
 
+	/**
+	 * Expression string (<code>null</code>).
+	 * @return
+	 */
 	public String getExpressionString() {
 		return expressionString;
 	}
 
+	/**
+	 * Either the expression string is different from <code>null</code>.
+	 * @return
+	 */
 	public boolean hasExpressionString() {
 		return expressionString != null;
 	}
 
+	/**
+	 * Initial RNG seed (unspecified).
+	 * @return
+	 */
 	public long getSeed() {
 		return seed;
 	}
 
+	/**
+	 * Default evaluation type ({@link ValueType#INTEGER}).
+	 * @return
+	 */
 	public ValueType getDefaultEvaluationType() {
 		return defaultEvaluationType;
 	}
 
+	/**
+	 * Count selector for multi-counts ({@link CountSelector#AT_LEAST).
+	 * @return
+	 */
 	public CountSelector getCountSelector() {
 		return countSelector;
 	}
 
+	/**
+	 * Either to force an output if there are none ({@literal <code>true</code>}).
+	 * @return
+	 */
 	public boolean isForceOutput() {
 		return forceOutput;
 	}
 
+	/**
+	 * Returns the source name of this option set.
+	 * @return
+	 */
 	public String getSource() {
 		return source;
 	}
 
+	/**
+	 * Import manager ({@link NoImport}).
+	 * @return
+	 */
 	public ImportManager getImportManager() {
 		return importManager;
 	}
 
+	/**
+	 * Required imports (none).
+	 * @return
+	 */
 	public List<Import> getImports() {
 		return Collections.unmodifiableList(imports);
 	}

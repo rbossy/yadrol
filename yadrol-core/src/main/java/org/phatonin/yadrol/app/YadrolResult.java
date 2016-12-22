@@ -32,6 +32,11 @@ import org.phatonin.yadrol.core.expressions.Output;
 import org.phatonin.yadrol.core.parser.ParseException;
 import org.phatonin.yadrol.core.parser.YadrolParser;
 
+/**
+ * Application result.
+ * 
+ *
+ */
 public class YadrolResult {
 	private final Expression[] expressions;
 	private final EvaluationContext evaluationContext;
@@ -42,14 +47,35 @@ public class YadrolResult {
 		this.evaluationContext = evaluationContext;
 	}
 
+	/**
+	 * Returns the expressions evaluated.
+	 * @return
+	 */
 	public Expression[] getExpressions() {
 		return expressions;
 	}
 
+	/**
+	 * Returns the evaluation context.
+	 * @return
+	 */
 	public EvaluationContext getEvaluationContext() {
 		return evaluationContext;
 	}
 	
+	/**
+	 * Honors the specified options and returns the result.
+	 * This method does the following:
+	 * <ul>
+	 * <li>creates an evaluation context wrt to the specified options;</li>
+	 * <li>resolves all imports;</li>
+	 * <li>parses the expression string;</li>
+	 * <li>evaluates all expressions.</li>
+	 * @param options
+	 * @return
+	 * @throws EvaluationException
+	 * @throws ParseException
+	 */
 	public static YadrolResult createResult(YadrolOptions options) throws EvaluationException, ParseException {
 		EvaluationContext evaluationContext = createEvaluationContext(options);
 		Scope scope = evaluationContext.getGlobalScope();

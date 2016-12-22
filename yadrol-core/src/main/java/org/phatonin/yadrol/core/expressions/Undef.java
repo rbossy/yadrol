@@ -20,6 +20,7 @@
 package org.phatonin.yadrol.core.expressions;
 
 import org.phatonin.yadrol.core.EvaluationContext;
+import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.Expression;
 import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.Precedence;
@@ -41,7 +42,7 @@ public class Undef extends AbstractUndefExpression {
 	}
 
 	@Override
-	public boolean isPureConstant() {
+	public boolean isPureConstant() throws EvaluationException {
 		return true;
 	}
 

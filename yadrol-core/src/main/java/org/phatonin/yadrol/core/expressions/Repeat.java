@@ -78,7 +78,7 @@ public class Repeat extends AbstractListExpression {
 	@Override
 	public List<Object> evaluateList(EvaluationContext ctx, Scope scope) throws EvaluationException {
 		try {
-			final long limit = Math.min(this.limit, ctx.getMaxRepeat());
+			final long limit = Math.min(this.limit, ctx.getMaxReroll());
 			Scope loopScope = new Scope(scope);
 			List<Object> result = new ArrayList<Object>();
 			if (preCondition) {

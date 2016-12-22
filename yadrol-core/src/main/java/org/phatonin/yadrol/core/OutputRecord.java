@@ -21,6 +21,11 @@ package org.phatonin.yadrol.core;
 
 import org.phatonin.yadrol.core.values.ValueType;
 
+/**
+ * Base class for outputs required during the evaluation of expressions.
+ * 
+ *
+ */
 public abstract class OutputRecord {
 	private final String name;
 	private final Expression expression;
@@ -33,14 +38,27 @@ public abstract class OutputRecord {
 		this.evaluationType = evaluationType;
 	}
 
+	/**
+	 * Returns the name of the output.
+	 * By default the name is a string representation of the expression that produced the output.
+	 * @return
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Returns the expression that produced this output.
+	 * @return
+	 */
 	public Expression getExpression() {
 		return expression;
 	}
 
+	/**
+	 * Returns the type of the evaluation that produced this output.
+	 * @return
+	 */
 	public ValueType getEvaluationType() {
 		return evaluationType;
 	}

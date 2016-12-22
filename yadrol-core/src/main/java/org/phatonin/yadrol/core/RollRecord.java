@@ -25,6 +25,11 @@ import java.util.List;
 
 import org.phatonin.yadrol.core.values.ValueType;
 
+/**
+ * A roll record stores the final result of the evaluation of an expression.
+ * 
+ *
+ */
 public class RollRecord extends OutputRecord {
 	private final List<DiceRecord> diceRecords = new ArrayList<DiceRecord>();
 	private Object result;
@@ -33,10 +38,18 @@ public class RollRecord extends OutputRecord {
 		super(name, expression, evaluationType);
 	}
 
+	/**
+	 * Returns the result recorded.
+	 * @return
+	 */
 	public Object getResult() {
 		return result;
 	}
 
+	/**
+	 * Returns the dice records stored during the evaluation.
+	 * @return
+	 */
 	public List<DiceRecord> getDiceRecords() {
 		return Collections.unmodifiableList(diceRecords);
 	}

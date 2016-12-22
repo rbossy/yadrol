@@ -35,6 +35,7 @@ import org.phatonin.yadrol.core.OutputMode;
 import org.phatonin.yadrol.core.expressions.*;
 import org.phatonin.yadrol.core.values.ValueType;
 
+@SuppressWarnings("all")
 public class YadrolParser {
   private String source;
   private int columnOffset;

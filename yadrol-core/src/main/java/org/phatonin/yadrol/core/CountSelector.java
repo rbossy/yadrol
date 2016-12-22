@@ -19,6 +19,11 @@
 
 package org.phatonin.yadrol.core;
 
+/**
+ * A count selector retrieves a score from a count.
+ * 
+ *
+ */
 public enum CountSelector {
 	FREQUENCY {
 		@Override
@@ -152,10 +157,30 @@ public enum CountSelector {
 		}
 	};
 	
+	/**
+	 * Retrieves the score in the specified count.
+	 * @param count
+	 * @return
+	 */
 	public abstract Number get(Count count);
+	
+	/**
+	 * Returns the relative selector of this selector.
+	 * @return
+	 */
 	public abstract CountSelector getRelative();
+	
+	/**
+	 * Returns the absolute selector of this selector.
+	 * @return
+	 */
 	public abstract CountSelector getAbsolute();
 	
+	/**
+	 * Converts the specified string into a count selector.
+	 * @param s
+	 * @return
+	 */
 	public static CountSelector fromString(String s) {
 		switch (s) {
 			case "frequency": return FREQUENCY;

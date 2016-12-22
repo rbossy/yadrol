@@ -21,6 +21,19 @@ package org.phatonin.yadrol.core;
 
 import java.util.Map;
 
+/**
+ * An import manager imports variable definitions from a provided address.
+ * 
+ *
+ */
 public interface ImportManager {
+	/**
+	 * Resolves the specified address as a set of variable definitions.
+	 * @param expression the expression that required the import.
+	 * @param ctx evaluation context.
+	 * @param address address to require.
+	 * @return variable definitions, or <code>null</code> if the address could not be resolved.
+	 * @throws EvaluationException
+	 */
 	Map<String,Object> resolveImport(Expression expression, EvaluationContext ctx, String address) throws EvaluationException;
 }

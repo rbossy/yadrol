@@ -21,20 +21,34 @@ package org.phatonin.yadrol.core;
 
 import java.util.Map;
 
+/**
+ * A multi-count object stores the statistics for a specified value in several distributions.
+ * 
+ *
+ */
 public class MultiCount {
 	private final Object value;
 	private final Map<String,Number> counts;
 	
-	public MultiCount(Object value, Map<String,Number> counts) {
+	MultiCount(Object value, Map<String,Number> counts) {
 		super();
 		this.value = value;
 		this.counts = counts;
 	}
 
+	/**
+	 * Returns the value for which the statistics are stored.
+	 * @return
+	 */
 	public Object getValue() {
 		return value;
 	}
 
+	/**
+	 * Returns the statistics for each distribution.
+	 * The keys of the returned map are the names of the corresponding SampleRecord instances.
+	 * @return
+	 */
 	public Map<String,Number> getCounts() {
 		return counts;
 	}

@@ -20,17 +20,17 @@
 package org.phatonin.yadrol.app.cli;
 
 import java.io.PrintStream;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 import org.phatonin.yadrol.core.DiceRecord;
+import org.phatonin.yadrol.core.EvaluationContext;
 import org.phatonin.yadrol.core.MultiCount;
 import org.phatonin.yadrol.core.RollRecord;
 
 public class LatexDisplay extends DisplayManager {
 	@Override
-	protected void writeMultiCounts(PrintStream out, CLIOptions options, Collection<MultiCount> multiCounts) {
+	protected void writeMultiCounts(PrintStream out, EvaluationContext ctx, CLIOptions options, List<MultiCount> multiCounts) {
 		List<String> names = getMultiCountNames(multiCounts);
 
 		out.print("\\begin{tabular}{r");

@@ -31,32 +31,33 @@ import java.util.Map;
 import org.phatonin.yadrol.app.YadrolResult;
 import org.phatonin.yadrol.core.DiceRecord;
 import org.phatonin.yadrol.core.EvaluationContext;
+import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.MultiCount;
 import org.phatonin.yadrol.core.RollRecord;
 
 public abstract class DisplayManager {
-	public void display(CLIOptions options, YadrolResult result) throws FileNotFoundException {
+	public void display(CLIOptions options, YadrolResult result) throws FileNotFoundException, EvaluationException {
 		writeSeedFile(options, result);
 		writeRollRecords(options, result);
 		writeSampleRecords(options, result);
 	}
 
-	private void writeSampleRecords(CLIOptions options, YadrolResult result) throws FileNotFoundException {
+	private void writeSampleRecords(CLIOptions options, YadrolResult result) throws FileNotFoundException, EvaluationException {
 		EvaluationContext ctx = result.getEvaluationContext();
-		Collection<MultiCount> multiCounts = ctx.getMultiCounts(options.getCountSelector().getRelative());
+		List<MultiCount> multiCounts = ctx.getMultiCounts(options.getCountSelector().getRelative());
 		File sampleRecordsFile = options.getSampleRecordsFile();
 		if (sampleRecordsFile == null) {
-			writeMultiCounts(System.out, options, multiCounts);
+			writeMultiCounts(System.out, result.getEvaluationContext(), options, multiCounts);
 		}
 		else {
 			try (PrintStream out = new PrintStream(sampleRecordsFile)) {
 				System.err.println("writing samples in " + sampleRecordsFile.getAbsolutePath());
-				writeMultiCounts(out, options, multiCounts);
+				writeMultiCounts(out, result.getEvaluationContext(), options, multiCounts);
 			}
 		}
 	}
 
-	protected abstract void writeMultiCounts(PrintStream out, CLIOptions options, Collection<MultiCount> multiCounts);
+	protected abstract void writeMultiCounts(PrintStream out, EvaluationContext ctx, CLIOptions options, List<MultiCount> multiCounts) throws EvaluationException;
 
 	private void writeRollRecords(CLIOptions options, YadrolResult result) throws FileNotFoundException {
 		File rollRecordsFile = options.getRollRecordsFile();

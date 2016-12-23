@@ -20,96 +20,108 @@
 package org.phatonin.yadrol.app.cli;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 import org.phatonin.yadrol.core.DiceRecord;
+import org.phatonin.yadrol.core.Distribution;
 import org.phatonin.yadrol.core.DistributionScore;
+import org.phatonin.yadrol.core.EvaluationContext;
+import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.MultiCount;
 import org.phatonin.yadrol.core.RollRecord;
+import org.phatonin.yadrol.core.SampleRecord;
+import org.phatonin.yadrol.core.Scope;
 
 public class DefaultDisplay extends DisplayManager {
 	@Override
-	protected void writeMultiCounts(PrintStream out, CLIOptions options, Collection<MultiCount> multiCounts) {
-		int maxValueWidth = getMultiCountMaxValueWidth(options, multiCounts);
-		List<String> names = getMultiCountNames(multiCounts);
+	protected void writeMultiCounts(PrintStream out, EvaluationContext ctx, CLIOptions options, List<MultiCount> multiCounts) throws EvaluationException {
+		String[][] table = buildTable(ctx, options, multiCounts);
+		writeTable(out, table, "  ");
+	}
+	
+	private static String[][] buildTable(EvaluationContext ctx, CLIOptions options, List<MultiCount> multiCounts) throws EvaluationException {
+		List<DistributionScore> distScores = options.getDistributionScores();
+		List<SampleRecord> sampleRecords = ctx.getSampleRecords();
+		int nRows = multiCounts.size() + distScores.size() + 1;
+		int nCols = sampleRecords.size() + 1;
+		String[][] result = new String[nRows][];
+		result[0] = getHeaderRow(sampleRecords, nCols);
+		for (int i = 0; i < multiCounts.size(); ++i) {
+			result[i + 1] = getMultiCountRow(sampleRecords, multiCounts.get(i), nCols);
+		}
+		for (int i = 0; i < distScores.size(); ++i) {
+			result[i + 1 + multiCounts.size()] = getDistributionScoreRow(ctx, sampleRecords, distScores.get(i), nCols);
+		}
+		return result;
+	}
 
-		String valueFormat = String.format("%%%ds", maxValueWidth);
-		List<String> columnFormats = getColumnFormats(names);
-		
-		displayMultiCountsHeader(out, valueFormat, names, columnFormats);
-		
-		for (MultiCount multiCount : multiCounts) {
-			displayMultiCountRow(out, multiCount, valueFormat, names, columnFormats);
-		}
-	}
-	
-	private static int getMultiCountMaxValueWidth(CLIOptions options, Collection<MultiCount> multiCounts) {
-		int result = 0;
-		for (MultiCount multiCount : multiCounts) {
-			Object value = multiCount.getValue();
-			String valueString = toString(value);
-			result = Math.max(result, valueString.length());
-		}
-		for (DistributionScore score : options.getDistributionScores()) {
-			String name = score.getName();
-			result = Math.max(result, name.length());
+	private static String[] getDistributionScoreRow(EvaluationContext ctx, List<SampleRecord> sampleRecords, DistributionScore distScore, int nCols) throws EvaluationException {
+		String[] result = new String[nCols];
+		result[0] = distScore.getName();
+		Scope scope = ctx.getGlobalScope();
+		for (int i = 1; i < nCols; ++i) {
+			SampleRecord sampleRecord = sampleRecords.get(i - 1);
+			Distribution dist = sampleRecord.getDistribution();
+			result[i] = distScore.computeAsString(ctx, scope, dist, "%.3f");
 		}
 		return result;
 	}
-	
-	private static List<String> getColumnFormats(List<String> names) {
-		List<String> result = new ArrayList<String>();
-		for (String name : names) {
-			int width = Math.max(6, name.length());
-			String fmt = String.format("   %%%ds", width);
-			result.add(fmt);
-		}
-		return result;
-	}
-	
-	private static void displayMultiCountsHeader(PrintStream out, String valueFormat, List<String> names, List<String> columnFormats) {
-		out.format(valueFormat, "");
-		for (int i = 0; i < names.size(); ++i) {
-			String fmt = columnFormats.get(i);
-			String name = names.get(i);
-			out.format(fmt, name);
-		}
-		out.println();
-	}
-	
-	private static void displayMultiCountRow(PrintStream out, MultiCount multiCount, String valueFormat, List<String> names, List<String> columnFormats) {
-		displayMultiCountValue(out, multiCount, valueFormat);
-		Map<String,Number> counts = multiCount.getCounts();
-		for (int i = 0; i < names.size(); ++i) {
-			String fmt = columnFormats.get(i);
-			String name = names.get(i);
-			displayMultiCountScores(out, counts, fmt, name);
-		}
-		out.println();
-	}
-	
-	private static void displayMultiCountValue(PrintStream out, MultiCount multiCount, String valueFormat) {
+
+	private static String[] getMultiCountRow(List<SampleRecord> sampleRecords, MultiCount multiCount, int nCols) {
 		Object value = multiCount.getValue();
-		String valueString = toString(value);
-		out.format(valueFormat, valueString);
-	}
-	
-	private static void displayMultiCountScores(PrintStream out, Map<String,Number> counts, String fmt, String name) {
-		String cell = getMultiCountCell(counts, name);
-		out.format(fmt, cell);
-	}
-	
-	private static String getMultiCountCell(Map<String,Number> counts, String name) {
-		if (counts.containsKey(name)) {
+		Map<String,Number> counts = multiCount.getCounts();
+		String[] result = new String[nCols];
+		result[0] = EvaluationContext.valueString(value);
+		for (int i = 1; i < nCols; ++i) {
+			SampleRecord sampleRecord = sampleRecords.get(i - 1);
+			String name = sampleRecord.getName();
 			Number n = counts.get(name);
-			return String.format("%.3f", n);
+			result[i] = String.format("%.3f", n.doubleValue());
 		}
-		return "";
+		return result;
 	}
 
+	private static String[] getHeaderRow(List<SampleRecord> sampleRecords, int nCols) {
+		String[] result = new String[nCols];
+		result[0] = "";
+		for (int i = 1; i < nCols; ++i) {
+			SampleRecord sampleRecord = sampleRecords.get(i - 1);
+			result[i] = sampleRecord.getName();
+		}
+		return result;
+	}
+	
+	private static void writeTable(PrintStream out, String[][] table, String separator) {
+		String[] header = table[0];
+		final int nCols = header.length;
+		String[] colsFmt = getColumnsFormat(table, nCols);
+		for (String[] row : table) {
+			for (int i = 0; i < nCols; ++i) {
+				if (i > 0) {
+					out.print(separator);
+				}
+				out.format(colsFmt[i], row[i]);
+			}
+			out.println();
+		}
+	}
+	
+	private static String[] getColumnsFormat(String[][] table, int nCols) {
+		int[] colsWidth = new int[nCols];
+		for (int i = 0; i < table.length; ++i) {
+			String[] row = table[i];
+			for (int j = 0; j < nCols; ++j) {
+				colsWidth[j] = Math.max(colsWidth[j], row[j].length());
+			}
+		}
+		String[] result = new String[nCols];
+		for (int i = 0; i < nCols; ++i) {
+			result[i] = String.format("%%%ds", colsWidth[i]);
+		}
+		return result;
+	}
+	
 	@Override
 	protected void writeRollRecord(PrintStream out, CLIOptions optiosn, RollRecord rollRecord) {
 		out.println(rollRecord.getName());

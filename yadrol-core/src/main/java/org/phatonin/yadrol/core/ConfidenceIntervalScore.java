@@ -23,6 +23,6 @@ public class ConfidenceIntervalScore implements DistributionScore {
 
 	@Override
 	public String getName() {
-		return String.format("interval (r=%.2f)", risk);
+		return String.format("risk=%.2f", risk);
 	}
 }

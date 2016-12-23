@@ -1566,4 +1566,15 @@ public class EvaluationContext {
 		}
 		return null;
 	}
+	
+	/**
+	 * Returns a string representation of the specified value.
+	 * This is not a conversion but a printable version of the specified value.
+	 * @param value
+	 * @return
+	 */
+	public static String valueString(Object value) {
+		Expression expr = valueToExpression(value);
+		return expr.toString();
+	}
 }

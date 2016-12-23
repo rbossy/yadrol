@@ -26,13 +26,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.phatonin.yadrol.core.DiceRecord;
+import org.phatonin.yadrol.core.DistributionScore;
 import org.phatonin.yadrol.core.MultiCount;
 import org.phatonin.yadrol.core.RollRecord;
 
 public class DefaultDisplay extends DisplayManager {
 	@Override
 	protected void writeMultiCounts(PrintStream out, CLIOptions options, Collection<MultiCount> multiCounts) {
-		int maxValueWidth = getMultiCountMaxValueWidth(multiCounts);
+		int maxValueWidth = getMultiCountMaxValueWidth(options, multiCounts);
 		List<String> names = getMultiCountNames(multiCounts);
 
 		String valueFormat = String.format("%%%ds", maxValueWidth);
@@ -45,12 +46,16 @@ public class DefaultDisplay extends DisplayManager {
 		}
 	}
 	
-	private static int getMultiCountMaxValueWidth(Collection<MultiCount> multiCounts) {
+	private static int getMultiCountMaxValueWidth(CLIOptions options, Collection<MultiCount> multiCounts) {
 		int result = 0;
 		for (MultiCount multiCount : multiCounts) {
 			Object value = multiCount.getValue();
 			String valueString = toString(value);
 			result = Math.max(result, valueString.length());
+		}
+		for (DistributionScore score : options.getDistributionScores()) {
+			String name = score.getName();
+			result = Math.max(result, name.length());
 		}
 		return result;
 	}

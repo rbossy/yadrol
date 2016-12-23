@@ -19,8 +19,10 @@
 
 package org.phatonin.yadrol.core;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -257,4 +259,26 @@ public class Distribution {
 		}
 		return null;
 	}
+	
+	public Count[] confidenceInterval(double risk) {
+		compute();
+		List<Count> counts = new ArrayList<Count>(getCounts());
+		double halfRisk = risk / 2;
+		Count lo = getIntervalBoundary(counts, halfRisk, CountSelector.RELATIVE_AT_MOST);
+		Collections.reverse(counts);
+		Count hi = getIntervalBoundary(counts, halfRisk, CountSelector.RELATIVE_AT_LEAST);
+		return new Count[] { lo , hi };
+	}
+	
+	public static Count getIntervalBoundary(List<Count> counts, double halfRisk, CountSelector selector) {
+		Count result = counts.get(0);
+		for (Count count : counts) {
+			if (selector.get(count).doubleValue() > halfRisk) {
+				break;
+			}
+			result = count;
+		}
+		return result;
+	}
+	
 }

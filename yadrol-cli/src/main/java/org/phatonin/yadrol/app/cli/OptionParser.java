@@ -29,9 +29,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.phatonin.yadrol.core.ConfidenceIntervalScore;
 import org.phatonin.yadrol.core.CountSelector;
 import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.OutputMode;
+import org.phatonin.yadrol.core.StandardDistributionScore;
 import org.phatonin.yadrol.core.importManagers.FileSystemImportManager;
 import org.phatonin.yadrol.core.values.ValueType;
 
@@ -160,6 +162,35 @@ enum OptionParser {
 		public void process(CLIOptions options, String[] args) {
 			Location location = new Location(options.getSource(), 0, 0);
 			options.addImport(location, null);
+		}
+	},
+	
+	MEAN("-mean", 0) {
+		@Override
+		public void process(CLIOptions options, String[] args) {
+			options.addDistributionScore(StandardDistributionScore.MEAN);
+		}
+	},
+	
+	MODE("-mode", 0) {
+		@Override
+		public void process(CLIOptions options, String[] args) {
+			options.addDistributionScore(StandardDistributionScore.MODE);
+		}
+	},
+	
+	MEDIAN("-median", 0) {
+		@Override
+		public void process(CLIOptions options, String[] args) {
+			options.addDistributionScore(StandardDistributionScore.MEDIAN_SUP);
+		}
+	},
+	
+	CONFIDENCE_INTERVAL("-interval", 1) {
+		@Override
+		public void process(CLIOptions options, String[] args) {
+			double risk = Double.parseDouble(args[0]);
+			options.addDistributionScore(new ConfidenceIntervalScore(risk));
 		}
 	}
 	;

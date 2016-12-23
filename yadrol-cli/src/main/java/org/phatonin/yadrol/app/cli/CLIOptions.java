@@ -20,8 +20,12 @@
 package org.phatonin.yadrol.app.cli;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.phatonin.yadrol.app.YadrolOptions;
+import org.phatonin.yadrol.core.DistributionScore;
 import org.phatonin.yadrol.core.importManagers.FileSystemImportManager;
 import org.phatonin.yadrol.core.importManagers.ImportManagers;
 import org.phatonin.yadrol.core.importManagers.StreamImportManager;
@@ -36,6 +40,7 @@ public class CLIOptions extends YadrolOptions {
 	private File sampleRecordsFile = null;
 	private boolean writeDiceRecords = false;
 	private final FileSystemImportManager fsImportManager = new FileSystemImportManager(true);
+	private final List<DistributionScore> distributionScores = new ArrayList<DistributionScore>();
 	
 	public CLIOptions(String source) {
 		super(source);
@@ -79,6 +84,14 @@ public class CLIOptions extends YadrolOptions {
 
 	public FileSystemImportManager getFsImportManager() {
 		return fsImportManager;
+	}
+
+	public List<DistributionScore> getDistributionScores() {
+		return Collections.unmodifiableList(distributionScores);
+	}
+	
+	public void addDistributionScore(DistributionScore score) {
+		distributionScores.add(score);
 	}
 
 	public void setWriteDiceRecords(boolean writeDiceRecords) {

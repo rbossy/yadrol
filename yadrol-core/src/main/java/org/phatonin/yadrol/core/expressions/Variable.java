@@ -22,6 +22,7 @@ package org.phatonin.yadrol.core.expressions;
 import org.phatonin.yadrol.core.EvaluationContext;
 import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.Expression;
+import org.phatonin.yadrol.core.ExpressionStringer;
 import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
@@ -107,6 +108,11 @@ public class Variable extends AbstractExpression {
 		identifierToString(sb, name);
 	}
 	
+	@Override
+	protected void toStringWithoutParen(ExpressionStringer stringer) {
+		stringer.identifier(name);
+	}
+
 	private boolean isCapitalized() {
 		return Character.isUpperCase(name.charAt(0));
 	}

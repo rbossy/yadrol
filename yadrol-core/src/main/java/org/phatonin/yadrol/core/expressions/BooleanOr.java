@@ -26,6 +26,7 @@ import java.util.List;
 import org.phatonin.yadrol.core.EvaluationContext;
 import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.Expression;
+import org.phatonin.yadrol.core.ExpressionStringer;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 
@@ -123,6 +124,11 @@ public class BooleanOr extends AbstractBooleanExpression {
 	@Override
 	protected void toStringWithoutParen(StringBuilder sb) {
 		nAryOperator(sb, " or ", operands, Precedence.AND);
+	}
+
+	@Override
+	protected void toStringWithoutParen(ExpressionStringer stringer) {
+		stringer.nAryOperator(" or ", operands, Precedence.AND);
 	}
 
 	@Override

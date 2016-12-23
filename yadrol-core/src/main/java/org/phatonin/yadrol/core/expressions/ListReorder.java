@@ -27,6 +27,7 @@ import java.util.Random;
 import org.phatonin.yadrol.core.EvaluationContext;
 import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.Expression;
+import org.phatonin.yadrol.core.ExpressionStringer;
 import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
@@ -178,6 +179,12 @@ public class ListReorder extends AbstractListExpression {
 	@Override
 	protected void toStringWithoutParen(StringBuilder sb) {
 		unaryOperator(sb, operator.toString(), list, Precedence.SUBSCRIPT);
+	}
+
+	@Override
+	protected void toStringWithoutParen(ExpressionStringer stringer) {
+		stringer.keyword(operator.toString())
+		.expression(list, Precedence.SUBSCRIPT);
 	}
 
 	@Override

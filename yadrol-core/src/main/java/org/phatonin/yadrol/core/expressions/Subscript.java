@@ -27,6 +27,7 @@ import java.util.Map;
 import org.phatonin.yadrol.core.EvaluationContext;
 import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.Expression;
+import org.phatonin.yadrol.core.ExpressionStringer;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.values.Function;
@@ -302,6 +303,21 @@ public class Subscript extends AbstractExpression {
 			sb.append('[');
 			subscript.toString(sb, Precedence.SEQUENCE);
 			sb.append(']');
+		}
+	}
+
+	@Override
+	protected void toStringWithoutParen(ExpressionStringer stringer) {
+		stringer.expression(list, Precedence.SUBSCRIPT);
+		if (subscript instanceof StringConstant) {
+			String name = ((StringConstant) subscript).getValue();
+			stringer.operator(".")
+			.identifier(name);
+		}
+		else {
+			stringer.leftBracket()
+			.expression(subscript, Precedence.SEQUENCE)
+			.rightBracket();
 		}
 	}
 

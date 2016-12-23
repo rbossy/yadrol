@@ -27,6 +27,7 @@ import org.phatonin.yadrol.core.EvaluationContext;
 import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.Expression;
 import org.phatonin.yadrol.core.ExpressionListUtils;
+import org.phatonin.yadrol.core.ExpressionStringer;
 import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
@@ -154,6 +155,37 @@ public class Lambda extends AbstractFunctionExpression {
 		sb.append(") { ");
 		body.toString(sb, Precedence.SEQUENCE);
 		sb.append(" }");
+	}
+
+	@Override
+	protected void toStringWithoutParen(ExpressionStringer stringer) {
+		stringer.keyword("fun")
+		.space()
+		.leftParen();
+		boolean notFirst = false;
+		for (String arg : positionalArgs) {
+			if (notFirst) {
+				stringer.comma().space();
+			}
+			else {
+				notFirst = true;
+			}
+			stringer.identifier(arg);
+		}
+		for (Map.Entry<String,Expression> e : namedArgs.entrySet()) {
+			if (notFirst) {
+				stringer.comma().space();
+			}
+			else {
+				notFirst = true;
+			}
+			stringer.identifier(e.getKey())
+			.colon().space()
+			.expression(e.getValue(), Precedence.SEQUENCE);
+		}
+		stringer.rightParen().space().leftCurly().space()
+		.expression(body, Precedence.SEQUENCE)
+		.space().rightCurly();
 	}
 
 	@Override

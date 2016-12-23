@@ -31,6 +31,7 @@ import java.util.regex.Pattern;
 import org.phatonin.yadrol.core.EvaluationContext;
 import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.Expression;
+import org.phatonin.yadrol.core.ExpressionStringer;
 import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
@@ -235,6 +236,19 @@ public abstract class AbstractExpression implements Expression {
 	protected boolean requiresParentheses(Precedence prec) {
 		return prec.compareTo(getPrecedence()) > 0;
 	}
+	
+	public void toString(ExpressionStringer stringer, Precedence prec) {
+		if (requiresParentheses(prec)) {
+			stringer.leftParen();
+			toStringWithoutParen(stringer);
+			stringer.rightParen();
+		}
+		else {
+			toStringWithoutParen(stringer);
+		}
+	}
+	
+	protected abstract void toStringWithoutParen(ExpressionStringer stringer);
 
 	@Override
 	public void toString(StringBuilder sb, Precedence prec) {

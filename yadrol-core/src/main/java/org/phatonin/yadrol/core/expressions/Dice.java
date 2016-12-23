@@ -24,6 +24,7 @@ import java.util.List;
 import org.phatonin.yadrol.core.EvaluationContext;
 import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.Expression;
+import org.phatonin.yadrol.core.ExpressionStringer;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.values.Roller;
@@ -127,6 +128,19 @@ public class Dice extends AbstractListExpression {
 			operator.append(' ');
 		}
 		binaryOperator(sb, operator, n, type, Precedence.UNARY);
+	}
+	
+	@Override
+	protected void toStringWithoutParen(ExpressionStringer stringer) {
+		stringer.expression(n, Precedence.UNARY);
+		if (n.requiresSpaceAsDiceNumber()) {
+			stringer.space();
+		}
+		stringer.operator("d");
+		if (type.requiresSpaceAsDiceNumber()) {
+			stringer.space();
+		}
+		stringer.expression(type, Precedence.UNARY);
 	}
 
 	@Override

@@ -25,6 +25,7 @@ import java.util.Map;
 import org.phatonin.yadrol.core.EvaluationContext;
 import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.Expression;
+import org.phatonin.yadrol.core.ExpressionStringer;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.values.ContainerVisitor;
@@ -155,6 +156,11 @@ public class Append extends AbstractExpression {
 	@Override
 	protected void toStringWithoutParen(StringBuilder sb) {
 		binaryOperator(sb, " << ", target, source, Precedence.RANGE);
+	}
+
+	@Override
+	protected void toStringWithoutParen(ExpressionStringer stringer) {
+		stringer.binaryOperator(" << ", target, source, Precedence.RANGE);
 	}
 
 	@Override

@@ -25,6 +25,7 @@ import java.util.List;
 import org.phatonin.yadrol.core.EvaluationContext;
 import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.Expression;
+import org.phatonin.yadrol.core.ExpressionStringer;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 
@@ -123,6 +124,11 @@ public class Range extends AbstractListExpression {
 	@Override
 	protected void toStringWithoutParen(StringBuilder sb) {
 		binaryOperator(sb, "..", start, end, Precedence.PLUS);
+	}
+
+	@Override
+	protected void toStringWithoutParen(ExpressionStringer stringer) {
+		stringer.binaryOperator("..", start, end, Precedence.PLUS);
 	}
 
 	@Override

@@ -28,6 +28,7 @@ import java.util.ListIterator;
 import org.phatonin.yadrol.core.EvaluationContext;
 import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.Expression;
+import org.phatonin.yadrol.core.ExpressionStringer;
 import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
@@ -302,6 +303,13 @@ public class StringInterpolation extends AbstractStringExpression {
 		sb.append('"');
 		sb.append(originalString);
 		sb.append('"');
+	}
+
+	@Override
+	protected void toStringWithoutParen(ExpressionStringer stringer) {
+		stringer.litteral("\"")
+		.litteral(originalString)
+		.litteral("\"");
 	}
 
 	@Override

@@ -29,6 +29,7 @@ import java.util.Map;
 import org.phatonin.yadrol.core.EvaluationContext;
 import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.Expression;
+import org.phatonin.yadrol.core.ExpressionStringer;
 import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
@@ -311,6 +312,28 @@ public class ForLoop extends AbstractExpression {
 		if (!new BooleanConstant(Location.NONE, true).equals(condition)) {
 			sb.append(" if ");
 			condition.toString(sb, Precedence.OR);
+		}
+	}
+
+	@Override
+	protected void toStringWithoutParen(ExpressionStringer stringer) {
+		if (new Variable(Location.NONE, itemVariable).equals(out)) {
+			stringer.keyword("for ");
+		}
+		else {
+			stringer.expression(out, Precedence.OR)
+			.keyword(" for ");
+		}
+		if (indexVariable != null) {
+			stringer.identifier(indexVariable)
+			.comma().space();
+		}
+		stringer.identifier(itemVariable)
+		.keyword(" in ")
+		.expression(container, Precedence.OR);
+		if (!new BooleanConstant(Location.NONE, true).equals(condition)) {
+			stringer.keyword(" if ")
+			.expression(condition, Precedence.OR);
 		}
 	}
 

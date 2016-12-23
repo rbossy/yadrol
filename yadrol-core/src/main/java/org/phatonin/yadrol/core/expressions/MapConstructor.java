@@ -25,6 +25,7 @@ import java.util.Map;
 import org.phatonin.yadrol.core.EvaluationContext;
 import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.Expression;
+import org.phatonin.yadrol.core.ExpressionStringer;
 import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
@@ -145,6 +146,13 @@ public class MapConstructor extends AbstractMapExpression {
 		sb.append("{ ");
 		expressionMapToString(sb, entries, false);
 		sb.append(" }");
+	}
+
+	@Override
+	protected void toStringWithoutParen(ExpressionStringer stringer) {
+		stringer.leftCurly().space()
+		.expressionMap(entries, false)
+		.space().rightCurly();
 	}
 
 	@Override

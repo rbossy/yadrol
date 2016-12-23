@@ -22,6 +22,7 @@ package org.phatonin.yadrol.core.expressions;
 import org.phatonin.yadrol.core.EvaluationContext;
 import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.Expression;
+import org.phatonin.yadrol.core.ExpressionStringer;
 import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
@@ -120,6 +121,12 @@ public class Die extends AbstractExpression {
 	protected void toStringWithoutParen(StringBuilder sb) {
 		String operator = type.requiresSpaceAsDiceType() ? "d " : "d";
 		unaryOperator(sb, operator, type, Precedence.UNARY);
+	}
+
+	@Override
+	protected void toStringWithoutParen(ExpressionStringer stringer) {
+		String operator = type.requiresSpaceAsDiceType() ? "d " : "d";
+		stringer.unaryOperator(operator, type, Precedence.UNARY);
 	}
 
 	@Override

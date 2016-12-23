@@ -27,6 +27,7 @@ import java.util.List;
 import org.phatonin.yadrol.core.EvaluationContext;
 import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.Expression;
+import org.phatonin.yadrol.core.ExpressionStringer;
 import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
@@ -180,6 +181,15 @@ public class BestMultiple extends AbstractListExpression {
 		n.toString(sb, Precedence.ASSIGN);
 		sb.append(" of ");
 		expression.toString(sb, Precedence.DRAW);
+	}
+
+	@Override
+	protected void toStringWithoutParen(ExpressionStringer stringer) {
+		stringer.keyword(operator.toString())
+		.space()
+		.expression(n, Precedence.ASSIGN)
+		.keyword(" of ")
+		.expression(expression, Precedence.DRAW);
 	}
 
 	@Override

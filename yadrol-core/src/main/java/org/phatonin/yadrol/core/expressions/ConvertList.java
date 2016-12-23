@@ -24,6 +24,7 @@ import java.util.List;
 import org.phatonin.yadrol.core.EvaluationContext;
 import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.Expression;
+import org.phatonin.yadrol.core.ExpressionStringer;
 import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
@@ -106,6 +107,11 @@ public class ConvertList extends AbstractListExpression {
 	@Override
 	protected void toStringWithoutParen(StringBuilder sb) {
 		unaryOperator(sb, "list ", expression, Precedence.SUBSCRIPT);
+	}
+
+	@Override
+	protected void toStringWithoutParen(ExpressionStringer stringer) {
+		stringer.unaryOperator("list ", expression, Precedence.SUBSCRIPT);
 	}
 
 	@Override

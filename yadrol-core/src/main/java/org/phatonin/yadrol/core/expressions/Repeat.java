@@ -25,6 +25,7 @@ import java.util.List;
 import org.phatonin.yadrol.core.EvaluationContext;
 import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.Expression;
+import org.phatonin.yadrol.core.ExpressionStringer;
 import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
@@ -161,6 +162,19 @@ public class Repeat extends AbstractListExpression {
 			sb.append(" limit ");
 			sb.append(limit);
 		}
+	}
+
+	@Override
+	protected void toStringWithoutParen(ExpressionStringer stringer) {
+		stringer.keyword("repeat ")
+		.expression(expression, Precedence.OR)
+		.keyword(limit == 1 ? " if " : " while ")
+		.expression(condition, Precedence.OR);
+		if (limit != 1 && limit != Long.MAX_VALUE) {
+			stringer.keyword(" limit ")
+			.litteral(Long.toString(limit));
+		}
+		//XXX precondition
 	}
 
 	@Override

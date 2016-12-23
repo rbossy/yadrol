@@ -22,6 +22,7 @@ package org.phatonin.yadrol.core.expressions;
 import org.phatonin.yadrol.core.EvaluationContext;
 import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.Expression;
+import org.phatonin.yadrol.core.ExpressionStringer;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 
@@ -224,6 +225,11 @@ public class Arithmetic extends AbstractIntegerExpression {
 		binaryOperator(sb, operator.toString(), left, right, getPrecedence());
 	}
 	
+	@Override
+	protected void toStringWithoutParen(ExpressionStringer stringer) {
+		stringer.binaryOperator(operator.toString(), left, right, getPrecedence());
+	}
+
 	@Override
 	protected Precedence getPrecedence() {
 		switch (operator) {

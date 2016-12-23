@@ -26,6 +26,7 @@ import java.util.Map;
 import org.phatonin.yadrol.core.EvaluationContext;
 import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.Expression;
+import org.phatonin.yadrol.core.ExpressionStringer;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.values.ContainerVisitor;
@@ -154,6 +155,13 @@ public class IndexOf extends AbstractExpression {
 	@Override
 	protected void toStringWithoutParen(StringBuilder sb) {
 		binaryOperator(sb, " in ", element, container, Precedence.APPEND);
+	}
+
+	@Override
+	protected void toStringWithoutParen(ExpressionStringer stringer) {
+		stringer.expression(element, Precedence.APPEND)
+		.keyword(" in ")
+		.expression(container, Precedence.APPEND);
 	}
 
 	@Override

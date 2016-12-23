@@ -22,6 +22,7 @@ package org.phatonin.yadrol.core.expressions;
 import org.phatonin.yadrol.core.EvaluationContext;
 import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.Expression;
+import org.phatonin.yadrol.core.ExpressionStringer;
 import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
@@ -75,6 +76,11 @@ public class Undef extends AbstractUndefExpression {
 	@Override
 	protected void toStringWithoutParen(StringBuilder sb) {
 		sb.append("undef");
+	}
+
+	@Override
+	protected void toStringWithoutParen(ExpressionStringer stringer) {
+		stringer.litteral("undef");
 	}
 
 	@Override

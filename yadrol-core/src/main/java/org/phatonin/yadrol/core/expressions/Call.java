@@ -29,6 +29,7 @@ import org.phatonin.yadrol.core.EvaluationContext;
 import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.Expression;
 import org.phatonin.yadrol.core.ExpressionListUtils;
+import org.phatonin.yadrol.core.ExpressionStringer;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.values.Function;
@@ -272,6 +273,18 @@ public class Call extends AbstractExpression {
 		}
 		expressionMapToString(sb, namedArgs, false);
 		sb.append(')');
+	}
+
+	@Override
+	protected void toStringWithoutParen(ExpressionStringer stringer) {
+		stringer.expression(function, Precedence.SUBSCRIPT)
+		.leftParen()
+		.expressionList(positionalArgs);
+		if (positionalArgs.length != 0 && !namedArgs.isEmpty()) {
+			stringer.comma().space();
+		}
+		stringer.expressionMap(namedArgs, false)
+		.rightParen();
 	}
 
 	@Override

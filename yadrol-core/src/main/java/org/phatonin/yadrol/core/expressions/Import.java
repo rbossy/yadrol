@@ -29,6 +29,7 @@ import java.util.Set;
 import org.phatonin.yadrol.core.EvaluationContext;
 import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.Expression;
+import org.phatonin.yadrol.core.ExpressionStringer;
 import org.phatonin.yadrol.core.ImportManager;
 import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.Precedence;
@@ -122,6 +123,13 @@ public class Import extends AbstractUndefExpression {
 	protected void toStringWithoutParen(StringBuilder sb) {
 		sb.append("import ");
 		stringConstant(sb, address);
+	}
+
+	@Override
+	protected void toStringWithoutParen(ExpressionStringer stringer) {
+		stringer.keyword("import ")
+		.string(address);
+		//XXX
 	}
 
 	@Override

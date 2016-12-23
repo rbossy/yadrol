@@ -25,6 +25,7 @@ import java.util.List;
 import org.phatonin.yadrol.core.EvaluationContext;
 import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.Expression;
+import org.phatonin.yadrol.core.ExpressionStringer;
 import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
@@ -128,6 +129,14 @@ public class DrawMultiple extends AbstractListExpression {
 		n.toString(sb, Precedence.ASSIGN);
 		sb.append(" from ");
 		list.toString(sb, Precedence.DICE);
+	}
+
+	@Override
+	protected void toStringWithoutParen(ExpressionStringer stringer) {
+		stringer.keyword("draw ")
+		.expression(n, Precedence.ASSIGN)
+		.keyword(" from ")
+		.expression(list, Precedence.DICE);
 	}
 
 	@Override

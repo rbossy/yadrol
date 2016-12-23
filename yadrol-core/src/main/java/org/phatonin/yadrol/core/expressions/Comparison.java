@@ -22,6 +22,7 @@ package org.phatonin.yadrol.core.expressions;
 import org.phatonin.yadrol.core.EvaluationContext;
 import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.Expression;
+import org.phatonin.yadrol.core.ExpressionStringer;
 import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
@@ -295,6 +296,11 @@ public class Comparison extends AbstractBooleanExpression {
 	@Override
 	protected void toStringWithoutParen(StringBuilder sb) {
 		binaryOperator(sb, operator.toString(), left, right, Precedence.INDEXOF);
+	}
+
+	@Override
+	protected void toStringWithoutParen(ExpressionStringer stringer) {
+		stringer.binaryOperator(operator.toString(), left, right, Precedence.INDEXOF);
 	}
 
 	@Override

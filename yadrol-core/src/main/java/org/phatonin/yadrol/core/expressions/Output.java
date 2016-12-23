@@ -22,6 +22,7 @@ package org.phatonin.yadrol.core.expressions;
 import org.phatonin.yadrol.core.EvaluationContext;
 import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.Expression;
+import org.phatonin.yadrol.core.ExpressionStringer;
 import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.OutputMode;
 import org.phatonin.yadrol.core.Precedence;
@@ -104,6 +105,20 @@ public class Output extends AbstractExpression {
 		if (name != null) {
 			sb.append(' ');
 			name.toString(sb, Precedence.ATOM);
+		}
+	}
+
+	@Override
+	protected void toStringWithoutParen(ExpressionStringer stringer) {
+		stringer.keyword(operator.toString()).space()
+		.expression(expression, Precedence.ASSIGN);
+		if (evaluationType != ValueType.DEFAULT) {
+			stringer.space()
+			.keyword(evaluationType.toString());
+		}
+		if (name != null) {
+			stringer.space()
+			.expression(name, Precedence.ATOM);
 		}
 	}
 

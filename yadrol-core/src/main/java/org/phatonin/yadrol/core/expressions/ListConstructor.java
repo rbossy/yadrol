@@ -27,6 +27,7 @@ import org.phatonin.yadrol.core.EvaluationContext;
 import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.Expression;
 import org.phatonin.yadrol.core.ExpressionListUtils;
+import org.phatonin.yadrol.core.ExpressionStringer;
 import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
@@ -135,6 +136,13 @@ public class ListConstructor extends AbstractListExpression {
 		sb.append('[');
 		expressionListToString(sb, elements);
 		sb.append(']');
+	}
+
+	@Override
+	protected void toStringWithoutParen(ExpressionStringer stringer) {
+		stringer.leftBracket()
+		.expressionList(elements)
+		.rightBracket();
 	}
 
 	@Override

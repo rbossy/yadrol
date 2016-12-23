@@ -21,105 +21,32 @@ package org.phatonin.yadrol.app.cli.display;
 
 import java.io.PrintStream;
 import java.util.List;
-import java.util.Map;
 
 import org.phatonin.yadrol.app.cli.CLIOptions;
 import org.phatonin.yadrol.core.DiceRecord;
-import org.phatonin.yadrol.core.Distribution;
-import org.phatonin.yadrol.core.DistributionScore;
 import org.phatonin.yadrol.core.EvaluationContext;
 import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.MultiCount;
 import org.phatonin.yadrol.core.RollRecord;
 import org.phatonin.yadrol.core.SampleRecord;
-import org.phatonin.yadrol.core.Scope;
 
 public class DefaultDisplay extends DisplayManager {
 	@Override
 	protected void writeMultiCounts(PrintStream out, EvaluationContext ctx, CLIOptions options, List<MultiCount> multiCounts) throws EvaluationException {
-		String[][] table = buildTable(ctx, options, multiCounts);
-		writeTable(out, table, "  ");
-	}
-	
-	private static String[][] buildTable(EvaluationContext ctx, CLIOptions options, List<MultiCount> multiCounts) throws EvaluationException {
-		List<DistributionScore> distScores = options.getDistributionScores();
-		List<SampleRecord> sampleRecords = ctx.getSampleRecords();
-		int nRows = multiCounts.size() + distScores.size() + 1;
-		int nCols = sampleRecords.size() + 1;
-		String[][] result = new String[nRows][];
-		result[0] = getHeaderRow(sampleRecords, nCols);
-		for (int i = 0; i < multiCounts.size(); ++i) {
-			result[i + 1] = getMultiCountRow(sampleRecords, multiCounts.get(i), nCols);
-		}
-		for (int i = 0; i < distScores.size(); ++i) {
-			result[i + 1 + multiCounts.size()] = getDistributionScoreRow(ctx, sampleRecords, distScores.get(i), nCols);
-		}
-		return result;
+		TableSpecification tableSpec = buildTableSpecification(ctx.getSampleRecords());
+		String[][] data = buildTableData(ctx, options, multiCounts);
+		tableSpec.print(out, data);
 	}
 
-	private static String[] getDistributionScoreRow(EvaluationContext ctx, List<SampleRecord> sampleRecords, DistributionScore distScore, int nCols) throws EvaluationException {
-		String[] result = new String[nCols];
-		result[0] = distScore.getName();
-		Scope scope = ctx.getGlobalScope();
-		for (int i = 1; i < nCols; ++i) {
-			SampleRecord sampleRecord = sampleRecords.get(i - 1);
-			Distribution dist = sampleRecord.getDistribution();
-			result[i] = distScore.computeAsString(ctx, scope, dist, "%.3f");
+	private static TableSpecification buildTableSpecification(List<SampleRecord> sampleRecords) {
+		TableSpecification result = new TableSpecification();
+		RowSpecification rowSpec = new RowSpecification();
+		rowSpec.appendColumnSpecification(DataColumnSpecification.MAX_RIGHT);
+		for (int i = 0; i < sampleRecords.size(); ++i) {
+			rowSpec.appendColumnSpecification(DataColumnSpecification.MAX_RIGHT);
 		}
-		return result;
-	}
-
-	private static String[] getMultiCountRow(List<SampleRecord> sampleRecords, MultiCount multiCount, int nCols) {
-		Object value = multiCount.getValue();
-		Map<String,Number> counts = multiCount.getCounts();
-		String[] result = new String[nCols];
-		result[0] = EvaluationContext.valueString(value);
-		for (int i = 1; i < nCols; ++i) {
-			SampleRecord sampleRecord = sampleRecords.get(i - 1);
-			String name = sampleRecord.getName();
-			Number n = counts.get(name);
-			result[i] = String.format("%.3f", n.doubleValue());
-		}
-		return result;
-	}
-
-	private static String[] getHeaderRow(List<SampleRecord> sampleRecords, int nCols) {
-		String[] result = new String[nCols];
-		result[0] = "";
-		for (int i = 1; i < nCols; ++i) {
-			SampleRecord sampleRecord = sampleRecords.get(i - 1);
-			result[i] = sampleRecord.getName();
-		}
-		return result;
-	}
-	
-	private static void writeTable(PrintStream out, String[][] table, String separator) {
-		String[] header = table[0];
-		final int nCols = header.length;
-		String[] colsFmt = getColumnsFormat(table, nCols);
-		for (String[] row : table) {
-			for (int i = 0; i < nCols; ++i) {
-				if (i > 0) {
-					out.print(separator);
-				}
-				out.format(colsFmt[i], row[i]);
-			}
-			out.println();
-		}
-	}
-	
-	private static String[] getColumnsFormat(String[][] table, int nCols) {
-		int[] colsWidth = new int[nCols];
-		for (int i = 0; i < table.length; ++i) {
-			String[] row = table[i];
-			for (int j = 0; j < nCols; ++j) {
-				colsWidth[j] = Math.max(colsWidth[j], row[j].length());
-			}
-		}
-		String[] result = new String[nCols];
-		for (int i = 0; i < nCols; ++i) {
-			result[i] = String.format("%%%ds", colsWidth[i]);
-		}
+		rowSpec.insertSeparator("  ");
+		result.setDefaultRowSpecification(rowSpec);
 		return result;
 	}
 	

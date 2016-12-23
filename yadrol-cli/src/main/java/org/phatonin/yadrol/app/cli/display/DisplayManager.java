@@ -17,7 +17,7 @@
    along with Yadrol.  If not, see <http://www.gnu.org/licenses/>.
 **/
 
-package org.phatonin.yadrol.app.cli;
+package org.phatonin.yadrol.app.cli.display;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.phatonin.yadrol.app.YadrolResult;
+import org.phatonin.yadrol.app.cli.CLIOptions;
 import org.phatonin.yadrol.core.DiceRecord;
 import org.phatonin.yadrol.core.EvaluationContext;
 import org.phatonin.yadrol.core.EvaluationException;

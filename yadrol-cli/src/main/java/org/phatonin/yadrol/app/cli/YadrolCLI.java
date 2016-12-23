@@ -29,6 +29,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.phatonin.yadrol.app.YadrolResult;
+import org.phatonin.yadrol.app.cli.display.DisplayManager;
 import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.parser.ParseException;
 

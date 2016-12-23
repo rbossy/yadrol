@@ -29,6 +29,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.phatonin.yadrol.app.cli.display.LatexDisplay;
 import org.phatonin.yadrol.core.ConfidenceIntervalScore;
 import org.phatonin.yadrol.core.CountSelector;
 import org.phatonin.yadrol.core.Location;

@@ -17,12 +17,13 @@
    along with Yadrol.  If not, see <http://www.gnu.org/licenses/>.
 **/
 
-package org.phatonin.yadrol.app.cli;
+package org.phatonin.yadrol.app.cli.display;
 
 import java.io.PrintStream;
 import java.util.List;
 import java.util.Map;
 
+import org.phatonin.yadrol.app.cli.CLIOptions;
 import org.phatonin.yadrol.core.DiceRecord;
 import org.phatonin.yadrol.core.Distribution;
 import org.phatonin.yadrol.core.DistributionScore;

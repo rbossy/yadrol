@@ -25,6 +25,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.phatonin.yadrol.app.YadrolOptions;
+import org.phatonin.yadrol.app.cli.display.DefaultDisplay;
+import org.phatonin.yadrol.app.cli.display.DisplayManager;
 import org.phatonin.yadrol.core.DistributionScore;
 import org.phatonin.yadrol.core.importManagers.FileSystemImportManager;
 import org.phatonin.yadrol.core.importManagers.ImportManagers;

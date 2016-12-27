@@ -165,7 +165,9 @@ public interface Expression {
 	 * @param prec precedence of the expression that contains this expression.
 	 */
 	void toString(StringBuilder sb, Precedence prec);
-	
+
+	void toString(ExpressionStringer stringer, Precedence prec);
+
 	/**
 	 * Returns either there needs to be a space between this expression and the dice operator (<code>'d'</code).
 	 * @return

@@ -35,7 +35,10 @@ import org.phatonin.yadrol.core.Distribution;
 import org.phatonin.yadrol.core.DistributionScore;
 import org.phatonin.yadrol.core.EvaluationContext;
 import org.phatonin.yadrol.core.EvaluationException;
+import org.phatonin.yadrol.core.ExpressionStringer;
 import org.phatonin.yadrol.core.MultiCount;
+import org.phatonin.yadrol.core.Precedence;
+import org.phatonin.yadrol.core.RegularStringer;
 import org.phatonin.yadrol.core.RollRecord;
 import org.phatonin.yadrol.core.SampleRecord;
 import org.phatonin.yadrol.core.Scope;
@@ -107,7 +110,9 @@ public abstract class DisplayManager {
 	}
 
 	protected static String toString(Object value) {
-		return EvaluationContext.valueToExpression(value).toString();
+		ExpressionStringer stringer = new RegularStringer();
+		EvaluationContext.valueToExpression(value).toString(stringer, Precedence.SEQUENCE);
+		return stringer.toString();
 	}
 	
 	protected static List<String> getMultiCountNames(Collection<MultiCount> multiCounts) {

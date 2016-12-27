@@ -2,25 +2,197 @@ package org.phatonin.yadrol.core;
 
 import java.util.Map;
 
-public interface ExpressionStringer {
-	ExpressionStringer leftParen();
-	ExpressionStringer rightParen();
-	ExpressionStringer leftCurly();
-	ExpressionStringer rightCurly();
-	ExpressionStringer leftBracket();
-	ExpressionStringer rightBracket();
-	ExpressionStringer space();
-	ExpressionStringer comma();
-	ExpressionStringer colon();
-	ExpressionStringer operator(String op);
-	ExpressionStringer keyword(String kw);
-	ExpressionStringer litteral(String value);
-	ExpressionStringer string(String str);
-	ExpressionStringer identifier(String var);
-	ExpressionStringer expression(Expression expr, Precedence prec);
-	ExpressionStringer unaryOperator(String op, Expression operand, Precedence prec);
-	ExpressionStringer binaryOperator(String op, Expression left, Expression right, Precedence prec);
-	ExpressionStringer nAryOperator(String op, Expression[] operands, Precedence prec);
-	ExpressionStringer expressionList(Expression[] exprs);
-	ExpressionStringer expressionMap(Map<String,Expression> exprs, boolean args);
+import org.phatonin.yadrol.core.expressions.Undef;
+
+public abstract class ExpressionStringer {
+	private final StringBuilder sb = new StringBuilder();
+	
+	public ExpressionStringer leftParen() {
+		leftParen(sb);
+		return this;
+	}
+	
+	protected abstract void leftParen(StringBuilder sb);
+	
+	public ExpressionStringer rightParen() {
+		rightParen(sb);
+		return this;
+	}
+	
+	protected abstract void rightParen(StringBuilder sb);
+	
+	public ExpressionStringer leftCurly() {
+		leftCurly(sb);
+		return this;
+	}
+	
+	protected abstract void leftCurly(StringBuilder sb);
+	
+	public ExpressionStringer rightCurly() {
+		rightCurly(sb);
+		return this;
+	}
+	
+	protected abstract void rightCurly(StringBuilder sb);
+	
+	public ExpressionStringer leftBracket() {
+		leftBracket(sb);
+		return this;
+	}
+	
+	protected abstract void leftBracket(StringBuilder sb);
+	
+	public ExpressionStringer rightBracket() {
+		rightBracket(sb);
+		return this;
+	}
+	
+	protected abstract void rightBracket(StringBuilder sb);
+	
+	public ExpressionStringer space() {
+		space(sb);
+		return this;
+	}
+	
+	protected abstract void space(StringBuilder sb);
+	
+	public ExpressionStringer comma() {
+		comma(sb);
+		return this;
+	}
+	
+	protected abstract void comma(StringBuilder sb);
+	
+	public ExpressionStringer colon() {
+		colon(sb);
+		return this;
+	}
+	
+	protected abstract void colon(StringBuilder sb);
+
+	public ExpressionStringer operator(String op) {
+		operator(sb, op);
+		return this;
+	}
+	
+	protected abstract void operator(StringBuilder sb, String op);
+
+	public ExpressionStringer keyword(String kw) {
+		keyword(sb, kw);
+		return this;
+	}
+	
+	protected abstract void keyword(StringBuilder sb, String kw);
+
+	public ExpressionStringer litteral(String value) {
+		litteral(sb, value);
+		return this;
+	}
+	
+	protected abstract void litteral(StringBuilder sb, String value);
+
+	public ExpressionStringer string(String str) {
+		string(sb, str);
+		return this;
+	}
+	
+	protected abstract void string(StringBuilder sb, String str);
+
+	public ExpressionStringer identifier(String var) {
+		identifier(sb, var);
+		return this;
+	}
+	
+	protected abstract void identifier(StringBuilder sb, String var);
+
+	public ExpressionStringer expression(Expression expr, Precedence prec) {
+		expr.toString(this, prec);
+		return this;
+	}
+	
+	public ExpressionStringer unaryOperator(String op, Expression operand, Precedence prec) {
+		return operator(op)
+				.expression(operand, prec);
+	}
+	
+	public ExpressionStringer binaryOperator(String op, Expression left, Expression right, Precedence prec) {
+		return expression(left, prec)
+				.operator(op)
+				.expression(right, prec);
+	}
+
+	public ExpressionStringer nAryOperator(String op, Expression[] operands, Precedence prec) {
+		boolean first = true;
+		for (Expression e : operands) {
+			if (first) {
+				first = false;
+			}
+			else {
+				operator(op);
+			}
+			expression(e, prec);
+		}
+		return this;
+	}
+
+	public ExpressionStringer expressionList(Expression[] exprs) {
+		boolean first = true;
+		for (Expression e : exprs) {
+			if (first) {
+				first = false;
+			}
+			else {
+				comma().space();
+			}
+			expression(e, Precedence.SEQUENCE);
+		}
+		return this;		
+	}
+
+	public ExpressionStringer expressionMap(Map<String,Expression> exprs, boolean args) {
+		boolean first = true;
+		for (Map.Entry<String,Expression> e : exprs.entrySet()) {
+			if (first) {
+				first = false;
+			}
+			else {
+				comma().space();
+			}
+			identifier(e.getKey());
+			Expression value = e.getValue();
+			if (args) {
+				if (new Undef(Location.NONE).equals(value)) {
+					continue;
+				}
+				args = false;
+			}
+			colon().space();
+			expression(value, Precedence.SEQUENCE);
+		}
+		return this;
+	}
+	
+	protected abstract void escapeAndAppend(StringBuilder sb, String str);
+	
+	protected ExpressionStringer append(String str) {
+		escapeAndAppend(sb, str);
+		return this;
+	}
+	
+	protected abstract void escapeAndAppend(StringBuilder sb, char c);
+	
+	protected ExpressionStringer append(char c) {
+		escapeAndAppend(sb, c);
+		return this;
+	}
+	
+	@Override
+	public String toString() {
+		return sb.toString();
+	}
+	
+	public ExpressionStringer clear() {
+		sb.setLength(0);
+		return this;
+	}
 }

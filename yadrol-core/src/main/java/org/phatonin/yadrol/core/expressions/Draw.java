@@ -105,12 +105,6 @@ public class Draw extends AbstractExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		sb.append("draw from ");
-		list.toString(sb, Precedence.DICE);
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.keyword("draw from ")
 		.expression(list, Precedence.DICE);

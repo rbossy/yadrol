@@ -122,11 +122,6 @@ public class Range extends AbstractListExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		binaryOperator(sb, "..", start, end, Precedence.PLUS);
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.binaryOperator("..", start, end, Precedence.PLUS);
 	}

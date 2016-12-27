@@ -219,11 +219,6 @@ public class Arithmetic extends AbstractIntegerExpression {
 			return false;
 		return true;
 	}
-
-	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		binaryOperator(sb, operator.toString(), left, right, getPrecedence());
-	}
 	
 	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {

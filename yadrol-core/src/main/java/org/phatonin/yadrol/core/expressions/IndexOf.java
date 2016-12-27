@@ -153,11 +153,6 @@ public class IndexOf extends AbstractExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		binaryOperator(sb, " in ", element, container, Precedence.APPEND);
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.expression(element, Precedence.APPEND)
 		.keyword(" in ")

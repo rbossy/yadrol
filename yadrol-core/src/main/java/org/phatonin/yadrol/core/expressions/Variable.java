@@ -102,11 +102,6 @@ public class Variable extends AbstractExpression {
 			return false;
 		return true;
 	}
-
-	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		identifierToString(sb, name);
-	}
 	
 	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {

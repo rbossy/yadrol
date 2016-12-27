@@ -82,11 +82,6 @@ public class IntegerConstant extends AbstractIntegerExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		sb.append(value);
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.litteral(Long.toString(value));
 	}

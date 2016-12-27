@@ -175,15 +175,6 @@ public class BestMultiple extends AbstractListExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		sb.append(operator.toString());
-		sb.append(' ');
-		n.toString(sb, Precedence.ASSIGN);
-		sb.append(" of ");
-		expression.toString(sb, Precedence.DRAW);
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.keyword(operator.toString())
 		.space()

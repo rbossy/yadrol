@@ -132,13 +132,6 @@ public class ListConstructor extends AbstractListExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		sb.append('[');
-		expressionListToString(sb, elements);
-		sb.append(']');
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.leftBracket()
 		.expressionList(elements)

@@ -118,12 +118,6 @@ public class Die extends AbstractExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		String operator = type.requiresSpaceAsDiceType() ? "d " : "d";
-		unaryOperator(sb, operator, type, Precedence.UNARY);
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		String operator = type.requiresSpaceAsDiceType() ? "d " : "d";
 		stringer.unaryOperator(operator, type, Precedence.UNARY);

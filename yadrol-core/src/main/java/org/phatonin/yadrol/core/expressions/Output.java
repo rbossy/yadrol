@@ -96,19 +96,6 @@ public class Output extends AbstractExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		unaryOperator(sb, operator.toString() + ' ', expression, Precedence.ASSIGN);
-		if (evaluationType != ValueType.DEFAULT) {
-			sb.append(' ');
-			sb.append(evaluationType.toString());
-		}
-		if (name != null) {
-			sb.append(' ');
-			name.toString(sb, Precedence.ATOM);
-		}
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.keyword(operator.toString()).space()
 		.expression(expression, Precedence.ASSIGN);

@@ -105,11 +105,6 @@ public class ConvertList extends AbstractListExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		unaryOperator(sb, "list ", expression, Precedence.SUBSCRIPT);
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.unaryOperator("list ", expression, Precedence.SUBSCRIPT);
 	}

@@ -294,28 +294,6 @@ public class ForLoop extends AbstractExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		if (new Variable(Location.NONE, itemVariable).equals(out)) {
-			sb.append("for ");
-		}
-		else {
-			out.toString(sb, Precedence.OR);
-			sb.append(" for ");
-		}
-		if (indexVariable != null) {
-			identifierToString(sb, indexVariable);
-			sb.append(", ");
-		}
-		identifierToString(sb, itemVariable);
-		sb.append(" in ");
-		container.toString(sb, Precedence.OR);
-		if (!new BooleanConstant(Location.NONE, true).equals(condition)) {
-			sb.append(" if ");
-			condition.toString(sb, Precedence.OR);
-		}
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		if (new Variable(Location.NONE, itemVariable).equals(out)) {
 			stringer.keyword("for ");

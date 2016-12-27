@@ -221,16 +221,6 @@ public class Conditional extends AbstractExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		sb.append("if ");
-		condition.toString(sb, Precedence.OR);
-		sb.append(" then ");
-		trueBranch.toString(sb, Precedence.OR);
-		sb.append(" else ");
-		falseBranch.toString(sb, Precedence.OR);
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.keyword("if ")
 		.expression(condition, Precedence.OR)

@@ -142,13 +142,6 @@ public class MapConstructor extends AbstractMapExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		sb.append("{ ");
-		expressionMapToString(sb, entries, false);
-		sb.append(" }");
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.leftCurly().space()
 		.expressionMap(entries, false)

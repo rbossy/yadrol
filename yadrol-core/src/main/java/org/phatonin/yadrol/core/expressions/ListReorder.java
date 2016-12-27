@@ -177,11 +177,6 @@ public class ListReorder extends AbstractListExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		unaryOperator(sb, operator.toString(), list, Precedence.SUBSCRIPT);
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.keyword(operator.toString())
 		.expression(list, Precedence.SUBSCRIPT);

@@ -183,13 +183,6 @@ public class Best extends AbstractExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		sb.append(operator.toString());
-		sb.append(" of ");
-		expression.toString(sb, Precedence.DRAW);
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.keyword(operator.toString())
 		.keyword(" of ")

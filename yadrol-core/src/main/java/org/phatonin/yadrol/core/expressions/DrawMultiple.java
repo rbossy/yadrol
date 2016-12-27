@@ -124,14 +124,6 @@ public class DrawMultiple extends AbstractListExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		sb.append("draw ");
-		n.toString(sb, Precedence.ASSIGN);
-		sb.append(" from ");
-		list.toString(sb, Precedence.DICE);
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.keyword("draw ")
 		.expression(n, Precedence.ASSIGN)

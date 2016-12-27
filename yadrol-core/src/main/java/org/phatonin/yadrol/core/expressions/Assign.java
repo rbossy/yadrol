@@ -110,11 +110,6 @@ public class Assign extends AbstractExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		binaryOperator(sb, " = ", lvalue, rvalue, Precedence.CONTROL);
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.binaryOperator(" = ", lvalue, rvalue, Precedence.CONTROL);
 	}

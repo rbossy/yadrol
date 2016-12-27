@@ -294,11 +294,6 @@ public class Comparison extends AbstractBooleanExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		binaryOperator(sb, operator.toString(), left, right, Precedence.INDEXOF);
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.binaryOperator(operator.toString(), left, right, Precedence.INDEXOF);
 	}

@@ -34,6 +34,7 @@ import org.phatonin.yadrol.core.Expression;
 import org.phatonin.yadrol.core.ExpressionStringer;
 import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.Precedence;
+import org.phatonin.yadrol.core.RegularStringer;
 import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.values.Function;
 import org.phatonin.yadrol.core.values.ValueType;
@@ -249,18 +250,6 @@ public abstract class AbstractExpression implements Expression {
 	}
 	
 	protected abstract void toStringWithoutParen(ExpressionStringer stringer);
-
-	@Override
-	public void toString(StringBuilder sb, Precedence prec) {
-		if (requiresParentheses(prec)) {
-			sb.append('(');
-			toStringWithoutParen(sb);
-			sb.append(')');
-		}
-		else {
-			toStringWithoutParen(sb);
-		}
-	}
 	
 	@Override
 	public boolean requiresSpaceAsDiceNumber() {
@@ -270,61 +259,6 @@ public abstract class AbstractExpression implements Expression {
 	@Override
 	public boolean requiresSpaceAsDiceType() {
 		return !requiresParentheses(Precedence.UNARY);
-	}
-
-	/**
-	 * Converts a binary operator to string.
-	 * @param sb
-	 * @param operator
-	 * @param left
-	 * @param right
-	 * @param prec
-	 */
-	protected static void binaryOperator(StringBuilder sb, CharSequence operator, Expression left, Expression right, Precedence prec) {
-		left.toString(sb, prec);
-		sb.append(operator);
-		right.toString(sb, prec);
-	}
-	
-	/**
-	 * Converts an unary operator to string.
-	 * @param sb
-	 * @param operator
-	 * @param expr
-	 * @param prec
-	 */
-	protected static void unaryOperator(StringBuilder sb, String operator, Expression expr, Precedence prec) {
-		sb.append(operator);
-		expr.toString(sb, prec);
-	}
-	
-	/**
-	 * Converts a n-ary operator to string.
-	 * @param sb
-	 * @param operator
-	 * @param expressions
-	 * @param prec
-	 */
-	protected static void nAryOperator(StringBuilder sb, String operator, Expression[] expressions, Precedence prec) {
-		boolean first = true;
-		for (Expression e : expressions) {
-			if (first) {
-				first = false;
-			}
-			else {
-				sb.append(operator);
-			}
-			e.toString(sb, prec);
-		}
-	}
-	
-	/**
-	 * Converts the specified expression array to string (separated by commas).
-	 * @param sb
-	 * @param expressions
-	 */
-	protected static void expressionListToString(StringBuilder sb, Expression[] expressions) {
-		nAryOperator(sb, ", ", expressions, Precedence.SEQUENCE);
 	}
 	
 	private static final Pattern UNQUOTED_IDENTIFIER = Pattern.compile("[A-Z_a-z][0-9A-Z_a-z]*");
@@ -394,40 +328,6 @@ public abstract class AbstractExpression implements Expression {
 	}
 	
 	/**
-	 * Convert the specified expression map to string.
-	 * @param sb
-	 * @param map
-	 * @param args
-	 */
-	protected static void expressionMapToString(StringBuilder sb, Map<String,Expression> map, boolean args) {
-		boolean first = true;
-		for (Map.Entry<String,Expression> e : map.entrySet()) {
-			if (first) {
-				first = false;
-			}
-			else {
-				sb.append(", ");
-			}
-			identifierToString(sb, e.getKey());
-			Expression value = e.getValue();
-			if (args) {
-				if (new Undef(Location.NONE).equals(value)) {
-					continue;
-				}
-				args = false;
-			}
-			sb.append(": ");
-			e.getValue().toString(sb, Precedence.SEQUENCE);
-		}
-	}
-	
-	/**
-	 * Convert this expression to string.
-	 * @param sb
-	 */
-	protected abstract void toStringWithoutParen(StringBuilder sb);
-	
-	/**
 	 * Returns the precedence of the operator used to build this expression.
 	 * @return
 	 */
@@ -435,9 +335,9 @@ public abstract class AbstractExpression implements Expression {
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		toString(sb, Precedence.SEQUENCE);
-		return sb.toString();
+		ExpressionStringer stringer = new RegularStringer();
+		toString(stringer, Precedence.SEQUENCE);
+		return stringer.toString();
 	}
 
 	@Override

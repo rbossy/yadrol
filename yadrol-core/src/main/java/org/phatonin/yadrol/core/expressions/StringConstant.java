@@ -91,11 +91,6 @@ public class StringConstant extends AbstractStringExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		stringConstant(sb, value);
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.string(value);
 	}

@@ -153,18 +153,6 @@ public class Repeat extends AbstractListExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		sb.append("repeat ");
-		expression.toString(sb, Precedence.OR);
-		sb.append(limit == 1 ? " if " : " while ");
-		condition.toString(sb, Precedence.OR);
-		if (limit != 1 && limit != Long.MAX_VALUE) {
-			sb.append(" limit ");
-			sb.append(limit);
-		}
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.keyword("repeat ")
 		.expression(expression, Precedence.OR)

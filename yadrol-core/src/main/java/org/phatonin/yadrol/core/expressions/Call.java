@@ -264,18 +264,6 @@ public class Call extends AbstractExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		function.toString(sb, Precedence.SUBSCRIPT);
-		sb.append('(');
-		expressionListToString(sb, positionalArgs);
-		if (positionalArgs.length != 0 && !namedArgs.isEmpty()) {
-			sb.append(", ");
-		}
-		expressionMapToString(sb, namedArgs, false);
-		sb.append(')');
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.expression(function, Precedence.SUBSCRIPT)
 		.leftParen()

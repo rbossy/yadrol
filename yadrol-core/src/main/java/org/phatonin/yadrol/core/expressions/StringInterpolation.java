@@ -299,13 +299,6 @@ public class StringInterpolation extends AbstractStringExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		sb.append('"');
-		sb.append(originalString);
-		sb.append('"');
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.litteral("\"")
 		.litteral(originalString)

@@ -149,11 +149,6 @@ public class ScopeVariables extends AbstractMapExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		sb.append(operator.toString());
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.keyword(operator.toString());
 	}

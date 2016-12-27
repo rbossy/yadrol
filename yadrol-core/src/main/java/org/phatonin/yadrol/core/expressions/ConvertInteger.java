@@ -103,11 +103,6 @@ public class ConvertInteger extends AbstractIntegerExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		unaryOperator(sb, "integer ", expression, Precedence.SUBSCRIPT);
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.unaryOperator("integer ", expression, Precedence.SUBSCRIPT);
 	}

@@ -120,12 +120,6 @@ public class Import extends AbstractUndefExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		sb.append("import ");
-		stringConstant(sb, address);
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.keyword("import ")
 		.string(address);

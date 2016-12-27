@@ -165,12 +165,6 @@ public class Native extends AbstractExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		sb.append("native ");
-		stringConstant(sb, address);
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.keyword("native ")
 		.string(address);

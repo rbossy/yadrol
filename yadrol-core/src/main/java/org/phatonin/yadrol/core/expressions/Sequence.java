@@ -183,11 +183,6 @@ public class Sequence extends AbstractExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		nAryOperator(sb, "; ", expressions, Precedence.OUTPUT); 
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.nAryOperator("; ", expressions, Precedence.OUTPUT);
 	}

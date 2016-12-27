@@ -103,11 +103,6 @@ public class ConvertBoolean extends AbstractBooleanExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		unaryOperator(sb, "boolean ", expression, Precedence.SUBSCRIPT);
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.unaryOperator("boolean ", expression, Precedence.SUBSCRIPT);
 	}

@@ -103,11 +103,6 @@ public class ConvertString extends AbstractStringExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		unaryOperator(sb, "string ", expression, Precedence.SUBSCRIPT);
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.unaryOperator("string ", expression, Precedence.SUBSCRIPT);
 	}

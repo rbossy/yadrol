@@ -88,11 +88,6 @@ public class BooleanConstant extends AbstractBooleanExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		sb.append(value);
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.litteral(Boolean.toString(value));
 	}

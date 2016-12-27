@@ -132,11 +132,6 @@ public class Count extends AbstractIntegerExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		unaryOperator(sb, "count ", container, Precedence.SUBSCRIPT);
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.unaryOperator("count ", container, Precedence.SUBSCRIPT);
 	}

@@ -129,35 +129,6 @@ public class Lambda extends AbstractFunctionExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		sb.append("fun (");
-		boolean notFirst = false;
-		for (String arg : positionalArgs) {
-			if (notFirst) {
-				sb.append(", ");
-			}
-			else {
-				notFirst = true;
-			}
-			identifierToString(sb, arg);
-		}
-		for (Map.Entry<String,Expression> e : namedArgs.entrySet()) {
-			if (notFirst) {
-				sb.append(", ");
-			}
-			else {
-				notFirst = true;
-			}
-			identifierToString(sb, e.getKey());
-			sb.append(": ");
-			e.getValue().toString(sb, Precedence.SEQUENCE);
-		}
-		sb.append(") { ");
-		body.toString(sb, Precedence.SEQUENCE);
-		sb.append(" }");
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.keyword("fun")
 		.space()

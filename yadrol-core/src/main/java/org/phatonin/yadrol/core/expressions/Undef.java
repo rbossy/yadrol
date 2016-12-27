@@ -74,11 +74,6 @@ public class Undef extends AbstractUndefExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		sb.append("undef");
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.litteral("undef");
 	}

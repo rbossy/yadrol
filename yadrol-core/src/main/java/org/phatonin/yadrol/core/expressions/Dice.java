@@ -116,19 +116,6 @@ public class Dice extends AbstractListExpression {
 			return false;
 		return true;
 	}
-
-	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		StringBuilder operator = new StringBuilder(3);
-		if (n.requiresSpaceAsDiceNumber()) {
-			operator.append(' ');
-		}
-		operator.append('d');
-		if (type.requiresSpaceAsDiceType()) {
-			operator.append(' ');
-		}
-		binaryOperator(sb, operator, n, type, Precedence.UNARY);
-	}
 	
 	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {

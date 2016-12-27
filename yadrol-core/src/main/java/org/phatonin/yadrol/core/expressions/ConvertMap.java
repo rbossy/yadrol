@@ -105,11 +105,6 @@ public class ConvertMap extends AbstractMapExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		unaryOperator(sb, "map ", expression, Precedence.SUBSCRIPT);
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.unaryOperator("map ", expression, Precedence.SUBSCRIPT);
 	}

@@ -149,11 +149,6 @@ public class Sign extends AbstractIntegerExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		unaryOperator(sb, operator.toString(), operand, Precedence.BEST);
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.unaryOperator(operator.toString(), operand, Precedence.BEST);
 	}

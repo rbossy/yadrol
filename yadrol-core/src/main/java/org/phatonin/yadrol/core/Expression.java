@@ -158,14 +158,6 @@ public interface Expression {
 	 */
 	Expression substituteVariables(Scope scope);
 	
-	/**
-	 * Converts this expressio into a string.
-	 * The string can be re-parsed back into an equivalent expression.
-	 * @param sb
-	 * @param prec precedence of the expression that contains this expression.
-	 */
-	void toString(StringBuilder sb, Precedence prec);
-
 	void toString(ExpressionStringer stringer, Precedence prec);
 
 	/**

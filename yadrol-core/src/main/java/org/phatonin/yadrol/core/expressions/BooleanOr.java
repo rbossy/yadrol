@@ -122,11 +122,6 @@ public class BooleanOr extends AbstractBooleanExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		nAryOperator(sb, " or ", operands, Precedence.AND);
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.nAryOperator(" or ", operands, Precedence.AND);
 	}

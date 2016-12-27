@@ -292,21 +292,6 @@ public class Subscript extends AbstractExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		list.toString(sb, Precedence.SUBSCRIPT);
-		if (subscript instanceof StringConstant) {
-			String name = ((StringConstant) subscript).getValue();
-			sb.append('.');
-			identifierToString(sb, name);
-		}
-		else {
-			sb.append('[');
-			subscript.toString(sb, Precedence.SEQUENCE);
-			sb.append(']');
-		}
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.expression(list, Precedence.SUBSCRIPT);
 		if (subscript instanceof StringConstant) {

@@ -99,11 +99,6 @@ public class BooleanNot extends AbstractBooleanExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		unaryOperator(sb, "not ", operand, Precedence.COMPARISON);
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.unaryOperator("not ", operand, Precedence.COMPARISON);
 	}

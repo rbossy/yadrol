@@ -154,11 +154,6 @@ public class Append extends AbstractExpression {
 	}
 
 	@Override
-	protected void toStringWithoutParen(StringBuilder sb) {
-		binaryOperator(sb, " << ", target, source, Precedence.RANGE);
-	}
-
-	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.binaryOperator(" << ", target, source, Precedence.RANGE);
 	}

@@ -11,7 +11,6 @@ import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
 
-import org.phatonin.yadrol.core.CountSelector;
 import org.phatonin.yadrol.core.OutputMode;
 import org.phatonin.yadrol.core.values.ValueType;
 
@@ -81,19 +80,6 @@ public enum WebParamDispatcher {
 		@Override
 		public String getParam(WebOptions options) {
 			return Long.toString(options.getSeed());
-		}
-	},
-	
-	COUNT_SELECTOR("count-selector") {
-		@Override
-		public void setParam(WebOptions options, String value) {
-			CountSelector countSelector = CountSelector.fromString(value);
-			options.setCountSelector(countSelector);
-		}
-
-		@Override
-		public String getParam(WebOptions options) {
-			return options.getCountSelector().toString();
 		}
 	},
 	
@@ -178,7 +164,7 @@ public enum WebParamDispatcher {
 
 	private static void setParam(WebOptions options, Map<String,WebParamDispatcher> paramMap, String name, String value) {
 		if (!paramMap.containsKey(name)) {
-			throw new RuntimeException();
+			throw new RuntimeException("unknown parameter: " + name);
 		}
 		WebParamDispatcher wpd = paramMap.get(name);
 		wpd.setParam(options, value);

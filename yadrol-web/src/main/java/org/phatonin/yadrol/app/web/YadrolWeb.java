@@ -2,10 +2,13 @@ package org.phatonin.yadrol.app.web;
 
 import java.io.IOException;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.json.simple.JSONObject;
@@ -19,11 +22,12 @@ import com.sun.jersey.api.core.HttpContext;
 import com.sun.jersey.api.core.HttpRequestContext;
 import com.sun.jersey.multipart.FormDataMultiPart;
 
-@Path("/api")
+@Path("")
 public class YadrolWeb {
 
 	@GET
 	@Path("/run")
+	@Produces(MediaType.APPLICATION_JSON)
 	public static Response run(
 			@Context HttpContext httpContext
 			) throws IOException {
@@ -32,9 +36,11 @@ public class YadrolWeb {
 	
 	@POST
 	@Path("/run")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes({ MediaType.MULTIPART_FORM_DATA })
 	public static Response run(
 			@Context HttpContext httpContext,
-			@Context FormDataMultiPart formData
+			FormDataMultiPart formData
 			) throws IOException {
 		return doRun(httpContext, formData);
 	}
@@ -60,20 +66,24 @@ public class YadrolWeb {
 	
 	@SuppressWarnings("unchecked")
 	private static Response successResponse(WebOptions options, YadrolResult result) {
-		JSONObject obj = new JSONObject();
-		obj.put("status", "success");
-		obj.put("options", WebOptionsConverter.INSTANCE.convert(options, options));
+		JSONObject obj = createResponseObject(options, true);
 		obj.put("result", YadrolResultConverter.INSTANCE.convert(result, options));
 		return Response.ok(obj.toString()).build();
 	}
 	
 	@SuppressWarnings("unchecked")
 	private static Response failureResponse(WebOptions options, String errType, String msg) {
-		JSONObject obj = new JSONObject();
-		obj.put("status", "failure");
-		obj.put("options", WebOptionsConverter.INSTANCE.convert(options, options));
-		obj.put("error-type", errType);
+		JSONObject obj = createResponseObject(options, false);
+		obj.put("error", errType);
 		obj.put("message", msg);
 		return Response.status(422).entity(obj.toString()).build();
+	}
+	
+	@SuppressWarnings("unchecked")
+	private static JSONObject createResponseObject(WebOptions options, boolean success) {
+		JSONObject result = new JSONObject();
+		result.put("success", success);
+		result.put("options", WebOptionsConverter.INSTANCE.convert(options, options));
+		return result;
 	}
 }

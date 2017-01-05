@@ -8,3 +8,7 @@ yadrol-core/.classpath
 yadrol-core/.project
 yadrol-core/.settings/
 yadrol-core/target/
+yadrol-web/.classpath
+yadrol-web/.project
+yadrol-web/.settings/
+yadrol-web/target/

@@ -13,6 +13,6 @@
   <modules>
     <module>yadrol-core</module>
     <module>yadrol-cli</module>
-    <!--<module>yadrol-web</module>-->
+    <module>yadrol-web</module>
   </modules>
 </project>

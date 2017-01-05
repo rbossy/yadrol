@@ -29,6 +29,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.phatonin.yadrol.app.cli.display.DefaultDisplay;
 import org.phatonin.yadrol.app.cli.display.LatexDisplay;
 import org.phatonin.yadrol.core.ConfidenceIntervalScore;
 import org.phatonin.yadrol.core.CountSelector;
@@ -193,7 +194,14 @@ enum OptionParser {
 			double risk = Double.parseDouble(args[0]);
 			options.addDistributionScore(new ConfidenceIntervalScore(risk));
 		}
-	}
+	},
+	
+	COLOR("-color", 0) {
+		@Override
+		public void process(CLIOptions options, String[] args) {
+			options.setDisplayManager(new DefaultDisplay(true));
+		}
+	},
 	;
 
 	private final String trigger;

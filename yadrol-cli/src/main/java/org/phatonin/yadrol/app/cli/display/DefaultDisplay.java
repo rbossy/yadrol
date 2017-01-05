@@ -31,26 +31,57 @@ import org.phatonin.yadrol.core.RollRecord;
 import org.phatonin.yadrol.core.SampleRecord;
 
 public class DefaultDisplay extends DisplayManager {
+	public static final String COLOR_RESET = "\u001B[0m";
+	public static final String COLOR_NORMAL = "\u001B[37;1m";
+	public static final String COLOR_BRIGHT = "\u001B[37;1m";
+	public static final String COLOR_HIGHLIGHT = "\u001B[31m;1";
+	public static final String COLOR_BRIGHT_HIGHLIGHT = "\u001B[31m";
+
+	private final boolean color;
+	
+	public DefaultDisplay(boolean color) {
+		super();
+		this.color = color;
+	}
+
 	@Override
 	protected void writeMultiCounts(PrintStream out, EvaluationContext ctx, CLIOptions options, List<MultiCount> multiCounts) throws EvaluationException {
-		TableSpecification tableSpec = buildTableSpecification(ctx.getSampleRecords());
+		TableSpecification tableSpec = buildTableSpecification(options, ctx.getSampleRecords());
 		String[][] data = buildTableData(ctx, options, multiCounts);
 		tableSpec.print(out, data);
 	}
 
-	private static TableSpecification buildTableSpecification(List<SampleRecord> sampleRecords) {
+	private TableSpecification buildTableSpecification(CLIOptions options, List<SampleRecord> sampleRecords) {
 		TableSpecification result = new TableSpecification();
 		RowSpecification rowSpec = new RowSpecification();
+		RowSpecification highlightSpec = new RowSpecification();
+		if (color) {
+			rowSpec.appendColumnSpecification(new ConstantColumnSpecification(COLOR_BRIGHT));
+			highlightSpec.appendColumnSpecification(new ConstantColumnSpecification(COLOR_BRIGHT_HIGHLIGHT));
+		}
 		rowSpec.appendColumnSpecification(DataColumnSpecification.MAX_RIGHT);
+		highlightSpec.appendColumnSpecification(DataColumnSpecification.MAX_RIGHT);
+		if (color) {
+			rowSpec.appendColumnSpecification(new ConstantColumnSpecification(COLOR_RESET));
+			highlightSpec.appendColumnSpecification(new ConstantColumnSpecification(COLOR_RESET + COLOR_HIGHLIGHT));
+		}
 		for (int i = 0; i < sampleRecords.size(); ++i) {
 			rowSpec.appendColumnSpecification(DataColumnSpecification.MAX_RIGHT);
+			highlightSpec.appendColumnSpecification(DataColumnSpecification.MAX_RIGHT);
+		}
+		if (color) {
+			highlightSpec.appendColumnSpecification(new ConstantColumnSpecification(COLOR_RESET));
 		}
 		rowSpec.insertSeparator("  ");
+		highlightSpec.insertSeparator("  ");
 		result.setDefaultRowSpecification(rowSpec);
+		for (int i = 0; i < options.getDistributionScores().size(); ++i) {
+			result.setRowSpecification(-1-i, highlightSpec);
+		}
 		return result;
 	}
-	
-	@Override
+
+	@Override	
 	protected void writeRollRecord(PrintStream out, CLIOptions optiosn, RollRecord rollRecord) {
 		out.println(rollRecord.getName());
 		out.println(toString(rollRecord.getResult()));
@@ -62,7 +93,7 @@ public class DefaultDisplay extends DisplayManager {
 			displayDiceRecord(out, rollName, diceRecord);
 		}
 	}
-	
+
 	private static void displayDiceRecord(PrintStream out, String rollName, DiceRecord diceRecord) {
 		List<Object> res = diceRecord.getResult();
 		out.format("(%s) %dd%s: %s\n", rollName, res.size(), toString(diceRecord.getType()), toString(res));

@@ -79,7 +79,7 @@ public abstract class DisplayManager {
 			}
 		}
 	}
-	
+
 	private void writeRollRecords(PrintStream out, CLIOptions options, YadrolResult result) {
 		EvaluationContext ctx = result.getEvaluationContext();
 		for (RollRecord rollRecord : ctx.getRollRecords()) {

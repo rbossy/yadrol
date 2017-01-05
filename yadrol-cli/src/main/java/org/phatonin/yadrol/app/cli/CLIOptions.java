@@ -36,7 +36,7 @@ public class CLIOptions extends YadrolOptions {
 	public static final String YADROL_IMPORT_PATH = "YADROL_IMPORT_PATH";
 
 	private boolean help = false;
-	private DisplayManager displayManager = new DefaultDisplay();
+	private DisplayManager displayManager = new DefaultDisplay(false);
 	private File seedFile = null;
 	private File rollRecordsFile = null;
 	private File sampleRecordsFile = null;

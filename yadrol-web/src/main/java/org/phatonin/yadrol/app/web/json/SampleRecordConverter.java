@@ -30,7 +30,7 @@ public class SampleRecordConverter implements JsonConverter<SampleRecord> {
 			result.put("mode", CountConverter.INSTANCE.convert(dist.mode(), options));
 			result.put("median-sup", CountConverter.INSTANCE.convert(dist.medianSup(), options));
 			result.put("median-inf", CountConverter.INSTANCE.convert(dist.medianInf(), options));
-			result.put("confidence-interval", ConverterUtil.convert(dist.confidenceInterval(options.getConfidenceIntervalRisk()), CountConverter.INSTANCE, options));
+			//result.put("confidence-interval", ConverterUtil.convert(dist.confidenceInterval(options.getConfidenceIntervalRisk()), CountConverter.INSTANCE, options));
 			return result;
 		}
 		catch (EvaluationException e) {

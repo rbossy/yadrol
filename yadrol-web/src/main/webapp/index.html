@@ -23,7 +23,7 @@
 				<h1>Yadrol <small>Dice roller and dice distribution sampler</small></h1>
 			</div>
 			<div class="col-md-2 btn-group" id="toolbar">
-				<button id="button-info" type="button" class="btn btn-info btn-lg">
+				<button id="button-info" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#info">
 					<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
 				</button>
 				<button id="button-help" type="button" class="btn btn-default btn-lg">
@@ -120,15 +120,39 @@
 							<input id="sample-size" class="form-control" type="number" value="30000" min="1000" max="1000000" step="1000"/>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-md-6">Confidence interval risk</div>
-						<div class="col-md-6">
-							<input id="confidence-interval-risk" class="form-control" type="number" value="0.3" min="0.01" max="1" step="0.01"/>
-						</div>
-					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" data-dismiss="modal">Done</button>
+				</div>
+			</div>
+		</div>
+	</div>
+		
+	<div class="modal fade" id="info" tabindex="-1" role="dialog" aria-labelledby="info">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+					</button>
+					<h3 class="modal-title">About Yadrol</h3>
+				</div>
+				<div class="modal-body container-fluid">
+					<h4>Version 0.1</h4>
+					<p>Made by <a href="mailto:phatonin@gmail.com?subject=[yadrol] ">phatonin</a> during his leisure time.</p>
+					<p>For sources, bug reports, feature requests, see the <a target="_new" href="https://github.com/phatonin/yadrol">GitHub page</a>.</p>
+					<hr>
+					<h4>Icons</h4>
+					<p><img height="17ex" src="icons/buttons/dice2.svg"> made by <a target="_new" href="http://www.flaticon.com/authors/nikita-golubev">Nikita Golubev</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"target="_blank">CC 3.0 BY</a>.</p>
+					<p><img height="17ex" src="icons/buttons/dice3.svg"> made by <a target="_new" href="http://www.freepik.com">Freepik</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC 3.0 BY</a>.</p>
+					<p><img height="17ex" src="icons/buttons/graph4.svg"> made by <a target="_new" href="http://www.flaticon.com/authors/retinaicons">Retinaicons</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC 3.0 BY</a>.</p>
+					<hr>
+					<h4>Libraries</h4>
+					<p>Layout was made this neat, thanks to <a target="_new" href="http://getbootstrap.com/">Bootstrap</a>.</p>
+					<p>Beautiful graphs rendered with <a target="_new" href="http://plottablejs.org/">Plottable</a>.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Dismiss</button>
 				</div>
 			</div>
 		</div>

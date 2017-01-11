@@ -158,7 +158,6 @@ var change_centrum = function(c) {
 ;
 
 var _create_roll_output = function(i, rec) {
-	//console.log(rec);
 	$('#output').append('<div class="row roll-record"><div class="col-md-3 roll-name"><code>'+rec.name+'</code></div><div class="col-md-2 roll-result lead">'+rec['string-result']+'</div></div>');
 }
 ;

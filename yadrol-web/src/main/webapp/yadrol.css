@@ -1,0 +1,31 @@
+@CHARSET "UTF-8";
+
+body {
+	
+}
+
+#header {
+	margin-bottom: 10mm;
+}
+
+#toolbar {
+	margin-top: 2ex;
+}
+
+#expression-string-box {
+	margin-bottom: 10mm;
+}
+
+#expression-string {
+	font-family: monospace;
+	font-size: 150%;
+}
+
+#button-run {
+	margin-left: 5mm;
+	width: 30mm;
+}
+
+#sample-records {
+	height: 7cm;
+}

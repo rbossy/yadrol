@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Yadrol</title>
+	<link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="plottable.css" rel="stylesheet">
+	<link href="yadrol.css" rel="stylesheet">
+</head>
+<body>
+    <script src="jquery-3.1.1.min.js"></script>
+    <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="svgtypewriter.js"></script>
+    <script src="d3.js"></script>
+    <script src="plottable.js"></script>
+    <script src="yadrol.js"></script>
+
+	<div id="global" class="container-fluid">
+		<div id="header" class="row">
+			<div class="col-md-10">
+				<h1>Yadrol <small>Dice roller and dice distribution sampler</small></h1>
+			</div>
+			<div class="col-md-2 btn-group" id="toolbar">
+				<button id="button-info" type="button" class="btn btn-info btn-lg">
+					<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+				</button>
+				<button id="button-help" type="button" class="btn btn-default btn-lg">
+					<span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+				</button>
+				<button id="button-settings" type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#settings">
+					<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+				</button>
+			</div>
+		</div>
+		<div id="desktop" class="row">
+			<div class="col-md-5">
+				<div class="row" id="expression-string-box">
+					<div class="col-md-12">
+						<textarea id="expression-string" class="form-control" placeholder="Expression, e.g. 3d6" rows="7"></textarea>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-md-offset-8 btn-group">
+						<button id="button-run" type="button" class="btn btn-success btn-md" onclick="run()"></button>
+						<button id="button-run-aux" type="button" class="btn btn-success btn-md dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+							<li><a onclick="set_output_mode('Sample', true)">
+								<img height="17ex" src="icons/buttons/graph4.svg">
+								&nbsp;Sample
+							</a></li>
+							<li><a onclick="set_output_mode('Roll', true)">
+								<img height="17ex" src="icons/buttons/dice3.svg">
+								&nbsp;Roll
+							</a></li>
+							<li><a onclick="set_output_mode('Roll Native', true)">
+								<img height="17ex" src="icons/buttons/dice2.svg">
+								&nbsp;Roll Native
+							</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div id="output" class="col-md-7">
+				<div class="row">
+					<div id="sample-records-box" class="col-md-12">
+						<div class="row">
+						<svg id="sample-records"></svg>
+						</div>
+						<div class="row">
+							<div class="col-md-4 col-md-offset-4 btn-group" data-toggle="buttons">
+								<label class="btn btn-default btn-sm active">
+    								<input type="radio" name="y-value" onchange="change_y('relative-at-least-frequency')" autocomplete="off" checked>At Least
+    							</label>
+								<label class="btn btn-default btn-sm">
+    								<input type="radio" name="y-value" onchange="change_y('relative-frequency')" autocomplete="off">Exact
+    							</label>
+								<label class="btn btn-default btn-sm">
+    								<input type="radio" name="y-value" onchange="change_y('relative-at-most-frequency')" autocomplete="off">At Most
+    							</label>
+							</div>
+							<div class="col-md-4 btn-group" data-toggle="buttons">
+								<label class="btn btn-default btn-sm active">
+    								<input type="radio" name="centrum-value" onchange="change_centrum('mean')" autocomplete="off" checked>Mean
+    							</label>
+								<label class="btn btn-default btn-sm">
+    								<input type="radio" name="centrum-value" onchange="change_centrum('mode')" autocomplete="off">Mode
+    							</label>
+								<label class="btn btn-default btn-sm">
+    								<input type="radio" name="centrum-value" onchange="change_centrum('median')" autocomplete="off">Median
+    							</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+		</div>
+		<div id="footer" class="row">
+		</div>
+	</div>
+	
+	<div class="modal fade" id="settings" tabindex="-1" role="dialog" aria-labelledby="settings">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+					</button>
+					<h3 class="modal-title">Yadrol settings</h3>
+				</div>
+				<div class="modal-body container-fluid">
+					<div class="row">
+						<div class="col-md-6">Sample size</div>
+						<div class="col-md-6">
+							<input id="sample-size" class="form-control" type="number" value="30000" min="1000" max="1000000" step="1000"/>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">Confidence interval risk</div>
+						<div class="col-md-6">
+							<input id="confidence-interval-risk" class="form-control" type="number" value="0.3" min="0.01" max="1" step="0.01"/>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Done</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</body>
+</html>

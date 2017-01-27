@@ -29,3 +29,12 @@ body {
 #sample-records {
 	height: 7cm;
 }
+
+#help-contents {
+	height: 5cm;
+	overflow: scroll;
+}
+
+.tryit {
+	cursor: pointer;
+}

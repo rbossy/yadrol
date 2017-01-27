@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<h3>Yadrol Help</h3>
+
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h4 class="panel-title">What is this about?</h4>
+	</div>
+	<div class="panel-body">
+		<p>
+		Yadrol simulates dice rolling and presents roll results or
+		calculates the distribution of rolling dice many times.
+		Yadrol is designed for tabletop role playing games and boardgames
+		enthousiasts that want to study existing dice mechanics or
+		that want to create new mechanics.
+		</p>
+	</div>
+</div>
+
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h4 class="panel-title">How does it work?</h4>
+	</div>
+	<div class="panel-body">
+		<p>
+		You specify a dice mechanic in the text area above, then Yadrol
+		simulates the rolls for you.
+		The dice mechanic is written as an expression in a language designed
+		to capture the most widely used dice mechanics.
+		More on that later.
+		</p>
+		<p> 
+		Yadrol has three simulation modes:
+		</p>
+		<dl>
+			<dt>
+				<img height="17ex" src="icons/buttons/dice3.svg">
+				&nbsp;Roll
+			</dt>
+			<dd>
+				Yadrol simulates the mechanic once and displays the final
+				result on the right.
+				The result of an expression is a number.
+			</dd>
+			<dt>
+				<img height="17ex" src="icons/buttons/graph4.svg">
+				&nbsp;Sample
+			</dt>
+			<dd>
+				Yadrol simulates the mechanic several times and displays on
+				the right a graph that represents the distribution of results.
+				By default the simulation is repeated 30,000 times.
+			</dd>
+			<dt>
+				<img height="17ex" src="icons/buttons/dice2.svg">
+				&nbsp;Advanced Roll
+			</dt>
+			<dd>
+				This mode works the same way as <em>Roll</em> but it is used
+				when the result is not necessarily a number.
+			</dd>
+		</dl>
+		<p>
+		<em>Sample</em> is the default mode.
+		</p>
+	</div>
+</div>
+
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h4 class="panel-title">Dice expression basics</h4>
+	</div>
+	<div class="panel-body">
+		<p>
+		The core expression to specify a dice is <code>NdX</code>, where <code>N</code>
+		is the number of dice to roll, and <code>X</code> is the number of sides
+		of each die.
+		</p>
+		<p>
+		For instance <code class="tryit" run="true">2d6</code> tells Yadrol to roll two six-sided die.
+		</p>
+		<p class="well">
+		Oh! And by the way, each time you see an expression example, you can click on it to try it on Yadrol.
+		</p>
+	</div>
+</div>

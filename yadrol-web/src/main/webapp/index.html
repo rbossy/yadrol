@@ -26,10 +26,7 @@
 				<button id="button-info" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#info">
 					<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
 				</button>
-				<button id="button-help" type="button" class="btn btn-default btn-lg">
-					<span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
-				</button>
-				<button id="button-settings" type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#settings">
+				<button id="button-settings" type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#settings">
 					<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
 				</button>
 			</div>
@@ -42,7 +39,12 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-4 col-md-offset-8 btn-group">
+					<div class="col-md-1">
+						<button id="button-help" type="button" class="btn btn-default btn-md" data-toggle="collapse" data-target="#help">
+							<span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+						</button>
+					</div>
+					<div class="col-md-4 col-md-offset-7 btn-group">
 						<button id="button-run" type="button" class="btn btn-success btn-md" onclick="run()"></button>
 						<button id="button-run-aux" type="button" class="btn btn-success btn-md dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							<span class="caret"></span>
@@ -58,9 +60,15 @@
 							</a></li>
 							<li><a onclick="set_output_mode('Roll Native', true)">
 								<img height="17ex" src="icons/buttons/dice2.svg">
-								&nbsp;Roll Native
+								&nbsp;Advanced Roll
 							</a></li>
 						</ul>
+					</div>
+				</div>
+				<div class="row collapse" id="help">
+					<div class="col-md-12">
+						<div id="help-contents">
+						</div>
 					</div>
 				</div>
 			</div>

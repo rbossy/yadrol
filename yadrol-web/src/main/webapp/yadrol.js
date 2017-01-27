@@ -5,7 +5,7 @@
 var ICON = {
 		'Sample': 'icons/buttons/graph4.svg',
 		'Roll': 'icons/buttons/dice3.svg',
-		'Roll Native': 'icons/buttons/dice2.svg'
+		'Advanced Roll': 'icons/buttons/dice2.svg'
 }
 
 var set_output_mode = function(mode, andRun) {
@@ -162,8 +162,6 @@ var _create_roll_output = function(i, rec) {
 }
 ;
 
-
-
 var _pop_searchParams = function(q, k) {
 	var r = q.get(k);
 	q['delete'](k);
@@ -185,16 +183,53 @@ var _parse_url = function() {
 		_pop_searchParams(q, 'roll');
 		run();
 	}
+	if (q.has('advanced-roll')) {
+		set_output_mode('Advanced Roll');
+		_pop_searchParams(q, 'advanced-roll');
+		run();
+	}
 	if (q.has('sample')) {
 		set_output_mode('Sample');
 		_pop_searchParams(q, 'sample');
 		run();
 	}
 }
+;
+
+var try_it = function(expressionString, outputMode, runNow) {
+	$('#expression-string').val(expressionString);
+	if (outputMode == 'roll') {
+		set_output_mode('Roll');
+	}
+	if (outputMode == 'sample') {
+		set_output_mode('Sample');
+	}
+	if (outputMode == 'advanced-roll') {
+		set_output_mode('Advanced Roll');
+	}
+	if (runNow) {
+		run();
+	}
+}
+;
+
 
 $(document).ready(function() {
 	set_output_mode('Sample');
 	_clear_output();
 	_parse_url();
+	$('#help-contents').load('help.html', function() {
+		$('.tryit').on('click', function() {
+			var e = $(this);
+			var expressionString = e[0].innerText;
+			console.log(expressionString);
+			var outputMode = e.attr('output-mode');
+			var runNow = false;
+			if (e.attr('run')) {
+				runNow = Boolean(e.attr('run'));
+			}
+			try_it(expressionString, outputMode, runNow);
+		});
+	});
 });
 

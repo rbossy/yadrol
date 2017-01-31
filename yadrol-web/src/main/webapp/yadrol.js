@@ -222,11 +222,10 @@ $(document).ready(function() {
 		$('.tryit').on('click', function() {
 			var e = $(this);
 			var expressionString = e[0].innerText;
-			console.log(expressionString);
-			var outputMode = e.attr('output-mode');
+			var outputMode = e[0].dataset['output-mode'];
 			var runNow = false;
-			if (e.attr('run')) {
-				runNow = Boolean(e.attr('run'));
+			if (e[0].dataset['run']) {
+				runNow = Boolean(e[0].dataset['run']);
 			}
 			try_it(expressionString, outputMode, runNow);
 		});

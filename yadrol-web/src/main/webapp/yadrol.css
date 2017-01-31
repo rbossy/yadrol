@@ -37,4 +37,6 @@ body {
 
 .tryit {
 	cursor: pointer;
+	font-weight: bold;
+	font-size: 120%;
 }

@@ -77,10 +77,131 @@
 		of each die.
 		</p>
 		<p>
-		For instance <code class="tryit" run="true">2d6</code> tells Yadrol to roll two six-sided die.
+		For instance <code class="tryit" data-run="true">2d6</code> tells Yadrol to roll two six-sided die.
 		</p>
 		<p class="well">
 		Oh! And by the way, each time you see an expression example, you can click on it to try it on Yadrol.
 		</p>
+		<p>
+		Yadrol can roll any type of dice:
+		</p>
+		<ul>
+			<li>the <code class="tryit" data-run="true">d20</code> used in D&amp;D;</li>
+			<li>the <code class="tryit" data-run="true">d100</code> used in BRP;</li>
+			<li>the <code class="tryit" data-run="true">d8</code> barely used at all;</li>
+			<li>the <code class="tryit" data-run="true">d13</code> that doesn't exist at all, but Yadrol can handle it anyway.</li>
+		</ul>
 	</div>
 </div>
+
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h4 class="panel-title">About the sample output</h4>
+	</div>
+	<div class="panel-body">
+		<p>
+		The sample output shows you a graph where the x-axis represent different values obtained by rolling the dice, and the y-axis represent their frequency.
+		</p>
+		<p>
+		By default Yadrol shows the frequency for obtaining <em>at least</em> the value; that is the frequency for obtaining the value <em>or more</em>.
+		For instance, if you try rolling <code class="tryit" data-run="true">3d6</code>, the frequency for <em>3 or more</em> is <em>1</em>.
+		That makes sense since <em>3</em> is the lowest score you can obtain with 3d6.
+		</p>
+		<p>
+		You can display the curve for <em>exact</em> or <em>at most</em> values with the buttons below the graph.
+		</p>
+		<p>
+		The blue triangle just above the x-axis indicates the weighed mean of the roll.
+		You can move this triangle to the <em>mode</em> or the <em>median</em> of the roll with the buttons below the graph.
+		</p>
+	</div>
+</div>
+
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h4 class="panel-title">About the roll output</h4>
+	</div>
+	<div class="panel-body">
+		<p>
+		Blah.
+		</p>
+	</div>
+</div>
+
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h4 class="panel-title">The dice expression language</h4>
+	</div>
+	<div class="panel-body">
+		<p>
+		Yadrol's language for specifying dice rolls is complete, it has been designed to be able to express most of dice mechanics used in table top RPGs and board games.
+		The next sections are dedicated to teach you the languages constructs through common mechanics.
+		The <a href="">Yadrol language reference</a> is available if you need to know everything about the language.
+		</p>
+	</div>
+</div>
+
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h4 class="panel-title">Select best dice in a roll</h4>
+	</div>
+	<div class="panel-body">
+		<p>
+		Roll and keep mechanics can be simulated with the <code>highest</code>/<code>lowest</code> constructs:
+		</p>
+		<ul>
+			<li><code class="tryit" data-run="true">highest of 2d10</code>: rolls two ten-sided dice and keeps the best one.</li>
+			<li><code class="tryit" data-run="true">lowest of 2d10</code>: rolls two ten-sided dice and keeps the lowest one.</li>
+			<li><code class="tryit" data-run="true">highest 2 of 3d6</code>: rolls three six-sided dice and keeps the two best ones.</li>
+			<li><code class="tryit" data-run="true">lowest 2 of 3d6</code>: rolls three six-sided dice and keeps the two best ones.</li>
+		</ul>
+	</div>
+</div>
+
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h4 class="panel-title">Count hits in a dice pool</h4>
+	</div>
+	<div class="panel-body">
+		<p>
+		<em>Count hits</em> is a type of dice mechanic where one rolls a pool of dice, then counts how many dice shows a result equal or higher than a target value.
+		In Yadrol, this can be specified as:
+		</p>
+		<p>
+		<code class="tryit" data-run="true">count (for 6d10 if &gt;= 7)</code>
+		</p>
+		<p>
+		This expression rolls six ten-sided dice and counts how many of them yield seven or more.
+		Let's break down this expression and see how it works:
+		</p>
+		<ul>
+		<li>As you already know <code>6d10</code> rolls six ten-sided dice.</li>
+		<li>The <code>for</code>-<code>if</code> construct that encloses the dice roll tells Yadrol to apply a condition <em>for each</em> dice.
+		The result of the <code>for</code>-<code>if</code> is the set of dice that satisfy the condition.
+		In our expression the condition is <code>&gt;= 7</code>, the dice is seven or more.
+		</li>
+		<li>Finally the <code>count</code> keyword tells Yadrol to count the selected dice.</li>
+		</ul>
+		<p>
+		Now let's count 1s in a pool of six-sided dice:
+		</p>
+		<p>
+		<code class="tryit" data-run="true">count (for 4d6 if == 1)</code>
+		</p>
+	</div>
+</div>
+
+
+<!-- 
+
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h4 class="panel-title"></h4>
+	</div>
+	<div class="panel-body">
+		<p>
+		</p>
+	</div>
+</div>
+
+ -->

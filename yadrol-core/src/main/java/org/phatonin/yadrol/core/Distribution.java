@@ -232,18 +232,38 @@ public class Distribution {
 		return result;
 	}
 	
-	/**
-	 * Returns the higher median count in this distribution.
-	 * @return
-	 */
-	public Count medianSup() {
+	private Count medianSup(boolean defaultToMedianInf) {
 		compute();
 		for (Count count : counts.values()) {
 			if (count.getRelativeAtMostFrequency() >= 0.5) {
 				return count;
 			}
 		}
+		if (defaultToMedianInf) {
+			return medianInf(false);
+		}
 		return null;
+	}
+
+	private Count medianInf(boolean defaultToMedianSup) {
+		compute();
+		for (Count count : counts.values()) {
+			if (count.getRelativeAtLeastFrequency() <= 0.5) {
+				return count;
+			}
+		}
+		if (defaultToMedianSup) {
+			return medianSup(false);
+		}
+		return null;
+	}
+
+	/**
+	 * Returns the higher median count in this distribution.
+	 * @return
+	 */
+	public Count medianSup() {
+		return medianSup(true);
 	}
 	
 	/**
@@ -251,13 +271,7 @@ public class Distribution {
 	 * @return
 	 */
 	public Count medianInf() {
-		compute();
-		for (Count count : counts.values()) {
-			if (count.getRelativeAtLeastFrequency() <= 0.5) {
-				return count;
-			}
-		}
-		return null;
+		return medianInf(true);
 	}
 	
 	public Count[] confidenceInterval(double risk) {

@@ -89,12 +89,49 @@ public class Best extends AbstractExpression {
 			public String toString() {
 				return "lowest";
 			}
+		},
+		
+		FIRST {
+			@Override
+			public int getBest(List<Object> list) {
+				return 0;
+			}
+
+			@Override
+			public <T> List<T> select(List<T> list, int n) {
+				return list.subList(0, n);
+			}
+
+			@Override
+			public String toString() {
+				return "first";
+			}
+		},
+		
+		LAST {
+			@Override
+			public int getBest(List<Object> list) {
+				return list.size() - 1;
+			}
+
+			@Override
+			public <T> List<T> select(List<T> list, int n) {
+				final int len = list.size();
+				return list.subList(len - n, len);
+			}
+
+			@Override
+			public String toString() {
+				return "last";
+			}
 		};
 		
 		public static Operator fromString(String op) {
 			switch (op) {
 				case "highest": return HIGHEST;
 				case "lowest": return LOWEST;
+				case "first": return FIRST;
+				case "last": return LAST;
 			}
 			throw new RuntimeException();
 		}

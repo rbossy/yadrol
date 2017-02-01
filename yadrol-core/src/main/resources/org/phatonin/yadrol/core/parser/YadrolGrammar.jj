@@ -131,7 +131,7 @@ public class YadrolParser {
 | < PLUS : ("+"|"-") >
 | < MULT : ("*"|"/"|"%") >
 
-| < BEST : ("highest"|"lowest") >
+| < BEST : ("highest"|"lowest"|"first"|"last") >
 | < OF   : "of" >
 
 | < DRAW : "draw" >

@@ -84,7 +84,7 @@ public class YadrolResult {
 		last.evaluate(evaluationContext, scope);
 		if (needsOutput(options, evaluationContext)) {
 			last = forceOutput(options, last);
-			evaluationContext.clear();
+			evaluationContext.clearRecords();
 			last.evaluate(evaluationContext, scope);
 		}
 		return new YadrolResult(expressions, evaluationContext);

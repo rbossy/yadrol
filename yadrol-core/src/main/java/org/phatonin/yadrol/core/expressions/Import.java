@@ -30,7 +30,6 @@ import org.phatonin.yadrol.core.EvaluationContext;
 import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.Expression;
 import org.phatonin.yadrol.core.ExpressionStringer;
-import org.phatonin.yadrol.core.ImportManager;
 import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
@@ -78,10 +77,9 @@ public class Import extends AbstractUndefExpression {
 	public void evaluateUndef(EvaluationContext ctx, Scope scope) throws EvaluationException {
 		try {
 			Map<String,Object> namespace = getNamespace(scope);
-			ImportManager importManager = ctx.getImportManager();
-			Map<String,Object> defined = importManager.resolveImport(this, ctx, address);
+			Map<String,Object> imported = ctx.resolveImport(this, address);
 			Set<String> names = new HashSet<String>(Arrays.asList(this.names));
-			for (Map.Entry<String,Object> e : defined.entrySet()) {
+			for (Map.Entry<String,Object> e : imported.entrySet()) {
 				String name = e.getKey();
 				if (names.isEmpty() || names.contains(name)) {
 					if (namespace.containsKey(name)) {
@@ -122,7 +120,7 @@ public class Import extends AbstractUndefExpression {
 	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
 		stringer.keyword("import ")
-		.string(address);
+		.identifier(address);
 		//XXX
 	}
 

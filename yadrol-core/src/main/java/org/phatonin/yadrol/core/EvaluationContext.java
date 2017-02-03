@@ -22,6 +22,8 @@ package org.phatonin.yadrol.core;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,6 +66,7 @@ public class EvaluationContext {
 	private long maxReroll = 1000;
 	private OutputMode defaultOutputMode = OutputMode.ROLL;
 	private long maxCallDepth = 100;
+	private Collection<String> imported = new HashSet<String>();
 
 	/**
 	 * Create an evaluation context with default values, initializing the random number generator with the specified seed.
@@ -313,7 +316,7 @@ public class EvaluationContext {
 	 * Clear dice, roll and sample records.
 	 * Roll and sample records held in this context are lost forever after calling this method.
 	 */
-	public void clear() {
+	public void clearRecords() {
 		diceRecords.clear();
 		currentRollRecord = null;
 		currentSampleRecord = null;
@@ -1576,5 +1579,17 @@ public class EvaluationContext {
 	public static String valueString(Object value) {
 		Expression expr = valueToExpression(value);
 		return expr.toString();
+	}
+	
+	public Map<String,Object> resolveImport(Expression expression, String address) throws EvaluationException {
+		if (imported.contains(address)) {
+			return new HashMap<String,Object>();
+		}
+		Map<String,Object> result = importManager.resolveImport(expression, this, address);
+		if (result == null) {
+			throw new EvaluationException(expression, "cannot import: " + address);
+		}
+		imported.add(address);
+		return result;
 	}
 }

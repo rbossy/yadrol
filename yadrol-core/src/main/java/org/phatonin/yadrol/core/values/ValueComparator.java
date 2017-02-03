@@ -101,4 +101,8 @@ public enum ValueComparator implements Comparator<Object> {
 			return compareIterators(it1, it2);
 		}
 	};
+	
+	public static boolean equality(Object v1, Object v2) {
+		return INSTANCE.compare(v1, v2) == 0;
+	}
 }

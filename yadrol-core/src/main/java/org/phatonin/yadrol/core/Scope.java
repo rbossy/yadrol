@@ -137,4 +137,8 @@ public class Scope {
 	public Map<String,Object> getVariables() {
 		return variables;
 	}
+	
+	public void clear() {
+		variables.clear();
+	}
 }

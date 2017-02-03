@@ -30,6 +30,7 @@ import java.util.Random;
 import org.phatonin.yadrol.core.EvaluationContext;
 import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.Expression;
+import org.phatonin.yadrol.core.expressions.Best;
 
 /**
  * Utility class for rolling.
@@ -189,6 +190,102 @@ public class Roller {
 		@Override
 		public Object visit(Function value, EvaluationContext param) throws EvaluationException {
 			return rollFunction(expression, param, value);
+		}
+	};
+
+	@SuppressWarnings("unused")
+	private static final class MinRollVisitor extends ValueVisitor<Object,EvaluationContext,EvaluationException> {
+		private final Expression expression;
+		
+		private MinRollVisitor(Expression expression) {
+			super();
+			this.expression = expression;
+		}
+
+		@Override
+		public Object visitUndef(EvaluationContext param) throws EvaluationException {
+			throw new EvaluationException(expression, "invalid dice type: undef");
+		}
+
+		@Override
+		public Object visit(String value, EvaluationContext param) throws EvaluationException {
+			throw new EvaluationException(expression, "invalid dice type: " + value);
+		}
+
+		@Override
+		public Object visit(boolean value, EvaluationContext param) throws EvaluationException {
+			throw new EvaluationException(expression, "invalid dice type: " + value);
+		}
+
+		@Override
+		public Object visit(long value, EvaluationContext param) {
+			return 1;
+		}
+
+		@Override
+		public Object visit(List<Object> value, EvaluationContext param) {
+			int minIndex = Best.Operator.LOWEST.getBest(value);
+			return value.get(minIndex);
+		}
+
+		@Override
+		public Object visit(Map<String,Object> value, EvaluationContext param) {
+			List<Object> list = EvaluationContext.mapToList(value);
+			int minIndex = Best.Operator.LOWEST.getBest(list);
+			return list.get(minIndex);
+		}
+
+		@Override
+		public Object visit(Function value, EvaluationContext param) throws EvaluationException {
+			throw new EvaluationException(expression, "cannot explode: " + EvaluationContext.valueString(value));
+		}
+	};
+	
+	@SuppressWarnings("unused")
+	private static final class MaxRollVisitor extends ValueVisitor<Object,EvaluationContext,EvaluationException> {
+		private final Expression expression;
+		
+		private MaxRollVisitor(Expression expression) {
+			super();
+			this.expression = expression;
+		}
+
+		@Override
+		public Object visitUndef(EvaluationContext param) throws EvaluationException {
+			throw new EvaluationException(expression, "invalid dice type: undef");
+		}
+
+		@Override
+		public Object visit(String value, EvaluationContext param) throws EvaluationException {
+			throw new EvaluationException(expression, "invalid dice type: " + value);
+		}
+
+		@Override
+		public Object visit(boolean value, EvaluationContext param) throws EvaluationException {
+			throw new EvaluationException(expression, "invalid dice type: " + value);
+		}
+
+		@Override
+		public Object visit(long value, EvaluationContext param) {
+			return value;
+		}
+
+		@Override
+		public Object visit(List<Object> value, EvaluationContext param) {
+			int maxIndex = Best.Operator.HIGHEST.getBest(value);
+			return value.get(maxIndex);
+		}
+
+		@Override
+		public Object visit(Map<String,Object> value, EvaluationContext param) {
+			List<Object> list = EvaluationContext.mapToList(value);
+			int maxIndex = Best.Operator.HIGHEST.getBest(list);
+			return list.get(maxIndex);
+		}
+
+		@Override
+		public Object visit(Function value, EvaluationContext param) throws EvaluationException {
+			throw new EvaluationException(expression, "cannot explode: " + EvaluationContext.valueString(value));
 		}
 	};
 }

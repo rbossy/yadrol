@@ -57,9 +57,11 @@ public class YadrolWeb {
 			return successResponse(options, result);
 		}
 		catch (EvaluationException e) {
+			e.printStackTrace();
 			return failureResponse(options, "evaluation", e.getMessage());
 		}
 		catch (ParseException e) {
+			e.printStackTrace();
 			return failureResponse(options, "parse", e.getMessage());
 		}
 	}

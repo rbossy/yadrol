@@ -11,7 +11,8 @@ public enum CountConverter implements JsonConverter<Count> {
 	@Override
 	public Object convert(Count value, WebOptions options) {
 		JSONObject result = new JSONObject();
-		result.put("value", ValueConverter.INSTANCE.convert(value.getValue(), options));
+		Object o = value.getValue();
+		result.put("value", ValueConverter.INSTANCE.convert(o, options));
 		result.put("frequency", value.getFrequency());
 		result.put("at-least-frequency", value.getAtLeastFrequency());
 		result.put("at-most-frequency", value.getAtMostFrequency());

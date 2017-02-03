@@ -29,8 +29,9 @@ import org.phatonin.yadrol.app.cli.display.DefaultDisplay;
 import org.phatonin.yadrol.app.cli.display.DisplayManager;
 import org.phatonin.yadrol.core.DistributionScore;
 import org.phatonin.yadrol.core.importManagers.FileSystemImportManager;
-import org.phatonin.yadrol.core.importManagers.ImportManagers;
+import org.phatonin.yadrol.core.importManagers.JavaResourceImportParser;
 import org.phatonin.yadrol.core.importManagers.StreamImportManager;
+import org.phatonin.yadrol.core.importManagers.URLImportManager;
 
 public class CLIOptions extends YadrolOptions {
 	public static final String YADROL_IMPORT_PATH = "YADROL_IMPORT_PATH";
@@ -41,18 +42,19 @@ public class CLIOptions extends YadrolOptions {
 	private File rollRecordsFile = null;
 	private File sampleRecordsFile = null;
 	private boolean writeDiceRecords = false;
-	private final FileSystemImportManager fsImportManager = new FileSystemImportManager(true);
 	private final List<DistributionScore> distributionScores = new ArrayList<DistributionScore>();
 	
 	public CLIOptions(String source) {
 		super(source);
-		ImportManagers importManagers = new ImportManagers();
-		importManagers.addImportManager(new StreamImportManager());
-		importManagers.addImportManager(fsImportManager);
+		setStreamImportManager(new StreamImportManager());
+		FileSystemImportManager fsImportManager = new FileSystemImportManager(true);
 		String paths = System.getenv(YADROL_IMPORT_PATH);
 		if (paths != null) {
 			fsImportManager.addSearchPaths(paths);
 		}
+		setFileSystemImportManager(fsImportManager);
+		setJavaResourceImportParser(JavaResourceImportParser.withStandardLibraries(CLIOptions.class.getClassLoader()));
+		setUrlImportManager(new URLImportManager());
 		setReduce(true);
 	}
 
@@ -82,10 +84,6 @@ public class CLIOptions extends YadrolOptions {
 
 	public boolean isWriteDiceRecords() {
 		return writeDiceRecords;
-	}
-
-	public FileSystemImportManager getFsImportManager() {
-		return fsImportManager;
 	}
 
 	public List<DistributionScore> getDistributionScores() {

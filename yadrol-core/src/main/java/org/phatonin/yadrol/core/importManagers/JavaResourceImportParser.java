@@ -36,6 +36,12 @@ public class JavaResourceImportParser extends AbstractImportParser {
 		this.classLoader = classLoader;
 	}
 
+	public static JavaResourceImportParser withStandardLibraries(ClassLoader classLoader) {
+		JavaResourceImportParser result = new JavaResourceImportParser(classLoader);
+		result.addSearchPath("org/phatonin/yadrol/lib");
+		return result;
+	}
+
 	public void addSearchPaths(Collection<String> searchPaths) {
 		this.searchPaths.addAll(searchPaths);
 	}

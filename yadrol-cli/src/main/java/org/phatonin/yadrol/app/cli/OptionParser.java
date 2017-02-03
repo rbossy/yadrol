@@ -146,7 +146,7 @@ enum OptionParser {
 	IMPORT_PATHS("-paths", 1) {
 		@Override
 		public void process(CLIOptions options, String[] args) {
-			FileSystemImportManager fsImportManager = options.getFsImportManager();
+			FileSystemImportManager fsImportManager = options.getFileSystemImportManager();
 			fsImportManager.addSearchPaths(args[0]);
 		}
 	},

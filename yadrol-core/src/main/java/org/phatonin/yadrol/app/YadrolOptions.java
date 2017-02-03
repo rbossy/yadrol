@@ -25,11 +25,13 @@ import java.util.List;
 import java.util.Random;
 
 import org.phatonin.yadrol.core.CountSelector;
-import org.phatonin.yadrol.core.ImportManager;
 import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.OutputMode;
 import org.phatonin.yadrol.core.expressions.Import;
-import org.phatonin.yadrol.core.importManagers.NoImport;
+import org.phatonin.yadrol.core.importManagers.FileSystemImportManager;
+import org.phatonin.yadrol.core.importManagers.JavaResourceImportParser;
+import org.phatonin.yadrol.core.importManagers.StreamImportManager;
+import org.phatonin.yadrol.core.importManagers.URLImportManager;
 import org.phatonin.yadrol.core.values.ValueType;
 
 /**
@@ -49,7 +51,11 @@ public class YadrolOptions {
 	private boolean reduce = false;
 	private long seed = new Random().nextLong();
 	private CountSelector countSelector = CountSelector.AT_LEAST;
-	private ImportManager importManager = NoImport.INSTANCE;
+//	private ImportManager importManager = NoImport.INSTANCE;
+	private StreamImportManager streamImportManager = null;
+	private FileSystemImportManager fileSystemImportManager = null;
+	private JavaResourceImportParser javaResourceImportParser = null;
+	private URLImportManager urlImportManager = null;
 	private final List<Import> imports = new ArrayList<Import>();
 
 	/**
@@ -143,14 +149,6 @@ public class YadrolOptions {
 	}
 
 	/**
-	 * Import manager ({@link NoImport}).
-	 * @return
-	 */
-	public ImportManager getImportManager() {
-		return importManager;
-	}
-
-	/**
 	 * Required imports (none).
 	 * @return
 	 */
@@ -158,6 +156,38 @@ public class YadrolOptions {
 		return Collections.unmodifiableList(imports);
 	}
 	
+	public StreamImportManager getStreamImportManager() {
+		return streamImportManager;
+	}
+
+	public FileSystemImportManager getFileSystemImportManager() {
+		return fileSystemImportManager;
+	}
+
+	public JavaResourceImportParser getJavaResourceImportParser() {
+		return javaResourceImportParser;
+	}
+
+	public URLImportManager getUrlImportManager() {
+		return urlImportManager;
+	}
+
+	public void setStreamImportManager(StreamImportManager streamImportManager) {
+		this.streamImportManager = streamImportManager;
+	}
+
+	public void setFileSystemImportManager(FileSystemImportManager fileSystemImportManager) {
+		this.fileSystemImportManager = fileSystemImportManager;
+	}
+
+	public void setJavaResourceImportParser(JavaResourceImportParser javaResourceImportParser) {
+		this.javaResourceImportParser = javaResourceImportParser;
+	}
+
+	public void setUrlImportManager(URLImportManager urlImportManager) {
+		this.urlImportManager = urlImportManager;
+	}
+
 	public void addImport(Import imp) {
 		imports.add(imp);
 	}
@@ -165,10 +195,6 @@ public class YadrolOptions {
 	public void addImport(Location location, String address) {
 		List<String> emptyNames = Collections.emptyList();
 		addImport(new Import(location, address, emptyNames, null));
-	}
-
-	public void setImportManager(ImportManager importManager) {
-		this.importManager = importManager;
 	}
 
 	public void setSource(String source) {

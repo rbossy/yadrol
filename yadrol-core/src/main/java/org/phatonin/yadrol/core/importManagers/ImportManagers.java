@@ -35,7 +35,7 @@ import org.phatonin.yadrol.core.ImportManager;
  */
 public class ImportManagers implements ImportManager {
 	private final List<ImportManager> importManagers = new ArrayList<ImportManager>();
-	
+
 	@Override
 	public Map<String,Object> resolveImport(Expression expression, EvaluationContext ctx, String address) throws EvaluationException {
 		for (ImportManager mgr : importManagers) {
@@ -52,6 +52,18 @@ public class ImportManagers implements ImportManager {
 	 * @param mgr the import manager.
 	 */
 	public void addImportManager(ImportManager mgr) {
-		importManagers.add(mgr);
+		if (mgr != null) {
+			importManagers.add(mgr);
+		}
+	}
+	
+	public ImportManager simplify() {
+		if (importManagers.isEmpty()) {
+			return NoImport.INSTANCE;
+		}
+		if (importManagers.size() == 1) {
+			return importManagers.get(0);
+		}
+		return this;
 	}
 }

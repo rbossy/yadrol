@@ -26,9 +26,11 @@ import org.phatonin.yadrol.core.EvaluationContext;
 import org.phatonin.yadrol.core.EvaluationException;
 import org.phatonin.yadrol.core.Expression;
 import org.phatonin.yadrol.core.ExpressionListUtils;
+import org.phatonin.yadrol.core.ImportManager;
 import org.phatonin.yadrol.core.Scope;
 import org.phatonin.yadrol.core.expressions.Import;
 import org.phatonin.yadrol.core.expressions.Output;
+import org.phatonin.yadrol.core.importManagers.ImportManagers;
 import org.phatonin.yadrol.core.parser.ParseException;
 import org.phatonin.yadrol.core.parser.YadrolParser;
 
@@ -95,12 +97,21 @@ public class YadrolResult {
 		result.setSeed(options.getSeed());
 		result.setDefaultEvaluationType(options.getDefaultEvaluationType());
 		result.setSampleSize(options.getSampleSize());
-		result.setImportManager(options.getImportManager());
+		result.setImportManager(createImportManager(options));
 		Scope globalScope = result.getGlobalScope();
 		for (Import imp : options.getImports()) {
 			imp.evaluateUndef(result, globalScope);
 		}
 		return result;
+	}
+
+	private static ImportManager createImportManager(YadrolOptions options) {
+		ImportManagers importManagers = new ImportManagers();
+		importManagers.addImportManager(options.getStreamImportManager());
+		importManagers.addImportManager(options.getFileSystemImportManager());
+		importManagers.addImportManager(options.getJavaResourceImportParser());
+		importManagers.addImportManager(options.getUrlImportManager());
+		return importManagers.simplify();
 	}
 
 	private static Expression[] parseExpression(YadrolOptions options) throws ParseException, EvaluationException {

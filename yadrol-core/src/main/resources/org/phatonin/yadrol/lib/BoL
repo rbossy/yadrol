@@ -1,0 +1,32 @@
+Weapon = {
+  Sword : fun() { d6 + 1 }
+};
+
+Difficulty = {
+  Easy: 1,
+  Moderate: 0,
+  Hard: -1,
+  Formidable: -2,
+  Mighty: -3,
+  Thongorean: -4
+};
+
+Range = {
+  PointBlank: Difficulty.Easy,
+  Close: Difficulty.Moderate,
+  Medium: Difficulty.Hard,
+  Long: Difficulty.Formidable,
+  Distant: Difficulty.Mighty,
+  Extreme: Difficulty.Thongorean
+};
+
+Resolve = fun(Ability, Diff) {
+  2d6 + Ability + Diff >= 9
+};
+
+Attack = fun(Melee, Defense, Damage: Weapon.Sword, Diff: Difficulty.Moderate) {
+  if Resolve(Melee, Diff - Defense)
+  then Damage()
+  else 0
+};
+

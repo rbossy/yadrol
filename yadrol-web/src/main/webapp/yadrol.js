@@ -90,6 +90,16 @@ var _clear_output = function() {
 }
 ;
 
+var CENTRUM_FUN = {
+		'mean': function(d) { return d.mean; },
+		'mode': function(d) { return d.mode.value; },
+		'median': function(d) { return (d['median-sup'].value + d['median-inf'].value) / 2; }
+}
+;
+
+var _current_y = 'relative-at-least-frequency';
+var _current_centrum = CENTRUM_FUN['mean'];
+
 var _create_graph = function(sample_records) {
 	var xScale = new Plottable.Scales.Linear();
 	var yScale = new Plottable.Scales.Linear();
@@ -108,7 +118,7 @@ var _create_graph = function(sample_records) {
 	}
 	linePlot
 	  .x(function(d) { return d.value; }, xScale)
-	  .y(function(d) { return d['relative-at-least-frequency']; }, yScale)
+	  .y(function(d) { return d[_current_y]; }, yScale)
 	  .attr("stroke", function(d, i, dataset) { return dataset.metadata().name; }, colorScale);
 	
 	var centrumPlot = new Plottable.Plots.Scatter();
@@ -118,7 +128,7 @@ var _create_graph = function(sample_records) {
 		centrumPlot.addDataset(new Plottable.Dataset([sr], sr));
 	}
 	centrumPlot
-	  .x(function(d) { return d.mean; }, xScale)
+	  .x(_current_centrum, xScale)
 	  .y(function(d) { return 0; }, yScale)
 	  .attr('fill', function(d, i, dataset) { return dataset.metadata().name; }, colorScale)
 	  .size(12)
@@ -137,23 +147,18 @@ var _create_graph = function(sample_records) {
 ;
 
 var change_y = function(y) {
+	_current_y = y;
 	var yScale = _sample_graph._rows[0][1]._scale;
 	var linePlot = _sample_graph._rows[0][2]._components[0];
 	linePlot.y(function(d) { return d[y]; }, yScale);
 }
 ;
 
-var CENTRUM_FUN = {
-		'mean': function(d) { return d.mean; },
-		'mode': function(d) { return d.mode.value; },
-		'median': function(d) { return (d['median-sup'].value + d['median-inf'].value) / 2; }
-}
-;
-
 var change_centrum = function(c) {
+	_current_centrum = CENTRUM_FUN[c];
 	var xScale = _sample_graph._rows[1][2]._scale;
 	var centrumPlot = _sample_graph._rows[0][2]._components[1];
-	centrumPlot.x(CENTRUM_FUN[c], xScale);
+	centrumPlot.x(_current_centrum, xScale);
 }
 ;
 

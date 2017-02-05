@@ -541,7 +541,7 @@ private Expression atom():{
 
 | result=string(locRef)  { return result; }
   
-| t=< BOOLEAN >  { return new BooleanConstant(getLocation(t), Boolean.getBoolean(t.image)); }
+| t=< BOOLEAN >  { return new BooleanConstant(getLocation(t), Boolean.parseBoolean(t.image)); }
 
 | n=integer(locRef)  { return new IntegerConstant(locRef.get(), n); }
 | t=< SCOPE >  { return new ScopeVariables(getLocation(t), ScopeVariables.Operator.fromString(t.image)); }

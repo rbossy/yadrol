@@ -124,7 +124,6 @@ var _create_graph = function(sample_records) {
 	var centrumPlot = new Plottable.Plots.Scatter();
 	for (var i = 0; i < sample_records.length; ++i) {
 		var sr = sample_records[i];
-		console.log(sr);
 		centrumPlot.addDataset(new Plottable.Dataset([sr], sr));
 	}
 	centrumPlot
@@ -135,7 +134,6 @@ var _create_graph = function(sample_records) {
 	  .symbol(function(d) { return new Plottable.SymbolFactories.triangleDown(); });
 
 	var plots = new Plottable.Components.Group([linePlot, centrumPlot]);
-	console.log(plots);
 
 	_sample_graph = new Plottable.Components.Table([
 	                                            [legend, yAxis, plots],
@@ -162,8 +160,44 @@ var change_centrum = function(c) {
 }
 ;
 
+var _standard_die_fun = function(dt) {
+	return function(n) {
+		return '<img height="60px" src="icons/dice-collections/mixed/d'+dt+'_'+n+'.svg">';
+	}
+}
+;
+
+var DICE_RECORD_FUN = {
+	4: _standard_die_fun(4),
+	6: _standard_die_fun(6),
+	8: _standard_die_fun(8),
+	10: _standard_die_fun(10),
+	12: _standard_die_fun(12),
+	20: _standard_die_fun(20),
+}
+;
+
+var DEFAULT_DICE_RECORD = function(n) {
+	return '' + n;
+}
+
 var _create_roll_output = function(i, rec) {
-	$('#output').append('<div class="row roll-record"><div class="col-md-3 roll-name"><code>'+rec.name+'</code></div><div class="col-md-2 roll-result lead">'+rec['string-result']+'</div></div>');
+	$('#output').append('<div class="row roll-record"><div class="col-md-3 roll-name"><code>'+rec.name+'</code></div><div class="col-md-2 roll-result lead">'+rec['string-result']+'</div><div class="col-md-7 dice-records" id="dice-records-'+i+'"></div></div>');
+	console.log(rec);
+	for (var j = 0; j < rec['dice-records'].length; ++j) {
+		var dr = rec['dice-records'][j];
+		var drfun;
+		if (dr.type in DICE_RECORD_FUN) {
+			drfun = DICE_RECORD_FUN[dr.type];
+		}
+		else {
+			drfun = DEFAULT_DICE_RECORD;
+		}
+		$('#dice-records-'+i).append('<div class="row"><div class="col-md-1 dice-type lead">d'+dr.type+'</div><div class="col-md-11" id="dice-records-'+i+'-'+j+'"></div></div>');
+		for (var k = 0; k < dr.result.length; ++k) {
+			$('#dice-records-'+i+'-'+j).append('&nbsp;' + drfun(dr.result[k]));
+		}
+	}
 }
 ;
 

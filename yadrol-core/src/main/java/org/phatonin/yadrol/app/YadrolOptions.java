@@ -51,7 +51,6 @@ public class YadrolOptions {
 	private boolean reduce = false;
 	private long seed = new Random().nextLong();
 	private CountSelector countSelector = CountSelector.AT_LEAST;
-//	private ImportManager importManager = NoImport.INSTANCE;
 	private StreamImportManager streamImportManager = null;
 	private FileSystemImportManager fileSystemImportManager = null;
 	private JavaResourceImportParser javaResourceImportParser = null;

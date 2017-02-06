@@ -28,6 +28,7 @@ import org.phatonin.yadrol.app.YadrolOptions;
 import org.phatonin.yadrol.app.cli.display.DefaultDisplay;
 import org.phatonin.yadrol.app.cli.display.DisplayManager;
 import org.phatonin.yadrol.core.DistributionScore;
+import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.importManagers.FileSystemImportManager;
 import org.phatonin.yadrol.core.importManagers.JavaResourceImportParser;
 import org.phatonin.yadrol.core.importManagers.StreamImportManager;
@@ -53,7 +54,8 @@ public class CLIOptions extends YadrolOptions {
 			fsImportManager.addSearchPaths(paths);
 		}
 		setFileSystemImportManager(fsImportManager);
-		setJavaResourceImportParser(JavaResourceImportParser.withStandardLibraries(CLIOptions.class.getClassLoader()));
+		setJavaResourceImportParser(JavaResourceImportParser.withStandardSearchLocation(CLIOptions.class.getClassLoader()));
+		addImport(Location.NONE, "std");
 		setUrlImportManager(new URLImportManager());
 		setReduce(true);
 	}

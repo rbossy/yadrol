@@ -1,6 +1,7 @@
 package org.phatonin.yadrol.app.web;
 
 import org.phatonin.yadrol.app.YadrolOptions;
+import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.importManagers.JavaResourceImportParser;
 import org.phatonin.yadrol.core.importManagers.URLImportManager;
 
@@ -13,7 +14,8 @@ public class WebOptions extends YadrolOptions {
 
 	public WebOptions() {
 		this("web params");
-		setJavaResourceImportParser(JavaResourceImportParser.withStandardLibraries(WebOptions.class.getClassLoader()));
+		setJavaResourceImportParser(JavaResourceImportParser.withStandardSearchLocation(WebOptions.class.getClassLoader()));
+		addImport(Location.NONE, "std");
 		setUrlImportManager(new URLImportManager());
 	}
 

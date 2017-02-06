@@ -162,7 +162,7 @@ var change_centrum = function(c) {
 
 var _standard_die_fun = function(dt) {
 	return function(n) {
-		return '<img height="60px" src="icons/dice-collections/mixed/d'+dt+'_'+n+'.svg">';
+		return '<img height="60px" src="icons/dice/d'+dt+'_'+n+'.svg">';
 	}
 }
 ;

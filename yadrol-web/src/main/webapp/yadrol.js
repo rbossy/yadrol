@@ -49,14 +49,11 @@ var run = function() {
 var _fail = function(data) {
 	console.log(data);
 	if (data.status == 422) {
-		if (data.responseJSON.error == 'parse') {
-			console.log(data.responseJSON.message);
-			return;
-		}
+		$('#output').append('<div class="row alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Ouch!</strong><br><pre>'+data.responseJSON.message+'</pre></div>');
 		return;
 	}
 	if (data.status >= 500 && data.status < 600) {
-		// server error
+		$('#output').append('<div class="row alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Ouch!</strong><br><pre>'+data.responseJSON.message+'</pre></div>');
 		return;
 	}
 }

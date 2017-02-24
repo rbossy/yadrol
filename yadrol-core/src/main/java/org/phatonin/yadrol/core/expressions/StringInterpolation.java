@@ -48,7 +48,7 @@ public class StringInterpolation extends AbstractStringExpression {
 		Generator reduce() throws EvaluationException;
 		Generator substituteVariables(Scope scope);
 	}
-	
+
 	private static class Litteral implements Generator {
 		private final String value;
 
@@ -204,12 +204,12 @@ public class StringInterpolation extends AbstractStringExpression {
 				escape = true;
 				continue;
 			}
-			if (inReplacement && c == '$') {
-				finishReplacement(location, generators, buf, parser);
-				inReplacement = false;
-				continue;
-			}
-			if (!inReplacement && c == '$') {
+			if (c == '$') {
+				if (inReplacement) {
+					finishReplacement(location, generators, buf, parser);
+					inReplacement = false;
+					continue;
+				}
 				finishLitteral(generators, buf);
 				inReplacement = true;
 				continue;

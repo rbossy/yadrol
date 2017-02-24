@@ -42,7 +42,7 @@ import org.phatonin.yadrol.core.values.ValueVisitor;
 public class Subscript extends AbstractExpression {
 	private final Expression list;
 	private final Expression subscript;
-	
+
 	public Subscript(Expression list, Expression subscript) {
 		super(list.getLocation());
 		this.list = list;

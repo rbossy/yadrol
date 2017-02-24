@@ -136,7 +136,7 @@
 		<p>
 		Yadrol's language for specifying dice rolls is complete, it has been designed to be able to express most of dice mechanics used in table top RPGs and board games.
 		The next sections are dedicated to teach you the languages constructs through common mechanics.
-		The <a href="">Yadrol language reference</a> is available if you need to know everything about the language.
+		The <a href="XXX">Yadrol language reference</a> is available if you need to know everything about the language.
 		</p>
 	</div>
 </div>
@@ -187,6 +187,177 @@
 		</p>
 		<p>
 		<code class="tryit" data-run="true">count (for 4d6 if == 1)</code>
+		</p>
+	</div>
+</div>
+
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h4 class="panel-title">Exploding die</h4>
+	</div>
+	<div class="panel-body">
+		<p>
+		An exploding die is a die that one rolls again when its result is the highest possible.
+		You specify rerolls to Yadrol with the <code>repeat</code> construct:
+		</p>
+		<p>
+		<code class="tryit" data-run="true">repeat d6 if == 6</code>
+		</p>
+		<p>
+		This expression tells Yadrol to roll a six-sided die and repeat the roll <em>if</em> the result is 6.
+		If the result of the first die is 6, then the final result of the roll is the sum of both dice.
+		</p>
+		<p>
+		In some games, you keep rerolling while the die shows 6, this is sometimes known as a <em>wild die</em>.
+		You can specify it to Yadrol by using the <code>while</code> operator instead of <code>if</code>:
+		</p>
+		<p>
+		<code class="tryit" data-run="true">repeat d6 while == 6</code>
+		</p>
+		<p>
+	</div>
+</div>
+
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h4 class="panel-title">Reroll 1s</h4>
+	</div>
+	<div class="panel-body">
+		<p>
+		We will use the very same <code>while</code>-<code>if</code> construct to specify another roll:
+		</p>
+		<p>
+		<code class="tryit" data-run="true">last of (repeat d12 if == 1)</code>
+		</p>
+		<p>
+		As we have seen above, the <code>repeat</code> part will roll a twelve-sided die and roll it again if the result is 1.
+		The <code>last of</code> operator tells that we are only interested in the last die rolled.
+		This expression means &quot;<em>roll a d12, reroll 1s</em>&quot;.
+		</p>
+		<p>
+		It's starting to get complicated, let's take a break with some other aspects of Yadrol.
+		</p>
+	</div>
+</div>
+
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h4 class="panel-title">Fudge dice</h4>
+	</div>
+	<div class="panel-body">
+		<p>
+		Fudge dice are custom six-sided dice used in games like <a href="XXX">Fudge</a> and <a href="XXX">FATE</a>.
+		Two sides are marked with a plus sign, two other sides with a minus sign, and the two remaining sides are blank.
+		The player usually rolls four dice, count the plus signs and substracts the minus signs.
+		</p>
+		<p>
+		One way to specify this to Yadrol is <code class="tryit" data-run="true">4d[-1, -1, 0, 0, 1, 1]</code>
+		</p>
+		<p>
+		In Yadrol terms, <code>[-1, -1, 0, 0, 1, 1]</code> denotes a collection of values called an <em>array</em>.
+		We have filled this array with two <code>-1</code> that represent the sides with a minus sign, two <code>1</code> that represent the sides with a plus sign, and two <code>0</code> that represent blank sides.
+		For Yadrol, rolling an array die means randomly picking one element in the array, that is the why the above expression simulates the roll of four Fudge dice.
+		</p>
+		<p class="well">
+		It has not escaped to the statistics-minded people that a Fudge die could be simulated with a shorter array with the same effect.
+		Try: <code class="tryit" data-run="true">4d[-1, 0, 1]</code>.
+		</p>
+	</div>
+</div>
+
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h4 class="panel-title">Barbarians of Lemuria combat turn</h4>
+	</div>
+	<div class="panel-body">
+		<p>
+		In the excellent Sword &amp; Sorcery game <a href="XXX">Barbarians of Lemuria</a> (BoL), players play sword-to-hire barbarian in search of fortune.
+		In the general mechanics of BoL, players roll 2d6 and must beat 9 to succeed.
+		During a combat turn, the character's blow is resolved this way.
+		If the attack succeeds, then the opponent loses Hit Points depending on the weapon.
+		</p>
+		<p>
+		In this section we will simulate an attack and plot the damage inflicted.
+		We will assume the character is using a sword which makes d6 + 1 damage:
+		</p>
+		<p>
+		<code class="tryit" data-run="true">if 2d6 &gt;= 9 then d6 + 1 else 0</code>
+		</p>
+		<p>
+		We introduced here the <code>if</code>-<code>then</code>-<code>else</code> construct.
+		Inside the <code>if</code> part, Yadrol rolls 2d6 and tests either the result is 9 or more.
+		If the condition is satisfied (the attack is a success), then Yadrol evaluates the <code>then</code> part that simulates the damage of a sword: <code>d6 + 1</code>.
+		If the condition is not satisfied (the attack is a failure), then Yadrol evaluates the <code>else</code> part that simulates no damage at all: <code>0</code>.
+		</p>
+		<p>
+		Now BoL is a bit more versatile.
+		Players also benefit from a bonus on their roll depending on their character's <em>Melee</em> ability.
+		They also suffer a penalty from their opponent's <em>Defense</em> ability.
+		The target number is still 9, so assuming a Melee of 2 and an opponent's Defense of 1: 
+		</p>
+		<p>
+		<code class="tryit" data-run="true">if 2d6 + 2 - 1 &gt;= 9 then d6 + 1 else 0</code>
+		</p>
+		<p>
+		This is nice but if we need to simulate attacks for characters and opponents we have to change the values in the expression.
+		Let's write this in another way that makes it easier:
+		</p>
+		<p>
+		<code class="tryit" data-run="true">Melee = 2;&#13;
+Defense = 1;&#13;
+if 2d6 + Melee - Defense &gt;= 9 then d6 + 1 else 0
+		</code>
+		</p>
+		<p>
+		There are several new notions here.
+		First we specified several expressions separated with semicolons (<code>;</code>).
+		Yadrol evaluates each one in sequence in the same order.
+		Then, in the two first expressions, values are assigned to variables with the equal (<code>=</code>) sign.
+		Variable names are at your discretion as long as they do not match Yadrol language reserved words, like <code>highest</code>, <code>lowest</code>, <code>for</code>, <code>repeat</code>, <code>if</code>, <code>then</code>, <code>else</code>, etc.
+		Keep in mind that the single letter dee (<code>d</code>) is a reserved word.
+		The expression on the right of the equal sign is evaluated, and the result is stored in the variable.
+		In this case the expressions are simple constants.
+		</p>
+		<p>
+		With this version of the attack simulation, we just have to change the values of the variables.
+		But wait, there's more.
+		</p>
+	</div>
+</div>
+
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h4 class="panel-title">Barbarians of Lemuria combat turn, where we learn about functions</h4>
+	</div>
+	<div class="panel-body">
+		<p>
+		In the previous section we have facilitated the reuse of an expression using a sequence of expressions and variable assignments.
+		We can go one step further and gather all this in a <em>function</em>:
+		</p>
+		<p>
+		<code>Attack = fun(Melee, Defense) {
+		};
+		</code>
+		</p>
+	</div>
+</div>
+
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h4 class="panel-title">Multiple graphs</h4>
+	</div>
+	<div class="panel-body">
+		<p>
+		Yadrol allows to compare several roll mechanisms on the same graphs.
+		The <code>sample</code> keyword tells Yadroll to add a distribution in the graph.
+		For instance <code class="tryit" data-run="true">sample d20</code> tells Yadrol to add to the graph the distribution of one twenty-sided die.
+		This is no different than <code class="tryit" data-run="true">d20</code> because by default Yadrol samples the specified expression.
+		</p>
+		<p>
+		Now we can compare two rolls by writing two <code>sample</code> expressions:
+		</p>
+		<p>
+		<code class="tryit" data-run="true">sample d20; sample 3d6</code>
 		</p>
 	</div>
 </div>

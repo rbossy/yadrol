@@ -70,7 +70,7 @@ public class Count extends AbstractIntegerExpression {
 	@Override
 	public long evaluateInteger(EvaluationContext ctx, Scope scope) throws EvaluationException {
 		try {
-			Object container = this.container.evaluateList(ctx, scope);
+			Object container = this.container.evaluate(ctx, scope);
 			return new CountVisitor().visit(container, null);
 		}
 		catch (EvaluationException e) {

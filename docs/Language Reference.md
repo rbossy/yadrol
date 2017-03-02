@@ -219,59 +219,52 @@ This section details the Yadrol language constructs. Each construct
 starts with the syntax of this construct in a block:
 
 <div class="yadrol-code" markdown="1">
-
-<span class="y-reserved">reserved</span> <span class="y-placeholder">placeholder</span> [ optional ]
-
 **reserved** *placeholder* [ optional ]
-
 </div>
 
-Reserved words, symbols and operators are denoted in <span class="yadrol-code y-reserved">bold</span>.
+Reserved words, symbols and operators are denoted in **`bold`**.
 Placeholders and variable parts of the construct are denoted in
-<span class="yadrol-code y-placeholder">italics</span>. Optional parts are enclosed between square brackets (<span class="yadrol-code">[]</span>).
+*`italics`*. Optional parts are enclosed between square brackets (`[]`).
 
 ## Literals 
 
 ### Undef 
 
-<div class="yadrol-code">
-<span class="y-reserved">undef</span>
+<div class="yadrol-code" markdown="1">
+**undef**
 </div>
 
 ### Boolean 
 
-<div class="yadrol-code">
-<span class="y-reserved">false</span><br>
-<span class="y-reserved">true</span>
+<div class="yadrol-code" markdown="1">
+**false**
+<br>
+**true**
 </div>
 
 ### Integer 
 
-<div class="yadrol-code">
-<span class="y-reserved">[0-9]+</span>
+<div class="yadrol-code" markdown="1">
+**[0-9]+**
 </div>
 
 ### String 
 
-<div class="yadrol-code">
-<span class="y-reserved">"</span><span class="y-placeholder">...</span><span class="y-reserved">"</span>
+<div class="yadrol-code" markdown="1">
+**"** *...* **"**
 </div>
 
 #### Character escape 
 
 Characters may be escaped with a backslash (`\`).
 
-+--------------------------------------+--------------------------------------+
-| **Escape**                           | **Effect**                           |
-+======================================+======================================+
+| Escape                               | Effect                               |
+|:------------------------------------:|:-------------------------------------|
 | `\n`                                 | newline                              |
-+--------------------------------------+--------------------------------------+
 | `\r`                                 | carriage return                      |
-+--------------------------------------+--------------------------------------+
 | `\t`                                 | horizontal tab                       |
-+--------------------------------------+--------------------------------------+
 | `\x`                                 | character *x*                        |
-+--------------------------------------+--------------------------------------+
+
 
 #### Expression interpolation 
 
@@ -281,10 +274,10 @@ string.
 
 ## Identifier 
 
-<div class="yadrol-code">
-<span class="y-reserved">[A-Z_a-z][0-9A-Z_a-z\]+</span>
+<div class="yadrol-code" markdown="1">
+**[A-Z_a-z][0-9A-Z_a-z\]+**
 <br>
-<span class="y-reserved">'</span><span class="y-placeholder">...</span><span class="y-reserved">'</span>
+**'** *...* **'**
 </div>
 
 Identifiers start with a letter or an undescore character and may be
@@ -297,10 +290,10 @@ variable in the current scope or its parent.
 
 ## List constructor 
 
-<div class="yadrol-code">
-<span class="y-reserved">[]</span>
+<div class="yadrol-code" markdown="1">
+**[]**
 <br>
-<span class="y-reserved">[</span> <span class="y-placeholder">item</span> <span class="y-reserved">,</span> <span class="y-placeholder">...</span> <span class="y-reserved">]</span>
+**[** *item* **,** *...* **]**
 </div>
 
 Evaluate each *item* expression and return a list containing the
@@ -308,16 +301,16 @@ results.
 
 ## Map constructor 
 
-<div class="yadrol-code">
-<span class="y-reserved">{}</span>
+<div class="yadrol-code" markdown="1">
+**{}**
 <br>
-<span class="y-reserved">{</span>
-<span class="y-placeholder">name</span>
-<span class="y-reserved">:</span>
-<span class="y-placeholder">item</span>
-<span class="y-reserved">,</span>
-<span class="y-placeholder">...</span>
-<span class="y-reserved">}</span>
+**{**
+*name*
+**:**
+*item*
+**,**
+*...*
+**}**
 </div>
 
 Evaluate each *item* expression and return a map containing the results,
@@ -325,24 +318,24 @@ the name of each item is specified by the *name* identifiers.
 
 ## Lambda 
 
-<div class="yadrol-code">
+<div class="yadrol-code" markdown="1">
 
-<span class="y-reserved">fun (</span>
+**fun (**
 [
-<span class="y-placeholder">name</span>
-<span class="y-reserved">,</span>
-<span class="y-placeholder">...</span>
+*name*
+**,**
+*...*
 [
-<span class="y-placeholder">name</span>
-<span class="y-reserved">:</span>
-<span class="y-placeholder">defval</span>
-<span class="y-reserved">,</span>
-<span class="y-placeholder">...</span>
+*name*
+**:**
+*defval*
+**,**
+*...*
 ]
 ]
-<span class="y-reserved">) {</span>
-<span class="y-placeholder">body</span>
-<span class="y-reserved">}</span>
+**) {**
+*body*
+**}**
 </div>
 
 Create a function where *name* are argument identifiers, and *body* is
@@ -353,22 +346,22 @@ a fresh scope with the current scope as parent.
 
 ## Call 
 
-<div class="yadrol-code">
-<span class="y-placeholder">expr</span>
-<span class="y-reserved">(</span>
+<div class="yadrol-code" markdown="1">
+*expr*
+**(**
 [
-<span class="y-placeholder">pos</span>
-<span class="y-reserved">,</span>
-<span class="y-placeholder">...</span>
+*pos*
+**,**
+*...*
 [
-<span class="y-placeholder">name</span>
-<span class="y-reserved">:</span>
-<span class="y-placeholder">val</span>
-<span class="y-reserved">,</span>
-<span class="y-placeholder">...</span>
+*name*
+**:**
+*val*
+**,**
+*...*
 ]
 ]
-<span class="y-reserved">)</span>
+**)**
 </div>
 
 Evaluate *expr* as a function and call it with *pos* expressions as
@@ -377,20 +370,20 @@ named arguments.
 
 ## Subscript 
 
-<div class="yadrol-code">
+<div class="yadrol-code" markdown="1">
 
-container
-\[
-index
-\]
+*container*
+**[**
+*index*
+**]**
 
 </div>
 
-<div class="yadrol-code">
+<div class="yadrol-code" markdown="1">
 
-map
-.
-name
+*map*
+**.**
+*name*
 
 </div>
 
@@ -423,11 +416,9 @@ return the element named *name*, otherwise raise an error.
 
 ## Assignment 
 
-<div class="yadrol-code">
+<div class="yadrol-code" markdown="1">
 
-lvalue
-=
-rvalue
+*lvalue* = *rvalue*
 
 </div>
 
@@ -459,11 +450,11 @@ the same name.
 
 ### Grouping 
 
-<div class="yadrol-code">
+<div class="yadrol-code" markdown="1">
 
-(
-expr
-)
+**(**
+*expr*
+**)**
 
 </div>
 
@@ -473,15 +464,15 @@ Parentheses are used to override operator precedence.
 
 #### Soft sequence 
 
-<div class="yadrol-code">
+<div class="yadrol-code" markdown="1">
 
-expr
-;
-expr
-\[
-;
-expr
-...\]
+*expr*
+**;**
+*expr*
+[
+**;**
+*...*
+]
 
 </div>
 
@@ -491,15 +482,21 @@ values of the preceding expressions are discarded.
 
 #### Hard sequence 
 
-<div class="yadrol-code">
+<div class="yadrol-code" markdown="1">
 
-expr
----
-expr
-\[
----
-expr
-...\]
+*expr*
+<br>
+**\-\--**
+<br>
+*expr*
+<br>
+[
+<br>
+**\-\--**
+<br>
+*...*
+<br>
+]
 
 </div>
 
@@ -509,14 +506,14 @@ application only records and outputs the result of the last expression.
 
 ### Conditional 
 
-<div class="yadrol-code">
+<div class="yadrol-code" markdown="1">
 
-if
-condition
-then
-texpr
-else
-fexpr
+**if**
+*condition*
+**then**
+*texpr*
+**else**
+*fexpr*
 
 </div>
 
@@ -525,24 +522,25 @@ fexpr
 
 ### For loops 
 
-<div class="yadrol-code">
+<div class="yadrol-code" markdown="1">
 
-\[
-out
-\]
-for
-\[\[
-index
-,
-\]
-item
-in
-\]
-container
-\[
-if
-condition
-\]
+[
+*out*
+]
+**for**
+[
+[
+*index*
+**,**
+]
+*item*
+**in**
+]
+*container*
+[
+**if**
+*condition*
+]
 
 </div>
 
@@ -575,38 +573,30 @@ Both *out* and *condition* are optional, but either one must be present.
 
 ### Repeat loops 
 
-<div class="yadrol-code">
+<div class="yadrol-code" markdown="1">
 
-repeat
-expr
-if
-condition
-
-</div>
-
-<div class="yadrol-code">
-
-repeat
-expr
-while
-condition
-\[
-limit
-number
-\]
-
-</div>
-
-<div class="yadrol-code">
-
-while
-condition
-repeat
-expr
-\[
-limit
-number
-\]
+**repeat**
+*expr*
+**if**
+*condition*
+<br>
+**repeat**
+*expr*
+**while**
+*condition*
+[
+**limit**
+*number*
+]
+<br>
+**while**
+*condition*
+**repeat**
+*expr*
+[
+**limit**
+*number*
+]
 
 </div>
 
@@ -636,26 +626,18 @@ left part of the comparison can be omitted.
 
 ## Boolean operators 
 
-<div class="yadrol-code">
+<div class="yadrol-code" markdown="1">
 
-expr
-or
-expr
-
-</div>
-
-<div class="yadrol-code">
-
-expr
-and
-expr
-
-</div>
-
-<div class="yadrol-code">
-
-not
-expr
+*expr*
+**or**
+*expr*
+<br>
+*expr*
+**and**
+*expr*
+<br>
+**not**
+*expr*
 
 </div>
 
@@ -668,51 +650,31 @@ evaluate the right operand if the left operand evaluates as `false`.
 
 ### Arithmetic comparison 
 
-<div class="yadrol-code">
+<div class="yadrol-code" markdown="1">
 
-left
-==
-right
-
-</div>
-
-<div class="yadrol-code">
-
-left
-!=
-right
-
-</div>
-
-<div class="yadrol-code">
-
-left
-&lt;
-right
-
-</div>
-
-<div class="yadrol-code">
-
-left
-&gt;
-right
-
-</div>
-
-<div class="yadrol-code">
-
-left
-&lt;=
-right
-
-</div>
-
-<div class="yadrol-code">
-
-left
-&gt;=
-right
+*left*
+**==**
+*right*
+<br>
+*left*
+**!=**
+*right*
+<br>
+*left*
+**&lt;**
+*right*
+<br>
+*left*
+**&gt;**
+*right*
+<br>
+*left*
+**&lt;=**
+*right*
+<br>
+*left*
+**&gt;=**
+*right*
 
 </div>
 
@@ -721,19 +683,15 @@ comparison is verified, otherwise `false`.
 
 ### General comparison 
 
-<div class="yadrol-code">
+<div class="yadrol-code" markdown="1">
 
-left
-===
-right
-
-</div>
-
-<div class="yadrol-code">
-
-left
-!==
-right
+*left*
+**===**
+*right*
+<br>
+*left*
+**!==**
+*right*
 
 </div>
 
@@ -750,71 +708,49 @@ are equal, and their parent scopes are the same.
 
 ## Arithmetic operators 
 
-<div class="yadrol-code">
+<div class="yadrol-code" markdown="1">
 
-expr
-+
-expr
-
-</div>
-
-<div class="yadrol-code">
-
-expr
--
-expr
-
-</div>
-
-<div class="yadrol-code">
-
-expr
-\*
-expr
-
-</div>
-
-<div class="yadrol-code">
-
-expr
-/
-expr
-
-</div>
-
-<div class="yadrol-code">
-
-expr
-%
-expr
+*expr*
+**+**
+*expr*
+<br>
+*expr*
+**-**
+*expr*
+<br>
+*expr*
+**\***
+*expr*
+<br>
+*expr*
+**/**
+*expr*
+<br>
+*expr*
+**%**
+*expr*
 
 </div>
 
 The left and right expressions are evaluated as integers, then the
 arthmetic operator is applied.
 
-+--------------------------------------+--------------------------------------+
-| **Operator**                         | **Operation**                        |
-+======================================+======================================+
-| `+`                                  | addition                             |
-+--------------------------------------+--------------------------------------+
-| `-`                                  | substraction                         |
-+--------------------------------------+--------------------------------------+
-| `*`                                  | multiplication                       |
-+--------------------------------------+--------------------------------------+
-| `/`                                  | integer division                     |
-+--------------------------------------+--------------------------------------+
-| `%`                                  | division remainder                   |
-+--------------------------------------+--------------------------------------+
+| Operator                             | Operation                            |
+|:------------------------------------:|:-------------------------------------|
+| **`+`**                              | addition                             |
+| **`-`**                              | substraction                         |
+| **`*`**                              | multiplication                       |
+| **`/`**                              | integer division                     |
+| **`%`**                              | division remainder                   |
 
 ## Dice 
 
 ### Single die 
 
-<div class="yadrol-code">
+<div class="yadrol-code" markdown="1">
 
-d
-type
+**d**
+*type*
 
 </div>
 
@@ -822,22 +758,12 @@ Evaluate *type* and return a die roll of the specified type.
 
 The roll depends on the type of *type*:
 
-+--------------------------------------+--------------------------------------+
-| **Type**                             | **Roll**                             |
-+======================================+======================================+
-| integer                              | A random integer between 1 and       |
-|                                      | *type*, inclusive                    |
-+--------------------------------------+--------------------------------------+
-| list                                 | A random element in the list, the    |
-|                                      | list remains unchanged               |
-+--------------------------------------+--------------------------------------+
-| map                                  | A random entry in the map, the map   |
-|                                      | remains unchanged, the result is a   |
-|                                      | single-entry map                     |
-+--------------------------------------+--------------------------------------+
-| function                             | Call the function with empty         |
-|                                      | arguments                            |
-+--------------------------------------+--------------------------------------+
+| Type                                 | Roll                                 |
+|:-------------------------------------|:-------------------------------------|
+| **integer**                              | A random integer between 1 and *type*, inclusive                    |
+| **list**                                 | A random element in the list, the list remains unchanged               |
+| **map**                                  | A random entry in the map, the map remains unchanged, the result is a single-entry map                |
+| **function**                             | Call the function with empty arguments                            |
 
 #### Space after `d` 
 
@@ -848,11 +774,11 @@ starts with an uppercase letter
 
 ### Multiple dice 
 
-<div class="yadrol-code">
+<div class="yadrol-code" markdown="1">
 
-number
-d
-type
+*number*
+**d**
+*type*
 
 </div>
 
@@ -875,14 +801,14 @@ uppercase letter
 
 ## Draw 
 
-<div class="yadrol-code">
+<div class="yadrol-code" markdown="1">
 
-draw
-\[
-number
-\]
-from
-expr
+**draw**
+[
+*number*
+]
+**from**
+*expr*
 
 </div>
 
@@ -896,39 +822,35 @@ elements.
 
 ## Best of 
 
-<div class="yadrol-code">
+<div class="yadrol-code" markdown="1">
 
-highest
-\[\_number\_\]
-of
-\_expr\_
-
-</div>
-
-<div class="yadrol-code">
-
-lowest
-\[\_number\_\]
-of
-\_expr\_
-
-</div>
-
-<div class="yadrol-code">
-
-first
-\[\_number\_\]
-of
-\_expr\_
-
-</div>
-
-<div class="yadrol-code">
-
-last
-\[\_number\_\]
-of
-\_expr\_
+**highest**
+[
+*number*
+]
+**of**
+*expr*
+<br>
+**lowest**
+[
+*number*
+]
+**of**
+*expr*
+<br>
+**first**
+[
+*number*
+]
+**of**
+*expr*
+<br>
+**last**
+[
+*number*
+]
+**of**
+*expr*
 
 </div>
 
@@ -944,11 +866,11 @@ same order than the original *expr* list.
 
 ## Append 
 
-<div class="yadrol-code">
+<div class="yadrol-code" markdown="1">
 
-head
-&lt;&lt;
-tail
+*head*
+**&lt;&lt;**
+*tail*
 
 </div>
 
@@ -963,11 +885,11 @@ The return value is the modified *head*.
 
 ## Range 
 
-<div class="yadrol-code">
+<div class="yadrol-code" markdown="1">
 
-start
-..
-end
+*start*
+**..**
+*end*
 
 </div>
 
@@ -985,98 +907,65 @@ If *start* equals *end*, then the result is a single element list.
 
 ## Count 
 
-<div class="yadrol-code">
+<div class="yadrol-code" markdown="1">
 
-count
-expr
+**count**
+*expr*
 
 </div>
 
 Evaluate *expr*, then return its size. The size of a value depends on
 its type:
 
-+--------------------------------------+--------------------------------------+
-| **Type**                             | **Size**                             |
-+======================================+======================================+
-| `undef`                              | `0`                                  |
-+--------------------------------------+--------------------------------------+
-| scalar (integer, string, boolean)    | `1`                                  |
-+--------------------------------------+--------------------------------------+
-| list                                 | number of elements                   |
-+--------------------------------------+--------------------------------------+
-| map                                  | number of entries                    |
-+--------------------------------------+--------------------------------------+
+| Type                                 | Size                             |
+|:-------------------------------------|:---------------------------------|
+| **`undef`**                              | `0`                                  |
+| **integer, string, boolean**    | `1`                                  |
+| **list**                                 | number of elements                   |
+| **map**                                  | number of entries                    |
 
 ## List reorder 
 
-<div class="yadrol-code">
+<div class="yadrol-code" markdown="1">
 
-sorted
-expr
-
-</div>
-
-<div class="yadrol-code">
-
-reversed
-expr
-
-</div>
-
-<div class="yadrol-code">
-
-shuffled
-expr
+**sorted**
+*expr*
+<br>
+**reversed**
+*expr*
+<br>
+**shuffled**
+*expr*
 
 </div>
 
 Evaluate *expr* as a list, then returns a new list containing the same
 elements in the specified order:
 
-+--------------------------------------+--------------------------------------+
-| **Specification**                    | **Order**                            |
-+======================================+======================================+
-| `sorted`                             | sorted in ascending order            |
-+--------------------------------------+--------------------------------------+
-| `reversed`                           | reverse order of the original list   |
-+--------------------------------------+--------------------------------------+
-| `shuffled`                           | random order                         |
-+--------------------------------------+--------------------------------------+
+| Specification                    | Order                            |
+|:---------------------------------|:---------------------------------|
+| **`sorted`**                             | sorted in ascending order            |
+| **`reversed`**                           | reverse order of the original list   |
+| **`shuffled`**                           | random order                         |
 
 ## Conversion 
 
-<div class="yadrol-code">
+<div class="yadrol-code" markdown="1">
 
-string
-expr
-
-</div>
-
-<div class="yadrol-code">
-
-boolean
-expr
-
-</div>
-
-<div class="yadrol-code">
-
-integer
-expr
-
-</div>
-
-<div class="yadrol-code">
-
-list
-expr
-
-</div>
-
-<div class="yadrol-code">
-
-map
-expr
+**string**
+*expr*
+<br>
+**boolean**
+*expr*
+<br>
+**integer**
+*expr*
+<br>
+**list**
+*expr*
+<br>
+**map**
+*expr*
 
 </div>
 
@@ -1084,31 +973,29 @@ Evaluate *expr* forcing the evaluation type.
 
 ## Output 
 
-<div class="yadrol-code">
+<div class="yadrol-code" markdown="1">
 
-roll
-expr
-\[
-type
-\] \[
-"
-name
-"
-\]
-
-</div>
-
-<div class="yadrol-code">
-
-sample
-expr
-\[
-type
-\] \[
-"
-name
-"
-\]
+**roll**
+*expr*
+[
+*type*
+]
+[
+**"**
+*name*
+**"**
+]
+<br>
+**sample**
+*expr*
+[
+*type*
+]
+[
+**"**
+*name*
+**"**
+]
 
 </div>
 
@@ -1125,18 +1012,20 @@ output. If omitted, then the application will generate one based on
 
 ## Import 
 
-<div class="yadrol-code">
+<div class="yadrol-code" markdown="1">
 
-import
-\[
-obj
-=
-\]
-address
-\[
-:
-name name ...
-\]
+**import**
+[
+*obj*
+**=**
+]
+*address*
+[
+**:**
+*name*
+*name*
+*...*
+]
 
 </div>
 
@@ -1163,42 +1052,19 @@ scope. The imported names are accessible through subscript constructs.
 The command-line tool accept the following addresses:
 
 -   standard library name, see XXX
-
 -   path to a Yadrol file, relative paths will be searched in the input
     paths
-
 -   URL that points to a Yadrol file
-
-## Native 
-
-<div class="yadrol-code">
-
-native
-class
-
-</div>
-
-Evaluate an expression written in native Java. The fully qualified name
-of the Java class is specified by the identifier *class*. This class
-must implement `org.phatonin.yadrol.core.Expression`.
 
 ## Scopes 
 
-<div class="yadrol-code">
+<div class="yadrol-code" markdown="1">
 
-local
-
-</div>
-
-<div class="yadrol-code">
-
-outer
-
-</div>
-
-<div class="yadrol-code">
-
-global
+**local**
+<br>
+**outer**
+<br>
+**global**
 
 </div>
 
@@ -1208,57 +1074,45 @@ the scope, and vice versa.
 `local` returns the current variable scope. `outer` returns the parent
 of the current variable scope. `global` returns the root variable scope.
 
+## Native 
+
+<div class="yadrol-code" markdown="1">
+
+**native**
+*class*
+
+</div>
+
+Evaluate an expression written in native Java. The fully qualified name
+of the Java class is specified by the identifier *class*. This class
+must implement `org.phatonin.yadrol.core.Expression`.
+
 # Operator precedence 
 
-+----------------------------------+-----------------------------------------+
-| **Operators**                    | **Associative**                         |
-+==================================+=========================================+
+| Operators                    | Associativity                         |
+|:----------------------------:|:-------------------------------------:|
 | `---`                            | yes                                     |
-+----------------------------------+-----------------------------------------+
 | `;`                              | yes                                     |
-+----------------------------------+-----------------------------------------+
 | `import` `roll` `sample`         | no                                      |
-+----------------------------------+-----------------------------------------+
 | `=`                              | no                                      |
-+----------------------------------+-----------------------------------------+
-| `if` `then` `else` `for` `in`    | no                                      |
-| `if` `repeat` `if` `while`       |                                         |
-+----------------------------------+-----------------------------------------+
+| `if` `then` `else` `for` `in` `repeat` `while`    | no                                      |
 | `or`                             | yes                                     |
-+----------------------------------+-----------------------------------------+
 | `and`                            | yes                                     |
-+----------------------------------+-----------------------------------------+
 | `not`                            | no                                      |
-+----------------------------------+-----------------------------------------+
-| `===` `!==` `==` `!=` `>` `<`    | no                                      |
-| `>=` `<=`                        |                                         |
-+----------------------------------+-----------------------------------------+
+| `===` `!==` `==` `!=` `>` `<` `>=` `<=`    | no                                      |
 | `in`                             | no                                      |
-+----------------------------------+-----------------------------------------+
 | `<<`                             | no                                      |
-+----------------------------------+-----------------------------------------+
 | `..`                             | no                                      |
-+----------------------------------+-----------------------------------------+
 | `+` `-`                          | yes                                     |
-+----------------------------------+-----------------------------------------+
-| `*` \` \` `%`                    | yes                                     |
-+----------------------------------+-----------------------------------------+
-| `+` `-` ^1^                      | no                                      |
-+----------------------------------+-----------------------------------------+
-| `highest` `lowest` `first`       | no                                      |
-| `last` `of`                      |                                         |
-+----------------------------------+-----------------------------------------+
+| `*` `/` `%`                    | yes                                     |
+| `+` `-` <sup>1</sup>                      | no                                      |
+| `highest` `lowest` `first` `last` `of`       | no                                      |
 | `draw`                           | no                                      |
-+----------------------------------+-----------------------------------------+
 | `d`                              | no                                      |
-+----------------------------------+-----------------------------------------+
-| `count` `sorted` `reversed`      | no                                      |
-| `shuffled` `string` `boolean`    |                                         |
-| `integer` `list` `map`           |                                         |
-+----------------------------------+-----------------------------------------+
-| `.` `[]`^2^ `()`^3^              | yes                                     |
-+----------------------------------+-----------------------------------------+
+| `count` `sorted` `reversed` `shuffled`      | no                                      |
+| `string` `boolean` `integer` `list` `map`    | no                                        |
+| `.` `[]`<sup>2</sup> `()`<sup>3</sup>              | yes                                     |
 
-^1^ Unary sign operators\
-^2^ Subscript brackets\
-^3^ Function call
+<sup>1</sup> Unary sign operators
+<sup>2</sup> Subscript brackets
+<sup>3</sup> Function call

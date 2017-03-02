@@ -94,6 +94,7 @@ public class YadrolParser {
     return null;  }
 }PARSER_END(YadrolParser)SKIP :{  " "| "\r"| "\t"| "\n"
 | "\u200b"| "\u00a0"
+| <"#" (~["\n","\r"])*>
 }TOKEN : /* OPERATORS */{
   < BREAK : ("--" ("-")+) >
 

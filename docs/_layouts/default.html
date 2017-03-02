@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>{{ site.title | default: site.github.repository_name }} by {{ site.github.owner_name }}</title>
+    <link href='https://fonts.googleapis.com/css?family=Arvo:400,700,400italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+    <script src="{{ '/assets/js/scale.fix.js' | relative_url }}"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <style>
+      a.yadrol {
+      -webkit-font-smoothing: antialiased;
+      background: url(assets/images/dice3.svg) no-repeat;
+      font-weight: normal;
+      text-shadow: rgba(0, 0, 0, 0.4) 0 -1px 0;
+      padding: 2px 2px 2px 22px;
+      height: 30px;
+      }
+      
+      header li.yadrol {
+      list-style-type: none;
+      width:132px;
+      height:15px;
+      margin-bottom: 12px;
+      line-height: 1em;
+      padding: 6px 6px 6px 7px;
+      
+      background: #00AF11;
+      background: -moz-linear-gradient(top, #00AF11 0%, #008211 100%);
+      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f8f8f8), color-stop(100%,#dddddd));
+      background: -webkit-linear-gradient(top, #00AF11 0%,#008211 100%);
+      background: -o-linear-gradient(top, #00AF11 0%,#008211 100%);
+      background: -ms-linear-gradient(top, #00AF11 0%,#008211 100%);
+      background: linear-gradient(top, #00AF11 0%,#008211 100%);
+      
+      border-radius:4px;
+      border:1px solid #0D0D0D;
+      
+      -webkit-box-shadow: inset 0px 1px 1px 0 rgba(2,233,38, 1);
+      box-shadow: inset 0px 1px 1px 0 rgba(2,233,38, 1);
+      
+      }
+      
+      header li.yadrol:hover {
+      background: #00C31D;
+      background: -moz-linear-gradient(top, #00C31D 0%, #019519 100%);
+      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f8f8f8), color-stop(100%,#dddddd));
+      background: -webkit-linear-gradient(top, #00C31D 0%,#019519 100%);
+      background: -o-linear-gradient(top, #00C31D 0%,#019519 100%);
+      background: -ms-linear-gradient(top, #00C31D 0%,#019519 100%);
+      background: linear-gradient(top, #00C31D 0%,#019519 100%);
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">{{ site.title | default: site.github.repository_name }}</h1>
+        <p class="header">{{ site.description | default: site.github.project_tagline }}</p>
+
+	<ul>
+	  <li class="yadrol">
+	    <a class="yadrol" href="http://localhost:8080/yadrol-web">Use Yadrol</a>
+	  </li>
+	  <li><a class="" href="Recipes">Recipes</a></li>
+	  <li><a class="" href="Language Reference">Language Reference</a></li>
+	  <li><a class="buttons github" href="http://github.com/phatonin/yadrol">GitHub</a></li>
+	</ul>
+
+      </header>
+
+      <section>
+        {{ content }}
+      </section>
+
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    {% if site.google_analytics %}
+      <script type="text/javascript">
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+      </script>
+      <script type="text/javascript">
+        try {
+          var pageTracker = _gat._getTracker("{{ site.google_analytics }}");
+        pageTracker._trackPageview();
+        } catch(err) {}
+      </script>
+    {% endif %}
+  </body>
+</html>

@@ -1,52 +1,46 @@
-Data types {#_data_types}
-==========
+# Data types
 
-Scalar types {#_scalar_types}
-------------
+## Scalar types
 
-### Undef {#_undef}
+### Undef 
 
 `undef` type has a single value: `undef`. This value usually means an
 undefined value, or an uninitialized variable.
 
-### Boolean {#_boolean}
+### Boolean 
 
 `boolean` type has two values: `true` and `false`.
 
-### Integer {#_integer}
+### Integer 
 
 `integer` values are represented as 64-bit signed integers.
 
-### String {#_string}
+### String 
 
 `string` are immutable sequence of Unicode characters.
 
-Container types {#_container_types}
----------------
+## Container types 
 
-### List {#_list}
+### List 
 
 Lists are ordered collections of elements. Each element is addressed by
 its position in the list. Element positions are 1-based.
 
-### Map {#_map}
+### Map 
 
 Maps are collections of key-value pairs. Keys are unique strings within
 a map.
 
 The insert order of keys is preserved.
 
-Functions {#_functions}
----------
+## Functions 
 
 Functions are callable expressions within their own variable scope.
 Functions are first-class values, they can be assigned and returned.
 
-Evaluation model {#_evaluation_model}
-================
+# Evaluation model 
 
-Variable scopes {#_variable_scopes}
----------------
+## Variable scopes 
 
 Expressions are evaluated within the context of a variable scope. A
 variable scope is a mapping from variable names to values. A variable
@@ -58,52 +52,51 @@ Yadrol creates it in the current scope.
 Some expressions spawn new variable scopes in order to evaluate
 sub-expressions.
 
-Data conversion {#_data_conversion}
----------------
+## Data conversion 
 
-### To boolean {#_to_boolean}
+### To boolean 
 
-#### From undef {#_from_undef}
+#### From undef 
 
 `undef` converts to `false`.
 
-#### From integer {#_from_integer}
+#### From integer 
 
 `0` converts to `false`, all other values convert to `true`
 
-#### From string {#_from_string}
+#### From string 
 
 The empty string converts to `false`, all other strings convert to
 `true`.
 
-#### From list {#_from_list}
+#### From list 
 
 The empty list converts to `false`, non-empty lists convert to `true`.
 
-#### From map {#_from_map}
+#### From map 
 
 The empty map converts to `false`, non-empty maps convert to `true`.
 
-#### From function {#_from_function}
+#### From function 
 
 If the function takes no argument, then its body is evaluated as a
 boolean.
 
 Other functions convert to `false`.
 
-### To integer {#_to_integer}
+### To integer 
 
-#### From undef {#_from_undef_2}
+#### From undef 
 
 `undef` converts to `0`.
 
-#### From boolean {#_from_boolean}
+#### From boolean 
 
 `false` converts to `0`.
 
 `true` converts to `1`.
 
-#### From string {#_from_string_2}
+#### From string 
 
 Strings are converted to integer by parsing its contents assuming the
 number is written in base 10.
@@ -111,14 +104,14 @@ number is written in base 10.
 If the contents cannot be parsed as an integer, the the string converts
 to `0`.
 
-#### From list {#_from_list_2}
+#### From list 
 
 A list converts into the sum of each of its elements. If an element is
 not an integer, then it is converted to an integer.
 
 The empty list converts to `0`
 
-#### From map {#_from_map_2}
+#### From map 
 
 A map converts into the sum of each of its values. If a value is not an
 integer, then it is converted to an integer. Map keys do not enter into
@@ -126,7 +119,7 @@ account in the conversion.
 
 The empty map converts to `0`
 
-#### From function {#_from_function_2}
+#### From function 
 
 If the function takes no argument, then its body is evaluated as an
 integer.
@@ -134,30 +127,30 @@ integer.
 Other functions convert to an undefined integer. Two identical functions
 always convert to the same integer.
 
-### To string {#_to_string}
+### To string 
 
-#### From undef {#_from_undef_3}
+#### From undef 
 
 `undef` converts to the empty string.
 
-#### From boolean {#_from_boolean_2}
+#### From boolean 
 
 `false` converts to the empty string.
 
 `true` converts to `"true"`.
 
-#### From integer {#_from_integer_2}
+#### From integer 
 
 An integer converts to a string that represents the number in base 10.
 
-#### From list {#_from_list_3}
+#### From list 
 
 A list converts to the concatenation of each of its elements. If an
 element is not a string, then it is converted to a string.
 
 The empty list converts to the empty string.
 
-#### From map {#_from_map_3}
+#### From map 
 
 A map converts to the concatenation of each of its values. If a value is
 not a string, then it is converted to a string. Map keys do not enter
@@ -165,7 +158,7 @@ into account in the conversion.
 
 The empty map converts to the empty string.
 
-#### From function {#_from_function_3}
+#### From function 
 
 If the function takes no argument, then its body is evaluated as a
 string.
@@ -173,112 +166,98 @@ string.
 Other functions convert to an undefined string. Two identical functions
 always convert to the same string.
 
-### To list {#_to_list}
+### To list 
 
-#### From undef {#_from_undef_4}
+#### From undef 
 
 `undef` converts into an empy list.
 
-#### From boolean, integer, or string {#_from_boolean_integer_or_string}
+#### From boolean, integer, or string 
 
 A Scalar converts into a list with a single element.
 
-#### From map {#_from_map_4}
+#### From map 
 
 A map converts into a list that contains all the values. The key insert
 order is preserved in the list.
 
-#### From function {#_from_function_4}
+#### From function 
 
 If the function takes no argument, then its body is evaluated as a list.
 
 Other functions convert to singleton list as for scalars.
 
-### To map {#_to_map}
+### To map 
 
-#### From undef {#_from_undef_5}
+#### From undef 
 
 `undef` converts into an empy map.
 
-#### From boolean, integer, or string {#_from_boolean_integer_or_string_2}
+#### From boolean, integer, or string 
 
 A Scalar converts into a map with a single value, the key is `"_"`.
 
-#### From list {#_from_list_4}
+#### From list 
 
 A list converts into a map that contains all the elements. The keys are
 string representations of the element index.
 
-#### From function {#_from_function_5}
+#### From function 
 
 If the function takes no argument, then its body is evaluated as a map.
 
 Other functions convert to singleton map as for scalars.
 
-### To function {#_to_function}
+### To function 
 
 Non-function values convert into a function that takes no argument. The
 body of this function evaluates to a value equal to the original.
 
-Language constructs {#_language_constructs}
-===================
+# Language constructs 
 
 This section details the Yadrol language constructs. Each construct
 starts with the syntax of this construct in a block:
 
-<div class="informalexample">
+<div class="yadrol-code" markdown="1">
 
-reserved
-placeholder
-\[
-optional
-\]
+<span class="y-reserved">reserved</span> <span class="y-placeholder">placeholder</span> [ optional ]
+
+**reserved** *placeholder* [ optional ]
 
 </div>
 
-Reserved words, symbols and operators are denoted in **bold**.
+Reserved words, symbols and operators are denoted in <span class="yadrol-code y-reserved">bold</span>.
 Placeholders and variable parts of the construct are denoted in
-*italics*. Optional parts are enclosed between square brackets (`[]`).
+<span class="yadrol-code y-placeholder">italics</span>. Optional parts are enclosed between square brackets (<span class="yadrol-code">[]</span>).
 
-Literals {#_literals}
---------
+## Literals 
 
-### Undef {#_undef_2}
+### Undef 
 
-<div class="informalexample">
-
-undef
-
+<div class="yadrol-code">
+<span class="y-reserved">undef</span>
 </div>
 
-### Boolean {#_boolean_2}
+### Boolean 
 
-<div class="informalexample">
-
-false
-true
-
+<div class="yadrol-code">
+<span class="y-reserved">false</span><br>
+<span class="y-reserved">true</span>
 </div>
 
-### Integer {#_integer_2}
+### Integer 
 
-<div class="informalexample">
-
-\[0-9\]+
-
+<div class="yadrol-code">
+<span class="y-reserved">[0-9]+</span>
 </div>
 
-### String {#_string_2}
+### String 
 
-<div class="informalexample">
-
-"
-...
-"
-
+<div class="yadrol-code">
+<span class="y-reserved">"</span><span class="y-placeholder">...</span><span class="y-reserved">"</span>
 </div>
 
-#### Character escape {#_character_escape}
+#### Character escape 
 
 Characters may be escaped with a backslash (`\`).
 
@@ -294,27 +273,18 @@ Characters may be escaped with a backslash (`\`).
 | `\x`                                 | character *x*                        |
 +--------------------------------------+--------------------------------------+
 
-#### Expression interpolation {#_expression_interpolation}
+#### Expression interpolation 
 
 A sequence of character enclosed by a pair of dollar signs (`$`) is
 parsed as an expression and replaced by evaluating this expression as a
 string.
 
-Identifier {#_identifier}
-----------
+## Identifier 
 
-<div class="informalexample">
-
-\[A-Z\_a-z\]\[0-9A-Z\_a-z\]+
-
-</div>
-
-<div class="informalexample">
-
-'
-...
-'
-
+<div class="yadrol-code">
+<span class="y-reserved">[A-Z_a-z][0-9A-Z_a-z\]+</span>
+<br>
+<span class="y-reserved">'</span><span class="y-placeholder">...</span><span class="y-reserved">'</span>
 </div>
 
 Identifiers start with a letter or an undescore character and may be
@@ -325,76 +295,54 @@ quotes.
 An identifier is an expression that evaluates to the value assigned to a
 variable in the current scope or its parent.
 
-List constructor {#_list_constructor}
-----------------
+## List constructor 
 
-<div class="informalexample">
-
-\[\]
-
-</div>
-
-<div class="informalexample">
-
-\[
-item
-,
-item
-,
-...
-\]
-
+<div class="yadrol-code">
+<span class="y-reserved">[]</span>
+<br>
+<span class="y-reserved">[</span> <span class="y-placeholder">item</span> <span class="y-reserved">,</span> <span class="y-placeholder">...</span> <span class="y-reserved">]</span>
 </div>
 
 Evaluate each *item* expression and return a list containing the
 results.
 
-Map constructor {#_map_constructor}
----------------
+## Map constructor 
 
-<div class="informalexample">
-
-{}
-
-</div>
-
-<div class="informalexample">
-
-{
-name
-:
-item
-,
-name
-:
-item
-...
-}
-
+<div class="yadrol-code">
+<span class="y-reserved">{}</span>
+<br>
+<span class="y-reserved">{</span>
+<span class="y-placeholder">name</span>
+<span class="y-reserved">:</span>
+<span class="y-placeholder">item</span>
+<span class="y-reserved">,</span>
+<span class="y-placeholder">...</span>
+<span class="y-reserved">}</span>
 </div>
 
 Evaluate each *item* expression and return a map containing the results,
 the name of each item is specified by the *name* identifiers.
 
-Lambda {#_lambda}
-------
+## Lambda 
 
-<div class="informalexample">
+<div class="yadrol-code">
 
-fun (
-\[
-name
-,
-... \[
-name
-:
-defval
-,
-... \] \]
-) {
-body
-}
-
+<span class="y-reserved">fun (</span>
+[
+<span class="y-placeholder">name</span>
+<span class="y-reserved">,</span>
+<span class="y-placeholder">...</span>
+[
+<span class="y-placeholder">name</span>
+<span class="y-reserved">:</span>
+<span class="y-placeholder">defval</span>
+<span class="y-reserved">,</span>
+<span class="y-placeholder">...</span>
+]
+]
+<span class="y-reserved">) {</span>
+<span class="y-placeholder">body</span>
+<span class="y-reserved">}</span>
 </div>
 
 Create a function where *name* are argument identifiers, and *body* is
@@ -403,34 +351,33 @@ the function body expression. Default values can be specified with
 current scope. *body* is evaluated each time the function is called with
 a fresh scope with the current scope as parent.
 
-Call {#_call}
-----
+## Call 
 
-<div class="informalexample">
-
-expr
-(
-\[
-pos
-,
-... \[
-name
-:
-val
-,
-... \] \]
-)
-
+<div class="yadrol-code">
+<span class="y-placeholder">expr</span>
+<span class="y-reserved">(</span>
+[
+<span class="y-placeholder">pos</span>
+<span class="y-reserved">,</span>
+<span class="y-placeholder">...</span>
+[
+<span class="y-placeholder">name</span>
+<span class="y-reserved">:</span>
+<span class="y-placeholder">val</span>
+<span class="y-reserved">,</span>
+<span class="y-placeholder">...</span>
+]
+]
+<span class="y-reserved">)</span>
 </div>
 
 Evaluate *expr* as a function and call it with *pos* expressions as
 positional arguments, and *name* identifiers and *val* expressions as
 named arguments.
 
-Subscript {#_subscript}
----------
+## Subscript 
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 container
 \[
@@ -439,7 +386,7 @@ index
 
 </div>
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 map
 .
@@ -474,10 +421,9 @@ expression raises an error.
 In the second form, *name* is an identifier. If *map* is a map, then
 return the element named *name*, otherwise raise an error.
 
-Assignment {#_assignment}
-----------
+## Assignment 
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 lvalue
 =
@@ -487,34 +433,33 @@ rvalue
 
 Evaluate *rvalue* and assigns the result to the *lvalue* expression.
 
-### To variable {#_to_variable}
+### To variable 
 
 If *lvalue* is an identifier, then the value is stored in the specified
 variable in the current scope.
 
-### To subscript {#_to_subscript}
+### To subscript 
 
 If *lvalue* is a subscript, then the value is stored in the container
 specified by the subscript.
 
-### To list constructor {#_to_list_constructor}
+### To list constructor 
 
 If *lvalue* is a list constructor, then *rvalue* is converted into a
 list. Each value of this list is then assigned to the corresponding
 element of *lvalue*.
 
-### To map constructor {#_to_map_constructor}
+### To map constructor 
 
 If *lvalue* is a map constructor, then *rvalue* is converted into a map.
 Each value of this map is then assigned to the element of *lvalue* with
 the same name.
 
-Control structures {#_control_structures}
-------------------
+## Control structures 
 
-### Grouping {#_grouping}
+### Grouping 
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 (
 expr
@@ -524,11 +469,11 @@ expr
 
 Parentheses are used to override operator precedence.
 
-### Sequence {#_sequence}
+### Sequence 
 
-#### Soft sequence {#_soft_sequence}
+#### Soft sequence 
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 expr
 ;
@@ -544,9 +489,9 @@ In the sequence, the expressions are evaluated in order. The value of
 the sequence is the value of the last expression in the sequence, the
 values of the preceding expressions are discarded.
 
-#### Hard sequence {#_hard_sequence}
+#### Hard sequence 
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 expr
 ---
@@ -562,9 +507,9 @@ Hard sequences are like soft sequences, each expression is evaluated one
 after the other all in the same scope. The difference is that the Yadrol
 application only records and outputs the result of the last expression.
 
-### Conditional {#_conditional}
+### Conditional 
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 if
 condition
@@ -578,9 +523,9 @@ fexpr
 *condition* is evaluated as a boolean. If the result is `true`, then
 *texpr* is evaluated, otherwise *fexpr* is evaluated.
 
-### For loops {#_for_loops}
+### For loops 
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 \[
 out
@@ -628,9 +573,9 @@ left part of the comparison can be omitted.
 
 Both *out* and *condition* are optional, but either one must be present.
 
-### Repeat loops {#_repeat_loops}
+### Repeat loops 
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 repeat
 expr
@@ -639,7 +584,7 @@ condition
 
 </div>
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 repeat
 expr
@@ -652,7 +597,7 @@ number
 
 </div>
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 while
 condition
@@ -689,10 +634,9 @@ integer literal, it is not an evaluated expression.
 If *condition* is a comparison between *item* and something, then the
 left part of the comparison can be omitted.
 
-Boolean operators {#_boolean_operators}
------------------
+## Boolean operators 
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 expr
 or
@@ -700,7 +644,7 @@ expr
 
 </div>
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 expr
 and
@@ -708,7 +652,7 @@ expr
 
 </div>
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 not
 expr
@@ -720,12 +664,11 @@ short-circuited. The `or` operator does not evaluate the right operand
 if the left operand evaluates as `true`. The `and` operator does not
 evaluate the right operand if the left operand evaluates as `false`.
 
-Comparison operators {#_comparison_operators}
---------------------
+## Comparison operators 
 
-### Arithmetic comparison {#_arithmetic_comparison}
+### Arithmetic comparison 
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 left
 ==
@@ -733,7 +676,7 @@ right
 
 </div>
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 left
 !=
@@ -741,7 +684,7 @@ right
 
 </div>
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 left
 &lt;
@@ -749,7 +692,7 @@ right
 
 </div>
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 left
 &gt;
@@ -757,7 +700,7 @@ right
 
 </div>
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 left
 &lt;=
@@ -765,7 +708,7 @@ right
 
 </div>
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 left
 &gt;=
@@ -776,9 +719,9 @@ right
 Evaluate *left* and *right* as integers, then return `true` if the
 comparison is verified, otherwise `false`.
 
-### General comparison {#_general_comparison}
+### General comparison 
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 left
 ===
@@ -786,7 +729,7 @@ right
 
 </div>
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 left
 !==
@@ -805,10 +748,9 @@ names and each corresponding element is equal. Functions are considered
 equal, if and only if their argument sets are equal, and their bodies
 are equal, and their parent scopes are the same.
 
-Arithmetic operators {#_arithmetic_operators}
---------------------
+## Arithmetic operators 
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 expr
 +
@@ -816,7 +758,7 @@ expr
 
 </div>
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 expr
 -
@@ -824,7 +766,7 @@ expr
 
 </div>
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 expr
 \*
@@ -832,7 +774,7 @@ expr
 
 </div>
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 expr
 /
@@ -840,7 +782,7 @@ expr
 
 </div>
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 expr
 %
@@ -865,12 +807,11 @@ arthmetic operator is applied.
 | `%`                                  | division remainder                   |
 +--------------------------------------+--------------------------------------+
 
-Dice {#_dice}
-----
+## Dice 
 
-### Single die {#_single_die}
+### Single die 
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 d
 type
@@ -898,16 +839,16 @@ The roll depends on the type of *type*:
 |                                      | arguments                            |
 +--------------------------------------+--------------------------------------+
 
-#### Space after `d` {#_space_after_literal_d_literal}
+#### Space after `d` 
 
 The space between the `d` operator and the die type is unnecessary for
 the following constructs: - an integer literal - a list or map
 constructor - an expression between parentheses - an identifier that
 starts with an uppercase letter
 
-### Multiple dice {#_multiple_dice}
+### Multiple dice 
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 number
 d
@@ -925,17 +866,16 @@ If *type* is a function, and this function accepts an argument named
 `N`, then this function is called with *number* as argument. It is the
 function responsibility to return a list of size *number*.
 
-#### Space before `d` {#_space_before_literal_d_literal}
+#### Space before `d` 
 
 The space between *number* and the `d` operator is unnecessary for the
 following constructs: - an integer literal - a list or map constructor -
 an expression between parentheses - an identifier that ends with an
 uppercase letter
 
-Draw {#_draw}
-----
+## Draw 
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 draw
 \[
@@ -954,10 +894,9 @@ If *number* is omitted, then only one element is drawn and returned.
 If *number* is specified, then a list is returned with the drawn
 elements.
 
-Best of {#_best_of}
--------
+## Best of 
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 highest
 \[\_number\_\]
@@ -966,7 +905,7 @@ of
 
 </div>
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 lowest
 \[\_number\_\]
@@ -975,7 +914,7 @@ of
 
 </div>
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 first
 \[\_number\_\]
@@ -984,7 +923,7 @@ of
 
 </div>
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 last
 \[\_number\_\]
@@ -1003,10 +942,9 @@ with the selected elements. The result list may be lower than *number*
 if *expr* has not enough elements. The elements in the result are in the
 same order than the original *expr* list.
 
-Append {#_append}
-------
+## Append 
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 head
 &lt;&lt;
@@ -1023,10 +961,9 @@ entries to *head*. If an entry with the same name already exists in
 
 The return value is the modified *head*.
 
-Range {#_range}
------
+## Range 
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 start
 ..
@@ -1046,10 +983,9 @@ descending order.
 
 If *start* equals *end*, then the result is a single element list.
 
-Count {#_count}
------
+## Count 
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 count
 expr
@@ -1071,24 +1007,23 @@ its type:
 | map                                  | number of entries                    |
 +--------------------------------------+--------------------------------------+
 
-List reorder {#_list_reorder}
-------------
+## List reorder 
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 sorted
 expr
 
 </div>
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 reversed
 expr
 
 </div>
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 shuffled
 expr
@@ -1108,38 +1043,37 @@ elements in the specified order:
 | `shuffled`                           | random order                         |
 +--------------------------------------+--------------------------------------+
 
-Conversion {#_conversion}
-----------
+## Conversion 
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 string
 expr
 
 </div>
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 boolean
 expr
 
 </div>
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 integer
 expr
 
 </div>
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 list
 expr
 
 </div>
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 map
 expr
@@ -1148,10 +1082,9 @@ expr
 
 Evaluate *expr* forcing the evaluation type.
 
-Output {#_output}
-------
+## Output 
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 roll
 expr
@@ -1165,7 +1098,7 @@ name
 
 </div>
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 sample
 expr
@@ -1190,10 +1123,9 @@ specified, then the application will coerce the evaluation type.
 output. If omitted, then the application will generate one based on
 *expr*.
 
-Import {#_import}
-------
+## Import 
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 import
 \[
@@ -1226,7 +1158,7 @@ stream is evaluated is not merged into the current scope. Instead the
 scope is stored as an object in the variable named *obj* in the current
 scope. The imported names are accessible through subscript constructs.
 
-### Addresses {#_addresses}
+### Addresses 
 
 The command-line tool accept the following addresses:
 
@@ -1237,10 +1169,9 @@ The command-line tool accept the following addresses:
 
 -   URL that points to a Yadrol file
 
-Native {#_native}
-------
+## Native 
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 native
 class
@@ -1251,22 +1182,21 @@ Evaluate an expression written in native Java. The fully qualified name
 of the Java class is specified by the identifier *class*. This class
 must implement `org.phatonin.yadrol.core.Expression`.
 
-Scopes {#_scopes}
-------
+## Scopes 
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 local
 
 </div>
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 outer
 
 </div>
 
-<div class="informalexample">
+<div class="yadrol-code">
 
 global
 
@@ -1278,8 +1208,7 @@ the scope, and vice versa.
 `local` returns the current variable scope. `outer` returns the parent
 of the current variable scope. `global` returns the root variable scope.
 
-Operator precedence {#_operator_precedence}
-===================
+# Operator precedence 
 
 +----------------------------------+-----------------------------------------+
 | **Operators**                    | **Associative**                         |

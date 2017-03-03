@@ -40,7 +40,7 @@ import org.phatonin.yadrol.core.values.ValueComparator;
 public class IndexOf extends AbstractExpression {
 	private final Expression element;
 	private final Expression container;
-	
+
 	public IndexOf(Expression element, Expression container) {
 		super(element.getLocation());
 		this.element = element;
@@ -83,7 +83,7 @@ public class IndexOf extends AbstractExpression {
 			while (lit.hasNext()) {
 				Object v = lit.next();
 				if (equalValues(param, v)) {
-					return lit.previousIndex();
+					return lit.nextIndex();
 				}
 			}
 			return null;

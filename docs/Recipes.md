@@ -1,3 +1,5 @@
+{% capture url %}http://localhost:8080/yadrol-web?run=true&expression-string={% endcapture %}
+
 # Basics
 
 
@@ -5,7 +7,7 @@
 
 <span class="yadrol-comment"># Dungeons &amp; Dragons</span>
 <br>
-[**d**20](http://localhost:8080/yadrol-web?run=true&expression-string=d20)
+[**d**20]({{url}}d20){:target="_blank"}
 
 <span class="yadrol-comment"># Basic Role Playing</span>
 <br>

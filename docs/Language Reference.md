@@ -743,6 +743,21 @@ arthmetic operator is applied.
 | **`/`**                              | integer division                     |
 | **`%`**                              | division remainder                   |
 
+## Unary sign operators
+
+<div class="yadrol-code" markdown="1">
+
+**+**
+*expr*
+<br>
+**-**
+*expr*
+
+</div>
+
+Evaluate *expr* as an integer, then apply the specified sign.
+
+
 ## Dice 
 
 ### Single die 
@@ -948,6 +963,28 @@ elements in the specified order:
 | **`reversed`**                           | reverse order of the original list   |
 | **`shuffled`**                           | random order                         |
 
+
+## Search
+
+<div class="yadrol-code" markdown="1">
+
+*element*
+**in**
+*container*
+
+</div>
+
+Evaluate *element* and *container*, then search for *element* in *container*.
+The returned value depends on the type of *container*:
+
+| Type | Value |
+|------|:------|
+| `undef` | `undef` |
+| boolean, integer, string | boolean, *element* **==** *container* |
+| list | index in *container* of *element*, or `undef` |
+| map | name of *element* in *container*, or `undef` |
+
+
 ## Conversion 
 
 <div class="yadrol-code" markdown="1">
@@ -1105,14 +1142,10 @@ must implement `org.phatonin.yadrol.core.Expression`.
 | `..`                             | no                                      |
 | `+` `-`                          | yes                                     |
 | `*` `/` `%`                    | yes                                     |
-| `+` `-` <sup>1</sup>                      | no                                      |
+| `+` `-` (unary sign)                      | no                                      |
 | `highest` `lowest` `first` `last` `of`       | no                                      |
 | `draw`                           | no                                      |
 | `d`                              | no                                      |
 | `count` `sorted` `reversed` `shuffled`      | no                                      |
 | `string` `boolean` `integer` `list` `map`    | no                                        |
-| `.` `[]`<sup>2</sup> `()`<sup>3</sup>              | yes                                     |
-
-<sup>1</sup> Unary sign operators
-<sup>2</sup> Subscript brackets
-<sup>3</sup> Function call
+| `.` `[]` (subscript) `()` (call)             | yes                                     |

@@ -1,46 +1,52 @@
-# Data types
+Language Reference
+==================
 
-## Scalar types
+<div class="include-toc">
+</div>
 
-### Undef 
+## Data types
+
+### Scalar types
+
+#### Undef 
 
 `undef` type has a single value: `undef`. This value usually means an
 undefined value, or an uninitialized variable.
 
-### Boolean 
+#### Boolean 
 
 `boolean` type has two values: `true` and `false`.
 
-### Integer 
+#### Integer 
 
 `integer` values are represented as 64-bit signed integers.
 
-### String 
+#### String 
 
 `string` are immutable sequence of Unicode characters.
 
-## Container types 
+### Container types 
 
-### List 
+#### List 
 
 Lists are ordered collections of elements. Each element is addressed by
 its position in the list. Element positions are 1-based.
 
-### Map 
+#### Map 
 
 Maps are collections of key-value pairs. Keys are unique strings within
 a map.
 
 The insert order of keys is preserved.
 
-## Functions 
+### Functions 
 
 Functions are callable expressions within their own variable scope.
 Functions are first-class values, they can be assigned and returned.
 
-# Evaluation model 
+## Evaluation model 
 
-## Variable scopes 
+### Variable scopes 
 
 Expressions are evaluated within the context of a variable scope. A
 variable scope is a mapping from variable names to values. A variable
@@ -52,51 +58,51 @@ Yadrol creates it in the current scope.
 Some expressions spawn new variable scopes in order to evaluate
 sub-expressions.
 
-## Data conversion 
+### Data conversion 
 
-### To boolean 
+#### To boolean 
 
-#### From undef 
+##### From undef 
 
 `undef` converts to `false`.
 
-#### From integer 
+##### From integer 
 
 `0` converts to `false`, all other values convert to `true`
 
-#### From string 
+##### From string 
 
 The empty string converts to `false`, all other strings convert to
 `true`.
 
-#### From list 
+##### From list 
 
 The empty list converts to `false`, non-empty lists convert to `true`.
 
-#### From map 
+##### From map 
 
 The empty map converts to `false`, non-empty maps convert to `true`.
 
-#### From function 
+##### From function 
 
 If the function takes no argument, then its body is evaluated as a
 boolean.
 
 Other functions convert to `false`.
 
-### To integer 
+#### To integer 
 
-#### From undef 
+##### From undef 
 
 `undef` converts to `0`.
 
-#### From boolean 
+##### From boolean 
 
 `false` converts to `0`.
 
 `true` converts to `1`.
 
-#### From string 
+##### From string 
 
 Strings are converted to integer by parsing its contents assuming the
 number is written in base 10.
@@ -104,14 +110,14 @@ number is written in base 10.
 If the contents cannot be parsed as an integer, the the string converts
 to `0`.
 
-#### From list 
+##### From list 
 
 A list converts into the sum of each of its elements. If an element is
 not an integer, then it is converted to an integer.
 
 The empty list converts to `0`
 
-#### From map 
+##### From map 
 
 A map converts into the sum of each of its values. If a value is not an
 integer, then it is converted to an integer. Map keys do not enter into
@@ -119,7 +125,7 @@ account in the conversion.
 
 The empty map converts to `0`
 
-#### From function 
+##### From function 
 
 If the function takes no argument, then its body is evaluated as an
 integer.
@@ -127,30 +133,30 @@ integer.
 Other functions convert to an undefined integer. Two identical functions
 always convert to the same integer.
 
-### To string 
+#### To string 
 
-#### From undef 
+##### From undef 
 
 `undef` converts to the empty string.
 
-#### From boolean 
+##### From boolean 
 
 `false` converts to the empty string.
 
 `true` converts to `"true"`.
 
-#### From integer 
+##### From integer 
 
 An integer converts to a string that represents the number in base 10.
 
-#### From list 
+##### From list 
 
 A list converts to the concatenation of each of its elements. If an
 element is not a string, then it is converted to a string.
 
 The empty list converts to the empty string.
 
-#### From map 
+##### From map 
 
 A map converts to the concatenation of each of its values. If a value is
 not a string, then it is converted to a string. Map keys do not enter
@@ -158,7 +164,7 @@ into account in the conversion.
 
 The empty map converts to the empty string.
 
-#### From function 
+##### From function 
 
 If the function takes no argument, then its body is evaluated as a
 string.
@@ -166,54 +172,54 @@ string.
 Other functions convert to an undefined string. Two identical functions
 always convert to the same string.
 
-### To list 
+#### To list 
 
-#### From undef 
+##### From undef 
 
 `undef` converts into an empy list.
 
-#### From boolean, integer, or string 
+##### From boolean, integer, or string 
 
 A Scalar converts into a list with a single element.
 
-#### From map 
+##### From map 
 
 A map converts into a list that contains all the values. The key insert
 order is preserved in the list.
 
-#### From function 
+##### From function 
 
 If the function takes no argument, then its body is evaluated as a list.
 
 Other functions convert to singleton list as for scalars.
 
-### To map 
+#### To map 
 
-#### From undef 
+##### From undef 
 
 `undef` converts into an empy map.
 
-#### From boolean, integer, or string 
+##### From boolean, integer, or string 
 
 A Scalar converts into a map with a single value, the key is `"_"`.
 
-#### From list 
+##### From list 
 
 A list converts into a map that contains all the elements. The keys are
 string representations of the element index.
 
-#### From function 
+##### From function 
 
 If the function takes no argument, then its body is evaluated as a map.
 
 Other functions convert to singleton map as for scalars.
 
-### To function 
+#### To function 
 
 Non-function values convert into a function that takes no argument. The
 body of this function evaluates to a value equal to the original.
 
-# Language constructs 
+## Language constructs 
 
 This section details the Yadrol language constructs. Each construct
 starts with the syntax of this construct in a block:
@@ -226,7 +232,7 @@ Reserved words, symbols and operators are denoted in **`bold`**.
 Placeholders and variable parts of the construct are denoted in
 *`italics`*. Optional parts are enclosed between square brackets (`[]`).
 
-## Comments
+### Comments
 
 Yadrol supports single-line comments: everything from the sharp character ('#') to the end of a line is ignored by the parser.
 
@@ -236,15 +242,15 @@ Yadrol supports single-line comments: everything from the sharp character ('#') 
 
 
 
-## Literals 
+### Literals 
 
-### Undef 
+#### Undef 
 
 <div class="yadrol-code" markdown="1">
 **undef**
 </div>
 
-### Boolean 
+#### Boolean 
 
 <div class="yadrol-code" markdown="1">
 **false**
@@ -252,19 +258,19 @@ Yadrol supports single-line comments: everything from the sharp character ('#') 
 **true**
 </div>
 
-### Integer 
+#### Integer 
 
 <div class="yadrol-code" markdown="1">
 **[0-9]+**
 </div>
 
-### String 
+#### String 
 
 <div class="yadrol-code" markdown="1">
 **"** *...* **"**
 </div>
 
-#### Character escape 
+##### Character escape 
 
 Characters may be escaped with a backslash (`\`).
 
@@ -276,13 +282,13 @@ Characters may be escaped with a backslash (`\`).
 | `\x`                                 | character *x*                        |
 
 
-#### Expression interpolation 
+##### Expression interpolation 
 
 A sequence of character enclosed by a pair of dollar signs (`$`) is
 parsed as an expression and replaced by evaluating this expression as a
 string.
 
-## Identifier 
+### Identifier 
 
 <div class="yadrol-code" markdown="1">
 **[A-Z_a-z][0-9A-Z_a-z\]+**
@@ -298,7 +304,7 @@ quotes.
 An identifier is an expression that evaluates to the value assigned to a
 variable in the current scope or its parent.
 
-## List constructor 
+### List constructor 
 
 <div class="yadrol-code" markdown="1">
 **[]**
@@ -309,7 +315,7 @@ variable in the current scope or its parent.
 Evaluate each *item* expression and return a list containing the
 results.
 
-## Map constructor 
+### Map constructor 
 
 <div class="yadrol-code" markdown="1">
 **{}**
@@ -326,7 +332,7 @@ results.
 Evaluate each *item* expression and return a map containing the results,
 the name of each item is specified by the *name* identifiers.
 
-## Lambda 
+### Lambda 
 
 <div class="yadrol-code" markdown="1">
 
@@ -354,7 +360,7 @@ the function body expression. Default values can be specified with
 current scope. *body* is evaluated each time the function is called with
 a fresh scope with the current scope as parent.
 
-## Call 
+### Call 
 
 <div class="yadrol-code" markdown="1">
 *expr*
@@ -378,7 +384,7 @@ Evaluate *expr* as a function and call it with *pos* expressions as
 positional arguments, and *name* identifiers and *val* expressions as
 named arguments.
 
-## Subscript 
+### Subscript 
 
 <div class="yadrol-code" markdown="1">
 
@@ -424,7 +430,7 @@ expression raises an error.
 In the second form, *name* is an identifier. If *map* is a map, then
 return the element named *name*, otherwise raise an error.
 
-## Assignment 
+### Assignment 
 
 <div class="yadrol-code" markdown="1">
 
@@ -434,31 +440,31 @@ return the element named *name*, otherwise raise an error.
 
 Evaluate *rvalue* and assigns the result to the *lvalue* expression.
 
-### To variable 
+#### To variable 
 
 If *lvalue* is an identifier, then the value is stored in the specified
 variable in the current scope.
 
-### To subscript 
+#### To subscript 
 
 If *lvalue* is a subscript, then the value is stored in the container
 specified by the subscript.
 
-### To list constructor 
+#### To list constructor 
 
 If *lvalue* is a list constructor, then *rvalue* is converted into a
 list. Each value of this list is then assigned to the corresponding
 element of *lvalue*.
 
-### To map constructor 
+#### To map constructor 
 
 If *lvalue* is a map constructor, then *rvalue* is converted into a map.
 Each value of this map is then assigned to the element of *lvalue* with
 the same name.
 
-## Control structures 
+### Control structures 
 
-### Grouping 
+#### Grouping 
 
 <div class="yadrol-code" markdown="1">
 
@@ -470,9 +476,9 @@ the same name.
 
 Parentheses are used to override operator precedence.
 
-### Sequence 
+#### Sequence 
 
-#### Soft sequence 
+##### Soft sequence 
 
 <div class="yadrol-code" markdown="1">
 
@@ -490,7 +496,7 @@ In the sequence, the expressions are evaluated in order. The value of
 the sequence is the value of the last expression in the sequence, the
 values of the preceding expressions are discarded.
 
-#### Hard sequence 
+##### Hard sequence 
 
 <div class="yadrol-code" markdown="1">
 
@@ -514,7 +520,7 @@ Hard sequences are like soft sequences, each expression is evaluated one
 after the other all in the same scope. The difference is that the Yadrol
 application only records and outputs the result of the last expression.
 
-### Conditional 
+#### Conditional 
 
 <div class="yadrol-code" markdown="1">
 
@@ -530,7 +536,7 @@ application only records and outputs the result of the last expression.
 *condition* is evaluated as a boolean. If the result is `true`, then
 *texpr* is evaluated, otherwise *fexpr* is evaluated.
 
-### For loops 
+#### For loops 
 
 <div class="yadrol-code" markdown="1">
 
@@ -581,7 +587,7 @@ left part of the comparison can be omitted.
 
 Both *out* and *condition* are optional, but either one must be present.
 
-### Repeat loops 
+#### Repeat loops 
 
 <div class="yadrol-code" markdown="1">
 
@@ -634,7 +640,7 @@ integer literal, it is not an evaluated expression.
 If *condition* is a comparison between *item* and something, then the
 left part of the comparison can be omitted.
 
-## Boolean operators 
+### Boolean operators 
 
 <div class="yadrol-code" markdown="1">
 
@@ -656,9 +662,9 @@ short-circuited. The `or` operator does not evaluate the right operand
 if the left operand evaluates as `true`. The `and` operator does not
 evaluate the right operand if the left operand evaluates as `false`.
 
-## Comparison operators 
+### Comparison operators 
 
-### Arithmetic comparison 
+#### Arithmetic comparison 
 
 <div class="yadrol-code" markdown="1">
 
@@ -691,7 +697,7 @@ evaluate the right operand if the left operand evaluates as `false`.
 Evaluate *left* and *right* as integers, then return `true` if the
 comparison is verified, otherwise `false`.
 
-### General comparison 
+#### General comparison 
 
 <div class="yadrol-code" markdown="1">
 
@@ -716,7 +722,7 @@ names and each corresponding element is equal. Functions are considered
 equal, if and only if their argument sets are equal, and their bodies
 are equal, and their parent scopes are the same.
 
-## Arithmetic operators 
+### Arithmetic operators 
 
 <div class="yadrol-code" markdown="1">
 
@@ -753,7 +759,7 @@ arthmetic operator is applied.
 | **`/`**                              | integer division                     |
 | **`%`**                              | division remainder                   |
 
-## Unary sign operators
+### Unary sign operators
 
 <div class="yadrol-code" markdown="1">
 
@@ -768,9 +774,9 @@ arthmetic operator is applied.
 Evaluate *expr* as an integer, then apply the specified sign.
 
 
-## Dice 
+### Dice 
 
-### Single die 
+#### Single die 
 
 <div class="yadrol-code" markdown="1">
 
@@ -790,14 +796,14 @@ The roll depends on the type of *type*:
 | **map**                                  | A random entry in the map, the map remains unchanged, the result is a single-entry map                |
 | **function**                             | Call the function with empty arguments                            |
 
-#### Space after `d` 
+##### Space after `d` 
 
 The space between the `d` operator and the die type is unnecessary for
 the following constructs: - an integer literal - a list or map
 constructor - an expression between parentheses - an identifier that
 starts with an uppercase letter
 
-### Multiple dice 
+#### Multiple dice 
 
 <div class="yadrol-code" markdown="1">
 
@@ -817,14 +823,14 @@ If *type* is a function, and this function accepts an argument named
 `N`, then this function is called with *number* as argument. It is the
 function responsibility to return a list of size *number*.
 
-#### Space before `d` 
+##### Space before `d` 
 
 The space between *number* and the `d` operator is unnecessary for the
 following constructs: - an integer literal - a list or map constructor -
 an expression between parentheses - an identifier that ends with an
 uppercase letter
 
-## Draw 
+### Draw 
 
 <div class="yadrol-code" markdown="1">
 
@@ -845,7 +851,7 @@ If *number* is omitted, then only one element is drawn and returned.
 If *number* is specified, then a list is returned with the drawn
 elements.
 
-## Best of 
+### Best of 
 
 <div class="yadrol-code" markdown="1">
 
@@ -889,7 +895,7 @@ with the selected elements. The result list may be lower than *number*
 if *expr* has not enough elements. The elements in the result are in the
 same order than the original *expr* list.
 
-## Append 
+### Append 
 
 <div class="yadrol-code" markdown="1">
 
@@ -908,7 +914,7 @@ entries to *head*. If an entry with the same name already exists in
 
 The return value is the modified *head*.
 
-## Range 
+### Range 
 
 <div class="yadrol-code" markdown="1">
 
@@ -930,7 +936,7 @@ descending order.
 
 If *start* equals *end*, then the result is a single element list.
 
-## Count 
+### Count 
 
 <div class="yadrol-code" markdown="1">
 
@@ -949,7 +955,7 @@ its type:
 | **list**                                 | number of elements                   |
 | **map**                                  | number of entries                    |
 
-## List reorder 
+### List reorder 
 
 <div class="yadrol-code" markdown="1">
 
@@ -974,7 +980,7 @@ elements in the specified order:
 | **`shuffled`**                           | random order                         |
 
 
-## Search
+### Search
 
 <div class="yadrol-code" markdown="1">
 
@@ -995,7 +1001,7 @@ The returned value depends on the type of *container*:
 | map | name of *element* in *container*, or `undef` |
 
 
-## Conversion 
+### Conversion 
 
 <div class="yadrol-code" markdown="1">
 
@@ -1018,7 +1024,7 @@ The returned value depends on the type of *container*:
 
 Evaluate *expr* forcing the evaluation type.
 
-## Output 
+### Output 
 
 <div class="yadrol-code" markdown="1">
 
@@ -1057,7 +1063,7 @@ specified, then the application will coerce the evaluation type.
 output. If omitted, then the application will generate one based on
 *expr*.
 
-## Import 
+### Import 
 
 <div class="yadrol-code" markdown="1">
 
@@ -1094,7 +1100,7 @@ stream is evaluated is not merged into the current scope. Instead the
 scope is stored as an object in the variable named *obj* in the current
 scope. The imported names are accessible through subscript constructs.
 
-### Addresses 
+#### Addresses 
 
 The command-line tool accept the following addresses:
 
@@ -1103,7 +1109,7 @@ The command-line tool accept the following addresses:
     paths
 -   URL that points to a Yadrol file
 
-## Scopes 
+### Scopes 
 
 <div class="yadrol-code" markdown="1">
 
@@ -1121,7 +1127,7 @@ the scope, and vice versa.
 `local` returns the current variable scope. `outer` returns the parent
 of the current variable scope. `global` returns the root variable scope.
 
-## Native 
+### Native 
 
 <div class="yadrol-code" markdown="1">
 
@@ -1134,7 +1140,7 @@ Evaluate an expression written in native Java. The fully qualified name
 of the Java class is specified by the identifier *class*. This class
 must implement `org.phatonin.yadrol.core.Expression`.
 
-# Operator precedence 
+## Operator precedence 
 
 | Operators                    | Associativity                         |
 |:----------------------------:|:-------------------------------------:|

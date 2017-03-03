@@ -12,7 +12,7 @@ This site is dedicate to Yadrol documentation.
 You can [play with Yadrol](http://localhost:8080/yadrol-web) right now.
 
 * A good startig point is [Recipes](Recipes) that gives the Yadrol expressions for the most common mechanics.
-* The [Language Reference](Language Reference), for the brave contains the full specification of the Yadrol language.
+* The [Language Reference](LanguageReference), for the brave contains the full specification of the Yadrol language.
 * Yadrol is maintained on [GitHub](http://github.com/phatonin/yadrol) where you can download the source code.
 
 

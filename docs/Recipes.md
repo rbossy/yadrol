@@ -1,7 +1,12 @@
 {% capture url %}http://localhost:8080/yadrol-web?run=true&expression-string={% endcapture %}
 
-# Basics
+Recipes
+=======
 
+<div class="include-toc">
+</div>
+
+## Basics
 
 <div class="yadrol-code" markdown="1">
 
@@ -11,23 +16,23 @@
 
 <span class="yadrol-comment"># Basic Role Playing</span>
 <br>
-[**d**100](http://localhost:8080/yadrol-web?run=true&expression-string=d100)
+[**d**100]({{url}}d100)
 
 <span class="yadrol-comment"># Seldom used, unfortunately</span>
 <br>
-[**d**8](http://localhost:8080/yadrol-web?run=true&expression-string=d8)
+[**d**8]({{url}}d8)
 
 <span class="yadrol-comment"># d13 only exist in hyperdimensional spaces, which is fine for Yadrol</span>
 <br>
-[**d**13](http://localhost:8080/yadrol-web?run=true&expression-string=d13)
+[**d**13]({{url}}d13)
 
 <span class="yadrol-comment"># Barbarians of Lemuria</span>
 <br>
-[**2d6**](http://localhost:8080/yadrol-web?run=true&expression-string=2d6)
+[**2d6**]({{url}}2d6)
 
 </div>
 
-# Roll and keep
+## Roll and keep
 
 *Roll and keep* mechanics can be simulated with the `highest` and
 `lowest` constructs:
@@ -36,23 +41,23 @@
 
 <span class="yadrol-comment"># Roll two ten-sided dice, keep best</span>
 <br>
-[**highest of** 2**d**10](http://localhost:8080/yadrol-web?run=true&expression-string=highest%20of%202d10)
+[**highest of** 2**d**10]({{url}}highest%20of%202d10)
 
 <span class="yadrol-comment"># Roll two ten-sided dice, keep lowest</span>
 <br>
-[**lowest of** 2**d**10](http://localhost:8080/yadrol-web?run=true&expression-string=lowest%20of%202d10)
+[**lowest of** 2**d**10]({{url}}lowest%20of%202d10)
 
 <span class="yadrol-comment"># Roll three dice, keep the two highest</span>
 <br>
-[**highest** 2 **of** 3**d**6](http://localhost:8080/yadrol-web?run=true&expression-string=highest%202%20of%203d6)
+[**highest** 2 **of** 3**d**6]({{url}}highest%202%20of%203d6)
 
 <span class="yadrol-comment"># Roll three dice, keep the two lowest</span>
 <br>
-[**lowest** 2 **of** 3**d**6](http://localhost:8080/yadrol-web?run=true&expression-string=lowest%202%20of%203d6)
+[**lowest** 2 **of** 3**d**6]({{url}}lowest%202%20of%203d6)
 
 </div>
 
-# Count hits in a dice pool
+## Count hits in a dice pool
 
 *Count hits* is a type of dice mechanic where one rolls a pool of dice,
 then counts how many dice shows a result equal or higher than a target
@@ -63,7 +68,7 @@ value. In Yadrol, this can be specified as:
 
 <span class="yadrol-comment"># World of Darkness</span>
 <br>
-[**count (for** 6**d**10 **if >=** 7**)**](http://localhost:8080/yadrol-web?run=true&expression-string=count%20%28for%206d10%20if%20>%3D%207%29)
+[**count (for** 6**d**10 **if >=** 7**)**]({{url}}count%20%28for%206d10%20if%20>%3D%207%29)
 
 </div>
 
@@ -77,21 +82,21 @@ Now let's count 1s in a pool of six-sided dice:
 
 <div class="yadrol-code" markdown="1">
 
-[**count (for** 4**d**6 **if ==** 1**)**](http://localhost:8080/yadrol-web?run=true&expression-string=count%20%28for%204d6%20if%20%3D%3D%201%29)
+[**count (for** 4**d**6 **if ==** 1**)**]({{url}}count%20%28for%204d6%20if%20%3D%3D%201%29)
 
 </div>
 
 
 
 
-# Exploding die
+## Exploding die
 
 An exploding die is a die that one rolls again when its result is the highest possible.
 You specify rerolls to Yadrol with the `repeat` construct:
 
 <div class="yadrol-code" markdown="1">
 
-[**repeat d**6 **if ==** 6](http://localhost:8080/yadrol-web?run=true&expression-string=repeat%20d6%20if%20%3D%3D%206)
+[**repeat d**6 **if ==** 6]({{url}}repeat%20d6%20if%20%3D%3D%206)
 
 </div>
 
@@ -103,17 +108,17 @@ You can specify it to Yadrol by using the `while` operator instead of `if`:
 
 <div class="yadrol-code" markdown="1">
 
-[**repeat d**6 **while ==** 6](http://localhost:8080/yadrol-web?run=true&expression-string=repeat%20d6%20while%20%3D%3D%206)
+[**repeat d**6 **while ==** 6]({{url}}repeat%20d6%20while%20%3D%3D%206)
 
 </div>
 
-# Reroll 1s
+## Reroll 1s
 
 We will use the very same <code>while</code>-<code>if</code> construct to specify another roll:
 
 <div class="yadrol-code" markdown="1">
 
-[**last of (repeat d**12 **if ==** 1)](http://localhost:8080/yadrol-web?run=true&expression-string=last%20of%20%28repeat%20d12%20if%20%3D%3D%201%29)
+[**last of (repeat d**12 **if ==** 1)]({{url}}last%20of%20%28repeat%20d12%20if%20%3D%3D%201%29)
 
 </div>
 
@@ -121,7 +126,7 @@ As we have seen above, the `repeat` part will roll a twelve-sided die and roll i
 The `last of` operator tells that we are only interested in the last die rolled.
 This expression means << _roll a d12, reroll 1s_ >>.
 
-# Fudge dice
+## Fudge dice
 
 Fudge dice are custom six-sided dice used in games like [Fudge](XXX) and [FATE](XXX).
 Two sides are marked with a plus sign, two other sides with a minus sign, and the two remaining sides are blank.
@@ -131,7 +136,7 @@ One way to specify this to Yadrol is:
 
 <div class="yadrol-code" markdown="1">
 
-[4**d[-**1**, -**1**,** 0**,** 0**,** 1**,** 1**]**](http://localhost:8080/yadrol-web?run=true&expression-string=4d%5B-1%2C%20-1%2C%200%2C%200%2C%201%2C%201%5D)
+[4**d[-**1**, -**1**,** 0**,** 0**,** 1**,** 1**]**]({{url}}4d%5B-1%2C%20-1%2C%200%2C%200%2C%201%2C%201%5D)
 
 </div>
 
@@ -144,12 +149,12 @@ Try:
 
 <div class="yadrol-code" markdown="1">
 
-[4**d[-**1**,** 0**,** 1**]**](http://localhost:8080/yadrol-web?run=true&expression-string=4d%5B-1%2C%200%2C%201%5D)
+[4**d[-**1**,** 0**,** 1**]**]({{url}}4d%5B-1%2C%200%2C%201%5D)
 
 </div>
 
 
-# Barbarians of Lemuria combat turn
+## Barbarians of Lemuria combat turn
 
 In the excellent Sword & Sorcery game [Barbarians of Lemuria](XXX) (BoL), players play sword-to-hire barbarian in search of fortune.
 In the general mechanics of BoL, players roll `2d6` and must beat `9` to succeed.
@@ -161,7 +166,7 @@ We will assume the character is using a sword which makes `d6 + 1` damage:
 
 <div class="yadrol-code" markdown="1">
 
-[**if** 2**d**6 **>=** 9 **then d**6 **+** 1 **else** 0](http://localhost:8080/yadrol-web?run=true&expression-string=if%202d6%20>%3D%209%20then%20d6%20%2B%201%20else%200)
+[**if** 2**d**6 **>=** 9 **then d**6 **+** 1 **else** 0]({{url}}if%202d6%20>%3D%209%20then%20d6%20%2B%201%20else%200)
 
 </div>
 
@@ -177,7 +182,7 @@ The target number is still `9`, so assuming a _Melee_ of `2` and an opponent's _
 
 <div class="yadrol-code" markdown="1">
 
-[**if** 2**d**6 **+** 2 **-** 1 **>=** 9 **then d**6 **+** 1 **else** 0](http://localhost:8080/yadrol-web?run=true&expression-string=if%202d6%20%2B%202%20-%201%20>%3D%209%20then%20d6%20%2B%201%20else%200)
+[**if** 2**d**6 **+** 2 **-** 1 **>=** 9 **then d**6 **+** 1 **else** 0]({{url}}if%202d6%20%2B%202%20-%201%20>%3D%209%20then%20d6%20%2B%201%20else%200)
 
 </div>
 
@@ -188,7 +193,7 @@ Let's write this in another way that makes it easier:
 
 [Melee **=** 2**;**<br>
 Defense **=** 1**;**<br>
-**if** 2**d**6 **+** Melee **-** Defense **>=** 9 **then d**6 **+** 1 **else** 0](http://localhost:8080/yadrol-web?run=true&expression-string=Melee%20%3D%202;%0ADefense%20%3D%201;%0Aif%202d6%20%2B%20Melee%20-%20Defense%20>%3D%209%20then%20d6%20%2B%201%20else%200)
+**if** 2**d**6 **+** Melee **-** Defense **>=** 9 **then d**6 **+** 1 **else** 0]({{url}}Melee%20%3D%202;%0ADefense%20%3D%201;%0Aif%202d6%20%2B%20Melee%20-%20Defense%20>%3D%209%20then%20d6%20%2B%201%20else%200)
 
 </div>
 
@@ -206,7 +211,7 @@ But wait, there's more.
 
 
 
-# Multiple outputs
+## Multiple outputs
 
 Yadrol allows to compare several roll mechanisms on the same graphs.
 The `sample` keyword tells Yadroll to add a distribution in the graph.
@@ -214,7 +219,7 @@ For instance,
 
 <div class="yadrol-code" markdown="1">
 
-[**sample d**20](http://localhost:8080/yadrol-web?run=true&expression-string=sample%20d20)
+[**sample d**20]({{url}}sample%20d20)
 
 </div>
 
@@ -227,7 +232,7 @@ Now we can compare two rolls by writing two `sample` expressions:
 
 [**sample d**20<br>
 **\-\--**<br>
-**sample** 3**d**6](http://localhost:8080/yadrol-web?run=true&expression-string=sample%20d20%0A---%0Asample%203d6)
+**sample** 3**d**6]({{url}}sample%20d20%0A---%0Asample%203d6)
 
 </div>
 
@@ -237,7 +242,7 @@ One can also require multiple roll outputs:
 
 [**roll** 3**d**6<br>
 **\-\--**<br>
-**roll** 3**d**6](http://localhost:8080/yadrol-web?run=true&expression-string=roll%203d6%0A---%0Aroll%203d6)
+**roll** 3**d**6]({{url}}roll%203d6%0A---%0Aroll%203d6)
 
 </div>
 
@@ -251,10 +256,10 @@ One can also require multiple roll outputs:
 <br>
 [STR **= (roll** 3**d**6**)**<br>
 **\-\--**<br>
-**if** STR **==** 18 **then (roll d**100**) else undef**](http://localhost:8080/yadrol-web?run=true&expression-string=STR%3D%28roll%203d6%29%20---%20if%20STR%20%3D%3D%2018%20then%20%28roll%20d100%29%20else%20undef)
+**if** STR **==** 18 **then (roll d**100**) else undef**]({{url}}STR%3D%28roll%203d6%29%20---%20if%20STR%20%3D%3D%2018%20then%20%28roll%20d100%29%20else%20undef)
 
 <span class="yadrol-comment"># Show the effect of the dice pool size in a roll and keep two dice mechanic
 <br>
-[**(sample highest** 2 **of** N**d**6**) for** N **in** 2 **..** 6](http://localhost:8080/yadrol-web?run=true&expression-string=%28sample%20highest%202%20of%20Nd6%29%20for%20N%20in%202%20..%206)
+[**(sample highest** 2 **of** N**d**6**) for** N **in** 2 **..** 6]({{url}}%28sample%20highest%202%20of%20Nd6%29%20for%20N%20in%202%20..%206)
 
 </div>

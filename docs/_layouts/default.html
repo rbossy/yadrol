@@ -7,6 +7,13 @@
     <link href='https://fonts.googleapis.com/css?family=Arvo:400,700,400italic' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
     <script src="{{ '/assets/js/scale.fix.js' | relative_url }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="jquery-3.1.1.min.js"></script>
+    <script>
+      $(document).ready(function() {
+      $('div.include-toc').load(window.location.pathname + '_ToC.html');
+      });
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -74,6 +81,26 @@
       text-decoration:none;
       }
 
+      .toc {
+      font-size: 80%;
+      }
+
+      .toc-level-1 {
+      padding-left: 5mm;
+      }
+
+      .toc-level-2 {
+      padding-left: 10mm;
+      }
+
+      .toc-level-3 {
+      padding-left: 15mm;
+      }
+
+      .toc-level-4 {
+      padding-left: 20mm;
+      }
+
     </style>
   </head>
   <body>
@@ -87,7 +114,7 @@
 	    <a class="yadrol-play" href="http://localhost:8080/yadrol-web">Use Yadrol</a>
 	  </li>
 	  <li><a class="" href="Recipes">Recipes</a></li>
-	  <li><a class="" href="Language Reference">Language Reference</a></li>
+	  <li><a class="" href="LanguageReference">Language Reference</a></li>
 	  <li><a class="buttons github" href="http://github.com/phatonin/yadrol">GitHub</a></li>
 	</ul>
 

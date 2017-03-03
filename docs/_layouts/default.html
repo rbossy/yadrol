@@ -12,7 +12,7 @@
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <style>
-      a.yadrol {
+      a.yadrol-play {
       -webkit-font-smoothing: antialiased;
       background: url(assets/images/dice3.svg) no-repeat;
       font-weight: normal;
@@ -21,7 +21,7 @@
       height: 30px;
       }
       
-      header li.yadrol {
+      header li.yadrol-play {
       list-style-type: none;
       width:132px;
       height:15px;
@@ -42,7 +42,6 @@
       
       -webkit-box-shadow: inset 0px 1px 1px 0 rgba(2,233,38, 1);
       box-shadow: inset 0px 1px 1px 0 rgba(2,233,38, 1);
-      
       }
       
       header li.yadrol:hover {
@@ -65,6 +64,16 @@
       background-color: #EEEEEE;
       }
 
+      .yadrol-comment {
+      color: #444444;
+      }
+
+      .yadrol-code a {
+      color:#000000;
+      font-weight:200;
+      text-decoration:none;
+      }
+
     </style>
   </head>
   <body>
@@ -74,8 +83,8 @@
         <p class="header">{{ site.description | default: site.github.project_tagline }}</p>
 
 	<ul>
-	  <li class="yadrol">
-	    <a class="yadrol" href="http://localhost:8080/yadrol-web">Use Yadrol</a>
+	  <li class="yadrol-play">
+	    <a class="yadrol-play" href="http://localhost:8080/yadrol-web">Use Yadrol</a>
 	  </li>
 	  <li><a class="" href="Recipes">Recipes</a></li>
 	  <li><a class="" href="Language Reference">Language Reference</a></li>

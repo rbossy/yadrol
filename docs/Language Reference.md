@@ -226,6 +226,16 @@ Reserved words, symbols and operators are denoted in **`bold`**.
 Placeholders and variable parts of the construct are denoted in
 *`italics`*. Optional parts are enclosed between square brackets (`[]`).
 
+## Comments
+
+Yadrol supports single-line comments: everything from the sharp character ('#') to the end of a line is ignored by the parser.
+
+<div class="yadrol-code" markdown="1">
+2**d**6 <span class="yadrol-comment"># This is a comment</span>
+</div>
+
+
+
 ## Literals 
 
 ### Undef 

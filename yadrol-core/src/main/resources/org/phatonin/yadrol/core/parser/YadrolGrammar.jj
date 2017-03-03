@@ -17,9 +17,7 @@
    along with Yadrol.  If not, see <http://www.gnu.org/licenses/>.
 **/
 
-/**
- * JavaCC template file created by SF JavaCC plugin 1.5.28+ wizard for JavaCC 1.5.0+
- */options{
+options{
   JAVA_UNICODE_ESCAPE = true; // (default false)  static = false;
 }PARSER_BEGIN(YadrolParser)package org.phatonin.yadrol.core.parser;
 

@@ -149,8 +149,6 @@ Try:
 
 # Barbarians of Lemuria combat turn
 
-## Let's start
-
 In the excellent Sword & Sorcery game [Barbarians of Lemuria](XXX) (BoL), players play sword-to-hire barbarian in search of fortune.
 In the general mechanics of BoL, players roll `2d6` and must beat `9` to succeed.
 During a combat turn, the character's blow is resolved this way.
@@ -188,7 +186,7 @@ Let's write this in another way that makes it easier:
 
 [Melee **=** 2**;**<br>
 Defense **=** 1**;**<br>
-**if** 2**d**6 **+** Melee **-** Defense **>=** 9 **then d**6 **+** 1 **else** 0](http://localhost:8080/yadrol-web?run=true&expression-string=Melee%20%3D%202;%0ADefense%20%3D%201;%0Aif%202d6%20+%20Melee%20-%20Defense%20>%3D%209%20then%20d6%20%2B%201%20else%200)
+**if** 2**d**6 **+** Melee **-** Defense **>=** 9 **then d**6 **+** 1 **else** 0](http://localhost:8080/yadrol-web?run=true&expression-string=Melee%20%3D%202;%0ADefense%20%3D%201;%0Aif%202d6%20%2B%20Melee%20-%20Defense%20>%3D%209%20then%20d6%20%2B%201%20else%200)
 
 </div>
 
@@ -204,5 +202,57 @@ In this case the expressions are simple constants.
 With this version of the attack simulation, we just have to change the values of the variables.
 But wait, there's more.
 
-## Now with functions
 
+
+# Multiple outputs
+
+Yadrol allows to compare several roll mechanisms on the same graphs.
+The `sample` keyword tells Yadroll to add a distribution in the graph.
+For instance,
+
+<div class="yadrol-code" markdown="1">
+
+[**sample d**20](http://localhost:8080/yadrol-web?run=true&expression-string=sample%20d20)
+
+</div>
+
+tells Yadrol to add to the graph the distribution of one twenty-sided die.
+This is no different than `d20` because by default Yadrol samples the specified expression.
+
+Now we can compare two rolls by writing two `sample` expressions:
+
+<div class="yadrol-code" markdown="1">
+
+[**sample d**20<br>
+**\-\--**<br>
+**sample** 3**d**6](http://localhost:8080/yadrol-web?run=true&expression-string=sample%20d20%0A---%0Asample%203d6)
+
+</div>
+
+One can also require multiple roll outputs:
+
+<div class="yadrol-code" markdown="1">
+
+[**roll** 3**d**6<br>
+**\-\--**<br>
+**roll** 3**d**6](http://localhost:8080/yadrol-web?run=true&expression-string=roll%203d6%0A---%0Aroll%203d6)
+
+</div>
+
+
+`roll` and `sample` constructs are expressions as any other, they can be incorporated in `for`-loops, or `ìf`-`then`-`else` structures:
+
+
+<div class="yadrol-code" markdown="1">
+
+<span class="yadrol-comment"># Advanced Dungeons &amp; Dragons Strength (percentile if equals 18)</span>
+<br>
+[STR **= (roll** 3**d**6**)**<br>
+**\-\--**<br>
+**if** STR **==** 18 **then (roll d**100**) else undef**](http://localhost:8080/yadrol-web?run=true&expression-string=STR%3D%28roll%203d6%29%20---%20if%20STR%20%3D%3D%2018%20then%20%28roll%20d100%29%20else%20undef)
+
+<span class="yadrol-comment"># Show the effect of the dice pool size in a roll and keep two dice mechanic
+<br>
+[**(sample highest** 2 **of** N**d**6**) for** N **in** 2 **..** 6](http://localhost:8080/yadrol-web?run=true&expression-string=%28sample%20highest%202%20of%20Nd6%29%20for%20N%20in%202%20..%206)
+
+</div>

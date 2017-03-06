@@ -264,6 +264,12 @@ var try_it = function(expressionString, outputMode, runNow) {
 }
 ;
 
+var build_url = function() {
+	var loc = window.location;
+	var expr = $('#expression-string').val();
+	return loc.protocol + '//' + loc.host + loc.pathname + '?run=true&expression-string=' + encodeURIComponent(expr);
+}
+;
 
 $(document).ready(function() {
 	set_output_mode('Sample');
@@ -278,6 +284,14 @@ $(document).ready(function() {
 			runNow = Boolean(e[0].dataset['run']);
 		}
 		try_it(expressionString, outputMode, runNow);
+	});
+	$('#the-url').focus(function() {
+		this.select();
+	})
+	$('#url').on('show.bs.modal', function () {
+		var url = build_url();
+		$('#the-url').attr('value', url);
+		$('#the-url-link').attr('href', url);
 	});
 });
 

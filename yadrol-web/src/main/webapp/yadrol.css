@@ -51,11 +51,6 @@ body {
 
 .dice-type {}
 
-#help-contents {
-	height: 5cm;
-	overflow: scroll;
-}
-
 .tryit {
 	cursor: pointer;
 	font-weight: bold;

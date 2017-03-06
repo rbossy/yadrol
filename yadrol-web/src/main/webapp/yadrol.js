@@ -269,17 +269,15 @@ $(document).ready(function() {
 	set_output_mode('Sample');
 	_clear_output();
 	_parse_url();
-	$('#help-contents').load('help.html', function() {
-		$('.tryit').on('click', function() {
-			var e = $(this);
-			var expressionString = e[0].innerText;
-			var outputMode = e[0].dataset['output-mode'];
-			var runNow = false;
-			if (e[0].dataset['run']) {
-				runNow = Boolean(e[0].dataset['run']);
-			}
-			try_it(expressionString, outputMode, runNow);
-		});
+	$('.tryit').on('click', function() {
+		var e = $(this);
+		var expressionString = e[0].innerText;
+		var outputMode = e[0].dataset['output-mode'];
+		var runNow = false;
+		if (e[0].dataset['run']) {
+			runNow = Boolean(e[0].dataset['run']);
+		}
+		try_it(expressionString, outputMode, runNow);
 	});
 });
 

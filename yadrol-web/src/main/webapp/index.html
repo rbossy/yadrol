@@ -21,33 +21,43 @@
 
 <html>
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Yadrol</title>
-	<link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
-	<link href="plottable.css" rel="stylesheet">
-	<link href="yadrol.css" rel="stylesheet">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yadrol</title>
+<link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="plottable.css" rel="stylesheet">
+<link href="yadrol.css" rel="stylesheet">
 </head>
 <body>
-    <script src="jquery-3.1.1.min.js"></script>
-    <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-    <script src="svgtypewriter.js"></script>
-    <script src="d3.js"></script>
-    <script src="plottable.js"></script>
-    <script src="yadrol.js"></script>
+	<script src="jquery-3.1.1.min.js"></script>
+	<script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+	<script src="svgtypewriter.js"></script>
+	<script src="d3.js"></script>
+	<script src="plottable.js"></script>
+	<script src="yadrol.js"></script>
 
 	<div id="global" class="container-fluid">
 		<div id="header" class="row">
 			<div class="col-md-10">
-				<h1>Yadrol <small>Dice roller and dice distribution sampler</small></h1>
+				<h1>
+					Yadrol <small>Dice roller and dice distribution sampler</small>
+				</h1>
 			</div>
 			<div class="col-md-2 btn-group" id="toolbar">
-				<button id="button-info" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#info">
-					<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+				<button id="button-help" type="button"
+					class="btn btn-warning btn-lg" data-toggle="modal"
+					data-target="#help">
+					<span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
 				</button>
-				<button id="button-settings" type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#settings">
+				<button id="button-settings" type="button"
+					class="btn btn-default btn-lg" data-toggle="modal"
+					data-target="#settings">
 					<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+				</button>
+				<button id="button-info" type="button" class="btn btn-info btn-lg"
+					data-toggle="modal" data-target="#about">
+					<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
 				</button>
 			</div>
 		</div>
@@ -55,88 +65,101 @@
 			<div class="col-md-5">
 				<div class="row" id="expression-string-box">
 					<div class="col-md-12">
-						<textarea id="expression-string" class="form-control" placeholder="Expression, e.g. 3d6" rows="7"></textarea>
+						<textarea id="expression-string" class="form-control"
+							placeholder="Expression, e.g. 3d6" rows="7"></textarea>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-1">
-						<button id="button-help" type="button" class="btn btn-default btn-md" data-toggle="collapse" data-target="#help">
-							<span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+						<button id="button-help" type="button"
+							class="btn btn-default btn-md" data-toggle="collapse"
+							data-target="#help">
+							<span class="glyphicon glyphicon-question-sign"
+								aria-hidden="true"></span>
 						</button>
 					</div>
 					<div class="col-md-4 col-md-offset-7 btn-group">
-						<button id="button-run" type="button" class="btn btn-success btn-md" onclick="run()"></button>
-						<button id="button-run-aux" type="button" class="btn btn-success btn-md dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<button id="button-run" type="button"
+							class="btn btn-success btn-md" onclick="run()"></button>
+						<button id="button-run-aux" type="button"
+							class="btn btn-success btn-md dropdown-toggle"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							<span class="caret"></span>
 						</button>
 						<ul class="dropdown-menu">
-							<li><a onclick="set_output_mode('Sample', true)">
-								<img height="17ex" src="icons/buttons/graph4.svg">
-								&nbsp;Sample
+							<li><a onclick="set_output_mode('Sample', true)"> <img
+									height="17ex" src="icons/buttons/graph4.svg">
+									&nbsp;Sample
 							</a></li>
-							<li><a onclick="set_output_mode('Roll', true)">
-								<img height="17ex" src="icons/buttons/dice3.svg">
-								&nbsp;Roll
+							<li><a onclick="set_output_mode('Roll', true)"> <img
+									height="17ex" src="icons/buttons/dice3.svg"> &nbsp;Roll
 							</a></li>
 							<li><a onclick="set_output_mode('Advanced Roll', true)">
-								<img height="17ex" src="icons/buttons/dice2.svg">
-								&nbsp;Advanced Roll
+									<img height="17ex" src="icons/buttons/dice2.svg">
+									&nbsp;Advanced Roll
 							</a></li>
 						</ul>
 					</div>
 				</div>
+				<!-- XXX
 				<div class="row collapse" id="help">
 					<div class="col-md-12">
 						<div id="help-contents">
 						</div>
 					</div>
 				</div>
+				 -->
 			</div>
 			<div id="output" class="col-md-7">
 				<div class="row">
 					<div id="sample-records-box" class="col-md-12">
 						<div class="row">
-						<svg id="sample-records"></svg>
+							<svg id="sample-records"></svg>
 						</div>
 						<div class="row">
-							<div class="col-md-4 col-md-offset-4 btn-group" data-toggle="buttons">
-								<label class="btn btn-default btn-sm active">
-    								<input type="radio" name="y-value" onchange="change_y('relative-at-least-frequency')" autocomplete="off" checked>At Least
-    							</label>
-								<label class="btn btn-default btn-sm">
-    								<input type="radio" name="y-value" onchange="change_y('relative-frequency')" autocomplete="off">Exact
-    							</label>
-								<label class="btn btn-default btn-sm">
-    								<input type="radio" name="y-value" onchange="change_y('relative-at-most-frequency')" autocomplete="off">At Most
-    							</label>
+							<div class="col-md-4 col-md-offset-4 btn-group"
+								data-toggle="buttons">
+								<label class="btn btn-default btn-sm active"> <input
+									type="radio" name="y-value"
+									onchange="change_y('relative-at-least-frequency')"
+									autocomplete="off" checked>At Least
+								</label> <label class="btn btn-default btn-sm"> <input
+									type="radio" name="y-value"
+									onchange="change_y('relative-frequency')" autocomplete="off">Exact
+								</label> <label class="btn btn-default btn-sm"> <input
+									type="radio" name="y-value"
+									onchange="change_y('relative-at-most-frequency')"
+									autocomplete="off">At Most
+								</label>
 							</div>
 							<div class="col-md-4 btn-group" data-toggle="buttons">
-								<label class="btn btn-default btn-sm active">
-    								<input type="radio" name="centrum-value" onchange="change_centrum('mean')" autocomplete="off" checked>Mean
-    							</label>
-								<label class="btn btn-default btn-sm">
-    								<input type="radio" name="centrum-value" onchange="change_centrum('mode')" autocomplete="off">Mode
-    							</label>
-								<label class="btn btn-default btn-sm">
-    								<input type="radio" name="centrum-value" onchange="change_centrum('median')" autocomplete="off">Median
-    							</label>
+								<label class="btn btn-default btn-sm active"> <input
+									type="radio" name="centrum-value"
+									onchange="change_centrum('mean')" autocomplete="off" checked>Mean
+								</label> <label class="btn btn-default btn-sm"> <input
+									type="radio" name="centrum-value"
+									onchange="change_centrum('mode')" autocomplete="off">Mode
+								</label> <label class="btn btn-default btn-sm"> <input
+									type="radio" name="centrum-value"
+									onchange="change_centrum('median')" autocomplete="off">Median
+								</label>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="row">
-		</div>
-		<div id="footer" class="row">
-		</div>
+		<div class="row"></div>
+		<div id="footer" class="row"></div>
 	</div>
-	
-	<div class="modal fade" id="settings" tabindex="-1" role="dialog" aria-labelledby="settings">
+
+	<div class="modal fade" id="settings" tabindex="-1" role="dialog"
+		aria-labelledby="settings">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
 						<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
 					</button>
 					<h3 class="modal-title">Yadrol settings</h3>
@@ -145,7 +168,8 @@
 					<div class="row">
 						<div class="col-md-6">Sample size</div>
 						<div class="col-md-6">
-							<input id="sample-size" class="form-control" type="number" value="30000" min="1000" max="1000000" step="1000"/>
+							<input id="sample-size" class="form-control" type="number"
+								value="30000" min="1000" max="1000000" step="1000" />
 						</div>
 					</div>
 				</div>
@@ -155,31 +179,178 @@
 			</div>
 		</div>
 	</div>
-		
-	<div class="modal fade" id="info" tabindex="-1" role="dialog" aria-labelledby="info">
+
+	<div class="modal fade" id="help" tabindex="-1" role="dialog"
+		aria-labelledby="help">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
 						<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
 					</button>
-					<h3 class="modal-title">About Yadrol</h3>
+					<h3 class="modal-title">Yadrol Help</h3>
 				</div>
+
 				<div class="modal-body container-fluid">
-					<h4>Version 0.1</h4>
-					<p>Made by <a href="mailto:phatonin@gmail.com?subject=[yadrol] ">phatonin</a> during his leisure time.</p>
-					<p>For sources, bug reports, feature requests, see the <a target="_new" href="https://github.com/phatonin/yadrol">GitHub page</a>.</p>
-					<hr>
-					<h4>Icons</h4>
-					<p><img height="17ex" src="icons/buttons/dice2.svg"> made by <a target="_new" href="http://www.flaticon.com/authors/nikita-golubev">Nikita Golubev</a> is licensed as <a href="http://creativecommons.org/licenses/by/3.0/"target="_blank">CC 3.0 BY</a>.</p>
-					<p><img height="17ex" src="icons/buttons/dice3.svg"> made by <a target="_new" href="http://www.freepik.com">Freepik</a> is licensed as <a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC 3.0 BY</a>.</p>
-					<p><img height="17ex" src="icons/buttons/graph4.svg"> made by <a target="_new" href="http://www.flaticon.com/authors/retinaicons">Retinaicons</a> is licensed as <a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC 3.0 BY</a>.</p>
-					<p><img height="40ex" src="icons/dice/d4.svg"> <img height="40ex" src="icons/dice/d6.svg"> made by <a target="_new" href="https://thenounproject.com/DaanDirk/">Daan Dirk</a> is licensed as <a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC 3.0 BY</a>.</p>
-					<p><img height="40ex" src="icons/dice/d8.svg"> <img height="40ex" src="icons/dice/d10.svg"> <img height="40ex" src="icons/dice/d12.svg"> <img height="40ex" src="icons/dice/d20.svg"> made by <a target="_new" href="https://thenounproject.com/mvalstar/">Mike Valstar</a> is licensed as <a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC 3.0 BY</a>.</p>
-					<hr>
-					<h4>Libraries</h4>
-					<p>Layout was made this neat, thanks to <a target="_new" href="http://getbootstrap.com/">Bootstrap</a>.</p>
-					<p>Beautiful graphs rendered with <a target="_new" href="http://plottablejs.org/">Plottable</a>.</p>
+
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h4 class="panel-title">What is this about?</h4>
+						</div>
+						<div class="panel-body">
+							<p>Yadrol simulates dice rolling and presents roll results or
+								calculates the distribution of rolling dice many times. Yadrol
+								is designed for tabletop role playing games and boardgames
+								enthousiasts that want to study existing dice mechanics or that
+								want to create new mechanics.</p>
+						</div>
+					</div>
+
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h4 class="panel-title">How does it work?</h4>
+						</div>
+						<div class="panel-body">
+							<p>You specify a dice mechanic in the text area on the left, then
+								Yadrol simulates the rolls for you. The dice mechanic is written
+								as an expression in a language designed to capture the most
+								widely used dice mechanics.</p>
+						</div>
+					</div>
+
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h4 class="panel-title">Dice expression basics</h4>
+						</div>
+						<div class="panel-body">
+							<p>
+								The core expression to specify a dice is
+								<code>NdX</code>
+								, where
+								<code>N</code>
+								is the number of dice to roll, and
+								<code>X</code>
+								is the number of sides of each die.
+							</p>
+							<p>
+								For instance
+								<code class="tryit" data-run="true">2d6</code>
+								tells Yadrol to roll two six-sided die.
+							</p>
+							<p class="well">Oh! And by the way, each time you see an
+								expression example, you can click on it to try it on Yadrol.</p>
+							<p>Yadrol can roll any type of dice:</p>
+							<ul>
+								<li>the <code class="tryit" data-run="true">d20</code> used
+									in D&amp;D;
+								</li>
+								<li>the <code class="tryit" data-run="true">d100</code>
+									used in BRP;
+								</li>
+								<li>the <code class="tryit" data-run="true">d8</code>
+									barely used at all;
+								</li>
+								<li>the <code class="tryit" data-run="true">d13</code> that
+									doesn't exist at all, but Yadrol rolls dice in hyperspace.
+								</li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h4 class="panel-title">The dice expression language</h4>
+						</div>
+						<div class="panel-body">
+							<p>
+								Yadrol's language for specifying dice rolls is complete, it has
+								been designed to be able to express most of dice mechanics used
+								in table top RPGs and board games. There's a site dedicated to <a
+									href="https://phatonin.github.io/yadrol">Yadrol
+									documentation</a>. We recommend you read the <a
+									href="https://phatonin.github.io/yadrol/Recipes">Recipes</a>
+								page that contains the expressions for the common mechanics.
+							</p>
+						</div>
+					</div>
+
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h4 class="panel-title">Simulation modes</h4>
+						</div>
+						<div class="panel-body">
+							<p>Yadrol has three simulation modes:</p>
+							<dl>
+								<dt>
+									<img height="17ex" src="icons/buttons/dice3.svg">
+									&nbsp;Roll
+								</dt>
+								<dd>Yadrol simulates the mechanic once and displays the
+									final result on the right. The result of an expression is a
+									number.</dd>
+								<dt>
+									<img height="17ex" src="icons/buttons/graph4.svg">
+									&nbsp;Sample
+								</dt>
+								<dd>Yadrol simulates the mechanic several times and
+									displays on the right a graph that represents the distribution
+									of results. By default the simulation is repeated 30,000 times.
+								</dd>
+								<dt>
+									<img height="17ex" src="icons/buttons/dice2.svg">
+									&nbsp;Advanced Roll
+								</dt>
+								<dd>
+									This mode works the same way as <em>Roll</em> but it is used
+									when the result is not necessarily a number.
+								</dd>
+							</dl>
+							<p>
+								<em>Sample</em> is the default mode.
+							</p>
+						</div>
+					</div>
+
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h4 class="panel-title">About the sample output</h4>
+						</div>
+						<div class="panel-body">
+							<p>The sample output shows you a graph where the x-axis
+								represent different values obtained by rolling the dice, and the
+								y-axis represent their frequency.</p>
+							<p>
+								By default Yadrol shows the frequency for obtaining <em>at
+									least</em> the value; that is the frequency for obtaining the value
+								<em>or more</em>. For instance, if you try rolling
+								<code class="tryit" data-run="true">3d6</code>
+								, the frequency for <em>3 or more</em> is <em>1</em>. That makes
+								sense since <em>3</em> is the lowest score you can obtain with
+								3d6.
+							</p>
+							<p>
+								You can display the curve for <em>exact</em> or <em>at most</em>
+								values with the buttons below the graph.
+							</p>
+							<p>
+								The blue triangle just above the x-axis indicates the weighed
+								mean of the roll. You can move this triangle to the <em>mode</em>
+								or the <em>median</em> of the roll with the buttons below the
+								graph.
+							</p>
+						</div>
+					</div>
+
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h4 class="panel-title">About the roll output</h4>
+						</div>
+						<div class="panel-body">
+							<p>Blah.</p>
+						</div>
+					</div>
+
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" data-dismiss="modal">Dismiss</button>
@@ -187,6 +358,86 @@
 			</div>
 		</div>
 	</div>
-	
+
+	<div class="modal fade" id="about" tabindex="-1" role="dialog"
+		aria-labelledby="about">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+					</button>
+					<h3 class="modal-title">About Yadrol</h3>
+				</div>
+				<div class="modal-body container-fluid">
+					<h4>Version 0.1</h4>
+					<p>
+						Made by <a href="mailto:phatonin@gmail.com?subject=[yadrol] ">phatonin</a>
+						during his leisure time.
+					</p>
+					<p>
+						For sources, bug reports, feature requests, see the <a
+							target="_new" href="https://github.com/phatonin/yadrol">GitHub
+							page</a>.
+					</p>
+					<hr>
+					<h4>Icons</h4>
+					<p>
+						<img height="17ex" src="icons/buttons/dice2.svg"> made by <a
+							target="_new"
+							href="http://www.flaticon.com/authors/nikita-golubev">Nikita
+							Golubev</a> is licensed as <a
+							href="http://creativecommons.org/licenses/by/3.0/"
+							target="_blank">CC 3.0 BY</a>.
+					</p>
+					<p>
+						<img height="17ex" src="icons/buttons/dice3.svg"> made by <a
+							target="_new" href="http://www.freepik.com">Freepik</a> is
+						licensed as <a href="http://creativecommons.org/licenses/by/3.0/"
+							target="_blank">CC 3.0 BY</a>.
+					</p>
+					<p>
+						<img height="17ex" src="icons/buttons/graph4.svg"> made by <a
+							target="_new" href="http://www.flaticon.com/authors/retinaicons">Retinaicons</a>
+						is licensed as <a
+							href="http://creativecommons.org/licenses/by/3.0/"
+							target="_blank">CC 3.0 BY</a>.
+					</p>
+					<p>
+						<img height="40ex" src="icons/dice/d4.svg"> <img
+							height="40ex" src="icons/dice/d6.svg"> made by <a
+							target="_new" href="https://thenounproject.com/DaanDirk/">Daan
+							Dirk</a> is licensed as <a
+							href="http://creativecommons.org/licenses/by/3.0/"
+							target="_blank">CC 3.0 BY</a>.
+					</p>
+					<p>
+						<img height="40ex" src="icons/dice/d8.svg"> <img
+							height="40ex" src="icons/dice/d10.svg"> <img height="40ex"
+							src="icons/dice/d12.svg"> <img height="40ex"
+							src="icons/dice/d20.svg"> made by <a target="_new"
+							href="https://thenounproject.com/mvalstar/">Mike Valstar</a> is
+						licensed as <a href="http://creativecommons.org/licenses/by/3.0/"
+							target="_blank">CC 3.0 BY</a>.
+					</p>
+					<hr>
+					<h4>Libraries</h4>
+					<p>
+						Layout was made this neat, thanks to <a target="_new"
+							href="http://getbootstrap.com/">Bootstrap</a>.
+					</p>
+					<p>
+						Beautiful graphs rendered with <a target="_new"
+							href="http://plottablejs.org/">Plottable</a>.
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Dismiss</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 </body>
 </html>

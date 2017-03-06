@@ -49,7 +49,14 @@ body {
 	height: 7cm;
 }
 
-.dice-type {}
+.dice-type {
+	vertical-align: middle;
+}
+
+.dice-records {
+	font-weight: bold;
+	font-stretch: ultra-expanded;
+}
 
 .tryit {
 	cursor: pointer;

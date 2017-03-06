@@ -190,7 +190,7 @@ var DICE_RECORD_FUN = {
 ;
 
 var DEFAULT_DICE_RECORD = function(n) {
-	return '' + n;
+	return '&nbsp;&nbsp;' + n;
 }
 
 var _create_roll_output = function(i, rec) {
@@ -205,7 +205,7 @@ var _create_roll_output = function(i, rec) {
 		else {
 			drfun = DEFAULT_DICE_RECORD;
 		}
-		$('#dice-records-'+i).append('<div class="row"><div class="col-md-1 dice-type lead">d'+dr.type+'</div><div class="col-md-11" id="dice-records-'+i+'-'+j+'"></div></div>');
+		$('#dice-records-'+i).append('<div class="row"><div class="col-md-1 dice-type lead">d'+dr.type+'</div><div class="col-md-11 dice-records lead" id="dice-records-'+i+'-'+j+'"></div></div>');
 		for (var k = 0; k < dr.result.length; ++k) {
 			$('#dice-records-'+i+'-'+j).append('&nbsp;' + drfun(dr.result[k]));
 		}

@@ -385,9 +385,9 @@ private Expression best():{
   Expression result;
   Expression n = null;
   Token t;}{
-  result=dice()  { return result; }
+  result=draw()  { return result; }
   
-| t=< BEST > (n=assign())? < OF > result=dice()  {
+| t=< BEST > (n=assign())? < OF > result=draw()  {
     if (n == null) {
       return new Best(getLocation(t), Best.Operator.fromString(t.image), result);    }
     return new BestMultiple(getLocation(t), Best.Operator.fromString(t.image), n, result);  }}

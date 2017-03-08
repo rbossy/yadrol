@@ -397,6 +397,7 @@ private Expression draw():{
   Token t;
   Expression n = null;}{
   result=dice()
+  { return result; }
 
 | t=< DRAW > (n=assign())? < FROM > result=dice()  {
     if (n == null) {

@@ -9,7 +9,7 @@ that want to create new mechanics.
 
 This site is dedicate to Yadrol documentation.
 
-You can [play with Yadrol](http://localhost:8080/yadrol-web) right now.
+You can [play with Yadrol](http://yadrol-phatonin.rhcloud.com) right now.
 
 * A good startig point is [Recipes](Recipes) that gives the Yadrol expressions for the most common mechanics.
 * The [Language Reference](LanguageReference), for the brave contains the full specification of the Yadrol language.
@@ -20,5 +20,5 @@ You can [play with Yadrol](http://localhost:8080/yadrol-web) right now.
 
 For any question or suggestion, you can:
 
-* submit an issue on [GitHub](XXX)
+* submit an issue on [GitHub](http://github.com/phatonin/yadrol/issues)
 * send an [e-mail to the author](mailto:phatonin@gmail.com)

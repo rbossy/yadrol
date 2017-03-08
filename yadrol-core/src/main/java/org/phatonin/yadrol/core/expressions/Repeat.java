@@ -154,15 +154,41 @@ public class Repeat extends AbstractListExpression {
 
 	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
-		stringer.keyword("repeat ")
-		.expression(expression, Precedence.OR)
-		.keyword(limit == 1 ? " if " : " while ")
-		.expression(condition, Precedence.OR);
-		if (limit != 1 && limit != Long.MAX_VALUE) {
-			stringer.keyword(" limit ")
-			.litteral(Long.toString(limit));
+		if (preCondition) {
+			stringer =
+					stringer
+					.keyword("while")
+					.space()
+					.expression(condition, Precedence.OR)
+					.space()
+					.keyword("repeat")
+					.space()
+					.expression(expression, Precedence.OR);
+			if (limit != Long.MAX_VALUE) {
+				stringer
+				.space()
+				.keyword("limit")
+				.space()
+				.litteral(Long.toString(limit));
+			}
 		}
-		//XXX precondition
+		else {
+			stringer
+			.keyword("repeat")
+			.space()
+			.expression(expression, Precedence.OR)
+			.space()
+			.keyword(limit == 1 ? "if" : "while")
+			.space()
+			.expression(condition, Precedence.OR);
+			if (limit != 1 && limit != Long.MAX_VALUE) {
+				stringer
+				.space()
+				.keyword("limit")
+				.space()
+				.litteral(Long.toString(limit));
+			}
+		}
 	}
 
 	@Override

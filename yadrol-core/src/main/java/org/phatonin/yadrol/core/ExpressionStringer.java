@@ -25,7 +25,7 @@ import org.phatonin.yadrol.core.expressions.Undef;
 
 public abstract class ExpressionStringer {
 	private final StringBuilder sb = new StringBuilder();
-	
+
 	public ExpressionStringer leftParen() {
 		leftParen(sb);
 		return this;

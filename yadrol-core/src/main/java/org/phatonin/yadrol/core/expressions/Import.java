@@ -35,7 +35,7 @@ import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
 
 /**
- * <code>import [alias =] "address" [: name1, name2, ...]</code>
+ * <code>import [alias =] "address" [: name1 name2 ...]</code>
  * 
  *
  */
@@ -119,9 +119,31 @@ public class Import extends AbstractUndefExpression {
 
 	@Override
 	protected void toStringWithoutParen(ExpressionStringer stringer) {
-		stringer.keyword("import ")
-		.identifier(address);
-		//XXX
+		stringer =
+				stringer
+				.keyword("import")
+				.space();
+		if (alias != null) {
+			stringer =
+					stringer
+					.identifier(alias)
+					.space()
+					.operator("=")
+					.space();
+		}
+		stringer = stringer.identifier(address);
+		if (names.length > 0) {
+			stringer =
+					stringer
+					.space()
+					.operator(":");
+			for (String name : names) {
+				stringer =
+						stringer
+						.space()
+						.identifier(name);
+			}
+		}
 	}
 
 	@Override

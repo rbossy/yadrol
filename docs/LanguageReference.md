@@ -1104,7 +1104,7 @@ scope. The imported names are accessible through subscript constructs.
 
 The command-line tool accept the following addresses:
 
--   standard library name, see XXX
+-   standard library name, see [Library Reference](LibraryReference)
 -   path to a Yadrol file, relative paths will be searched in the input
     paths
 -   URL that points to a Yadrol file

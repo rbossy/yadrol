@@ -1,4 +1,4 @@
-MDSRC=Recipes.md LanguageReference.md
+MDSRC=Recipes.md LanguageReference.md LibraryReference.md
 
 TOCFILES=$(MDSRC:%.md=%_ToC.html)
 

@@ -12,6 +12,7 @@ This site is dedicate to Yadrol documentation.
 You can [play with Yadrol](http://yadrol-phatonin.rhcloud.com) right now.
 
 * A good startig point is [Recipes](Recipes) that gives the Yadrol expressions for the most common mechanics.
+* Some dice mechanics have been already coded and documented in the [Library Reference](LibraryReference).
 * The [Language Reference](LanguageReference), for the brave contains the full specification of the Yadrol language.
 * Yadrol is maintained on [GitHub](http://github.com/phatonin/yadrol) where you can download the source code.
 

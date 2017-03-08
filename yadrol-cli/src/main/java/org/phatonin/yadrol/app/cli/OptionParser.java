@@ -23,6 +23,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -104,12 +107,12 @@ enum OptionParser {
 		@Override
 		public void process(CLIOptions options, String[] args) {
 			File seedFile = new File(args[0]);
+			Path seedPath = seedFile.toPath();
 			options.setSeedFile(seedFile);
 			if (seedFile.exists()) {
 				try (Reader r = new FileReader(seedFile)) {
-					char[] buffer = new char[1024];
-					r.read(buffer); // XXX
-					String seedString = new String(buffer);
+					List<String> lines = Files.readAllLines(seedPath, Charset.defaultCharset());
+					String seedString = lines.get(0);
 					long seed = Long.parseLong(seedString);
 					options.setSeed(seed);
 				}

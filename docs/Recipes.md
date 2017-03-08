@@ -128,7 +128,7 @@ This expression means << _roll a d12, reroll 1s_ >>.
 
 ## Fudge dice
 
-Fudge dice are custom six-sided dice used in games like [Fudge](XXX) and [FATE](XXX).
+Fudge dice are custom six-sided dice used in games like [Fudge](http://www.fudgerpg.com/) and [FATE](http://www.faterpg.com).
 Two sides are marked with a plus sign, two other sides with a minus sign, and the two remaining sides are blank.
 The player usually rolls four dice, count the plus signs and substracts the minus signs.
 
@@ -156,7 +156,7 @@ Try:
 
 ## Barbarians of Lemuria combat turn
 
-In the excellent Sword & Sorcery game [Barbarians of Lemuria](XXX) (BoL), players play sword-to-hire barbarian in search of fortune.
+In the excellent Sword & Sorcery game [Barbarians of Lemuria](http://barbariansoflemuria.webs.com) (BoL), players play sword-to-hire barbarian in search of fortune.
 In the general mechanics of BoL, players roll `2d6` and must beat `9` to succeed.
 During a combat turn, the character's blow is resolved this way.
 If the attack succeeds, then the opponent loses Hit Points depending on the weapon.

@@ -26,6 +26,7 @@ import org.phatonin.yadrol.core.ExpressionStringer;
 import org.phatonin.yadrol.core.Location;
 import org.phatonin.yadrol.core.Precedence;
 import org.phatonin.yadrol.core.Scope;
+import org.phatonin.yadrol.core.values.Function;
 
 /**
  * <code>name</code>
@@ -57,7 +58,11 @@ public class Variable extends AbstractExpression {
 	@Override
 	public Expression substituteVariables(Scope scope) {
 		if (scope.hasVariable(name)) {
-			return EvaluationContext.valueToExpression(scope.getVariable(name));
+			Object val = scope.getVariable(name);
+			if (val instanceof Function) {
+				return this;
+			}
+			return EvaluationContext.valueToExpression(val);
 		}
 		return this;
 	}

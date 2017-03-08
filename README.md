@@ -2,7 +2,7 @@
 
 Yadrol simulates dice rolling and presents roll results or calculates the distribution of rolling dice many times. Yadrol is designed for tabletop role playing games and boardgames enthousiasts that want to study existing dice mechanics or that want to create new mechanics.
 
-You can [play with Yadrol](XXX) right now.
+You can [play with Yadrol](http://yadrol-phatonin.rhcloud.com) right now.
 
 The [documentation](http://phatonin.gihub.io/yadrol) has a number of [Recipes](http://phatonin.gihub.io/yadrol/Recipes) for the most common mechanics and a [Language Reference](http://phatonin.gihub.io/yadrol/LanguageReference).
 

@@ -195,7 +195,7 @@ var DEFAULT_DICE_RECORD = function(n) {
 
 var _create_roll_output = function(i, rec) {
 	$('#output').append('<div class="row roll-record"><div class="col-md-3 roll-name"><code>'+rec.name+'</code></div><div class="col-md-2 roll-result lead">'+rec['string-result']+'</div><div class="col-md-7 dice-records" id="dice-records-'+i+'"></div></div>');
-	console.log(rec);
+	//console.log(rec);
 	for (var j = 0; j < rec['dice-records'].length; ++j) {
 		var dr = rec['dice-records'][j];
 		var drfun;
@@ -222,26 +222,30 @@ var _pop_searchParams = function(q, k) {
 var _parse_url = function() {
 	var url = new URL(document.baseURI);
 	var q = url.searchParams;
+	var is_run = false;
 	if (q.has('expression-string')) {
 		$('#expression-string').val(_pop_searchParams(q, 'expression-string'));
 	}
 	if (q.has('run')) {
 		_pop_searchParams(q, 'run');
-		run();
+		is_run = true;
 	}
 	if (q.has('roll')) {
 		set_output_mode('Roll');
 		_pop_searchParams(q, 'roll');
-		run();
+		is_run = true;
 	}
 	if (q.has('advanced-roll')) {
 		set_output_mode('Advanced Roll');
 		_pop_searchParams(q, 'advanced-roll');
-		run();
+		is_run = true;
 	}
 	if (q.has('sample')) {
 		set_output_mode('Sample');
 		_pop_searchParams(q, 'sample');
+		is_run = true;
+	}
+	if (is_run) {
 		run();
 	}
 }

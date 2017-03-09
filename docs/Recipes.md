@@ -1,4 +1,4 @@
-{% capture url %}http://yadrol-phatonin.rhcloud.com/?run=true&expression-string={% endcapture %}
+{% capture url %}http://yadrol-phatonin.rhcloud.com/?expression-string={% endcapture %}
 
 Recipes
 =======

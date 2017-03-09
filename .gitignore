@@ -16,3 +16,4 @@ yadrol-web/src/main/webapp/icons/free-collections
 docs/.sass-cache/
 docs/_site/
 docs/Gemfile.lock
+docs/jquery-3.1.1.min.js

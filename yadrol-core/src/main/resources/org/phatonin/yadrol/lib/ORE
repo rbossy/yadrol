@@ -1,0 +1,4 @@
+ORE = fun(N) {
+  dice = Nd6;
+  count (for dice if == n) for n in 1..6
+}

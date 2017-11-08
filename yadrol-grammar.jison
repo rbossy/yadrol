@@ -4,6 +4,7 @@
 
 <<EOF>>		return 'EOF';
 \s+		/* skip */
+"#".*$		/* skip */
 [-]{3,}		return 'BREAK';
 ";"		return 'SEMICOLON';
 "import"	return 'IMPORT';
@@ -31,15 +32,15 @@
 "or"		return 'OR';
 "and"		return 'AND';
 "not"		return 'NOT';
+"<<"		return 'APPEND';
 "==="		return 'GEN_COMP';
 "!=="		return 'GEN_COMP';
 "=="		return 'NUM_COMP';
 "!="		return 'NUM_COMP';
-"<"		return 'NUM_COMP';
-">"		return 'NUM_COMP';
 "<="		return 'NUM_COMP';
 ">="		return 'NUM_COMP';
-"<<"		return 'APPEND';
+"<"		return 'NUM_COMP';
+">"		return 'NUM_COMP';
 ".."		return 'RANGE';
 "+"		return 'PLUS';
 "-"		return 'PLUS';

@@ -164,7 +164,7 @@ public class YadrolParser {
 | < UNQUOTED : (["A"-"Z","_","a"-"z"] (["0"-"9","A"-"Z","_","a"-"z"])*) >
 | < SQUOTED  : ("\'" ((~["\'"])|("\\" ["\'","n","t","r"]))* "\'") >
 | < DQUOTED  : ("\"" ((~["\""])|("\\" ["\"","n","t","r","$"]))* "\"") >
-}
+}
 public Expression[] parse(String source, int columnOffset):{
   List<Expression> result = new ArrayList<Expression>();
   Expression e;
@@ -323,7 +323,7 @@ private Expression not():{
   Expression e;
 }{
   t=< NOT > e=comparison()
-  { return new BooleanNot(getLocation(t), e); }
+  { return new BooleanNot(getLocation(t), e); }
 | e=comparison()  { return e; }}
 
 private Expression comparison():{
@@ -543,7 +543,8 @@ private Expression atom():{
   
 | t=< BOOLEAN >  { return new BooleanConstant(getLocation(t), Boolean.parseBoolean(t.image)); }
 
-| n=integer(locRef)  { return new IntegerConstant(locRef.get(), n); }
+| n=integer(locRef)  { return new IntegerConstant(locRef.get(), n); }
+
 | t=< SCOPE >  { return new ScopeVariables(getLocation(t), ScopeVariables.Operator.fromString(t.image)); }
 
 | t=< LBRACKET > list=list() < RBRACKET >  { return new ListConstructor(getLocation(t), list); }
@@ -553,7 +554,8 @@ private Expression atom():{
 | t=< FUN > < LPAREN > (lambdaArgs(positionalArgs, namedArgs))? < RPAREN > < LCURLY > result=expression() < RCURLY >
   { return new Lambda(getLocation(t), positionalArgs, namedArgs, result); }
 
-| t=< NATIVE > s=identifier(locRef)  { return new Native(getLocation(t), s); }
+| t=< NATIVE > s=identifier(locRef)  { return new Native(getLocation(t), s); }
+
 | s=identifier(locRef)  { return new Variable(locRef.get(), s); }
 }
 

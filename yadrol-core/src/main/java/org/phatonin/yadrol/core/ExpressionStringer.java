@@ -128,7 +128,7 @@ public abstract class ExpressionStringer {
 		expr.toString(this, prec);
 		return this;
 	}
-	
+
 	public ExpressionStringer unaryOperator(String op, Expression operand, Precedence prec) {
 		return operator(op)
 				.expression(operand, prec);

@@ -124,7 +124,7 @@ public class Dice extends AbstractListExpression {
 			stringer.space();
 		}
 		stringer.operator("d");
-		if (type.requiresSpaceAsDiceNumber()) {
+		if (type.requiresSpaceAsDiceType()) {
 			stringer.space();
 		}
 		stringer.expression(type, Precedence.UNARY);

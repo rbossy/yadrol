@@ -120,12 +120,12 @@ expressionList
 expression
 : LPAREN expression RPAREN { $$ = $2; }
 | UNDEF { $$ = new Constant(null, undefined); }
-| BOOLEAN { $$ = new Constant(null, Boolean(yytext)); }
+| BOOLEAN { $$ = new Constant(null, (yytext == 'true')); }
 | STRING { $$ = new Constant(null, yytext.slice(1, yytext.length - 1)); }
 | NUMBER { $$ = new Constant(null, Number(yytext)); }
 | LBRACKET list RBRACKET { $$ = new ContainerConstructor(null, $2, 'list'); }
 | LCURLY map RCURLY { $$ = new ContainerConstructor(null, new YadrolMap($2), 'map'); }
-| FUN LPAREN lambdaArgs RPAREN LCURLY expression RCURLY { $$ = new Lambda(null, $3, $6); }
+| FUN LPAREN lambdaArgs RPAREN LCURLY expression RCURLY { var scope = new Scope(); $3.forEach(function(a) { a[1] = a[1].evaluate(scope); }); $$ = new Lambda(null, $3, $6); }
 | IDENTIFIER { $$ = new Variable(null, yytext); }
 | SCOPE { $$ = new ScopeVariables(null, ScopeVariables[yytext.toUpperCase()]); }
 | expression DOT IDENTIFIER { $$ = new Subscript(null, $1, new Constant(null, $3)); }
@@ -145,7 +145,7 @@ expression
         throw new Error();
       }
     }
-    return new Call(null, $1, posArgs, new YadrolMap($3));
+    $$ = new Call(null, $1, posArgs, new YadrolMap($3));
   }
 | COUNT expression { $$ = new Count(null, $2); }
 | REORDER expression { $$ = new ListReorder(null, ListReorder[$1.toUpperCase()], $2); }

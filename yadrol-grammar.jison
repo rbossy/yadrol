@@ -82,6 +82,7 @@
 '}'		return 'RCURLY';
 [A-Z_a-z]\w*	return 'IDENTIFIER';
 "\""		this.begin('string'); this.yy.str = '';
+<string><<EOF>>	throw new Error('unterminated string literal');
 <string>"\""    this.popState(); return 'STRING';
 <string>\\n     this.yy.str += '\n';
 <string>\\\"    this.yy.str += '"';

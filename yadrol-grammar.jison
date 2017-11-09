@@ -1,4 +1,5 @@
 %lex
+%options ranges
 
 %%
 
@@ -119,17 +120,17 @@ expressionList
 
 expression
 : LPAREN expression RPAREN { $$ = $2; }
-| UNDEF { $$ = new Constant(null, undefined); }
-| BOOLEAN { $$ = new Constant(null, (yytext == 'true')); }
-| STRING { $$ = new Constant(null, yytext.slice(1, yytext.length - 1)); }
-| NUMBER { $$ = new Constant(null, Number(yytext)); }
-| LBRACKET list RBRACKET { $$ = new ContainerConstructor(null, $2, 'list'); }
-| LCURLY map RCURLY { $$ = new ContainerConstructor(null, new YadrolMap($2), 'map'); }
-| FUN LPAREN lambdaArgs RPAREN LCURLY expression RCURLY { var scope = new Scope(); $3.forEach(function(a) { a[1] = a[1].evaluate(scope); }); $$ = new Lambda(null, $3, $6); }
-| IDENTIFIER { $$ = new Variable(null, yytext); }
-| SCOPE { $$ = new ScopeVariables(null, ScopeVariables[yytext.toUpperCase()]); }
-| expression DOT IDENTIFIER { $$ = new Subscript(null, $1, new Constant(null, $3)); }
-| expression LBRACKET expression RBRACKET { $$ = new Subscript(null, $1, $3); }
+| UNDEF { $$ = new Constant(Location.fromLexer(yy.sourceFile, @1, @1), undefined); }
+| BOOLEAN { $$ = new Constant(Location.fromLexer(yy.sourceFile, @1, @1), (yytext == 'true')); }
+| STRING { $$ = new Constant(Location.fromLexer(yy.sourceFile, @1, @1), yytext.slice(1, yytext.length - 1)); }
+| NUMBER { $$ = new Constant(Location.fromLexer(yy.sourceFile, @1, @1), Number(yytext)); }
+| LBRACKET list RBRACKET { $$ = new ContainerConstructor(Location.fromLexer(yy.sourceFile, @1, @3), $2, 'list'); }
+| LCURLY map RCURLY { $$ = new ContainerConstructor(Location.fromLexer(yy.sourceFile, @1, @3), new YadrolMap($2), 'map'); }
+| FUN LPAREN lambdaArgs RPAREN LCURLY expression RCURLY { var scope = new Scope(); $3.forEach(function(a) { a[1] = a[1].evaluate(scope); }); $$ = new Lambda(Location.fromLexer(yy.sourceFile, @1, @7), $3, $6); }
+| IDENTIFIER { $$ = new Variable(Location.fromLexer(yy.sourceFile, @1, @1), yytext); }
+| SCOPE { $$ = new ScopeVariables(Location.fromLexer(yy.sourceFile, @1, @1), ScopeVariables[yytext.toUpperCase()]); }
+| expression DOT IDENTIFIER { $$ = new Subscript(Location.fromLexer(yy.sourceFile, @1, @3), $1, new Constant(Location.fromLexer(yy.sourceFile, @3, @3), $3)); }
+| expression LBRACKET expression RBRACKET { $$ = new Subscript(Location.fromLexer(yy.sourceFile, @1, @4), $1, $3); }
 | expression LPAREN callArgs RPAREN {
     var posArgs = [];
     while ($3.length > 0) {
@@ -145,46 +146,46 @@ expression
         throw new Error();
       }
     }
-    $$ = new Call(null, $1, posArgs, new YadrolMap($3));
+    $$ = new Call(Location.fromLexer(yy.sourceFile, @1, @4), $1, posArgs, new YadrolMap($3));
   }
-| COUNT expression { $$ = new Count(null, $2); }
-| REORDER expression { $$ = new ListReorder(null, ListReorder[$1.toUpperCase()], $2); }
-| CONVERT expression { $$ = new Convert(null, $2, $1); }
-| expression DICE expression { $$ = new Dice(null, $1, $3); }
-| expression DICE_UPPER { $$ = new Dice(null, $1, new Variable(null, $2.slice(1))); }
-| expression DICE_NUMBER { $$ = new Dice(null, $1, new Constant(null, Number($2.slice(1)))); }
-| UPPER_DICE expression { $$ = new Dice(null, new Variable(null, $1.slice(0, 1)), $2); }
-| UPPER_DICE_UPPER { $$ = new Dice(null, new Variable(null, $1.slice(0, 1)), new Variable(null, $1.slice(2))); }
-| UPPER_DICE_NUMBER { $$ = new Dice(null, new Variable(null, $1.slice(0, 1)), new Constant(null, Number($1.slice(2)))); }
-| DICE expression { $$ = new Die(null, $2); }
-| DICE_UPPER { $$ = new Die(null, new Variable(null, $1.slice(1))); }
-| DICE_NUMBER { $$ = new Die(null, new Constant(null, Number($1.slice(1)))); }
+| COUNT expression { $$ = new Count(Location.fromLexer(yy.sourceFile, @1, @2), $2); }
+| REORDER expression { $$ = new ListReorder(Location.fromLexer(yy.sourceFile, @1, @2), ListReorder[$1.toUpperCase()], $2); }
+| CONVERT expression { $$ = new Convert(Location.fromLexer(yy.sourceFile, @1, @2), $2, $1); }
+| expression DICE expression { $$ = new Dice(Location.fromLexer(yy.sourceFile, @1, @3), $1, $3); }
+| expression DICE_UPPER { $$ = new Dice(Location.fromLexer(yy.sourceFile, @1, @2), $1, new Variable(Location.fromLexer(yy.sourceFile, @2, @2), $2.slice(1))); }
+| expression DICE_NUMBER { $$ = new Dice(Location.fromLexer(yy.sourceFile, @1, @2), $1, new Constant(Location.fromLexer(yy.sourceFile, @2, @2), Number($2.slice(1)))); }
+| UPPER_DICE expression { $$ = new Dice(Location.fromLexer(yy.sourceFile, @1, @2), new Variable(Location.fromLexer(yy.sourceFile, @1, @1), $1.slice(0, 1)), $2); }
+| UPPER_DICE_UPPER { $$ = new Dice(Location.fromLexer(yy.sourceFile, @1, @1), new Variable(Location.fromLexer(yy.sourceFile, @1, @1), $1.slice(0, 1)), new Variable(Location.fromLexer(yy.sourceFile, @1, @1), $1.slice(2))); }
+| UPPER_DICE_NUMBER { $$ = new Dice(Location.fromLexer(yy.sourceFile, @1, @1), new Variable(Location.fromLexer(yy.sourceFile, @1, @1), $1.slice(0, 1)), new Constant(Location.fromLexer(yy.sourceFile, @1, @1), Number($1.slice(2)))); }
+| DICE expression { $$ = new Die(Location.fromLexer(yy.sourceFile, @1, @2), $2); }
+| DICE_UPPER { $$ = new Die(Location.fromLexer(yy.sourceFile, @1, @1), new Variable(Location.fromLexer(yy.sourceFile, @1, @1), $1.slice(1))); }
+| DICE_NUMBER { $$ = new Die(Location.fromLexer(yy.sourceFile, @1, @1), new Constant(Location.fromLexer(yy.sourceFile, @1, @1), Number($1.slice(1)))); }
 | DRAW expression FROM expression { throw new Error('not implemented'); }
 | DRAW FROM expression { throw new Error('not implemented: draw'); }
-| BEST expression OF expression { $$ = new BestMultiple(null, Best[$1.toUpperCase()], $2, $4); }
-| BEST OF expression { $$ = new Best(null, Best[$1.toUpperCase()], $3); }
-| PLUS expression %prec SIGN { $$ = new Sign(null, Sign.getOperator($1), $2); }
-| expression MULT expression { $$ = new Arithmetic(null, Arithmetic.getOperator($2), $1, $3); }
-| expression PLUS expression { $$ = new Arithmetic(null, Arithmetic.getOperator($2), $1, $3); }
-| expression RANGE expression { $$ = new Range(null, $1, $3); }
-| expression APPEND expression { $$ = new Append(null, $1, $3); }
-| expression GEN_COMP expression { $$ = new GeneralComparison(null, GeneralComparison.getOperator($2), $1, $3);  }
-| expression NUM_COMP expression { $$ = new NumberComparison(null, NumberComparison.getOperator($2), $1, $3); }
-| expression IN expression { $$ = new IndexOf(null, $1, $3); }
-| NOT expression { $$ = new BooleanNot(null, $2); }
-| expression AND expression { $$ = new BooleanAnd(null, $1, $3); }
-| expression OR expression { $$ = new BooleanOr(null, $1, $3); }
-| IF expression THEN expression ELSE expression { $$ = new Conditional(null, $2, $4, $6); }
-| WHILE expression REPEAT expression { $$ = new Repeat(null, $4, $2, true, Number.MAX_VALUE); }
-| WHILE expression REPEAT expression LIMIT NUMBER { $$ = new Repeat(null, $4, $2, true, Number($6)); }
-| REPEAT expression WHILE expression { $$ = Repeat(null, $2, $4, false, Number.MAX_VALUE); }
-| REPEAT expression WHILE expression LIMIT NUMBER { $$ = Repeat(null, $2, $4, false, Number($6)); }
-| REPEAT expression IF expression { $$ = Repeat(null, $2, $4, false, 1); }
-| FOR loopVars IN expression { $$ = new ForLoop(null, $2[0], $2[1], new Variable(null, $2[1]), $4, new Constant(null, true)); }
-| FOR loopVars IN expression IF expression { $$ = new ForLoop(null, $2[0], $2[1], new Variable(null, $2[1]), $4, $6); }
-| expression FOR loopVars IN expression { $$ = new ForLoop(null, $3[0], $3[1], $1, $5, new Constant(null, true)); }
-| expression FOR loopVars IN expression IF expression { $$ = new ForLoop(null, $3[0], $3[1], $1, $5, $7); }
-| expression ASSIGN expression { $$ = new Assign(null, $1, $3); }
+| BEST expression OF expression { $$ = new BestMultiple(Location.fromLexer(yy.sourceFile, @1, @4), Best[$1.toUpperCase()], $2, $4); }
+| BEST OF expression { $$ = new Best(Location.fromLexer(yy.sourceFile, @1, @3), Best[$1.toUpperCase()], $3); }
+| PLUS expression %prec SIGN { $$ = new Sign(Location.fromLexer(yy.sourceFile, @1, @2), Sign.getOperator($1), $2); }
+| expression MULT expression { $$ = new Arithmetic(Location.fromLexer(yy.sourceFile, @1, @3), Arithmetic.getOperator($2), $1, $3); }
+| expression PLUS expression { $$ = new Arithmetic(Location.fromLexer(yy.sourceFile, @1, @3), Arithmetic.getOperator($2), $1, $3); }
+| expression RANGE expression { $$ = new Range(Location.fromLexer(yy.sourceFile, @1, @3), $1, $3); }
+| expression APPEND expression { $$ = new Append(Location.fromLexer(yy.sourceFile, @1, @3), $1, $3); }
+| expression GEN_COMP expression { $$ = new GeneralComparison(Location.fromLexer(yy.sourceFile, @1, @3), GeneralComparison.getOperator($2), $1, $3);  }
+| expression NUM_COMP expression { $$ = new NumberComparison(Location.fromLexer(yy.sourceFile, @1, @3), NumberComparison.getOperator($2), $1, $3); }
+| expression IN expression { $$ = new IndexOf(Location.fromLexer(yy.sourceFile, @1, @3), $1, $3); }
+| NOT expression { $$ = new BooleanNot(Location.fromLexer(yy.sourceFile, @1, @2), $2); }
+| expression AND expression { $$ = new BooleanAnd(Location.fromLexer(yy.sourceFile, @1, @3), $1, $3); }
+| expression OR expression { $$ = new BooleanOr(Location.fromLexer(yy.sourceFile, @1, @3), $1, $3); }
+| IF expression THEN expression ELSE expression { $$ = new Conditional(Location.fromLexer(yy.sourceFile, @1, @6), $2, $4, $6); }
+| WHILE expression REPEAT expression { $$ = new Repeat(Location.fromLexer(yy.sourceFile, @1, @4), $4, $2, true, Number.MAX_VALUE); }
+| WHILE expression REPEAT expression LIMIT NUMBER { $$ = new Repeat(Location.fromLexer(yy.sourceFile, @1, @6), $4, $2, true, Number($6)); }
+| REPEAT expression WHILE expression { $$ = Repeat(Location.fromLexer(yy.sourceFile, @1, @4), $2, $4, false, Number.MAX_VALUE); }
+| REPEAT expression WHILE expression LIMIT NUMBER { $$ = Repeat(Location.fromLexer(yy.sourceFile, @1, @6), $2, $4, false, Number($6)); }
+| REPEAT expression IF expression { $$ = Repeat(Location.fromLexer(yy.sourceFile, @1, @4), $2, $4, false, 1); }
+| FOR loopVars IN expression { $$ = new ForLoop(Location.fromLexer(yy.sourceFile, @1, @4), $2[0], $2[1], new Variable(Location.fromLexer(yy.sourceFile, @2, @2), $2[1]), $4, new Constant(Location.fromLexer(yy.sourceFile, @2, @2), true)); }
+| FOR loopVars IN expression IF expression { $$ = new ForLoop(Location.fromLexer(yy.sourceFile, @1, @6), $2[0], $2[1], new Variable(Location.fromLexer(yy.sourceFile, @2, @2), $2[1]), $4, $6); }
+| expression FOR loopVars IN expression { $$ = new ForLoop(Location.fromLexer(yy.sourceFile, @1, @5), $3[0], $3[1], $1, $5, new Constant(Location.fromLexer(yy.sourceFile, @3, @3), true)); }
+| expression FOR loopVars IN expression IF expression { $$ = new ForLoop(Location.fromLexer(yy.sourceFile, @1, @7), $3[0], $3[1], $1, $5, $7); }
+| expression ASSIGN expression { $$ = new Assign(Location.fromLexer(yy.sourceFile, @1, @3), $1, $3); }
 | IMPORT STRING { throw new Error('not implemented: import'); }
 | IMPORT IDENTIFIER ASSIGN STRING { throw new Error('not implemented: import'); }
 | OUTPUT expression { throw new Error('not implemented: output'); }
@@ -192,7 +193,7 @@ expression
 | OUTPUT expression AS STRING { throw new Error('not implemented: output'); }
 | OUTPUT expression AS CONVERT STRING { throw new Error('not implemented: output'); }
 | OUTPUT expression AS STRING CONVERT { throw new Error('not implemented: output'); }
-| expression semicolon expression %prec SEMICOLON { $$ = new Sequence(null, $1, $3); }
+| expression semicolon expression %prec SEMICOLON { $$ = new Sequence(Location.fromLexer(yy.sourceFile, @1, @3), $1, $3); }
 ;
 
 list
@@ -222,7 +223,7 @@ lambdaArg
 ;
 
 lambdaArgValue
-: { $$ = new Constant(null, undefined); }
+: { $$ = new Constant(Location.NONE, undefined); }
 | COLON expression { $$ = $2; }
 ;
 

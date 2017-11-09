@@ -81,11 +81,11 @@
 '{'		return 'LCURLY';
 '}'		return 'RCURLY';
 [A-Z_a-z]\w*	return 'IDENTIFIER';
-"\""		%{ this.begin('string'); return 'STR_START'; %}
-<string>"\""    %{ this.popState(); return 'STR_END'; %}
-<string>\\n             %{ return 'STR_NL'; %}
-<string>\\\"            %{ return 'STR_DQ'; %}
-<string>[^\\\"]* %{ return 'STR_CH'; %}
+"\""		this.begin('string'); this.yy.str = '';
+<string>"\""    this.popState(); return 'STRING';
+<string>\\n     this.yy.str += '\n';
+<string>\\\"    this.yy.str += '"';
+<string>[^\\\"]* this.yy.str += yytext;
 
 /lex
 
@@ -127,7 +127,7 @@ expression
 : LPAREN expression RPAREN { $$ = $2; }
 | UNDEF { $$ = new Constant(Location.fromLexer(yy.sourceFile, @1, @1), undefined); }
 | BOOLEAN { $$ = new Constant(Location.fromLexer(yy.sourceFile, @1, @1), (yytext == 'true')); }
-| STR_START string STR_END { $$ = new Constant(Location.fromLexer(yy.sourceFile, @1, @3), $2); }
+| STRING { $$ = new Constant(Location.fromLexer(yy.sourceFile, @1, @1), yy.str); }
 | NUMBER { $$ = new Constant(Location.fromLexer(yy.sourceFile, @1, @1), Number(yytext)); }
 | LBRACKET list RBRACKET { $$ = new ContainerConstructor(Location.fromLexer(yy.sourceFile, @1, @3), $2, 'list'); }
 | LCURLY map RCURLY { $$ = new ContainerConstructor(Location.fromLexer(yy.sourceFile, @1, @3), new YadrolMap($2), 'map'); }
@@ -256,15 +256,4 @@ semicolon
 optSemicolon
 :
 | SEMICOLON optSemicolon
-;
-
-string
-: { $$ = ''; }
-| stringElement string { $$ = $1 + $2; }
-;
-
-stringElement
-: STR_CH { $$ = $1; }
-| STR_DQ { $$ = '"'; }
-| STR_NL { $$ = '\n'; }
 ;

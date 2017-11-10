@@ -137,23 +137,7 @@ expression
 | SCOPE { $$ = new ScopeVariables(Location.fromLexer(yy.sourceFile, @1, @1), ScopeVariables[yytext.toUpperCase()]); }
 | expression DOT IDENTIFIER { $$ = new Subscript(Location.fromLexer(yy.sourceFile, @1, @3), $1, new Constant(Location.fromLexer(yy.sourceFile, @3, @3), $3)); }
 | expression LBRACKET expression RBRACKET { $$ = new Subscript(Location.fromLexer(yy.sourceFile, @1, @4), $1, $3); }
-| expression LPAREN callArgs RPAREN {
-    var posArgs = [];
-    while ($3.length > 0) {
-      var a = $3.shift();
-      if (a.length == 2) {
-        $3.unshift(a);
-	break;
-      }
-      posArgs.push(a[0]);
-    }
-    for (var a of $3) {
-      if (a.length == 1) {
-        throw new Error('missing named argument name');
-      }
-    }
-    $$ = new Call(Location.fromLexer(yy.sourceFile, @1, @4), $1, posArgs, new YadrolMap($3));
-  }
+| expression LPAREN callArgs RPAREN { var posArgs = yy.extractPositionalArgs($3); $$ = new Call(Location.fromLexer(yy.sourceFile, @1, @4), $1, posArgs, new YadrolMap($3)); }
 | COUNT expression { $$ = new Count(Location.fromLexer(yy.sourceFile, @1, @2), $2); }
 | REORDER expression { $$ = new ListReorder(Location.fromLexer(yy.sourceFile, @1, @2), ListReorder[$1.toUpperCase()], $2); }
 | CONVERT expression { $$ = new Convert(Location.fromLexer(yy.sourceFile, @1, @2), $2, $1); }

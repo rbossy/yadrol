@@ -4,7 +4,7 @@ th {
     padding-right: 3mm;
 }
 
-th.test-header {
+.test-header {
     padding-top: 3mm;
     padding-bottom: 3mm;
     background-color: #CCCCCC;

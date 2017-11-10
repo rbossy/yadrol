@@ -149,7 +149,7 @@ expression
     }
     for (var a of $3) {
       if (a.length == 1) {
-        throw new Error();
+        throw new Error('missing named argument name');
       }
     }
     $$ = new Call(Location.fromLexer(yy.sourceFile, @1, @4), $1, posArgs, new YadrolMap($3));
@@ -166,8 +166,8 @@ expression
 | DICE expression { $$ = new Die(Location.fromLexer(yy.sourceFile, @1, @2), $2); }
 | DICE_UPPER { $$ = new Die(Location.fromLexer(yy.sourceFile, @1, @1), new Variable(Location.fromLexer(yy.sourceFile, @1, @1), $1.slice(1))); }
 | DICE_NUMBER { $$ = new Die(Location.fromLexer(yy.sourceFile, @1, @1), new Constant(Location.fromLexer(yy.sourceFile, @1, @1), Number($1.slice(1)))); }
-| DRAW expression FROM expression { throw new Error('not implemented'); }
-| DRAW FROM expression { throw new Error('not implemented: draw'); }
+| DRAW expression FROM expression { $$ = new DrawMultiple(Location.fromLexer(yy.sourceFile, @1, @4), $2, $4); }
+| DRAW FROM expression { $$ = new Draw(Location.fromLexer(yy.sourceFile, @1, @3), $3); }
 | BEST expression OF expression { $$ = new BestMultiple(Location.fromLexer(yy.sourceFile, @1, @4), Best[$1.toUpperCase()], $2, $4); }
 | BEST OF expression { $$ = new Best(Location.fromLexer(yy.sourceFile, @1, @3), Best[$1.toUpperCase()], $3); }
 | PLUS expression %prec SIGN { $$ = new Sign(Location.fromLexer(yy.sourceFile, @1, @2), Sign.getOperator($1), $2); }
@@ -192,8 +192,8 @@ expression
 | expression FOR loopVars IN expression { $$ = new ForLoop(Location.fromLexer(yy.sourceFile, @1, @5), $3[0], $3[1], $1, $5, new Constant(Location.fromLexer(yy.sourceFile, @3, @3), true)); }
 | expression FOR loopVars IN expression IF expression { $$ = new ForLoop(Location.fromLexer(yy.sourceFile, @1, @7), $3[0], $3[1], $1, $5, $7); }
 | expression ASSIGN expression { $$ = new Assign(Location.fromLexer(yy.sourceFile, @1, @3), $1, $3); }
-| IMPORT STRING { throw new Error('not implemented: import'); }
-| IMPORT IDENTIFIER ASSIGN STRING { throw new Error('not implemented: import'); }
+| IMPORT STRING { $$ = new Import(Location.fromLexer(yy.sourceFile, @1, @2), $2); }
+| IMPORT IDENTIFIER ASSIGN STRING { $$ = new Import(Location.fromLexer(yy.sourceFile, @1, @4), $4, $2); }
 | OUTPUT expression { throw new Error('not implemented: output'); }
 | OUTPUT expression AS CONVERT { throw new Error('not implemented: output'); }
 | OUTPUT expression AS STRING { throw new Error('not implemented: output'); }

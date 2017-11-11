@@ -98,7 +98,7 @@
 %left AND
 %left NOT
 %nonassoc GEN_COMP NUM_COMP
-%nonassoc IN
+%left IN
 %nonassoc APPEND
 %nonassoc RANGE
 %left PLUS
@@ -262,17 +262,11 @@ expression
 | REPEAT expression IF expression
   { $$ = Repeat(Location.fromLexer(yy.sourceFile, @1, @4), $2, $4, false, 1); }
 
-| FOR loopVars IN expression
-  { $$ = new ForLoop(Location.fromLexer(yy.sourceFile, @1, @4), $2[0], $2[1], new Variable(Location.fromLexer(yy.sourceFile, @2, @2), $2[1]), $4, new Constant(Location.fromLexer(yy.sourceFile, @2, @2), true)); }
-
 | FOR loopVars IN expression IF expression
   { $$ = new ForLoop(Location.fromLexer(yy.sourceFile, @1, @6), $2[0], $2[1], new Variable(Location.fromLexer(yy.sourceFile, @2, @2), $2[1]), $4, $6); }
 
-| expression FOR loopVars IN expression
-  { $$ = new ForLoop(Location.fromLexer(yy.sourceFile, @1, @5), $3[0], $3[1], $1, $5, new Constant(Location.fromLexer(yy.sourceFile, @3, @3), true)); }
-
-| expression FOR loopVars IN expression IF expression
-  { $$ = new ForLoop(Location.fromLexer(yy.sourceFile, @1, @7), $3[0], $3[1], $1, $5, $7); }
+| expression FOR loopVars IN expression forLoopCondition
+  { $$ = new ForLoop(Location.fromLexer(yy.sourceFile, @1, @6), $3[0], $3[1], $1, $5, $6); }
 
 | expression ASSIGN expression
   { $$ = new Assign(Location.fromLexer(yy.sourceFile, @1, @3), $1, $3); }
@@ -347,6 +341,11 @@ callArg
 loopVars
 : IDENTIFIER { $$ = [undefined, $1]; }
 | IDENTIFIER COMMA IDENTIFIER { $$ = [$1, $3]; }
+;
+
+forLoopCondition
+: { $$ = new Constant(Location.NONE, true) }
+| IF expression { $$ = $2; }
 ;
 
 semicolon

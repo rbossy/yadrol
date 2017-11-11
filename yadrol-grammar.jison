@@ -80,12 +80,14 @@
 '{'		return 'LCURLY';
 '}'		return 'RCURLY';
 [A-Z_a-z]\w*	return 'IDENTIFIER';
-"\""		this.begin('string'); this.yy.str = '';
+"\""		this.begin('string'); return 'STR_START';
 <string><<EOF>>	throw new Error('unterminated string literal');
-<string>"\""    this.popState(); return 'STRING';
-<string>\\n     this.yy.str += '\n';
-<string>\\\"    this.yy.str += '"';
-<string>[^\\\"]* this.yy.str += yytext;
+<string>"\""    this.popState(); return 'STR_END';
+<string>\\n     return 'STR_NL';
+<string>\\\"    return 'STR_DQ';
+<string>\\\{    return 'STR_LCURLY';
+<string>"{"[A-Z_a-z]\w*"}" return 'STR_VAR';
+<string>[^\\\"{]* return 'STR_CONST';
 
 /lex
 
@@ -133,8 +135,11 @@ expression
 | BOOLEAN
   { $$ = new Constant(Location.fromLexer(yy.sourceFile, @1, @1), (yytext == 'true')); }
 
-| STRING
-  { $$ = new Constant(Location.fromLexer(yy.sourceFile, @1, @1), yy.str); }
+| STR_START STR_END
+  { $$ = new Constant(Location.fromLexer(yy.sourceFile, @1, @1), ''); }
+
+| STR_START string STR_END
+  { $$ = new StringInterpolation(Location.fromLexer(yy.sourceFile, @1, @3), $2); }
 
 | NUMBER
   { $$ = new Constant(Location.fromLexer(yy.sourceFile, @1, @1), Number(yytext)); }
@@ -355,4 +360,17 @@ semicolon
 optSemicolon
 :
 | SEMICOLON optSemicolon
+;
+
+string
+: stringElement { $$ = [$1]; }
+| stringElement string { $2.unshift($1); $$ = $2; }
+;
+
+stringElement
+: STR_NL { $$ = new Constant(Location.fromLexer(yy.sourceFile, @1), '\n'); }
+| STR_DQ { $$ = new Constant(Location.fromLexer(yy.sourceFile, @1), '"'); }
+| STR_LCURLY { $$ = new Constant(Location.fromLexer(yy.sourceFile, @1), '{'); }
+| STR_VAR { $$ = new Variable(Location.fromLexer(yy.sourceFile, @1), $1.slice(1, $1.length - 1)); }
+| STR_CONST { $$ = new Constant(Location.fromLexer(yy.sourceFile, @1), $1); }
 ;

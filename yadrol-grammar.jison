@@ -10,7 +10,6 @@
 [-]{3,}		return 'BREAK';
 ";"		return 'SEMICOLON';
 "import"	return 'IMPORT';
-"output"	return 'OUTPUT';
 "sample"	return 'OUTPUT';
 "roll"		return 'OUTPUT';
 "as"		return 'AS';
@@ -174,31 +173,31 @@ expression
   { $$ = new Convert(Location.fromLexer(yy.sourceFile, @1, @2), $2, $1); }
 
 | expression DICE expression
-  { $$ = new Dice(Location.fromLexer(yy.sourceFile, @1, @3), $1, $3); }
+  { $$ = new Dice(Location.fromLexer(yy.sourceFile, @1, @3), $1, $3, yy.recordLogger); }
 
 | expression DICE_UPPER
-  { $$ = new Dice(Location.fromLexer(yy.sourceFile, @1, @2), $1, new Variable(Location.fromLexer(yy.sourceFile, @2, @2), $2.slice(1))); }
+  { $$ = new Dice(Location.fromLexer(yy.sourceFile, @1, @2), $1, new Variable(Location.fromLexer(yy.sourceFile, @2, @2), $2.slice(1)), yy.recordLogger); }
 
 | expression DICE_NUMBER
-  { $$ = new Dice(Location.fromLexer(yy.sourceFile, @1, @2), $1, new Constant(Location.fromLexer(yy.sourceFile, @2, @2), Number($2.slice(1)))); }
+  { $$ = new Dice(Location.fromLexer(yy.sourceFile, @1, @2), $1, new Constant(Location.fromLexer(yy.sourceFile, @2, @2), Number($2.slice(1))), yy.recordLogger); }
 
 | UPPER_DICE expression
-  { $$ = new Dice(Location.fromLexer(yy.sourceFile, @1, @2), new Variable(Location.fromLexer(yy.sourceFile, @1, @1), $1.slice(0, 1)), $2); }
+  { $$ = new Dice(Location.fromLexer(yy.sourceFile, @1, @2), new Variable(Location.fromLexer(yy.sourceFile, @1, @1), $1.slice(0, 1)), $2, yy.recordLogger); }
 
 | UPPER_DICE_UPPER
-  { $$ = new Dice(Location.fromLexer(yy.sourceFile, @1, @1), new Variable(Location.fromLexer(yy.sourceFile, @1, @1), $1.slice(0, 1)), new Variable(Location.fromLexer(yy.sourceFile, @1, @1), $1.slice(2))); }
+  { $$ = new Dice(Location.fromLexer(yy.sourceFile, @1, @1), new Variable(Location.fromLexer(yy.sourceFile, @1, @1), $1.slice(0, 1)), new Variable(Location.fromLexer(yy.sourceFile, @1, @1), $1.slice(2)), yy.recordLogger); }
 
 | UPPER_DICE_NUMBER
-  { $$ = new Dice(Location.fromLexer(yy.sourceFile, @1, @1), new Variable(Location.fromLexer(yy.sourceFile, @1, @1), $1.slice(0, 1)), new Constant(Location.fromLexer(yy.sourceFile, @1, @1), Number($1.slice(2)))); }
+  { $$ = new Dice(Location.fromLexer(yy.sourceFile, @1, @1), new Variable(Location.fromLexer(yy.sourceFile, @1, @1), $1.slice(0, 1)), new Constant(Location.fromLexer(yy.sourceFile, @1, @1), Number($1.slice(2))), yy.recordLogger); }
 
 | DICE expression
-  { $$ = new Die(Location.fromLexer(yy.sourceFile, @1, @2), $2); }
+  { $$ = new Die(Location.fromLexer(yy.sourceFile, @1, @2), $2, yy.recordLogger); }
 
 | DICE_UPPER
-  { $$ = new Die(Location.fromLexer(yy.sourceFile, @1, @1), new Variable(Location.fromLexer(yy.sourceFile, @1, @1), $1.slice(1))); }
+  { $$ = new Die(Location.fromLexer(yy.sourceFile, @1, @1), new Variable(Location.fromLexer(yy.sourceFile, @1, @1), $1.slice(1)), yy.recordLogger); }
 
 | DICE_NUMBER
-  { $$ = new Die(Location.fromLexer(yy.sourceFile, @1, @1), new Constant(Location.fromLexer(yy.sourceFile, @1, @1), Number($1.slice(1)))); }
+  { $$ = new Die(Location.fromLexer(yy.sourceFile, @1, @1), new Constant(Location.fromLexer(yy.sourceFile, @1, @1), Number($1.slice(1))), yy.recordLogger); }
 
 | DRAW expression FROM expression
   { $$ = new DrawMultiple(Location.fromLexer(yy.sourceFile, @1, @4), $2, $4); }
@@ -285,19 +284,19 @@ expression
   { $$ = new Import(Location.fromLexer(yy.sourceFile, @1, @4), $4, $2); }
 
 | OUTPUT expression
-  { throw new Error('not implemented: output'); }
+  { $$ = new Output(Location.fromLexer(yy.sourceFile, @1, @2), undefined, $2, yy.recordLogger.defaultType, Output[$1.toUpperCase()], yy.recordLogger); }
 
 | OUTPUT expression AS CONVERT
-  { throw new Error('not implemented: output'); }
+  { $$ = new Output(Location.fromLexer(yy.sourceFile, @1, @4), undefined, $2, $4, Output[$1.toUpperCase()], yy.recordLogger); }
 
 | OUTPUT expression AS STRING
-  { throw new Error('not implemented: output'); }
+  { $$ = new Output(Location.fromLexer(yy.sourceFile, @1, @4), $4, $2, yy.recordLogger.defaultType, Output[$1.toUpperCase()], yy.recordLogger); }
 
 | OUTPUT expression AS CONVERT STRING
-  { throw new Error('not implemented: output'); }
+  { $$ = new Output(Location.fromLexer(yy.sourceFile, @1, @5), $5, $2, $4, Output[$1.toUpperCase()], yy.recordLogger); }
 
 | OUTPUT expression AS STRING CONVERT
-  { throw new Error('not implemented: output'); }
+  { $$ = new Output(Location.fromLexer(yy.sourceFile, @1, @5), $4, $2, $5, Output[$1.toUpperCase()], yy.recordLogger); }
 
 | expression semicolon expression %prec SEMICOLON
   { $$ = new Sequence(Location.fromLexer(yy.sourceFile, @1, @3), $1, $3); }

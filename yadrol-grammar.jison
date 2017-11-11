@@ -247,20 +247,14 @@ expression
 | IF expression THEN expression ELSE expression
   { $$ = new Conditional(Location.fromLexer(yy.sourceFile, @1, @6), $2, $4, $6); }
 
-| WHILE expression REPEAT expression
-  { $$ = new Repeat(Location.fromLexer(yy.sourceFile, @1, @4), $4, $2, true, Number.MAX_VALUE); }
+| WHILE expression REPEAT expression limit
+  { $$ = new Repeat(Location.fromLexer(yy.sourceFile, @1, @5), $4, $2, true, $5); }
 
-| WHILE expression REPEAT expression LIMIT NUMBER
-  { $$ = new Repeat(Location.fromLexer(yy.sourceFile, @1, @6), $4, $2, true, Number($6)); }
-
-| REPEAT expression WHILE expression
-  { $$ = Repeat(Location.fromLexer(yy.sourceFile, @1, @4), $2, $4, false, Number.MAX_VALUE); }
-
-| REPEAT expression WHILE expression LIMIT NUMBER
-  { $$ = Repeat(Location.fromLexer(yy.sourceFile, @1, @6), $2, $4, false, Number($6)); }
+| REPEAT expression WHILE expression limit
+  { $$ = new Repeat(Location.fromLexer(yy.sourceFile, @1, @5), $2, $4, false, $5); }
 
 | REPEAT expression IF expression
-  { $$ = Repeat(Location.fromLexer(yy.sourceFile, @1, @4), $2, $4, false, 1); }
+  { $$ = new Repeat(Location.fromLexer(yy.sourceFile, @1, @4), $2, $4, false, 1); }
 
 | FOR loopVars IN expression IF expression
   { $$ = new ForLoop(Location.fromLexer(yy.sourceFile, @1, @6), $2[0], $2[1], new Variable(Location.fromLexer(yy.sourceFile, @2, @2), $2[1]), $4, $6); }
@@ -336,6 +330,11 @@ callArgs
 callArg
 : IDENTIFIER COLON expression { $$ = [$1, $3]; }
 | expression { $$ = [$1]; }
+;
+
+limit
+: { $$ = Number.MAX_VALUE; }
+| LIMIT NUMBER { $$ = Number($2); }
 ;
 
 loopVars

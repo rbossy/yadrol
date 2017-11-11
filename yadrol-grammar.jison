@@ -282,14 +282,14 @@ expression
 | OUTPUT expression AS CONVERT
   { $$ = new Output(Location.fromLexer(yy.sourceFile, @1, @4), undefined, $2, $4, Output[$1.toUpperCase()], yy.recordLogger); }
 
-| OUTPUT expression AS STRING
-  { $$ = new Output(Location.fromLexer(yy.sourceFile, @1, @4), $4, $2, yy.recordLogger.defaultType, Output[$1.toUpperCase()], yy.recordLogger); }
+| OUTPUT expression AS STR_START string STR_END
+  { $$ = new Output(Location.fromLexer(yy.sourceFile, @1, @6), new StringInterpolation(Location.fromLexer(yy.sourceFile, @1, @5), $5), $2, yy.recordLogger.defaultType, Output[$1.toUpperCase()], yy.recordLogger); }
 
-| OUTPUT expression AS CONVERT STRING
-  { $$ = new Output(Location.fromLexer(yy.sourceFile, @1, @5), $5, $2, $4, Output[$1.toUpperCase()], yy.recordLogger); }
+| OUTPUT expression AS CONVERT STR_START string STR_END
+  { $$ = new Output(Location.fromLexer(yy.sourceFile, @1, @7), new StringInterpolation(Location.fromLexer(yy.sourceFile, @1, @6), $6), $2, $4, Output[$1.toUpperCase()], yy.recordLogger); }
 
-| OUTPUT expression AS STRING CONVERT
-  { $$ = new Output(Location.fromLexer(yy.sourceFile, @1, @5), $4, $2, $5, Output[$1.toUpperCase()], yy.recordLogger); }
+| OUTPUT expression AS STR_START string STR_END CONVERT
+  { $$ = new Output(Location.fromLexer(yy.sourceFile, @1, @7), new StringInterpolation(Location.fromLexer(yy.sourceFile, @1, @4), $4), $2, $6, Output[$1.toUpperCase()], yy.recordLogger); }
 
 | expression semicolon expression %prec SEMICOLON
   { $$ = new Sequence(Location.fromLexer(yy.sourceFile, @1, @3), $1, $3); }

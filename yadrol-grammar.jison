@@ -217,13 +217,13 @@ expression
   { $$ = new Best(Location.fromLexer(yy.sourceFile, @1, @3), Best[$1.toUpperCase()], $3); }
 
 | PLUS expression %prec SIGN
-  { $$ = new Sign(Location.fromLexer(yy.sourceFile, @1, @2), Sign.getOperator($1), $2); }
+  { $$ = new Sign(Location.fromLexer(yy.sourceFile, @1, @2), yy.getSignOperator($1), $2); }
 
 | expression MULT expression
-  { $$ = new Arithmetic(Location.fromLexer(yy.sourceFile, @1, @3), Arithmetic.getOperator($2), $1, $3); }
+  { $$ = new Arithmetic(Location.fromLexer(yy.sourceFile, @1, @3), yy.getArithmeticOperator($2), $1, $3); }
 
 | expression PLUS expression
-  { $$ = new Arithmetic(Location.fromLexer(yy.sourceFile, @1, @3), Arithmetic.getOperator($2), $1, $3); }
+  { $$ = new Arithmetic(Location.fromLexer(yy.sourceFile, @1, @3), yy.getArithmeticOperator($2), $1, $3); }
 
 | expression RANGE expression
   { $$ = new Range(Location.fromLexer(yy.sourceFile, @1, @3), $1, $3); }
@@ -232,10 +232,10 @@ expression
   { $$ = new Append(Location.fromLexer(yy.sourceFile, @1, @3), $1, $3); }
 
 | expression GEN_COMP expression
-  { $$ = new GeneralComparison(Location.fromLexer(yy.sourceFile, @1, @3), GeneralComparison.getOperator($2), $1, $3);  }
+  { $$ = new GeneralComparison(Location.fromLexer(yy.sourceFile, @1, @3), yy.getGeneralComparisonOperator($2), $1, $3);  }
 
 | expression NUM_COMP expression
-  { $$ = new NumberComparison(Location.fromLexer(yy.sourceFile, @1, @3), NumberComparison.getOperator($2), $1, $3); }
+  { $$ = new NumberComparison(Location.fromLexer(yy.sourceFile, @1, @3), yy.getNumberComparisonOperator($2), $1, $3); }
 
 | expression IN expression
   { $$ = new IndexOf(Location.fromLexer(yy.sourceFile, @1, @3), $1, $3); }

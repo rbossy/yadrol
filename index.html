@@ -1,23 +1,62 @@
 <html>
   <head>
     <title>Yadrol test</title>
-    <script src="yadrol-values.js"></script>
-    <script src="yadrol-expressions.js"></script>
-    <script src="jquery-3.1.1.min.js"></script>
-    <script src="yadrol-test.js"></script>
+    <script src="lib/yadrol/values.js"></script>
+    <script src="lib/yadrol/yadrol-parser.js"></script>
+    <script src="lib/yadrol/parseutils.js"></script>
+    <script src="lib/yadrol/expressions.js"></script>
+    <script src="lib/jquery-3.2.1.min.js"></script>
+    <script src="lib/bootstrap.bundle.min.js"></script>
+    <script src="lib/yadrol/app.js"></script>
+    <script src="lib/yadrol/main.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/yadrol.css" rel="stylesheet">
   </head>
   <body>
-    <table>
-      <thead>
-	<tr>
-	  <th>Test</th>
-	  <th>Result</th>
-	  <th>Expected<th>
-	  <th>Error</th>
-	</tr>
-      </thead>
-      <tbody>
-      </tbody>
-    </table>
+    <div class="container-fluid">
+      <div class="row"> <!-- header -->
+	<div class="col">
+	  <h1 class="float-left">Yadrol</h1>
+	</div>
+	<div class="col">
+	  <div class="btn-group float-right" role="group">
+	    <button type="button" class="btn btn-secondary">?</button>
+	    <button type="button" class="btn btn-secondary">*</button>
+	    <button type="button" class="btn btn-secondary">i</button>
+	  </div>
+	</div>
+      </div>
+      
+      <div class="row"> <!--- content -->
+	<div class="col-5">
+	  <div class="container-fluid">
+	    <div class="row">
+	      <div class="col">
+		<textarea id="expression-string" class="form-control" placeholder="Expression, e.g. 3d6" rows="7"></textarea>
+	      </div>
+	    </div>
+	    <div class="row">
+	      <div class="col">
+		<div class="btn-group dropdown float-right">
+		  <button id="output-mode" type="button" class="btn btn-success btn-md" onclick="run()">Sample</button>
+		  <button type="button" class="btn btn-success btn-md dropdown-toggle" data-toggle="dropdown">
+		    <span class="caret"></span>
+		  </button>
+		  <div class="dropdown-menu">
+		    <a class="dropdown-item" onclick="setOutputMode('Sample', true)">Sample</a>
+		    <a class="dropdown-item" onclick="setOutputMode('Roll', true)">Roll</a>
+		  </div>
+		</div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<div class="col-7">
+	</div>
+      </div>
+
+      <div class="row"> <!--- footer -->
+      </div>
+    </div>
   </body>
 </html>

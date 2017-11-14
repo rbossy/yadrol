@@ -23,6 +23,15 @@
     font-family: mono;
 }
 
+#header {
+    margin-top: 3mm;
+    margin-bottom: 3mm;
+}
+
+#run-button {
+    margin-top: 3mm;
+}
+
 #sample-records {
 }
 

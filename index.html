@@ -18,9 +18,9 @@
   </head>
   <body>
     <div class="container-fluid">
-      <div class="row"> <!-- header -->
+      <div id="header" class="row"> <!-- header -->
 	<div class="col">
-	  <h1 class="float-left">Yadrol</h1>
+	  <h2 class="float-left">Yadrol <small class="text-muted">Dice roller and dice distribution sampler</small></h2>
 	</div>
 	<div class="col">
 	  <div class="btn-group float-right" role="group">
@@ -41,7 +41,7 @@
 	    </div>
 	    <div class="row">
 	      <div class="col">
-		<div class="btn-group dropdown float-right">
+		<div id="run-button" class="btn-group dropdown float-right">
 		  <button id="output-mode" type="button" class="btn btn-success btn-md" onclick="run()">Sample</button>
 		  <button type="button" class="btn btn-success btn-md dropdown-toggle" data-toggle="dropdown">
 		    <span class="caret"></span>
@@ -66,17 +66,18 @@
 		    </div>
 		  </div>
 		  <div class="row">
+		    <div class="col"></div>
 		    <div class="col">
 		      <div class="btn-group" data-toggle="buttons">
-			<label class="btn btn-secondary active">
+			<label class="btn btn-sm btn-secondary active">
 			  <input type="radio" name="y-value" onchange="setY('relativeAtLeast')" autocomplete="off" checked>
 			  At Least
 			</label>
-			<label class="btn btn-secondary">
+			<label class="btn btn-sm btn-secondary">
 			  <input type="radio" name="y-value" onchange="setY('relative')" autocomplete="off">
 			  Exact
 			</label>
-			<label class="btn btn-secondary">
+			<label class="btn btn-sm btn-secondary">
 			  <input type="radio" name="y-value" onchange="setY('relativeAtMost')" autocomplete="off">
 			  At Most
 			</label>
@@ -85,20 +86,21 @@
 		    <div class="col"></div>
 		    <div class="col">
 		      <div class="btn-group" data-toggle="buttons">
-			<label class="btn btn-secondary active">
+			<label class="btn btn-sm btn-secondary active">
 			  <input type="radio" name="centrum-value" onchange="setCentrum('mean')" autocomplete="off" checked>
 			  Mean
 			</label>
-			<label class="btn btn-secondary">
+			<label class="btn btn-sm btn-secondary">
 			  <input type="radio" name="centrum-value" onchange="setCentrum('mode')" autocomplete="off">
 			  Mode
 			</label>
-			<label class="btn btn-secondary">
+			<label class="btn btn-sm btn-secondary">
 			  <input type="radio" name="centrum-value" onchange="setCentrum('median')" autocomplete="off">
 			  Median
 			</label>
 		      </div>
 		    </div>
+		    <div class="col"></div>
 		  </div>
 		</div>
 	      </div>

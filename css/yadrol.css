@@ -1,19 +1,7 @@
-th {
-    text-align: left;
-    padding-left: 3mm;
-    padding-right: 3mm;
-}
-
 .test-header {
     padding-top: 3mm;
     padding-bottom: 3mm;
     background-color: #CCCCCC;
-}
-
-td {
-    text-align: left;
-    padding-left: 3mm;
-    padding-right: 3mm;
 }
 
 .test {
@@ -33,4 +21,11 @@ td {
 
 .yadrol-value {
     font-family: mono;
+}
+
+#sample-records {
+}
+
+#sample-records-graph {
+    height: 7cm;
 }

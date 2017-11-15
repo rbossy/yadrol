@@ -37,6 +37,20 @@
     margin-right: 3mm;
 }
 
+.roll-record {
+    border: solid black 1px;
+    border-radius: 3mm;
+}
+
+.roll-record-name {
+    font-size: 120%;
+}
+
+.roll-record-result {
+    font-size: 200%;
+    margin-top: 3mm;
+}
+
 #sample-records {
 }
 

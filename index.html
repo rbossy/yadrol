@@ -34,6 +34,18 @@
       <div class="row"> <!--- content -->
 	<div class="col-5">
 	  <div class="container-fluid">
+	    <div id="toolbar" class="row">
+	      <div class="col">
+		<div class="dropdown">
+		  <button id="history-button" class="btn btn-sm dropdown-toggle" type="button" data-toggle="dropdown" disabled="yes">
+		    History
+		  </button>
+		  <div id="history" class="dropdown-menu">
+		    <!--<a class="dropdown-item" href="#">Action</a>-->
+		  </div>
+		</div>
+	      </div>
+	    </div>
 	    <div class="row">
 	      <div class="col">
 		<textarea id="expression-string" class="form-control" placeholder="Expression, e.g. 3d6" rows="7"></textarea>

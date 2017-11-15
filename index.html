@@ -42,13 +42,22 @@
 	    <div class="row">
 	      <div class="col">
 		<div id="run-button" class="btn-group dropdown float-right">
-		  <button id="output-mode" type="button" class="btn btn-success btn-md" onclick="run()">Sample</button>
+		  <button id="output-mode" type="button" class="btn btn-success btn-md" onclick="run()">
+		    <img class="output-mode-icon" src="icons/buttons/graph4.svg">
+		    Sample
+		  </button>
 		  <button type="button" class="btn btn-success btn-md dropdown-toggle" data-toggle="dropdown">
 		    <span class="caret"></span>
 		  </button>
 		  <div class="dropdown-menu">
-		    <a class="dropdown-item" onclick="setOutputMode('Sample', true)">Sample</a>
-		    <a class="dropdown-item" onclick="setOutputMode('Roll', true)">Roll</a>
+		    <a class="dropdown-item" onclick="setOutputMode('Sample', true)">
+		      <img class="output-mode-icon" src="icons/buttons/graph4.svg">
+		      Sample
+		    </a>
+		    <a class="dropdown-item" onclick="setOutputMode('Roll', true)">
+		      <img class="output-mode-icon" src="icons/buttons/dice3.svg">
+		      Roll
+		    </a>
 		  </div>
 		</div>
 	      </div>

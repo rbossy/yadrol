@@ -39,8 +39,8 @@
 
 .roll-record {
     border: solid black 1px;
-    border-radius: 3mm;
-    margin-bottom: 3mm;
+    border-radius: 0.25rem;
+    margin-bottom: 0.25rem;
 }
 
 .roll-record-name {

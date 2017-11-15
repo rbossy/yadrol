@@ -26,7 +26,7 @@
 	  <div class="btn-group float-right" role="group">
 	    <button type="button" class="btn btn-secondary">?</button>
 	    <button type="button" class="btn btn-secondary">*</button>
-	    <button type="button" class="btn btn-secondary">i</button>
+	    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#about">i</button>
 	  </div>
 	</div>
       </div>
@@ -62,13 +62,17 @@
 		    <span class="caret"></span>
 		  </button>
 		  <div class="dropdown-menu">
-		    <a class="dropdown-item" onclick="Action.setOutputMode('Sample', true)">
+		    <a class="dropdown-item" onclick="Action.setMode('sample', true)">
 		      <img class="output-mode-icon" src="icons/buttons/graph4.svg">
 		      Sample
 		    </a>
-		    <a class="dropdown-item" onclick="Action.setOutputMode('Roll', true)">
+		    <a class="dropdown-item" onclick="Action.setMode('roll', true)">
 		      <img class="output-mode-icon" src="icons/buttons/dice3.svg">
 		      Roll
+		    </a>
+		    <a class="dropdown-item" onclick="Action.setMode('advanced', true)">
+		      <img class="output-mode-icon" src="icons/buttons/dice2.svg">
+		      Advanced
 		    </a>
 		  </div>
 		</div>
@@ -131,6 +135,55 @@
       </div>
 
       <div class="row"> <!--- footer -->
+      </div>
+    </div>
+    <div id="about" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+	<div class="modal-content">
+	  <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	      <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+	    </button>
+	    <h3 class="modal-title">About Yadrol</h3>
+	  </div>
+	  <div class="modal-body container-fluid">
+	    <h4>Version 0.1</h4>
+	    <p>
+	      Made by <a href="mailto:phatonin@gmail.com?subject=[yadrol] ">phatonin</a> during his leisure time.
+	    </p>
+	    <p>
+	      For sources, bug reports, feature requests, see the <a target="_new" href="https://github.com/phatonin/yadrol">GitHub page</a>.
+	    </p>
+	    <hr>
+	    <h4>Icons</h4>
+	    <p>
+	      <img height="17ex" src="icons/buttons/dice2.svg"> made by <a target="_new" href="http://www.flaticon.com/authors/nikita-golubev">Nikita Golubev</a> [<a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC 3.0 BY</a>].
+	    </p>
+	    <p>
+	      <img height="17ex" src="icons/buttons/dice3.svg"> made by <a target="_new" href="http://www.freepik.com">Freepik</a> [<a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC 3.0 BY</a>].
+	    </p>
+	    <p>
+	      <img height="17ex" src="icons/buttons/graph4.svg"> made by <a target="_new" href="http://www.flaticon.com/authors/retinaicons">Retinaicons</a> [<a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC 3.0 BY</a>].
+	    </p>
+	    <p>
+	      <img height="40ex" src="icons/dice/d4.svg"> <img height="40ex" src="icons/dice/d6.svg"> made by <a target="_new" href="https://thenounproject.com/DaanDirk/">Daan Dirk</a> [<a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC 3.0 BY</a>].
+	    </p>
+	    <p>
+	      <img height="40ex" src="icons/dice/d8.svg"> <img height="40ex" src="icons/dice/d10.svg"> <img height="40ex" src="icons/dice/d12.svg"> <img height="40ex" src="icons/dice/d20.svg"> made by <a target="_new" href="https://thenounproject.com/mvalstar/">Mike Valstar</a> [<a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC 3.0 BY</a>].
+	    </p>
+	    <hr>
+	    <h4>Libraries</h4>
+	    <p>
+	      Yadrol uses jQuery [MIT license].
+	    </p>
+	    <p>
+	      Layout was made this neat, thanks to <a target="_new" href="http://getbootstrap.com/">Bootstrap</a> [MIT license].
+	    </p>
+	    <p>
+	      Beautiful charts rendered with <a target="_new" href="http://plottablejs.org/">Plottable</a> and d3 [MIT license].
+	    </p>
+	  </div>
+	</div>
       </div>
     </div>
   </body>

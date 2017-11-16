@@ -18,6 +18,7 @@
     <link href="css/plottable.css" rel="stylesheet">
     <link href="css/codemirror.css" rel="stylesheet">
     <link href="css/yadrol.css" rel="stylesheet">
+    <link href="css/yadrol-editor.css" rel="stylesheet">
   </head>
   <body>
     <div class="container-fluid">
@@ -94,12 +95,7 @@
 	    <div class="row">
 	      <div class="col">
 		<div id="sample-records" class="container-fluid">
-		  <div class="row">
-		    <div class="col">
-		      <svg id="sample-records-graph"></svg>
-		    </div>
-		  </div>
-		  <div class="row">
+		  <div id="graph-toolbar" class="row">
 		    <div class="col"></div>
 		    <div class="col">
 		      <div class="btn-group" data-toggle="buttons">
@@ -135,6 +131,11 @@
 		      </div>
 		    </div>
 		    <div class="col"></div>
+		  </div>
+		  <div class="row">
+		    <div class="col">
+		      <svg id="sample-records-graph"></svg>
+		    </div>
 		  </div>
 		</div>
 	      </div>

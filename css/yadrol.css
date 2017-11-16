@@ -41,6 +41,14 @@
     margin-right: 3mm;
 }
 
+#output-container {
+
+}
+
+#graph-toolbar {
+    margin-bottom: 5mm;
+}
+
 .roll-record {
     border: solid black 1px;
     border-radius: 0.25rem;

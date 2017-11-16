@@ -1,0 +1,218 @@
+.CodeMirror {
+    font-family: monospace;
+    font-size: 120%;
+    height: 7cm;
+    border: solid #CCCCCC 2px;
+    border-radius: 0.25rem;
+}
+
+.cm-BREAK {
+    font-weight: bold;
+}
+
+.cm-SEMICOLON {
+
+}
+
+.cm-IMPORT {
+    font-weight: bold;
+}
+
+.cm-OUTPUT {
+    font-weight: bold;
+}
+
+.cm-AS {
+    font-weight: bold;
+}
+
+.cm-IF {
+    color: #991818;
+}
+
+.cm-THEN {
+    color: #991818;
+}
+
+.cm-ELSE {
+    color: #991818;
+}
+
+.cm-FOR {
+    color: #991818;
+}
+
+.cm-REPEAT {
+    color: #991818;
+}
+
+.cm-WHILE {
+    color: #991818;
+}
+
+.cm-LIMIT {
+    color: #991818;
+}
+
+.cm-IN {
+    color: #991818;
+}
+
+.cm-COUNT {
+    color: #991818;
+}
+
+.cm-CONVERT {
+    color: #991818;
+}
+
+.cm-REORDER {
+    color: #991818;
+}
+
+.cm-OR {
+    color: #991818;
+}
+
+.cm-AND {
+    color: #991818;
+}
+
+.cm-NOT {
+    color: #991818;
+}
+
+.cm-APPEND {
+    color: #991818;
+}
+
+.cm-GEN_COMP {
+    color: #991818;
+}
+
+.cm-NUM_COMP {
+    color: #991818;
+}
+
+.cm-RANGE {
+    color: #991818;
+}
+
+.cm-PLUS {
+    color: #991818;
+}
+
+.cm-MULT {
+    color: #991818;
+}
+
+.cm-ASSIGN {
+    color: #991818;
+}
+
+.cm-BEST {
+    color: #991818;
+}
+
+.cm-OF {
+    color: #991818;
+}
+
+.cm-DRAW {
+    color: #991818;
+}
+
+.cm-FROM {
+    color: #991818;
+}
+
+.cm-DICE {
+    font-weight: bold;
+}
+
+.cm-UPPER_DICE {
+    font-weight: bold;
+}
+
+.cm-DICE_UPPER {
+    font-weight: bold;
+}
+
+.cm-UPPER_DICE_UPPER {
+    font-weight: bold;
+}
+
+.cm-DICE_NUMBER {
+    font-weight: bold;
+}
+
+.cm-UPPER_DICE_NUMBER {
+    font-weight: bold;
+}
+
+.cm-LPAREN {
+
+}
+
+.cm-RPAREN {
+
+}
+
+.cm-LBRACKET {
+
+}
+
+.cm-RBRACKET {
+
+}
+
+.cm-COMMA {
+
+}
+
+.cm-COLON {
+
+}
+
+.cm-DOT {
+
+}
+
+.cm-SCOPE {
+    color: #991818;
+}
+
+.cm-UNDEF {
+    color: #0A45B2;
+}
+
+.cm-BOOLEAN {
+    color: #0A45B2;
+}
+
+.cm-NUM {
+    color: #0A45B2;
+}
+
+.cm-FUN {
+    color: #991818;
+}
+
+.cm-LCURLY {
+
+}
+
+.cm-RCURLY {
+
+}
+
+.cm-IDENTIFIER {
+
+}
+
+.cm-STR {
+    font-style: italic;
+    color: #888888;
+}
+
+

@@ -25,7 +25,7 @@
 	<div class="col">
 	  <div class="btn-group float-right" role="group">
 	    <button type="button" class="btn btn-secondary">?</button>
-	    <button type="button" class="btn btn-secondary">*</button>
+	    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#settings">*</button>
 	    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#about">i</button>
 	  </div>
 	</div>
@@ -145,14 +145,15 @@
       </div>
     </div>
 
+    <!-- URL share -->
     <div id="build-url" class="modal fade" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
 	<div class="modal-content">
 	  <div class="modal-header">
-	    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	      <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
-	    </button>
 	    <h3 class="modal-title">Share URL</h3>
+	    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	      <span>&times;</span>
+	    </button>
 	  </div>
 	  <div class="modal-body container-fluid">
 	    <div class="row">
@@ -193,10 +194,10 @@
       <div class="modal-dialog" role="document">
 	<div class="modal-content">
 	  <div class="modal-header">
-	    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	      <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
-	    </button>
 	    <h3 class="modal-title">About Yadrol</h3>
+	    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	      <span>&times;</span>
+	    </button>
 	  </div>
 	  <div class="modal-body container-fluid">
 	    <h4>Version 0.1</h4>
@@ -237,6 +238,28 @@
 	    <p>
 	      Beautiful charts rendered with <a target="_new" href="http://plottablejs.org/">Plottable</a> by <a href="https://www.palantir.com/">Palantir Technologies</a> [<a href="https://github.com/palantir/plottable/blob/develop/LICENSE">MIT license</a>] and <a href="https://d3js.org/">d3js</a> by <a href="https://bost.ocks.org/mike/">Mike Bostock</a> [<a href="https://github.com/d3/d3/blob/master/LICENSE">BSD 3-clause license</a>].
 	    </p>
+	  </div>
+	</div>
+      </div>
+    </div>
+
+    <!-- Settings -->
+    <div id="settings" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+	<div class="modal-content">
+	  <div class="modal-header">
+	    <h3 class="modal-title">Settings</h3>
+	    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	      <span>&times;</span>
+	    </button>
+	  </div>
+	  <div class="modal-body container-fluid">
+	    <div class="row">
+	      <div class="col-md-6">Sample size</div>
+	      <div class="col-md-6">
+		<input id="sample-size" class="form-control" type="number" value="100000" min="1000" max="1000000" step="1000" onchange="Action.setSampleSize()" />
+	      </div>
+	    </div>
 	  </div>
 	</div>
       </div>

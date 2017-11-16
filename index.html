@@ -30,11 +30,17 @@
 	  </div>
 	</div>
       </div>
-      
-      <div class="row"> <!--- content -->
+
+      <!--- Content -->
+      <div class="row">
 	<div class="col-5">
 	  <div class="container-fluid">
 	    <div id="toolbar" class="row">
+	      <div class="col">
+		<button class="btn btn-sm" type="button" data-toggle="modal" data-target="#build-url" onclick="Action.updateURL()">
+		  URL
+		</button>
+	      </div>
 	      <div class="col">
 		<div class="dropdown">
 		  <button id="history-button" class="btn btn-sm dropdown-toggle" type="button" data-toggle="dropdown" disabled="disabled">
@@ -134,9 +140,55 @@
 	</div>
       </div>
 
-      <div class="row"> <!--- footer -->
+       <!--- Footer -->
+      <div class="row">
       </div>
     </div>
+
+    <div id="build-url" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+	<div class="modal-content">
+	  <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	      <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+	    </button>
+	    <h3 class="modal-title">Share URL</h3>
+	  </div>
+	  <div class="modal-body container-fluid">
+	    <div class="row">
+	      <div class="col">
+		<div class="input-group">
+		  <input id="url" type="text" class="form-control">
+		  <span class="input-group-btn">
+		    <button type="button" class="btn" onclick="Action.copyURL()">
+		      C
+		    </button>
+		  </span>
+		</div>
+	      </div>
+	    </div>
+	    <div id="url-options" class="row">
+	      <div class="col">
+	      </div>
+	      <div class="col">
+		<label>
+		  <input id="url-include-mode" type="checkbox" onclick="Action.updateURL()">
+		  Include mode
+		</label>
+	      </div>
+	      <div class="col">
+		<label>
+		  <input id="url-autorun" type="checkbox" onclick="Action.updateURL()">
+		  Autorun
+		</label>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+      </div>
+    </div>
+
+    <!-- About -->
     <div id="about" class="modal fade" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
 	<div class="modal-content">

@@ -1,6 +1,12 @@
 <html>
   <head>
     <title>Yadrol test</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-tour.min.css" rel="stylesheet">
+    <link href="css/plottable.css" rel="stylesheet">
+    <link href="css/codemirror.css" rel="stylesheet">
+    <link href="css/yadrol.css" rel="stylesheet">
+    <link href="css/yadrol-editor.css" rel="stylesheet">
     <script src="lib/yadrol/values.js"></script>
     <script src="lib/yadrol/yadrol-parser.js"></script>
     <script src="lib/yadrol/parseutils.js"></script>
@@ -8,16 +14,12 @@
     <script src="lib/jquery-3.2.1.min.js"></script>
     <script src="lib/yadrol/app.js"></script>
     <script src="lib/bootstrap.bundle.min.js"></script>
+    <script src="lib/bootstrap-tour.min.js"></script>
     <script src="lib/svgtypewriter.js"></script>
     <script src="lib/d3.js"></script>
     <script src="lib/plottable.min.js"></script>
     <script src="lib/codemirror.js"></script>
     <script src="lib/yadrol/main.js"></script>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/plottable.css" rel="stylesheet">
-    <link href="css/codemirror.css" rel="stylesheet">
-    <link href="css/yadrol.css" rel="stylesheet">
-    <link href="css/yadrol-editor.css" rel="stylesheet">
   </head>
   <body>
     <div class="container-fluid">
@@ -27,9 +29,9 @@
 	</div>
 	<div class="col">
 	  <div class="btn-group float-right" role="group">
-	    <button type="button" class="btn btn-secondary">?</button>
-	    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#settings">*</button>
-	    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#about">i</button>
+	    <button type="button" class="btn btn-light" onclick="Action.startTutorial()">Tutorial</button>
+	    <button type="button" class="btn btn-light" data-toggle="modal" data-target="#settings">Settings</button>
+	    <button type="button" class="btn btn-light" data-toggle="modal" data-target="#about">About</button>
 	  </div>
 	</div>
       </div>
@@ -40,13 +42,13 @@
 	  <div class="container-fluid">
 	    <div id="toolbar" class="row">
 	      <div class="col">
-		<button class="btn btn-sm" type="button" data-toggle="modal" data-target="#build-url" onclick="Action.updateURL()">
+		<button id="url-button" class="btn btn-sm btn-info" type="button" disabled="true" data-toggle="modal" data-target="#build-url" onclick="Action.updateURL()">
 		  URL
 		</button>
 	      </div>
 	      <div class="col">
 		<div class="dropdown">
-		  <button id="history-button" class="btn btn-sm dropdown-toggle" type="button" data-toggle="dropdown" disabled="disabled">
+		  <button id="history-button" class="btn btn-sm btn-info dropdown-toggle" type="button" data-toggle="dropdown" disabled="disabled">
 		    History
 		  </button>
 		  <div id="history" class="dropdown-menu">
@@ -63,7 +65,7 @@
 	    <div class="row">
 	      <div class="col">
 		<div id="run-button" class="btn-group dropdown float-right">
-		  <button id="output-mode" type="button" class="btn btn-success btn-md" onclick="Action.run()">
+		  <button id="output-mode" type="button" disabled="true" class="btn btn-success btn-md" onclick="Action.run()">
 		    <img class="output-mode-icon" src="icons/buttons/graph4.svg">
 		    Sample
 		  </button>
@@ -98,15 +100,15 @@
 		    <div class="col"></div>
 		    <div class="col">
 		      <div class="btn-group" data-toggle="buttons">
-			<label class="btn btn-sm btn-secondary active">
+			<label class="btn btn-sm btn-info active">
 			  <input type="radio" name="y-value" onchange="Action.setY('relativeAtLeast')" autocomplete="off" checked>
 			  At Least
 			</label>
-			<label class="btn btn-sm btn-secondary">
+			<label class="btn btn-sm btn-info">
 			  <input type="radio" name="y-value" onchange="Action.setY('relative')" autocomplete="off">
 			  Exact
 			</label>
-			<label class="btn btn-sm btn-secondary">
+			<label class="btn btn-sm btn-info">
 			  <input type="radio" name="y-value" onchange="Action.setY('relativeAtMost')" autocomplete="off">
 			  At Most
 			</label>
@@ -115,15 +117,15 @@
 		    <div class="col"></div>
 		    <div class="col">
 		      <div class="btn-group" data-toggle="buttons">
-			<label class="btn btn-sm btn-secondary active">
+			<label class="btn btn-sm btn-info active">
 			  <input type="radio" name="centrum-value" onchange="Action.setCentrum('mean')" autocomplete="off" checked>
 			  Mean
 			</label>
-			<label class="btn btn-sm btn-secondary">
+			<label class="btn btn-sm btn-info">
 			  <input type="radio" name="centrum-value" onchange="Action.setCentrum('mode')" autocomplete="off">
 			  Mode
 			</label>
-			<label class="btn btn-sm btn-secondary">
+			<label class="btn btn-sm btn-info">
 			  <input type="radio" name="centrum-value" onchange="Action.setCentrum('median')" autocomplete="off">
 			  Median
 			</label>

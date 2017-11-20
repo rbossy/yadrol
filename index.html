@@ -72,14 +72,14 @@
 		  <button type="button" class="btn btn-success btn-md dropdown-toggle" data-toggle="dropdown">
 		    <span class="caret"></span>
 		  </button>
-		  <div class="dropdown-menu">
-		    <a class="dropdown-item" onclick="Action.setMode('sample', true)">
-		      <img class="output-mode-icon" src="icons/buttons/graph4.svg">
-		      Sample
-		    </a>
+		  <div id="output-modes-menu" class="dropdown-menu">
 		    <a class="dropdown-item" onclick="Action.setMode('roll', true)">
 		      <img class="output-mode-icon" src="icons/buttons/dice3.svg">
 		      Roll
+		    </a>
+		    <a class="dropdown-item" onclick="Action.setMode('sample', true)">
+		      <img class="output-mode-icon" src="icons/buttons/graph4.svg">
+		      Sample
 		    </a>
 		    <a class="dropdown-item" onclick="Action.setMode('advanced', true)">
 		      <img class="output-mode-icon" src="icons/buttons/dice2.svg">
@@ -99,7 +99,7 @@
 		  <div id="sample-records-toolbar" class="row">
 		    <div class="col"></div>
 		    <div class="col">
-		      <div class="btn-group" data-toggle="buttons">
+		      <div id="y-button-group" class="btn-group" data-toggle="buttons">
 			<label class="btn btn-sm btn-info active">
 			  <input type="radio" name="y-value" onchange="Action.setY('relativeAtLeast')" autocomplete="off" checked>
 			  At Least
@@ -116,7 +116,7 @@
 		    </div>
 		    <div class="col"></div>
 		    <div class="col">
-		      <div class="btn-group" data-toggle="buttons">
+		      <div id="centrum-button-group" class="btn-group" data-toggle="buttons">
 			<label class="btn btn-sm btn-info active">
 			  <input type="radio" name="centrum-value" onchange="Action.setCentrum('mean')" autocomplete="off" checked>
 			  Mean

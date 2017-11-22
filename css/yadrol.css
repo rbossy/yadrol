@@ -57,6 +57,10 @@ html {
     margin-bottom: 3mm;
 }
 
+.first-roll-record {
+    margin-top: 11mm;
+}
+
 #sample-records {
 }
 
@@ -70,6 +74,7 @@ html {
 
 #help {
     margin-top: 9mm;
+    margin-bottom: 6mm;
 }
 
 .help-row {

@@ -32,13 +32,13 @@
     margin-bottom: 3mm;
 }
 
-#run-button {
-    margin-top: 3mm;
-}
-
 .output-mode-icon {
     height: 2ex;
     margin-right: 3mm;
+}
+
+#bottom-toolbar {
+    padding-top: 3mm;
 }
 
 #output-container {
@@ -73,4 +73,24 @@
 
 #url-options {
     padding-top: 5mm;
+}
+
+#help {
+    margin-top: 9mm;
+}
+
+.help-row {
+    margin-bottom: 6mm;
+}
+
+.toc-item {
+    cursor: pointer;
+}
+
+.toc-item-selected {
+    font-weight: bold;
+}
+
+.tryit {
+    cursor: pointer;
 }

@@ -1,278 +1,289 @@
 <html>
-  <head>
-    <title>Yadrol test</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/bootstrap-tour.min.css" rel="stylesheet">
-    <link href="css/plottable.css" rel="stylesheet">
-    <link href="css/codemirror.css" rel="stylesheet">
-    <link href="css/yadrol.css" rel="stylesheet">
-    <link href="css/yadrol-editor.css" rel="stylesheet">
-    <script src="lib/yadrol/values.js"></script>
-    <script src="lib/yadrol/yadrol-parser.js"></script>
-    <script src="lib/yadrol/parseutils.js"></script>
-    <script src="lib/yadrol/expressions.js"></script>
-    <script src="lib/jquery-3.2.1.min.js"></script>
-    <script src="lib/yadrol/app.js"></script>
-    <script src="lib/bootstrap.bundle.min.js"></script>
-    <script src="lib/bootstrap-tour.min.js"></script>
-    <script src="lib/svgtypewriter.js"></script>
-    <script src="lib/d3.js"></script>
-    <script src="lib/plottable.min.js"></script>
-    <script src="lib/codemirror.js"></script>
-    <script src="lib/yadrol/main.js"></script>
-  </head>
-  <body>
-    <div class="container-fluid">
-      <div id="header" class="row"> <!-- header -->
-	<div class="col">
-	  <h2 class="float-left">Yadrol <small class="text-muted">Dice roller and dice distribution sampler</small></h2>
-	</div>
-	<div class="col">
-	  <div class="btn-group float-right" role="group">
-	    <button type="button" class="btn btn-light" onclick="Action.startTutorial()">Tutorial</button>
-	    <button type="button" class="btn btn-light" data-toggle="modal" data-target="#settings">Settings</button>
-	    <button type="button" class="btn btn-light" data-toggle="modal" data-target="#about">About</button>
-	  </div>
-	</div>
-      </div>
-
-      <!--- Content -->
-      <div class="row">
-	<div class="col-5">
-	  <div class="container-fluid">
-	    <div id="toolbar" class="row">
-	      <div class="col">
-		<button id="url-button" class="btn btn-sm btn-info" type="button" disabled="true" data-toggle="modal" data-target="#build-url" onclick="Action.updateURL()">
-		  URL
-		</button>
-	      </div>
-	      <div class="col">
-		<div class="dropdown">
-		  <button id="history-button" class="btn btn-sm btn-info dropdown-toggle" type="button" data-toggle="dropdown" disabled="disabled">
-		    History
-		  </button>
-		  <div id="history" class="dropdown-menu">
-		    <!--<a class="dropdown-item" href="#">Action</a>-->
-		  </div>
+<head>
+	<title>Yadrol test</title>
+	<!--<link href="css/bootstrap.min.css" rel="stylesheet">-->
+	<link href="css/themes/minty/bootstrap.min.css" rel="stylesheet">
+	<link href="css/bootstrap-tour.min.css" rel="stylesheet">
+	<link href="css/plottable.css" rel="stylesheet">
+	<link href="css/codemirror.css" rel="stylesheet">
+	<link href="css/yadrol.css" rel="stylesheet">
+	<link href="css/yadrol-editor.css" rel="stylesheet">
+	<script src="lib/yadrol/values.js"></script>
+	<script src="lib/yadrol/yadrol-parser.js"></script>
+	<script src="lib/yadrol/parseutils.js"></script>
+	<script src="lib/yadrol/expressions.js"></script>
+	<script src="lib/jquery-3.2.1.min.js"></script>
+	<script src="lib/yadrol/app.js"></script>
+	<script src="lib/bootstrap.bundle.min.js"></script>
+	<script src="lib/bootstrap-tour.min.js"></script>
+	<script src="lib/svgtypewriter.js"></script>
+	<script src="lib/d3.js"></script>
+	<script src="lib/plottable.min.js"></script>
+	<script src="lib/codemirror.js"></script>
+	<script src="lib/yadrol/main.js"></script>
+</head>
+<body>
+	<div class="container-fluid">
+		<div id="header" class="row">
+			<div class="col">
+				<h2 class="float-left">Yadrol <small class="text-muted">Dice roller and dice distribution sampler</small></h2>
+			</div>
+			<div class="col">
+				<div class="btn-group float-right" role="group">
+					<button type="button" class="btn" onclick="Action.startTutorial()" data-toggle="tooltip" data-placement="bottom" title="Learn to use Yadrol">Tutorial</button>
+					<button type="button" class="btn" data-toggle="modal" data-target="#recipes" data-toggle="tooltip" data-placement="bottom" title="Write themost common mechanisms">Recipes</button>
+					<button type="button" class="btn" data-toggle="modal" data-target="#settings" data-toggle="tooltip" data-placement="bottom" title="Configure Yadrol">Settings</button>
+					<button type="button" class="btn" data-toggle="modal" data-target="#about" data-toggle="tooltip" data-placement="bottom" title="Credits">About</button>
+				</div>
+			</div>
 		</div>
-	      </div>
-	    </div>
-	    <div class="row">
-	      <div class="col">
-		<textarea id="expression-string" class="form-control" placeholder="Expression, e.g. 3d6" rows="7"></textarea>
-	      </div>
-	    </div>
-	    <div class="row">
-	      <div class="col">
-		<div id="run-button" class="btn-group dropdown float-right">
-		  <button id="output-mode" type="button" disabled="true" class="btn btn-success btn-md" onclick="Action.run()">
-		    <img class="output-mode-icon" src="icons/buttons/graph4.svg">
-		    Sample
-		  </button>
-		  <button type="button" class="btn btn-success btn-md dropdown-toggle" data-toggle="dropdown">
-		    <span class="caret"></span>
-		  </button>
-		  <div id="output-modes-menu" class="dropdown-menu">
-		    <a class="dropdown-item" onclick="Action.setMode('roll', true)">
-		      <img class="output-mode-icon" src="icons/buttons/dice3.svg">
-		      Roll
-		    </a>
-		    <a class="dropdown-item" onclick="Action.setMode('sample', true)">
-		      <img class="output-mode-icon" src="icons/buttons/graph4.svg">
-		      Sample
-		    </a>
-		    <a class="dropdown-item" onclick="Action.setMode('advanced', true)">
-		      <img class="output-mode-icon" src="icons/buttons/dice2.svg">
-		      Advanced
-		    </a>
-		  </div>
+
+		<div id="content" class="row">
+			<div class="col-5">
+				<div id="input-container" class="container-fluid">
+					<div id="toolbar" class="row">
+						<div class="col">
+							<button id="url-button" class="btn btn-sm btn-info" type="button" disabled="true" data-toggle="modal" data-target="#build-url" onclick="Action.updateURL()">
+								URL
+							</button>
+						</div>
+						<div class="col">
+							<div class="dropdown">
+								<button id="history-button" class="btn btn-sm btn-info dropdown-toggle" type="button" data-toggle="dropdown" disabled="disabled">
+									History
+								</button>
+								<div id="history" class="dropdown-menu">
+									<!--<a class="dropdown-item" href="#">Action</a>-->
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<textarea id="expression-string" class="form-control" placeholder="Expression, e.g. 3d6" rows="7"></textarea>
+						</div>
+					</div>
+					<div id="bottom-toolbar" class="row">
+						<div class="col">
+							<div class="btn-group" role="group">
+								<button type="button" class="btn btn-sm" onclick="Help.tableofcontents('Recipes', Help.recipesContent)">Recipes</button>
+								<button type="button" class="btn btn-sm" onclick="Help.tableofcontents('Reference', Help.referenceContent)">Reference</button>
+							</div>
+						</div>
+						<div class="col">
+							<div id="run-button" class="btn-group dropdown float-right">
+								<button id="output-mode" type="button" disabled="true" class="btn btn-success btn-md" onclick="Action.run()">
+									<img class="output-mode-icon" src="icons/buttons/graph4.svg">
+									Sample
+								</button>
+								<button type="button" class="btn btn-success btn-md dropdown-toggle" data-toggle="dropdown">
+									<span class="caret"></span>
+								</button>
+								<div id="output-modes-menu" class="dropdown-menu">
+									<a class="dropdown-item" onclick="Action.setMode('roll', true)">
+										<img class="output-mode-icon" src="icons/buttons/dice3.svg">
+										Roll
+									</a>
+									<a class="dropdown-item" onclick="Action.setMode('sample', true)">
+										<img class="output-mode-icon" src="icons/buttons/graph4.svg">
+										Sample
+									</a>
+									<a class="dropdown-item" onclick="Action.setMode('advanced', true)">
+										<img class="output-mode-icon" src="icons/buttons/dice2.svg">
+										Advanced
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-7">
+				<div id="output-container" class="container-fluid">
+					<div class="row">
+						<div class="col">
+							<div id="sample-records" class="container-fluid">
+								<div id="sample-records-toolbar" class="row">
+									<div class="col"></div>
+									<div class="col">
+										<div id="y-button-group" class="btn-group" data-toggle="buttons">
+											<label class="btn btn-sm btn-info active">
+												<input type="radio" name="y-value" onchange="Action.setY('relativeAtLeast')" autocomplete="off" checked>
+												At Least
+											</label>
+											<label class="btn btn-sm btn-info">
+												<input type="radio" name="y-value" onchange="Action.setY('relative')" autocomplete="off">
+												Exact
+											</label>
+											<label class="btn btn-sm btn-info">
+												<input type="radio" name="y-value" onchange="Action.setY('relativeAtMost')" autocomplete="off">
+												At Most
+											</label>
+										</div>
+									</div>
+									<div class="col"></div>
+									<div class="col">
+										<div id="centrum-button-group" class="btn-group" data-toggle="buttons">
+											<label class="btn btn-sm btn-info active">
+												<input type="radio" name="centrum-value" onchange="Action.setCentrum('mean')" autocomplete="off" checked>
+												Mean
+											</label>
+											<label class="btn btn-sm btn-info">
+												<input type="radio" name="centrum-value" onchange="Action.setCentrum('mode')" autocomplete="off">
+												Mode
+											</label>
+											<label class="btn btn-sm btn-info">
+												<input type="radio" name="centrum-value" onchange="Action.setCentrum('median')" autocomplete="off">
+												Median
+											</label>
+										</div>
+									</div>
+									<div class="col"></div>
+								</div>
+								<div class="row">
+									<div class="col">
+										<svg id="sample-records-graph"></svg>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-	<div class="col-7">
-	  <div id="output-container" class="container-fluid">
-	    <div class="row">
-	      <div class="col">
-		<div id="sample-records" class="container-fluid">
-		  <div id="sample-records-toolbar" class="row">
-		    <div class="col"></div>
-		    <div class="col">
-		      <div id="y-button-group" class="btn-group" data-toggle="buttons">
-			<label class="btn btn-sm btn-info active">
-			  <input type="radio" name="y-value" onchange="Action.setY('relativeAtLeast')" autocomplete="off" checked>
-			  At Least
-			</label>
-			<label class="btn btn-sm btn-info">
-			  <input type="radio" name="y-value" onchange="Action.setY('relative')" autocomplete="off">
-			  Exact
-			</label>
-			<label class="btn btn-sm btn-info">
-			  <input type="radio" name="y-value" onchange="Action.setY('relativeAtMost')" autocomplete="off">
-			  At Most
-			</label>
-		      </div>
-		    </div>
-		    <div class="col"></div>
-		    <div class="col">
-		      <div id="centrum-button-group" class="btn-group" data-toggle="buttons">
-			<label class="btn btn-sm btn-info active">
-			  <input type="radio" name="centrum-value" onchange="Action.setCentrum('mean')" autocomplete="off" checked>
-			  Mean
-			</label>
-			<label class="btn btn-sm btn-info">
-			  <input type="radio" name="centrum-value" onchange="Action.setCentrum('mode')" autocomplete="off">
-			  Mode
-			</label>
-			<label class="btn btn-sm btn-info">
-			  <input type="radio" name="centrum-value" onchange="Action.setCentrum('median')" autocomplete="off">
-			  Median
-			</label>
-		      </div>
-		    </div>
-		    <div class="col"></div>
-		  </div>
-		  <div class="row">
-		    <div class="col">
-		      <svg id="sample-records-graph"></svg>
-		    </div>
-		  </div>
+
+		<div id="help" class="row">
+			<div id="help-toc" class="col-3">
+			</div>
+			<div id="help-content" class="col-9">
+			</div>
 		</div>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-      </div>
 
-       <!--- Footer -->
-      <div class="row">
-      </div>
-    </div>
-
-    <!-- URL share -->
-    <div id="build-url" class="modal fade" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-	<div class="modal-content">
-	  <div class="modal-header">
-	    <h3 class="modal-title">Share URL</h3>
-	    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	      <span>&times;</span>
-	    </button>
-	  </div>
-	  <div class="modal-body container-fluid">
-	    <div class="row">
-	      <div class="col">
-		<div class="input-group">
-		  <input id="url" type="text" class="form-control">
-		  <span class="input-group-btn">
-		    <button type="button" class="btn" onclick="Action.copyURL()">
-		      C
-		    </button>
-		  </span>
+		<div id="footer" class="row">
 		</div>
-	      </div>
-	    </div>
-	    <div id="url-options" class="row">
-	      <div class="col">
-	      </div>
-	      <div class="col">
-		<label>
-		  <input id="url-include-mode" type="checkbox" onclick="Action.updateURL()">
-		  Include mode
-		</label>
-	      </div>
-	      <div class="col">
-		<label>
-		  <input id="url-autorun" type="checkbox" onclick="Action.updateURL()">
-		  Autorun
-		</label>
-	      </div>
-	    </div>
-	  </div>
 	</div>
-      </div>
-    </div>
 
-    <!-- About -->
-    <div id="about" class="modal fade" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-	<div class="modal-content">
-	  <div class="modal-header">
-	    <h3 class="modal-title">About Yadrol</h3>
-	    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	      <span>&times;</span>
-	    </button>
-	  </div>
-	  <div class="modal-body container-fluid">
-	    <h4>Version 0.1</h4>
-	    <p>
-	      Made by <a href="mailto:phatonin@gmail.com?subject=[yadrol] ">phatonin</a> during his leisure time.
-	    </p>
-	    <p>
-	      For sources, bug reports, feature requests, see the <a target="_new" href="https://github.com/phatonin/yadrol">GitHub page</a>.
-	    </p>
-	    <hr>
-	    <h4>Icons</h4>
-	    <p>
-	      <img height="17ex" src="icons/buttons/dice2.svg"> by <a target="_new" href="http://www.flaticon.com/authors/nikita-golubev">Nikita Golubev</a> [<a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC 3.0 BY</a>].
-	    </p>
-	    <p>
-	      <img height="17ex" src="icons/buttons/dice3.svg"> by <a target="_new" href="http://www.freepik.com">Freepik</a> [<a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC 3.0 BY</a>].
-	    </p>
-	    <p>
-	      <img height="17ex" src="icons/buttons/graph4.svg"> by <a target="_new" href="http://www.flaticon.com/authors/retinaicons">Retinaicons</a> [<a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC 3.0 BY</a>].
-	    </p>
-	    <p>
-	      <img height="40ex" src="icons/dice/d4.svg"> <img height="40ex" src="icons/dice/d6.svg"> by <a target="_new" href="https://thenounproject.com/DaanDirk/">Daan Dirk</a> [<a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC 3.0 BY</a>].
-	    </p>
-	    <p>
-	      <img height="40ex" src="icons/dice/d8.svg"> <img height="40ex" src="icons/dice/d10.svg"> <img height="40ex" src="icons/dice/d12.svg"> <img height="40ex" src="icons/dice/d20.svg"> by <a target="_new" href="https://thenounproject.com/mvalstar/">Mike Valstar</a> [<a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC 3.0 BY</a>].
-	    </p>
-	    <hr>
-	    <h4>Libraries</h4>
-	    <p>
-	      The Yadrol language parser is generated with <a href="https://zaa.ch/jison/">Jison</a> by <a href="https://github.com/zaach">Zachary Carter</a> [<a href="https://github.com/zaach/jison#license">MIT license</a>]
-	    </p>
-	    <p>
-	      Yadrol uses <a href="https://jquery.com/">jQuery</a> by the <a href="https://jquery.org/team/">jQuery Foundation</a> [<a href="https://jquery.org/license/">MIT license</a>].
-	    </p>
-	    <p>
-	      Layout was made this neat, thanks to <a target="_new" href="http://getbootstrap.com/">Bootstrap</a> by the <a href="https://github.com/orgs/twbs/people">Bootstrap core team</a> [<a href="https://github.com/twbs/bootstrap/blob/master/LICENSE">MIT license</a>].
-	    </p>
-	    <p>
-	      Beautiful charts rendered with <a href="http://plottablejs.org/">Plottable</a> by <a href="https://www.palantir.com/">Palantir Technologies</a> [<a href="https://github.com/palantir/plottable/blob/develop/LICENSE">MIT license</a>] and <a href="https://d3js.org/">d3js</a> by <a href="https://bost.ocks.org/mike/">Mike Bostock</a> [<a href="https://github.com/d3/d3/blob/master/LICENSE">BSD 3-clause license</a>].
-	    </p>
-	    <p>
-	      Tutorial easily built with <a href="http://bootstraptour.com/">Bootstrap Tour</a> by <a href="https://github.com/sorich87">Ulrich Sossou</a> [<a href="https://github.com/sorich87/bootstrap-tour/blob/master/LICENSE">MIT license</a>].
-	    </p>
-	    <p>
-	      The expression editor works out of the box with <a href="http://codemirror.net/">CodeMirror</a> by <a href="https://github.com/marijnh">Marijn Haverbeke</a> [<a href="https://github.com/codemirror/CodeMirror/blob/master/LICENSE">MIT license</a>].
-	  </div>
+	<div id="build-url" class="modal fade" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3 class="modal-title">Share URL</h3>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span>&times;</span>
+					</button>
+				</div>
+				<div class="modal-body container-fluid">
+					<div class="row">
+						<div class="col">
+							<div class="input-group">
+								<input id="url" type="text" class="form-control">
+								<span class="input-group-btn">
+									<button type="button" class="btn" onclick="Action.copyURL()">
+										C
+									</button>
+								</span>
+							</div>
+						</div>
+					</div>
+					<div id="url-options" class="row">
+						<div class="col">
+						</div>
+						<div class="col">
+							<label>
+								<input id="url-include-mode" type="checkbox" onclick="Action.updateURL()">
+								Include mode
+							</label>
+						</div>
+						<div class="col">
+							<label>
+								<input id="url-autorun" type="checkbox" onclick="Action.updateURL()">
+								Autorun
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-      </div>
-    </div>
 
-    <!-- Settings -->
-    <div id="settings" class="modal fade" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-	<div class="modal-content">
-	  <div class="modal-header">
-	    <h3 class="modal-title">Settings</h3>
-	    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	      <span>&times;</span>
-	    </button>
-	  </div>
-	  <div class="modal-body container-fluid">
-	    <div class="row">
-	      <div class="col-md-6">Sample size</div>
-	      <div class="col-md-6">
-		<input id="sample-size" class="form-control" type="number" value="100000" min="1000" max="1000000" step="1000" onchange="Action.setSampleSize()" />
-	      </div>
-	    </div>
-	  </div>
+	<div id="about" class="modal fade" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3 class="modal-title">About Yadrol</h3>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span>&times;</span>
+					</button>
+				</div>
+				<div class="modal-body container-fluid">
+					<h4>Version 0.1</h4>
+					<p>
+						Made by <a href="mailto:phatonin@gmail.com?subject=[yadrol] ">phatonin</a> during his leisure time.
+					</p>
+					<p>
+						For sources, bug reports, feature requests, see the <a target="_new" href="https://github.com/phatonin/yadrol">GitHub page</a>.
+					</p>
+					<hr>
+					<h4>Icons</h4>
+					<p>
+						<img height="17ex" src="icons/buttons/dice2.svg"> by <a target="_new" href="http://www.flaticon.com/authors/nikita-golubev">Nikita Golubev</a> [<a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC 3.0 BY</a>].
+					</p>
+					<p>
+						<img height="17ex" src="icons/buttons/dice3.svg"> by <a target="_new" href="http://www.freepik.com">Freepik</a> [<a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC 3.0 BY</a>].
+					</p>
+					<p>
+						<img height="17ex" src="icons/buttons/graph4.svg"> by <a target="_new" href="http://www.flaticon.com/authors/retinaicons">Retinaicons</a> [<a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC 3.0 BY</a>].
+					</p>
+					<p>
+						<img height="40ex" src="icons/dice/d4.svg"> <img height="40ex" src="icons/dice/d6.svg"> by <a target="_new" href="https://thenounproject.com/DaanDirk/">Daan Dirk</a> [<a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC 3.0 BY</a>].
+					</p>
+					<p>
+						<img height="40ex" src="icons/dice/d8.svg"> <img height="40ex" src="icons/dice/d10.svg"> <img height="40ex" src="icons/dice/d12.svg"> <img height="40ex" src="icons/dice/d20.svg"> by <a target="_new" href="https://thenounproject.com/mvalstar/">Mike Valstar</a> [<a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC 3.0 BY</a>].
+					</p>
+					<hr>
+					<h4>Libraries</h4>
+					<p>
+						The Yadrol language parser is generated with <a href="https://zaa.ch/jison/">Jison</a> by <a href="https://github.com/zaach">Zachary Carter</a> [<a href="https://github.com/zaach/jison#license">MIT license</a>]
+					</p>
+					<p>
+						Yadrol uses <a href="https://jquery.com/">jQuery</a> by the <a href="https://jquery.org/team/">jQuery Foundation</a> [<a href="https://jquery.org/license/">MIT license</a>].
+					</p>
+					<p>
+						Layout was made this neat, thanks to <a target="_new" href="http://getbootstrap.com/">Bootstrap</a> by the <a href="https://github.com/orgs/twbs/people">Bootstrap core team</a> [<a href="https://github.com/twbs/bootstrap/blob/master/LICENSE">MIT license</a>].
+					</p>
+					<p>
+						Beautiful charts rendered with <a href="http://plottablejs.org/">Plottable</a> by <a href="https://www.palantir.com/">Palantir Technologies</a> [<a href="https://github.com/palantir/plottable/blob/develop/LICENSE">MIT license</a>] and <a href="https://d3js.org/">d3js</a> by <a href="https://bost.ocks.org/mike/">Mike Bostock</a> [<a href="https://github.com/d3/d3/blob/master/LICENSE">BSD 3-clause license</a>].
+					</p>
+					<p>
+						Tutorial easily built with <a href="http://bootstraptour.com/">Bootstrap Tour</a> by <a href="https://github.com/sorich87">Ulrich Sossou</a> [<a href="https://github.com/sorich87/bootstrap-tour/blob/master/LICENSE">MIT license</a>].
+					</p>
+					<p>
+						The expression editor works out of the box with <a href="http://codemirror.net/">CodeMirror</a> by <a href="https://github.com/marijnh">Marijn Haverbeke</a> [<a href="https://github.com/codemirror/CodeMirror/blob/master/LICENSE">MIT license</a>].
+					</p>
+				</div>
+			</div>
+		</div>
 	</div>
-      </div>
-    </div>
-  </body>
+
+	<div id="settings" class="modal fade" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3 class="modal-title">Settings</h3>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span>&times;</span>
+					</button>
+				</div>
+				<div class="modal-body container-fluid">
+					<div class="row">
+						<div class="col-md-6">Sample size</div>
+						<div class="col-md-6">
+							<input id="sample-size" class="form-control" type="number" value="100000" min="1000" max="1000000" step="1000" onchange="Action.setSampleSize()" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
 </html>

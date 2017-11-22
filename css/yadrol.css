@@ -54,18 +54,7 @@ html {
 }
 
 .roll-record {
-    border: solid black 1px;
-    border-radius: 0.25rem;
-    margin-bottom: 0.25rem;
-}
-
-.roll-record-name {
-    font-size: 120%;
-}
-
-.roll-record-result {
-    font-size: 200%;
-    margin-top: 3mm;
+    margin-bottom: 3mm;
 }
 
 #sample-records {

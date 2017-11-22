@@ -1,3 +1,7 @@
+html {
+    overflow-y:scroll;
+}
+
 .test-header {
     padding-top: 3mm;
     padding-bottom: 3mm;

@@ -326,11 +326,6 @@ class Action {
 		localStorage.setItem('sample-size', String(n));
 	}
 
-	static startTutorial() {
-		Action.tutorial.init();
-		Action.tutorial.start(true);
-	}
-
 	static initCodeMirror() {
 		CodeMirror.defineMode('yadrol', Action.yadrolMode);
 		Action.codeMirror = CodeMirror.fromTextArea(document.getElementById('expression-string'), {
@@ -420,7 +415,74 @@ Action.modes = {
 		'evaluationType': 'native'
 	},
 };
-Action.tutorial = new Tour({
+
+class Help {
+	static startTutorial() {
+		Help.tutorial.init();
+		Help.tutorial.start(true);
+	}
+
+	static clear() {
+		$('#help-toc').empty();
+		$('#help-content').empty();
+	}
+
+	static hide() {
+		$('#help').hide();
+		Help.clear();
+		Help.current = undefined;
+	}
+
+	static show() {
+		$('#help').show();
+	}
+
+	static tableofcontents(helpTitle, helpContent) {
+		if (Help.current === helpContent) {
+			return;
+		}
+		Help.clear();
+		Help.current = helpContent;
+		var list = $('<ul></ul>');
+		$('#help-toc')
+		.append(
+			$('<div class="card card-primary"></div>')
+			.append(
+				$('<div class="card-header"></div>')
+				.append(
+					$('<button type="button" class="close" onclick="Help.hide()"></button>')
+					.append(
+						$('<span>&times;</span>')
+					),
+					$('<h3></h3>').text(helpTitle)
+				),
+				$('<div class="card-body"></div>')
+				.append(list)
+			)
+		);
+		for (var e of helpContent.entries()) {
+			var index = e[0];
+			var page = e[1];
+			list.append('<li class="toc-item" onclick="Help.page('+index+')">'+page.title+'</li>');
+		}
+		Help.show();
+	}
+
+	static page(index) {
+		$('.toc-item-selected').removeClass('toc-item-selected');
+		$('.toc-item').slice(index, index+1).addClass('toc-item-selected');
+		var page = Help.current[index];
+		var body = page.body();
+		$('#help-content')
+			.empty()
+			.append(
+				$('<div class="container-fluid"></div>').append(
+					body
+				)
+			);
+	}
+}
+Help.tutorial = new Tour({
 	storage: false,
 	onEnd: function(tour) { localStorage.setItem('seen-tutorial', 'true'); },
 	steps: [
@@ -513,68 +575,6 @@ Action.tutorial = new Tour({
 		content: '<p>This is the end of the Yadrol introduction tutorial.</p> <p>You can learn more on the dice expression language by looking at the <a href="">Recipes</a>. You will realize that Yadrol supports a wide range of mechanics (roll and keep, exploding dice, etc).</p> <p>For the bravest, the <a href="">Reference</a> is more comprehensive and will allow you to write original and cutting edge expressions.</p>'
 	}
 	]});
-
-class Help {
-	static clear() {
-		$('#help-toc').empty();
-		$('#help-content').empty();
-	}
-
-	static hide() {
-		$('#help').hide();
-		Help.clear();
-		Help.current = undefined;
-	}
-
-	static show() {
-		$('#help').show();
-	}
-
-	static tableofcontents(helpTitle, helpContent) {
-		if (Help.current === helpContent) {
-			return;
-		}
-		Help.clear();
-		Help.current = helpContent;
-		var list = $('<ul></ul>');
-		$('#help-toc')
-		.append(
-			$('<div class="card card-primary"></div>')
-			.append(
-				$('<div class="card-header"></div>')
-				.append(
-					$('<button type="button" class="close" onclick="Help.hide()"></button>')
-					.append(
-						$('<span>&times;</span>')
-					),
-					$('<h3></h3>').text(helpTitle)
-				),
-				$('<div class="card-body"></div>')
-				.append(list)
-			)
-		);
-		for (var e of helpContent.entries()) {
-			var index = e[0];
-			var page = e[1];
-			list.append('<li class="toc-item" onclick="Help.page('+index+')">'+page.title+'</li>');
-		}
-		Help.show();
-	}
-
-	static page(index) {
-		$('.toc-item-selected').removeClass('toc-item-selected');
-		$('.toc-item').slice(index, index+1).addClass('toc-item-selected');
-		var page = Help.current[index];
-		var body = page.body();
-		$('#help-content')
-			.empty()
-			.append(
-				$('<div class="container-fluid"></div>').append(
-					body
-				)
-			);
-	}
-}
 Help.current = undefined;
 Help.recipesContent = [
 {
@@ -802,7 +802,7 @@ new StartOption('history', [], StartOption.expressionValue, function() {
 });
 new StartOption('seen-tutorial', false, StartOption.booleanValue, function() {
 	if ((!StartOption.urlExpression()) && (!this.finalValue())) {
-		Action.startTutorial();
+		Help.startTutorial();
 	}
 });
 new StartOption('sample-size', 100000, StartOption.numberValue, function() {

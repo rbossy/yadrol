@@ -217,7 +217,7 @@ Help.recipesContent = [
 					Element.card('default', 'World of Darkness', 'Bucketful of dice', Element.tryit('count (for x in 6d10 if x>=7)', 'roll'))
 				),
 				Element.col(
-					Element.card('default', 'Count 1s', 'Because one is glorious', Element.tryit('count (for x in 4d6 if x==1)', 'roll'))
+					Element.card('default', 'Count 1s', 'Because one is glorious', Element.tryit('#(for x in 4d6 if x==1)', 'roll'))
 				)
 			)
 		]
@@ -303,4 +303,143 @@ Help.recipesContent = [
 	}
 }
 ];
-Help.referenceContent = [];
+Help.referenceContent = [
+{
+	title: 'Data types', // undef, bool, str, num, list, map, func
+	body: function() {
+		return [
+			Element.row('help-row',
+				Element.col(
+					Element.card('default', 'Undef', undefined, 'Undef type has a single value: <em>undef</em>.')
+				),
+				Element.col(
+					Element.card('default', 'Boolean', undefined, 'Boolean type has two values: <em>false</em> and <em>true</em>.')
+				),
+				Element.col(
+					Element.card('default', 'String', undefined, 'String values are sequence of Unicode characters.')
+				),
+				Element.col(
+					Element.card('default', 'Number', undefined, 'In Yadrol, numbers are signed integer values.')
+				),
+			),
+			Element.row('help-row',
+				Element.col(
+					Element.card('default', 'List', undefined, 'Lists are ordered collections of values of any type.')
+				),
+				Element.col(
+					Element.card('default', 'Map', undefined, 'Maps are ordered collections of named values of any type.', 'In a map, entry keys are unique.')
+				),
+				Element.col(
+					Element.card('default', 'Function', undefined, 'Functions are expressions that can be called and evaluated with a specific set of parameters.')
+				)
+			)
+		];
+	}
+},
+{
+	title: 'Data conversion', // table
+	body: function() { return ''; }
+},
+{
+	title: 'Operator precedence', // table
+	body: function() { return ''; }
+},
+{
+	title: 'Scoping', // Dynamic, parent scope, spawning
+	body: function() { return ''; }
+},
+{
+	title: 'Comments & whitespace', // ok
+	body: function() { return ''; }
+},
+{
+	title: 'Literals', // undef, bool, str, num
+	body: function() { return ''; }
+},
+{
+	title: 'Constructors', // list, map
+	body: function() { return ''; }
+},
+{
+	title: 'Variables & Scopes', // identifier, scopes
+	body: function() { return ''; }
+},
+{
+	title: 'Lambda & function call', // lambda, call
+	body: function() { return ''; }
+},
+{
+	title: 'Subscript',
+	body: function() { return ''; }
+},
+{
+	title: 'Assignment', // too var, to list, to map, to subscript
+	body: function() { return ''; }
+},
+{
+	title: 'Sequences', // soft/hard
+	body: function() { return ''; }
+},
+{
+	title: 'Conditional', // if then else
+	body: function() { return ''; }
+},
+{
+	title: 'For loops', // 3 forms 
+	body: function() { return ''; }
+},
+{
+	title: 'Repeat loops', // 3 forms, limit
+	body: function() { return ''; }
+},
+{
+	title: 'Boolean operators', // and or not
+	body: function() { return ''; }
+},
+{
+	title: 'Comparison', // numeric, general
+	body: function() { return ''; }
+},
+{
+	title: 'Arithmetic', // binary, unary
+	body: function() { return ''; }
+},
+{
+	title: 'Dice', // number, list, map, function, multiple, identifiers
+	body: function() { return ''; }
+},
+{
+	title: 'Draw', // single multiple
+	body: function() { return ''; }
+},
+{
+	title: 'Best', // single multiple selectors
+	body: function() { return ''; }
+},
+{
+	title: 'List tools', // count append reorder
+	body: function() { return ''; }
+},
+{
+	title: 'Range', // two directions
+	body: function() { return ''; }
+},
+{
+	title: 'Conversion', // conversion
+	body: function() { return ''; }
+},
+{
+	title: 'Output', // roll sample
+	body: function() { return ''; }
+},
+{
+	title: 'Import', // import
+	body: function() { return ''; }
+},
+];
+
+
+
+
+
+

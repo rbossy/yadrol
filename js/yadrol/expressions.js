@@ -1280,9 +1280,15 @@ class Range extends BinaryOperator {
 
 	compute(begin, end) {
 		var result = [];
-		var step = begin <= end ? 1 : -1;
-		for (var i = begin; i != end; i += step) {
-			result.push(i);
+		if (begin <= end) {
+			for (var i = begin; i <= end; ++i) {
+				result.push(i);
+			}			
+		}
+		else {
+			for (var i = begin; i >= end; --i) {
+				result.push(i);
+			}			
 		}
 		return result;
 	}
@@ -1532,43 +1538,43 @@ class Import extends Expression {
 		var ns = this._getNamespace(scope);
 		var mod = this._resolveImport();
 		for (var e of mod) {
-	    ns.set(e[0], e[1]); // XXX overwrite previous value
+			ns.set(e[0], e[1]); /* XXX overwrite previous value */
+		}
 	}
-}
 
-_getNamespace(scope) {
-	if (this.name === undefined) {
+	_getNamespace(scope) {
+		if (this.name === undefined) {
+			return scope.variables;
+		}
+		var vars = scope._lookup(this.name);
+		var result = vars.get(this.name);
+		if (valueType(result) != 'map') {
+			result = new YadrolMap();
+			vars.set(this.name, result); /* XXX overwrite previous value */
+		}
+		return result;
+	}
+
+	_resolveImport() {
+		if (Import.CACHE.has(this.address)) {
+			return Import.CACHE.get(this.address);
+		}
+		var input = this._retrieveInput();
+		var expressions = yadrolParser.parseExpressions(this.address, input);
+		var scope = new Scope();
+		for (var e of expressions) {
+			e.evaluate(scope);
+		}
+		Import.CACHE.set(this.address, scope.variables);
 		return scope.variables;
 	}
-	var vars = scope._lookup(this.name);
-	var result = vars.get(this.name);
-	if (valueType(result) != 'map') {
-		result = new YadrolMap();
-	    vars.set(this.name, result); // XXX overwrite previous value
-	}
-	return result;
-}
 
-_resolveImport() {
-	if (Import.CACHE.has(this.address)) {
-		return Import.CACHE.get(this.address);
+	_retrieveInput() {
+		var xmlHttp = new XMLHttpRequest();
+		xmlHttp.open('GET', this.address, false); /* false for synchronous request */
+		xmlHttp.send(null);
+		return xmlHttp.responseText;
 	}
-	var input = this._retrieveInput();
-	var expressions = yadrolParser.parseExpressions(this.address, input);
-	var scope = new Scope();
-	for (var e of expressions) {
-		e.evaluate(scope);
-	}
-	Import.CACHE.set(this.address, scope.variables);
-	return scope.variables;
-}
-
-_retrieveInput() {
-	var xmlHttp = new XMLHttpRequest();
-	xmlHttp.open('GET', this.address, false); // false for synchronous request
-	xmlHttp.send(null);
-	return xmlHttp.responseText;
-}
 }
 Import.CACHE = new YadrolMap();
 

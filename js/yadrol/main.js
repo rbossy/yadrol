@@ -28,15 +28,16 @@ class Element {
 	}
 
 	static card(klass, title, subtitle, ...content) {
+		var header = $('<div class="card-header bg-'+klass+'"></div>')
+			.append(
+				$('<h5></h5>').text(title)
+			);
+		if (subtitle) {
+			header.append($('<h6></h6>').text(subtitle));
+		}
 		return $('<div class="card border-'+klass+'"></div>')
 			.append(
-				$('<div class="card-header bg-'+klass+'"></div>')
-				.append(
-					$('<h5></h5>').text(title)
-				)
-				.filter(function() { return subtitle; }).append(
-					$('<h6></h6>').text(subtitle)
-				),
+				header,
 				$('<div class="card-body"></div>')
 				.append(
 					content.map(function(e) { if ($(e[0]).is('div')) { return $(e[0]); } return $('<p class="card-text"></p>').append(e); })

@@ -270,11 +270,11 @@ expression
 | expression ASSIGN expression
   { $$ = new Assign(Location.fromLexer(yy.sourceFile, @1, @3), $1, $3); }
 
-| IMPORT STRING
-  { $$ = new Import(Location.fromLexer(yy.sourceFile, @1, @2), $2); }
+| IMPORT STR_START string STR_END
+  { $$ = new Import(Location.fromLexer(yy.sourceFile, @1, @2), new StringInterpolation(Location.fromLexer(yy.sourceFile, @2, @4), $3), undefined, yy.recordLogger); }
 
-| IMPORT IDENTIFIER ASSIGN STRING
-  { $$ = new Import(Location.fromLexer(yy.sourceFile, @1, @4), $4, $2); }
+| IMPORT IDENTIFIER ASSIGN STR_START string STR_END
+  { $$ = new Import(Location.fromLexer(yy.sourceFile, @1, @4), new StringInterpolation(Location.fromLexer(yy.sourceFile, @4, @6), $5), $2, yy.recordLogger); }
 
 | OUTPUT expression
   { $$ = new Output(Location.fromLexer(yy.sourceFile, @1, @2), undefined, $2, yy.recordLogger.defaultType, Output[$1.toUpperCase()], yy.recordLogger); }

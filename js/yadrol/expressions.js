@@ -1528,15 +1528,16 @@ Output.SAMPLE = function(scope) { this.recordLogger.recordSample(this._getName(s
 Output.SAMPLE.symbol = 'sample';
 
 class Import extends Expression {
-	constructor(location, address, name) {
+	constructor(location, address, name, recordLogger) {
 		super(location, Precedence.IMPORT, 'undefined');
 		this.address = address;
 		this.name = name;
+		this.recordLogger = recordLogger;
 	}
 
 	nativeEvaluator(scope) {
 		var ns = this._getNamespace(scope);
-		var mod = this._resolveImport();
+		var mod = this._resolveImport(scope);
 		for (var e of mod) {
 			ns.set(e[0], e[1]); /* XXX overwrite previous value */
 		}
@@ -1555,23 +1556,25 @@ class Import extends Expression {
 		return result;
 	}
 
-	_resolveImport() {
-		if (Import.CACHE.has(this.address)) {
-			return Import.CACHE.get(this.address);
+	_resolveImport(scope) {
+		var address = this.address.evaluate(scope, 'string');
+		if (Import.CACHE.has(address)) {
+			return Import.CACHE.get(address);
 		}
-		var input = this._retrieveInput();
-		var expressions = yadrolParser.parseExpressions(this.address, input);
+		var input = Import._retrieveInput(address);
+		var expressions = yadrolParser.parseExpressions(address, input, this.recordLogger);
 		var scope = new Scope();
 		for (var e of expressions) {
 			e.evaluate(scope);
 		}
-		Import.CACHE.set(this.address, scope.variables);
+		Import.CACHE.set(address, scope.variables);
 		return scope.variables;
 	}
 
-	_retrieveInput() {
+	static _retrieveInput(address) {
+		console.log(address);
 		var xmlHttp = new XMLHttpRequest();
-		xmlHttp.open('GET', this.address, false); /* false for synchronous request */
+		xmlHttp.open('GET', address, false); /* false for synchronous request */
 		xmlHttp.send(null);
 		return xmlHttp.responseText;
 	}

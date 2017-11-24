@@ -51,6 +51,12 @@ class Element {
 		while (true) {
 			var tokId = yadrolParser.lexer.next();
 			if (tokId === false) {
+				if (yadrolParser.lexer.slice(0, 2) === '//') {
+					result.append(
+						$('<span class="cm-COMM"></span>').append(yadrolParser.lexer.yytext)
+					);
+					continue;
+				}
 				result.append(yadrolParser.lexer.yytext.replace('\n', '<br>'));
 				continue;
 			}
@@ -76,7 +82,7 @@ class Element {
 			if (tokId === yadrolParser.symbols_.NUMBER) {
 				result.append(
 					$('<span class="cm-NUM"></span>').append(yadrolParser.lexer.yytext)
-					);
+				);
 				continue;
 			}
 			var tokType = yadrolParser.terminals_[tokId];
@@ -369,6 +375,10 @@ class Action {
 					}
 					this.eatToken(stream);
 					if (tokId === false) {
+						if (yadrolParser.lexer.yytext.slice(0, 2) === '//') {
+							stream.skipToEnd();
+							return 'COMM';
+						}
 						return null;
 					}
 					if (tokId === yadrolParser.symbols_.STR_START) {

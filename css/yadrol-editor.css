@@ -211,8 +211,10 @@
 }
 
 .cm-STR {
-    font-style: italic;
-    color: #888888;
+    color: #0A45B2;
 }
 
-
+.cm-COMM {
+    color: #888888;
+    font-style: italic;
+}

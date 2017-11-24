@@ -6,7 +6,7 @@
 
 <<EOF>>		return 'EOF';
 \s+		/* skip */
-"#".*$		/* skip */
+"//".*$		/* skip */
 [-]{3,}		return 'BREAK';
 ";"		return 'SEMICOLON';
 "import"	return 'IMPORT';
@@ -22,6 +22,7 @@
 "limit"		return 'LIMIT';
 "in"		return 'IN';
 "count"		return 'COUNT';
+"#"       return 'COUNT';
 "string"	return 'CONVERT';
 "boolean"	return 'CONVERT';
 "number"	return 'CONVERT';

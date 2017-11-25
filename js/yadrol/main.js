@@ -254,6 +254,9 @@ class Action {
 	}
 
 	static setExpressionString(expr) {
+		if (this instanceof HTMLElement) {
+			expr = this.textContent;
+		}
 		if (expr.trim() !== '') {
 			Action.codeMirror.setValue(expr);
 		}
@@ -274,14 +277,42 @@ class Action {
 		SamplesCharter.clear();
 	}
 
+	static historyExpressions() {
+		return $('#history > span');
+	}
+
+	static findInHistory(expr) {
+		return Action.historyExpressions().children('span:first-child').filter(function(_index, e) { return e.textContent === expr; }).parent();
+	}
+
 	static addToHistory(expr) {
-		var prev = $('#history').children('a').filter(function(_index, e) { return e.textContent == expr; });
-		if (prev.length > 0) {
+		console.log(Action.findInHistory());
+		if (Action.findInHistory(expr).length > 0) {
 			return;
 		}
-		$('#history').prepend('<a class="dropdown-item" onclick="Action.setExpressionString(\''+expr+'\')">'+expr+'</a>');
+		$('#history').prepend(
+			$('<span class="dropdown-item"></span>').append(
+				$('<span class="history-button"></span>')
+				.click(Action.setExpressionString)
+				.text(expr),
+				$('<span class="history-button float-right">&times;<span>')
+				.click(Action.removeFromHistory)
+			)
+		);
 		$('#history-button').attr('disabled', false);
-		var historyList = $('#history > a').toArray().map(function(e) { return new Constant(Location.NONE, e.textContent); });
+		Action.updateLocalStorageHistory();
+	}
+
+	static removeFromHistory() {
+		$(this).parent().remove();
+		if (Action.historyExpressions().length === 0) {
+			$('#history-button').attr('disabled', true);
+		}
+		Action.updateLocalStorageHistory();
+	}
+
+	static updateLocalStorageHistory() {
+		var historyList = Action.historyExpressions().children('span:first-child').toArray().map(function(e) { return new Constant(Location.NONE, e.textContent); });
 		localStorage.setItem('history', new ContainerConstructor(Location.NONE, historyList, 'list').toString());
 	}
 

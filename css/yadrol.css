@@ -36,6 +36,10 @@ html {
     margin-bottom: 3mm;
 }
 
+.history-button {
+    cursor: pointer;
+}
+
 .output-mode-icon {
     height: 2ex;
     margin-right: 3mm;

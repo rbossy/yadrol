@@ -151,10 +151,17 @@ Help.tutorial = new Tour({
 		placement: 'right'
 	},
 	{
+		element: "#help-buttons",
+		backdrop: true,
+		title: "Help!",
+		content: "<p>These buttons show help pages. <em>Recipes</em> are expressions for the most used mechanics, and <em>Reference</em> contains all Yadrol constructs.</p>",
+		placement: 'right'
+	},
+	{
 		orphan: true,
 		backdrop: true,
 		title: "That's it! And now?",
-		content: '<p>This is the end of the Yadrol introduction tutorial.</p> <p>You can learn more on the dice expression language by looking at the <a href="">Recipes</a>. You will realize that Yadrol supports a wide range of mechanics (roll and keep, exploding dice, etc).</p> <p>For the bravest, the <a href="">Reference</a> is more comprehensive and will allow you to write original and cutting edge expressions.</p>'
+		content: '<p>This is the end of the Yadrol introduction tutorial.</p> <p><strong>Enjoy!</strong></p>'
 	}
 	]});
 Help.current = undefined;
@@ -305,7 +312,7 @@ Help.recipesContent = [
 ];
 Help.referenceContent = [
 {
-	title: 'Data types', // undef, bool, str, num, list, map, func
+	title: 'Data types, literals and costructors', // undef, bool, str, num, list, map, func
 	body: function() {
 		return [
 			Element.row('help-row',

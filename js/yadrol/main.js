@@ -45,8 +45,8 @@ class Element {
 			);
 	}
 
-	static tryit(input, mode) {
-		var result = $('<code class="tryit"></code>');
+	static tryit(input, mode, klass) {
+		var result = $('<code class="tryit '+(klass ? klass : '')+'"></code>');
 		yadrolParser.lexer.setInput(input);
 		var inString = false;
 		while (true) {
@@ -282,7 +282,7 @@ class Action {
 	}
 
 	static findInHistory(expr) {
-		return Action.historyExpressions().children('span:first-child').filter(function(_index, e) { return e.textContent === expr; }).parent();
+		return Action.historyExpressions().children('code').filter(function(_index, e) { return e.textContent === expr; }).parent();
 	}
 
 	static addToHistory(expr) {
@@ -291,9 +291,7 @@ class Action {
 		}
 		$('#history').prepend(
 			$('<span class="dropdown-item"></span>').append(
-				$('<span class="history-button"></span>')
-				.click(Action.setExpressionString)
-				.text(expr),
+				Element.tryit(expr),
 				$('<span class="history-button float-right">&times;<span>')
 				.click(Action.removeFromHistory)
 			)
@@ -311,7 +309,7 @@ class Action {
 	}
 
 	static updateLocalStorageHistory() {
-		var historyList = Action.historyExpressions().children('span:first-child').toArray().map(function(e) { return new Constant(Location.NONE, e.textContent); });
+		var historyList = Action.historyExpressions().children('code').toArray().map(function(e) { return new Constant(Location.NONE, e.textContent); });
 		localStorage.setItem('history', new ContainerConstructor(Location.NONE, historyList, 'list').toString());
 	}
 

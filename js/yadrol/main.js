@@ -286,7 +286,6 @@ class Action {
 	}
 
 	static addToHistory(expr) {
-		console.log(Action.findInHistory());
 		if (Action.findInHistory(expr).length > 0) {
 			return;
 		}

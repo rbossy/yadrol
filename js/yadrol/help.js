@@ -63,6 +63,10 @@ class Help {
 				)
 			);
 	}
+
+	static placeholder(placeholder, body) {
+		return Element.highlight('$'+placeholder+'$').add($('<span> is </span>')).add(Element.highlight(body));
+	}
 }
 Help.tutorial = new Tour({
 	storage: false,
@@ -312,32 +316,51 @@ Help.recipesContent = [
 ];
 Help.referenceContent = [
 {
-	title: 'Data types, literals and costructors', // undef, bool, str, num, list, map, func
+	title: 'Data types, literals and constructors', // undef, bool, str, num, list, map, func
 	body: function() {
 		return [
 			Element.row('help-row',
 				Element.col(
-					Element.card('default', 'Undef', undefined, 'Undef type has a single value: <em>undef</em>.')
+					Element.card('default', 'Undef', undefined,
+						Element.highlight('undef'),
+						'Undef type has a single value: <em>undef</em>.')
 				),
 				Element.col(
-					Element.card('default', 'Boolean', undefined, 'Boolean type has two values: <em>false</em> and <em>true</em>.')
+					Element.card('default', 'Boolean', undefined,
+						Element.highlight('false'),
+						Element.highlight('true'),
+						'Boolean type has two values: <em>false</em> and <em>true</em>.')
 				),
 				Element.col(
-					Element.card('default', 'String', undefined, 'String values are sequence of Unicode characters.')
+					Element.card('default', 'String', undefined,
+						Element.highlight('"..."'),
+						'String values are sequence of Unicode characters.')
 				),
 				Element.col(
-					Element.card('default', 'Number', undefined, 'In Yadrol, numbers are signed integer values.')
+					Element.card('default', 'Number', undefined,
+					 	$('<code class="cm-NUM">[+-]?[0-9]+</code>'),
+						'In Yadrol, numbers are signed integer values.')
 				),
 			),
 			Element.row('help-row',
 				Element.col(
-					Element.card('default', 'List', undefined, 'Lists are ordered collections of values of any type.')
+					Element.card('default', 'List', undefined,
+						Element.highlight('[ $expr$, $expr$, $...$ ]'),
+						'Lists are ordered collections of expressions of any type.')
 				),
 				Element.col(
-					Element.card('default', 'Map', undefined, 'Maps are ordered collections of named values of any type.', 'In a map, entry keys are unique.')
+					Element.card('default', 'Map', undefined, 
+						Element.highlight('{ name: $expr$, name: $expr$, $...$ }'),
+						'Maps are ordered collections of named expressions of any type.', 'In a map, entry keys are unique.')
 				),
+			),
+			Element.row('help-row',
 				Element.col(
-					Element.card('default', 'Function', undefined, 'Functions are expressions that can be called and evaluated with a specific set of parameters.')
+					Element.card('default', 'Function', undefined,
+						Element.highlight('fun ($posargs$, $namedargs$) { $expr$ }'),
+						Help.placeholder('posargs', '$expr$, $expr$, $...$'),
+						Help.placeholder('namedargs', 'name: $expr$, name: $expr$, $...$'),
+						'Functions are expressions that can be called and evaluated with a specific set of parameters.')
 				)
 			)
 		];

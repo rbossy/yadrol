@@ -45,14 +45,17 @@ class Element {
 			);
 	}
 
-	static tryit(input, mode, klass) {
-		var result = $('<code class="tryit '+(klass ? klass : '')+'"></code>');
+	static highlight(input, klass) {
+		var result = $('<code></code>');
+		if (klass) {
+			result.addClass(klass);
+		}
 		yadrolParser.lexer.setInput(input);
 		var inString = false;
 		while (true) {
 			var tokId = yadrolParser.lexer.next();
 			if (tokId === false) {
-				if (yadrolParser.lexer.slice(0, 2) === '//') {
+				if (yadrolParser.lexer.yytext.slice(0, 2) === '//') {
 					result.append(
 						$('<span class="cm-COMM"></span>').append(yadrolParser.lexer.yytext)
 					);
@@ -86,11 +89,22 @@ class Element {
 				);
 				continue;
 			}
+			if (tokId === yadrolParser.symbols_.PLACEHOLDER) {
+				result.append(
+					$('<span class="cm-PLACEHOLDER"></span>').append(yadrolParser.lexer.yytext.slice(1, yadrolParser.lexer.yytext.length - 1))
+				);
+				continue;
+			}
 			var tokType = yadrolParser.terminals_[tokId];
 			result.append(
 				$('<span class="cm-'+tokType+'"></span>').append(yadrolParser.lexer.yytext)
 				);
 		}
+		return result;
+	}
+
+	static tryit(input, mode) {
+		var result = Element.highlight(input, 'tryit');
 		result.on('click', function() {
 			Action.setExpressionString(input);
 			if (Action.modes.hasOwnProperty(mode)) {

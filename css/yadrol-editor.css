@@ -218,3 +218,8 @@
     color: #888888;
     font-style: italic;
 }
+
+.cm-PLACEHOLDER {
+    font-style: italic;
+    text-decoration: underline;
+}

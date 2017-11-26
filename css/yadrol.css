@@ -96,3 +96,7 @@ html {
 .tryit {
     cursor: pointer;
 }
+
+code {
+    color: black;
+}

@@ -7,6 +7,7 @@
 <<EOF>>		return 'EOF';
 \s+		/* skip */
 "//".*$		/* skip */
+\$[^\$]+\$ return 'PLACEHOLDER';
 [-]{3,}		return 'BREAK';
 ";"		return 'SEMICOLON';
 "import"	return 'IMPORT';
@@ -374,4 +375,8 @@ stringElement
 | STR_LCURLY { $$ = new Constant(Location.fromLexer(yy.sourceFile, @1), '{'); }
 | STR_VAR { $$ = new Variable(Location.fromLexer(yy.sourceFile, @1), $1.slice(1, $1.length - 1)); }
 | STR_CONST { $$ = new Constant(Location.fromLexer(yy.sourceFile, @1), $1); }
+;
+
+placeholder
+: PLACEHOLDER
 ;

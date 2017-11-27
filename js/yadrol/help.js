@@ -559,7 +559,7 @@ Help.referenceContent = [
 	}
 },
 {
-	title: 'Scoping', // Dynamic, parent scope, spawning
+	title: 'Scoping',
 	body: function() {
 		return [
 			Element.row('help-row',
@@ -576,6 +576,8 @@ Help.referenceContent = [
 						'Assignment works the same way: the value is assigned to the variable in the innermost scope where the variable name was defined.',
 					)
 				),
+			),
+			Element.row('help-row',
 				Element.col(
 					Element.card('default', 'Spawning scopes', undefined,
 						'Scopes are spawned in the following constructs:',
@@ -591,23 +593,32 @@ Help.referenceContent = [
 	}
 },
 {
-	title: 'Comments & whitespace', // ok
+	title: 'Whitespace & comments',
+	body: function() {
+		return [
+			Element.row('help-row',
+				Element.col(
+					Element.card('default', 'Whitespaces', 'don\'t count',
+						'Whitespaces always terminate a token.',
+						'All whitespace characters are equivalent: there is no difference between a space and a newline.'
+					)
+				),
+				Element.col(
+					Element.card('default', 'Comments', undefined,
+						Element.highlight('// this is a comment'),
+						'Comments run until the end of the line.'
+					)
+				)
+			)
+		];
+	}
+},
+{
+	title: 'Variables', // identifier
 	body: function() { return ''; }
 },
 {
-	title: 'Literals', // undef, bool, str, num
-	body: function() { return ''; }
-},
-{
-	title: 'Constructors', // list, map
-	body: function() { return ''; }
-},
-{
-	title: 'Variables & Scopes', // identifier, scopes
-	body: function() { return ''; }
-},
-{
-	title: 'Lambda & function call', // lambda, call
+	title: 'Function call', // call
 	body: function() { return ''; }
 },
 {

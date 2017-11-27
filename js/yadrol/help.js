@@ -316,7 +316,7 @@ Help.recipesContent = [
 ];
 Help.referenceContent = [
 {
-	title: 'Data types, literals and constructors', // undef, bool, str, num, list, map, func
+	title: 'Data types, literals and constructors',
 	body: function() {
 		return [
 			Element.row('help-row',
@@ -374,7 +374,7 @@ Help.referenceContent = [
 	}
 },
 {
-	title: 'Data conversion', // table
+	title: 'Data conversion',
 	body: function() {
 		return [
 			Element.row('help-row',
@@ -458,8 +458,105 @@ Help.referenceContent = [
 	}
 },
 {
-	title: 'Operator precedence', // table
-	body: function() { return ''; }
+	title: 'Operator precedence',
+	body: function() {
+		return [
+			Element.row('help-row',
+				Element.col(
+					$('<table class="table table-bordered table-hover"></table>').append(
+						$('<thead class="thead-light"></thead>').append(
+							Element.tr(
+								Element.th('Operators'),
+								Element.th('associativity')
+							)
+						),
+						$('<tbody></tbody>').append(
+							Element.tr(
+								Element.td(Element.highlight('---')),
+								Element.td('left')
+							),
+							Element.tr(
+								Element.td(Element.highlight(';')),
+								Element.td('left')
+							),
+							Element.tr(
+								Element.td(Element.highlight('import roll sample as')),
+								Element.td('no')
+							),
+							Element.tr(
+								Element.td(Element.highlight('=')),
+								Element.td('no')
+							),
+							Element.tr(
+								Element.td(Element.highlight('if while limit for')),
+								Element.td('no')
+							),
+							Element.tr(
+								Element.td(Element.highlight('or')),
+								Element.td('left')
+							),
+							Element.tr(
+								Element.td(Element.highlight('and')),
+								Element.td('left')
+							),
+							Element.tr(
+								Element.td(Element.highlight('not')),
+								Element.td('left')
+							),
+							Element.tr(
+								Element.td(Element.highlight('=== !== == != < > <= >=')),
+								Element.td('no')
+							),
+							Element.tr(
+								Element.td(Element.highlight('in')),
+								Element.td('no')
+							),
+							Element.tr(
+								Element.td(Element.highlight('<<')),
+								Element.td('no')
+							),
+							Element.tr(
+								Element.td(Element.highlight('..')),
+								Element.td('no')
+							),
+							Element.tr(
+								Element.td(Element.highlight('+ -')),
+								Element.td('left')
+							),
+							Element.tr(
+								Element.td(Element.highlight('* / %')),
+								Element.td('left')
+							),
+							Element.tr(
+								Element.td(Element.highlight('+ - $(unary)$')),
+								Element.td('no')
+							),
+							Element.tr(
+								Element.td(Element.highlight('highest lowest first last')),
+								Element.td('no')
+							),
+							Element.tr(
+								Element.td(Element.highlight('draw')),
+								Element.td('no')
+							),
+							Element.tr(
+								Element.td(Element.highlight('d')),
+								Element.td('left')
+							),
+							Element.tr(
+								Element.td(Element.highlight('# sorted shuffled reversed boolean string number list map')),
+								Element.td('no')
+							),
+							Element.tr(
+								Element.td(Element.highlight('() $(call)$ . [] $(subscript)$')),
+								Element.td('left')
+							),
+						)
+					)
+				)
+			)
+		]
+	}
 },
 {
 	title: 'Scoping', // Dynamic, parent scope, spawning

@@ -323,44 +323,51 @@ Help.referenceContent = [
 				Element.col(
 					Element.card('default', 'Undef', undefined,
 						Element.highlight('undef'),
-						'Undef type has a single value: <em>undef</em>.')
+						'Undef type has a single value: <em>undef</em>.'
+					)
 				),
 				Element.col(
 					Element.card('default', 'Boolean', undefined,
 						Element.highlight('false'),
 						Element.highlight('true'),
-						'Boolean type has two values: <em>false</em> and <em>true</em>.')
+						'Boolean type has two values: <em>false</em> and <em>true</em>.'
+					)
 				),
 				Element.col(
 					Element.card('default', 'String', undefined,
 						Element.highlight('"..."'),
-						'String values are sequence of Unicode characters.')
+						'String values are sequence of Unicode characters.'
+					)
 				),
 				Element.col(
 					Element.card('default', 'Number', undefined,
 					 	$('<code class="cm-NUM">[+-]?[0-9]+</code>'),
-						'In Yadrol, numbers are signed integer values.')
+						'In Yadrol, numbers are signed integer values.'
+					)
 				),
 			),
 			Element.row('help-row',
 				Element.col(
 					Element.card('default', 'List', undefined,
 						Element.highlight('[ $expr$, $expr$, $...$ ]'),
-						'Lists are ordered collections of expressions of any type.')
+						'Lists are ordered collections of expressions of any type.'
+					)
 				),
 				Element.col(
 					Element.card('default', 'Map', undefined, 
 						Element.highlight('{ name: $expr$, name: $expr$, $...$ }'),
-						'Maps are ordered collections of named expressions of any type.', 'In a map, entry keys are unique.')
+						'Maps are ordered collections of named expressions of any type.', 'In a map, entry keys are unique.'
+					)
 				),
 			),
 			Element.row('help-row',
 				Element.col(
 					Element.card('default', 'Function', undefined,
-						Element.highlight('fun ($posargs$, $namedargs$) { $expr$ }'),
-						Help.placeholder('posargs', '$expr$, $expr$, $...$'),
-						Help.placeholder('namedargs', 'name: $expr$, name: $expr$, $...$'),
-						'Functions are expressions that can be called and evaluated with a specific set of parameters.')
+						Element.highlight('fun (name: $value$, name: $value$, $...$) { $body$ }'),
+						'Functions are expressions that can be called and evaluated with a specific set of parameters.',
+						'Function expressions are also referred as <em>lambda</em> expressions.',
+						'Each argument is composed of an identifier that specifies its name, and the default value. The default value is optional. If the default vaue is specified, then it must be separated from the name with a colon.'
+					)
 				)
 			)
 		];
@@ -368,7 +375,87 @@ Help.referenceContent = [
 },
 {
 	title: 'Data conversion', // table
-	body: function() { return ''; }
+	body: function() {
+		return [
+			Element.row('help-row',
+				Element.col(
+					$('<table class="table table-bordered table-hover"></table>').append(
+						$('<thead class="thead-light"></thead>').append(
+							Element.tr(
+								Element.th('from \\ to'),
+								Element.th('string'),
+								Element.th('boolean'),
+								Element.th('number'),
+								Element.th('list'),
+								Element.th('map'),
+								Element.th('function')
+							)
+						),
+						$('<tbody></tbody>').append(
+							Element.tr(
+								Element.th('undef'),
+								Element.td(Element.highlight('""')),
+								Element.td(Element.highlight('false')),
+								Element.td(Element.highlight('0')),
+								Element.td(Element.highlight('[]')),
+								Element.td(Element.highlight('{}')),
+								Element.td(Element.highlight('fun () { undef }'))
+							),
+							Element.tr(
+								Element.th('string'),
+								Element.td(),
+								Element.td(Element.highlight('$str$ != ""')),
+								Element.td('Base 10, or zero'),
+								Element.td(Element.highlight('[ $str$ ]')),
+								Element.td(Element.highlight('{ _ : $str$ }')),
+								Element.td(Element.highlight('fun () { $str$ }'))
+							),
+							Element.tr(
+								Element.th('boolean'),
+								Element.td(Element.highlight('if $bool$ then "true" else ""')),
+								Element.td(),
+								Element.td(Element.highlight('if $bool$ then 1 else 0')),
+								Element.td(Element.highlight('[ $bool$ ]')),
+								Element.td(Element.highlight('{ _ : $bool$ }')),
+								Element.td(Element.highlight('fun () { $bool$ }'))
+							),
+							Element.tr(
+								Element.th('number'),
+								Element.td('Base 10'),
+								Element.td(Element.highlight('$num != 0$')),
+								Element.td(),
+								Element.td(Element.highlight('[ $num$ ]')),
+								Element.td(Element.highlight('{ _ : $num$ }')),
+								Element.td(Element.highlight('fun () { $num$ }'))
+							),
+							Element.tr(
+								Element.th('list'),
+								Element.td('Concatenation'),
+								Element.td(Element.highlight('#$lst$ > 0')),
+								Element.td('Sum'),
+								Element.td(),
+								Element.td(Element.highlight('{ _0 : $lst$[0] , _1 : $lst$[1] , $...$ }')),
+								Element.td(Element.highlight('fun () { $lst$ }'))
+							),
+							Element.tr(
+								Element.th('map'),
+								Element.td('Concatenation of values'),
+								Element.td(Element.highlight('#$map$ > 0')),
+								Element.td('Sum of values'),
+								Element.td('List of values'),
+								Element.td(),
+								Element.td(Element.highlight('fun () { $map$ }'))
+							),
+							Element.tr(
+								Element.th('function'),
+								Element.td('Call function without argument and convert the result').attr('colspan', 6),
+							)
+						)
+					)
+				)
+			)
+		]
+	}
 },
 {
 	title: 'Operator precedence', // table

@@ -321,7 +321,7 @@ ValueConverter.CONVERTER = {
 		'boolean': function(scope, value) { return value.length != 0; },
 		'number': ValueConverter._sumContainer(0, 'number'),
 		'list': ValueConverter._convertToSelf,
-		'map': function(scope, value) { return new YadrolMap(value.map(function(x, i) { return [String(i), x]; })); },
+		'map': function(scope, value) { return new YadrolMap(value.map(function(x, i) { return ['_' + String(i), x]; })); },
 		'function': ValueConverter._toFunctionConverter('list')
 	},
 	'map': {

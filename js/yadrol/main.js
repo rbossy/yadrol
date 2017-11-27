@@ -27,6 +27,18 @@ class Element {
 		return $('<div class="col"></div>').append(args);
 	}
 
+	static tr(...args) {
+		return $('<tr></tr>').append(args);
+	}
+
+	static td(...contents) {
+		return $('<td></td>').append(contents);
+	}
+
+	static th(...contents) {
+		return $('<th></th>').append(contents);
+	}
+
 	static card(klass, title, subtitle, ...content) {
 		var header = $('<div class="card-header bg-'+klass+'"></div>')
 			.append(

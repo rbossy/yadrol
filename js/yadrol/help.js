@@ -560,7 +560,35 @@ Help.referenceContent = [
 },
 {
 	title: 'Scoping', // Dynamic, parent scope, spawning
-	body: function() { return ''; }
+	body: function() {
+		return [
+			Element.row('help-row',
+				Element.col(
+					Element.card('default', 'Dynamic scoping', undefined,
+						'Variables need not to be declared, they are declared within the scope of their first assignment.',
+						'Function and loop scopes are dynamic: the scope is created at runtime.'
+					)
+				),
+				Element.col(
+					Element.card('default', 'Parent scope', undefined,
+						'Variable values are searched within the current scope. If no variable of the specified name was found, then it is searched in the current\'s scope parent scope. The scope parents are searched until the global scope (which has no parent) is reached.',
+						'If no variabe is found in the global scope, then its value is undef.',
+						'Assignment works the same way: the value is assigned to the variable in the innermost scope where the variable name was defined.',
+					)
+				),
+				Element.col(
+					Element.card('default', 'Spawning scopes', undefined,
+						'Scopes are spawned in the following constructs:',
+						$('<ul></ul>').append(
+							$('<li></li>').html('<strong>Function call</strong>: a function body is evaluated in its own scope, arguments are set in this scope, the parent scope is the scope where the lambda was evaluated.'),
+							$('<li></li>').html('<strong>Loops</strong>: loop bodies and conditions are evaluated in their own scope, the loop variable (for-loops) is set in this scope, the parent scope is the scope where the loop was initiated.'),
+							$('<li></li>').html('<strong>Import</strong>: imported files are evaluated in their own scope, this scope has no parent.'),
+						)
+					)
+				)
+			)
+		];
+	}
 },
 {
 	title: 'Comments & whitespace', // ok

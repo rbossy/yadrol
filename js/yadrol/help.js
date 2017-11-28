@@ -65,7 +65,7 @@ class Help {
 	}
 
 	static placeholder(placeholder, body) {
-		return Element.highlight('$'+placeholder+'$').add($('<span> is </span>')).add(Element.highlight(body));
+		return Element.highlight('$'+placeholder+'$').add($('<span> is </span>')).add(((typeof body) === 'strig') ? $('<p></p>').html(body) : body);
 	}
 }
 Help.tutorial = new Tour({
@@ -581,10 +581,10 @@ Help.referenceContent = [
 				Element.col(
 					Element.card('default', 'Spawning scopes', undefined,
 						'Scopes are spawned in the following constructs:',
-						$('<ul></ul>').append(
-							$('<li></li>').html('<strong>Function call</strong>: a function body is evaluated in its own scope, arguments are set in this scope, the parent scope is the scope where the lambda was evaluated.'),
-							$('<li></li>').html('<strong>Loops</strong>: loop bodies and conditions are evaluated in their own scope, the loop variable (for-loops) is set in this scope, the parent scope is the scope where the loop was initiated.'),
-							$('<li></li>').html('<strong>Import</strong>: imported files are evaluated in their own scope, this scope has no parent.'),
+						Element.ul(
+							'<strong>Function call</strong>: a function body is evaluated in its own scope, arguments are set in this scope, the parent scope is the scope where the lambda was evaluated.',
+							'<strong>Loops</strong>: loop bodies and conditions are evaluated in their own scope, the loop variable (for-loops) is set in this scope, the parent scope is the scope where the loop was initiated.',
+							'<strong>Import</strong>: imported files are evaluated in their own scope, this scope has no parent.',
 						)
 					)
 				)
@@ -614,20 +614,111 @@ Help.referenceContent = [
 	}
 },
 {
-	title: 'Variables', // identifier
-	body: function() { return ''; }
+	title: 'Identifiers & Variables',
+	body: function() {
+		return [
+			Element.row('help-row',
+				Element.col(
+					Element.card('default', 'Identifiers', undefined,
+						Element.highlight('$[A-Z_a-z][0-9A-Z_a-z]*$'),
+						'Identifiers are used in the following constructs:',
+						Element.ul(
+							'Variable names.',
+							'Entry key in map constructor.',
+							'Argument name in lambda expression.',
+							'Argument name in call expression.',
+							'Subscript when using the dot.'
+						)
+					)
+				),
+				Element.col(
+					Element.card('default', 'Variables', undefined,
+						Element.highlight('name'),
+						'A variable is named with an identifier.',
+						'The value returned is that of the innermost scope that contains a value for a variable of the specified name. If none is found, then undef.'
+					)
+				)	
+			)
+		];
+	}
 },
 {
-	title: 'Function call', // call
-	body: function() { return ''; }
+	title: 'Function call',
+	body: function() {
+		return [
+			Element.row('help-row',
+				Element.col(
+					Element.card('default', 'Function call', undefined,
+						Element.highlight('$fun_expr$ ( $pos_args$ , $named_args$ )'),
+						Help.placeholder('fun_expr', 'an expression evluated as a function'),
+						Help.placeholder('pos_args', Element.highlight('$expr$ , $expr$ , $...$')),
+						Help.placeholder('named_args', Element.highlight('name : $expr$ , name : $expr$ , $...$')),
+						'Evaluates the body of the function with the specified argument.',
+						'The positional arguments are first set to the variables in the function scope named after the function definition.',
+						'Then named arguments are set in the function scope.'
+					)
+				)
+			)
+		];
+	}
 },
 {
 	title: 'Subscript',
-	body: function() { return ''; }
+	body: function() {
+		return [
+			Element.row('help-row',
+				Element.col(
+					Element.card('default', 'Bracket form', undefined,
+						Element.highlight('$container$ [ $sub$ ]'),
+						'Evaluates <em>container</em> and <em>sub</em>, then returns the part of <em>container</em> specified by <em>sub</em>.',
+						'The part depends on the type of <em>sub</em>:',
+						Element.ul(
+							'<strong>number</strong>: <em>container</em> must be a list. The subscript returns the elemet at the index specified by <em>sub</em> (starting at zero). If the index is negative, then the index is counted starting by the end. If the index is out of the list boundaries, then the subscript returns undef.',
+							'<strong>string</strong>: <em>container</em> must be a map. The suscript is the entry with the specified name. If there is no entry with this name, then undef.',
+							'<strong>list</strong>: returns a list of the same size, each element is the subscript result of the corresponding subsript item.',
+							'<strong>map</strong>: returns a map with the same keys, each value is the subscript result of the corresponding subscript entry.'
+						),
+						'A subscript of type undef, boolean or function is an error.'
+					)
+				),
+				Element.col(
+					Element.card('default', 'Dot form', undefined,
+						Element.highlight('$container$ . name'),
+						'This is equivalent to:',
+						Element.highlight('$container$ [ "name" ]')
+					)
+				)
+			)
+		]
+	}
 },
 {
-	title: 'Assignment', // too var, to list, to map, to subscript
-	body: function() { return ''; }
+	title: 'Assignment',
+	body: function() {
+		return [
+			Element.row('help-row',
+				Element.col(
+					Element.card('default', 'Assign to variable', undefined,
+						Element.highlight('name = $rvalue$'),
+						'Evaluates <em>rvalue</em> and set the variable to the result.',
+						'If the variable is already set in the current scope or in one of its parents, then the variable is overwritten. Otherwise the value is set to the variable in the current scope.'
+					)
+				),
+				Element.col(
+					Element.card('default', 'Assign to list constructor', undefined,
+						Element.highlight('[ $expr$ , $expr$ , $...$ ] = $rvalue$'),
+						'Evaluates <em>rvalue</em> as a list then assign each item of the result to the corresponding <em>expr</em> in the list constructor.'
+					)
+				),
+				Element.col(
+					Element.card('default', 'Assign to map constructor', undefined,
+						Element.highlight('{ name : $expr$ , name : $expr$ , $...$ } = $rvalue$'),
+						'Evaluates <em>rvalue</em> as a map then assign each entry of the result to the corresponding <em>expr</em> in the map constructor.'
+					)
+				)
+			)
+		]
+	}
 },
 {
 	title: 'Sequences', // soft/hard

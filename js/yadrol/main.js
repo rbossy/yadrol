@@ -39,6 +39,10 @@ class Element {
 		return $('<th></th>').append(contents);
 	}
 
+	static ul(...items) {
+		return $('<ul></ul>').append(items.map(function(i) { return $('<li></li>').html(i); }));
+	}
+
 	static card(klass, title, subtitle, ...content) {
 		var header = $('<div class="card-header bg-'+klass+'"></div>')
 			.append(

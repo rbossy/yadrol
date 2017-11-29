@@ -847,19 +847,19 @@ Help.referenceContent = [
 			Element.row('help-row',
 				Element.col(
 					Element.card('default', 'Or', undefined,
-						Elment.highlight('$left$ or $right$'),
+						Element.highlight('$left$ or $right$'),
 						'Evaluates <em>left</em> as a boolean. If the result is false, then evaluates <em>right</em>.'
 					)
 				),
 				Element.col(
 					Element.card('default', 'And', undefined,
-						Elment.highlight('$left$ and $right$'),
+						Element.highlight('$left$ and $right$'),
 						'Evaluates <em>left</em> as a boolean. If the result is true, then evaluates <em>right</em>.'
 					)
 				),
 				Element.col(
 					Element.card('default', 'Not', undefined,
-						Elment.highlight('not $expr$'),
+						Element.highlight('not $expr$'),
 						'Evaluates <em>expr</em> as a boolean, and returns the opposite value.'
 					)
 				),
@@ -868,16 +868,100 @@ Help.referenceContent = [
 	}
 },
 {
-	title: 'Comparison', // numeric, general
-	body: function() { return ''; }
+	title: 'Comparison',
+	body: function() {
+		return [
+			Element.row('help-row',
+				Element.col(
+					Element.card('default', 'General comparison', undefined,
+						Element.highlight('$left$ === $right$'),
+						Element.highlight('$left$ !== $right$'),
+						'Evaluates <em>left</em> and <em>right</em> and returns a boolean indicating either the results are identical or not.'
+					)
+				),
+				Element.col(
+					Element.card('default', 'Numeric comparison', undefined,
+						Element.highlight('$left$ == $right$'),
+						Element.highlight('$left$ != $right$'),
+						Element.highlight('$left$ < $right$'),
+						Element.highlight('$left$ > $right$'),
+						Element.highlight('$left$ <= $right$'),
+						Element.highlight('$left$ >= $right$'),
+						'Evaluates <em>left</em> and <em>right</em> as numbers, then returns either the comparison is true.'
+					)
+				)
+			),
+		]
+	}
 },
 {
-	title: 'Arithmetic', // binary, unary
-	body: function() { return ''; }
+	title: 'Arithmetic',
+	body: function() {
+		return [
+			Element.row('help-row',
+				Element.col(
+					Element.card('default', 'Binary', undefined,
+						Element.highlight('$left$ + $right$'),
+						Element.highlight('$left$ - $right$'),
+						Element.highlight('$left$ * $right$'),
+						Element.highlight('$left$ / $right$'),
+						Element.highlight('$left$ % $right$'),
+						'Evaluates <em>left</em> and <em>right</em> as numbers, then returns the result of the arithmetic operation.',
+						'All arithmetic operation are integer operations. <code class="cm-MULT">%</code> is the remainder of the division.'
+					)
+				),
+				Element.col(
+					Element.card('default', 'Unary', undefined,
+						Element.highlight('+ $expr$'),
+						Element.highlight('- $expr$'),
+						'Evaluates <em>expr</em> as a number, then applies the specified sign.'
+					)
+				)
+			)
+		]
+	}
 },
 {
-	title: 'Dice', // number, list, map, function, multiple, identifiers
-	body: function() { return ''; }
+	title: 'Dice',
+	body: function() {
+		return [
+			Element.row('help-row',
+				Element.col(
+					Element.card('default', 'Single die', undefined,
+						Element.highlight('d $die$'),
+						'Evaluates <em>die</em> and rolls a die of this type. The process of the roll depends on the type of <em>die</em>:',
+						Element.ul(
+							'<strong>number</strong>: returns a random number between 1 and <em>die</em>, inclusive.',
+							'<strong>list</strong> or <strong>map</strong>: returns a random element of the container.',
+							'<strong>function</strong>: calls the function without any argument.'
+						),
+						'Rolling undef, boolean or string is an error',
+						'The following constucts can be joined after the <span class="cm-DICE">d</span> operator without a space:',
+						Element.ul(
+							'Number literals.',
+							'List and map constructors',
+							'Identifiers that start with an upper case letter'
+						)
+					)
+				),
+				Element.col(
+					Element.card('default', 'Multiple dice', undefined,
+						Element.highlight('$n$ d $die$'),
+						'Evaluates <em>n</em> as a number and evaluates <em>die</em>, then rolls the dice <em>n</em> times. The result is a list of size <em>n</em> containing the results of the rolls.',
+						'If <em>die</em> is a function that accepts at least one argument, then this function is called only once with <em>n</em> as a single argument.',
+						'The following constucts can be joined before the <span class="cm-DICE">d</span> operator without a space:',
+						Element.ul(
+							'Number literals',
+							'List and map constructors',
+							'Lambdas',
+							'Function calls',
+							'Single upper case letter identifiers'
+						)
+					)
+				)
+			)
+		]
+	}
 },
 {
 	title: 'Draw', // single multiple

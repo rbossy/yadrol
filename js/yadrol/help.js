@@ -932,7 +932,7 @@ Help.referenceContent = [
 						'Evaluates <em>die</em> and rolls a die of this type. The process of the roll depends on the type of <em>die</em>:',
 						Element.ul(
 							'<strong>number</strong>: returns a random number between 1 and <em>die</em>, inclusive.',
-							'<strong>list</strong> or <strong>map</strong>: returns a random element of the container.',
+							'<strong>list</strong> or <strong>map</strong>: returns a random element of the container, undef if the container is empty.',
 							'<strong>function</strong>: calls the function without any argument.'
 						),
 						'Rolling undef, boolean or string is an error',
@@ -964,8 +964,26 @@ Help.referenceContent = [
 	}
 },
 {
-	title: 'Draw', // single multiple
-	body: function() { return ''; }
+	title: 'Draw',
+	body: function() {
+		return [
+			Element.row('help-row',
+				Element.col(
+					Element.card('default', 'Single draw', undefined,
+						Element.highlight('draw from $expr$'),
+						'Evaluates <em>expr</em> as a list, removes the first item and returns this item. Returns undef if <em>expr</em> is empty.'
+					)
+				),
+				Element.col(
+					Element.card('default', 'Multiple draw', undefined,
+						Element.highlight('draw $n$ from $expr$'),
+						'Evaluates <em>n</em> as a number and <em>expr</em> as a list, removes the <em>n</em> first items from <em>expr</em> and returns a list containing these elements.',
+						'If <em>expr</em> has fewer items than <em>n</em> then returns a list containing all items and <em>expr</em> is emptied.'
+					)
+				)
+			)
+		];
+	}
 },
 {
 	title: 'Best', // single multiple selectors

@@ -841,8 +841,31 @@ Help.referenceContent = [
 	}
 },
 {
-	title: 'Boolean operators', // and or not
-	body: function() { return ''; }
+	title: 'Boolean operators',
+	body: function() {
+		return [
+			Element.row('help-row',
+				Element.col(
+					Element.card('default', 'Or', undefined,
+						Elment.highlight('$left$ or $right$'),
+						'Evaluates <em>left</em> as a boolean. If the result is false, then evaluates <em>right</em>.'
+					)
+				),
+				Element.col(
+					Element.card('default', 'And', undefined,
+						Elment.highlight('$left$ and $right$'),
+						'Evaluates <em>left</em> as a boolean. If the result is true, then evaluates <em>right</em>.'
+					)
+				),
+				Element.col(
+					Element.card('default', 'Not', undefined,
+						Elment.highlight('not $expr$'),
+						'Evaluates <em>expr</em> as a boolean, and returns the opposite value.'
+					)
+				),
+			)
+		]
+	}
 },
 {
 	title: 'Comparison', // numeric, general

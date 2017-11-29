@@ -592,6 +592,20 @@ new StartOption('run', false, StartOption.booleanValue, function() {
 		}
 	}
 });
+new StartOption('help', undefined, StartOption.stringValue, function() {
+	switch (this.finalValue()) {
+		case 'Recipes': Help.tableofcontents('Recipes', Help.recipesContent); break;
+		case 'Reference': Help.tableofcontents('Reference', Help.referenceContent); break;
+	}
+});
+new StartOption('help-page', undefined, StartOption.numberValue, function() {
+	if (StartOption.ALL.get('help').finalValue() !== undefined) {
+		var val = this.finalValue();
+		if (val !== undefined) {
+			Help.page(val);
+		}
+	}
+})
 
 $(document).ready(function() {
 	SamplesCharter.clear();

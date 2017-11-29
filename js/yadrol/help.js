@@ -13,6 +13,8 @@ class Help {
 		$('#help').hide();
 		Help.clear();
 		Help.current = undefined;
+		localStorage.removeItem('help');
+		localStorage.removeItem('help-page');
 	}
 
 	static show() {
@@ -48,6 +50,8 @@ class Help {
 			list.append('<li class="toc-item" onclick="Help.page('+index+')">'+page.title+'</li>');
 		}
 		Help.show();
+		localStorage.setItem('help', helpTitle);
+		localStorage.removeItem('help-page');
 	}
 
 	static page(index) {
@@ -62,6 +66,7 @@ class Help {
 					body
 				)
 			);
+		localStorage.setItem('help-page', index);
 	}
 
 	static placeholder(placeholder, body) {

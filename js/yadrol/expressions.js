@@ -1615,8 +1615,11 @@ class Variable extends Expression {
 	}
 
 	requiresSpaceAsDiceNumber() {
-		var last = this.name[this.name.length - 1];
-		return (last != last.toUpperCase());
+		if (this.name.length > 1) {
+			return true;
+		}
+		var letter = this.name[0];
+		return (letter != letter.toUpperCase());
 	}
 }
 

@@ -65,7 +65,7 @@ class Help {
 	}
 
 	static placeholder(placeholder, body) {
-		return Element.highlight('$'+placeholder+'$').add($('<span> is </span>')).add(((typeof body) === 'strig') ? $('<p></p>').html(body) : body);
+		return Element.highlight('$'+placeholder+'$').add($('<span> is </span>')).add(((typeof body) === 'string') ? $('<span></span>').html(body) : body);
 	}
 }
 Help.tutorial = new Tour({
@@ -721,20 +721,124 @@ Help.referenceContent = [
 	}
 },
 {
-	title: 'Sequences', // soft/hard
-	body: function() { return ''; }
+	title: 'Sequences',
+	body: function() {
+		return [
+			Element.row('help-row',
+				Element.col(
+					Element.card('default', 'Soft sequence', undefined,
+						Element.highlight('$expr$ ; $expr$ ; $...$'),
+						'Evaluates all <em>expr</em> in the specified order, then returns the result of the last expression.',
+						'Soft sequences are allowed in sub-expressions.'
+					)
+				),
+				Element.col(
+					Element.card('default', 'Hard sequence', undefined,
+						Element.highlight('$expr$\n---\n$expr$\n---\n$expr$'),
+						'Evaluates all <em>expr</em> in the specified order, then returns the result of the last expression.',
+						'Hard sequences are only allowed at top-level. Hard sequences cannot occur in sub-expressions',
+						'If no expression contains an output, then the last expression will be an implicit output.'
+					)
+				)
+			)
+		]
+	}
 },
 {
-	title: 'Conditional', // if then else
-	body: function() { return ''; }
+	title: 'Conditional',
+	body: function() {
+		return [
+			Element.row('help-row',
+				Element.col(
+					Element.card('default', 'Conditional', undefined,
+						Element.highlight('if $cond$ then $expr_true$ else $expr_false$'),
+						'Evaluates <em>cond</em> as a boolean. If the result is true, then evaluates <em>expr_true</em>. Otherwise evaluates <em>expr_false</em>',
+						'The else clause is mandatory.'
+					)
+				)
+			)
+		];
+	}
 },
 {
 	title: 'For loops', // 3 forms 
-	body: function() { return ''; }
+	body: function() {
+		return [
+			Element.row('help-row',
+				Element.col(
+					Element.card('default', 'Element selection', undefined,
+						Element.highlight('for $loop_vars$ in $container$ if $cond$'),
+						Help.placeholder('loop_vars', Element.highlight('name')),
+						Help.placeholder('loop_vars', Element.highlight('index , name')),
+						'Evaluates <em>container</em>, then assigns each element to <em>loop_vars</em> and evaluates <em>cond</em> as a boolean. The result is a container containing the elements for which <em>cond</em> is true.',
+						'If <em>container</em> is a list, then the result is a list. If <em>container</em> is a map, then the result is a map.',
+						'If <em>loop_vars</em> is a single identifier, then this variable is assigned to each value succesively. If <em>loop_vars</em> is two identifiers, then the first one is assigned the index in the list, or the key in the map, and the second one is assigned the values.',
+						'Variables in <em>loop_vars</em> are assigned in a new scope, <em>cond</em> is evaluated in this new scope. The loop scope has the current scope as parent.'
+					)
+				),
+				Element.col(
+					Element.card('default', 'Element mapping', undefined,
+						Element.highlight('$out$ for $loop_vars$ in $container$'),
+						Help.placeholder('loop_vars', Element.highlight('name')),
+						Help.placeholder('loop_vars', Element.highlight('index , name')),
+						'Evaluates <em>container</em>, then assigns each element to <em>loop_vars</em> and evaluates <em>out</em>. The result is a container containing the results of the successive evaluations of <em>out</em>.',
+						'If <em>container</em> is a list, then the result is a list. If <em>container</em> is a map, then the result is a map.',
+						'If <em>loop_vars</em> is a single identifier, then this variable is assigned to each value succesively. If <em>loop_vars</em> is two identifiers, then the first one is assigned the index in the list, or the key in the map, and the second one is assigned the values.',
+						'Variables in <em>loop_vars</em> are assigned in a new scope, <em>out</em> is evaluated in this new scope. The loop scope has the current scope as parent.'
+					)
+				),
+			),
+			Element.row('help-row',
+				Element.col(
+					Element.card('default', 'Element mapping', undefined,
+						Element.highlight('$out$ for $loop_vars$ in $container$ if $cond$'),
+						Help.placeholder('loop_vars', Element.highlight('name')),
+						Help.placeholder('loop_vars', Element.highlight('index , name')),
+						'Evaluates <em>container</em>, then assigns each element to <em>loop_vars</em> and evaluates <em>cond</em> as a boolean and evaluates <em>out</em> for elements for which <em>cond</em> is true. The result is a container containing the results of the successive evaluations of <em>out</em>.',
+						'If <em>container</em> is a list, then the result is a list. If <em>container</em> is a map, then the result is a map.',
+						'If <em>loop_vars</em> is a single identifier, then this variable is assigned to each value succesively. If <em>loop_vars</em> is two identifiers, then the first one is assigned the index in the list, or the key in the map, and the second one is assigned the values.',
+						'Variables in <em>loop_vars</em> are assigned in a new scope, <em>cond</em> and <em>out</em> are evaluated in this new scope. The loop scope has the current scope as parent.'
+					)
+				)
+			)
+		];
+	}
 },
 {
-	title: 'Repeat loops', // 3 forms, limit
-	body: function() { return ''; }
+	title: 'Repeat loops',
+	body: function() {
+		return [
+			Element.row('help-row',
+				Element.col(
+					Element.card('default', 'Pre-repeat', undefined,
+						Element.highlight('while $cond$ repeat $expr$ $limit$'),
+						Help.placeholder('limit', 'nothing or <span class="cm-LIMIT">limit</span> <span class="cm-NUM">num</span>'),
+						'Repeatedly evaluates <em>cond</em> as a boolean, then <em>expr</em> if the result is true, stops when <em>cond</em> is false.',
+						'The result is a list containing the successive results of <em>expr</em>.',
+						'The <em>cond</em> and <em>expr</em> expressions are evaluated in a new scope with the current scope as parent.',
+						'If <em>limit</em> is given, then the number of evaluations of <em>expr</em> is limited to the specified value.'
+					)
+				),
+				Element.col(
+					Element.card('default', 'Post-repeat', undefined,
+						Element.highlight('repeat $expr$ while $cond$ $limit$'),
+						Help.placeholder('limit', 'nothing or <span class="cm-LIMIT">limit</span> <span class="cm-NUM">num</span>'),
+						'Repeatedly evaluates <em>expr</em>, then <em>cond</em> as a boolean, stops when <em>cond</em> is false.',
+						'The result is a list containing the successive results of <em>expr</em>. The result has at least one item.',
+						'The <em>expr</em> and <em>cond</em> expressions are evaluated in a new scope with the current scope as parent.',
+						'If <em>limit</em> is given, then the number of evaluations of <em>expr</em> is limited to the specified value plus one.'			
+					)
+				),
+				Element.col(
+					Element.card('default', 'Post-repeat', undefined,
+						Element.highlight('repeat $expr$ if $cond$'),
+						'This form is equivalent to:',
+						Element.highlight('repeat $expr$ while $cond$ limit 1')
+					)
+				),
+			)
+		]
+	}
 },
 {
 	title: 'Boolean operators', // and or not

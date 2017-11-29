@@ -374,6 +374,55 @@ Help.referenceContent = [
 	}
 },
 {
+	title: 'Natural order',
+	body: function() {
+		return [
+			Element.row('help-row',
+				Element.col(
+					Element.card('default', 'Different types', undefined,
+						'Two values of different types are ordered as follows:',
+						'undef < string < boolean < number < list < map < function'
+					)
+				),
+				Element.col(
+					Element.card('default', 'Strings', undefined,
+						'Strings are compared according to their exicographical order.'
+					)
+				),
+				Element.col(
+					Element.card('default', 'Booleans', undefined,
+						'false is lower than true.'
+					)
+				),
+			),
+			Element.row('help-row',
+				Element.col(
+					Element.card('default', 'Numbers', undefined,
+						'Numbers are compared according to their natural order.'
+					)
+				),
+				Element.col(
+					Element.card('default', 'Lists', undefined,
+						'Lists are compared by their first item. If their first items are equal, then the second items are compared, etc.'
+					)
+				),
+			),
+			Element.row('help-row',
+				Element.col(
+					Element.card('default', 'Maps', undefined,
+						'Maps are compared by their first entry: their keys are compared, if they are equal, then their values are compared. If the first entries are equal, then the second entry is compared, etc.'
+					)
+				),
+				Element.col(
+					Element.card('default', 'Functions', undefined,
+						'Functions have an unspecified but stable order.'
+					)
+				)
+			)
+		];
+	}
+},
+{
 	title: 'Data conversion',
 	body: function() {
 		return [
@@ -986,8 +1035,34 @@ Help.referenceContent = [
 	}
 },
 {
-	title: 'Best', // single multiple selectors
-	body: function() { return ''; }
+	title: 'Best',
+	body: function() {
+		return [
+			Element.row('help-row',
+				Element.col(
+					Element.card('default', 'Single best', undefined,
+						Element.highlight('$selector$ of $expr$'),
+						Help.placeholder('selector', Element.highlight('highest lowest first last')),
+						'Evaluates <em>expr</em> as a list then returns the item specified by <em>selector</em>.',
+						Element.ul(
+							'<span class="cm-BEST">highest</span> selects the highest item in the list according to the natural order.',
+							'<span class="cm-BEST">lowest</span> selects the lowest item in the list according to the natural order.',
+							'<span class="cm-BEST">first</span> selects the first item in the list.',
+							'<span class="cm-BEST">last</span> selects the last item in the list.',
+						)
+					)
+				),
+				Element.col(
+					Element.card('default', 'Multiple best', undefined,
+						Element.highlight('$selector$ $n$ of $expr$'),
+						Help.placeholder('selector', Element.highlight('highest lowest first last')),
+						'Evaluates <em>n</em> as a number and <em>expr</em> as a list then returns a list of items specified by <em>selector</em>.',
+						'Even if <em>selector</em> is <span class="cm-BEST">highest</span> or <span class="cm-BEST">lowest</span>, the items in the result list are in the same order than in <em>expr</em>.'
+					)
+				)
+			),
+		];
+	}
 },
 {
 	title: 'List tools', // count append reorder

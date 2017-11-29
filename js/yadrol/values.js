@@ -173,7 +173,11 @@ class ValueComparator {
 			if (bValue.done) {
 				return 1;
 			}
-			var c = ValueComparator.compare(aValue.value[1], bValue.value[1]);
+			var c = ValueComparator.compare(aValue.value[0], bValue.value[0]);
+			if (c != 0) {
+				return c;
+			}
+			c = ValueComparator.compare(aValue.value[1], bValue.value[1]);
 			if (c != 0) {
 				return c;
 			}

@@ -6,7 +6,8 @@
 
 <<EOF>>		return 'EOF';
 \s+		/* skip */
-"//".*$		/* skip */
+"//".*\n	/* skip */
+"//".*<<EOF>>  /* skip */
 \$[^\$]+\$ return 'PLACEHOLDER';
 [-]{3,}		return 'BREAK';
 ";"		return 'SEMICOLON';

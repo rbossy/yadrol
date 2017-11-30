@@ -708,6 +708,7 @@ class Append extends Expression {
 					target.push(v);
 				}
 			}
+			default: throw new Error('cannot append to: ' + target);
 		}
 		return target;
 	}
@@ -1257,12 +1258,12 @@ class ListReorder extends UnaryOperator {
 		return list;
 	}
 }
-ListReorder.REVERSED = new OperatorSymbol('reverse', Precedence.UNARY, Precedence.SUBSCRIPT, true);
-ListReorder.REVERSED.reorder = function(list) { list.reverse(); }; 
-ListReorder.SORTED = new OperatorSymbol('sort', Precedence.UNARY, Precedence.SUBSCRIPT, true);
-ListReorder.SORTED.reorder = function(list) { list.sort(ValueComparator.compare); }; 
-ListReorder.SHUFFLED = new OperatorSymbol('shuffle', Precedence.UNARY, Precedence.SUBSCRIPT, true);
-ListReorder.SHUFFLED.reorder = function(list) {
+ListReorder.REVERSE = new OperatorSymbol('reverse', Precedence.UNARY, Precedence.SUBSCRIPT, true);
+ListReorder.REVERSE.reorder = function(list) { list.reverse(); }; 
+ListReorder.SORT = new OperatorSymbol('sort', Precedence.UNARY, Precedence.SUBSCRIPT, true);
+ListReorder.SORT.reorder = function(list) { list.sort(ValueComparator.compare); }; 
+ListReorder.SHUFFLE = new OperatorSymbol('shuffle', Precedence.UNARY, Precedence.SUBSCRIPT, true);
+ListReorder.SHUFFLE.reorder = function(list) {
 	for (var i = list.length - 1; i > 0; --i) {
 		var j = Math.floor(Math.random() * (i + 1));
 		if (i != j) {

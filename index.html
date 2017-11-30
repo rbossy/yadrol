@@ -31,8 +31,6 @@
 			</div>
 			<div class="col">
 				<div class="btn-group float-right" role="group">
-					<button type="button" class="btn" onclick="Help.startTutorial()" data-toggle="tooltip" data-placement="bottom" title="Learn to use Yadrol">Tutorial</button>
-					<button type="button" class="btn" data-toggle="modal" data-target="#settings" data-toggle="tooltip" data-placement="bottom" title="Configure Yadrol">Settings</button>
 					<button type="button" class="btn" data-toggle="modal" data-target="#about" data-toggle="tooltip" data-placement="bottom" title="Credits">About</button>
 				</div>
 			</div>
@@ -42,6 +40,11 @@
 			<div class="col-5">
 				<div id="input-container" class="container-fluid">
 					<div id="toolbar" class="row">
+						<div class="col">
+							<button id="url-button" class="btn btn-sm btn-info" type="button" disabled="true" data-toggle="modal" data-target="#settings" onclick="Action.updateURL()">
+								Settings
+							</button>
+						</div>
 						<div class="col">
 							<button id="url-button" class="btn btn-sm btn-info" type="button" disabled="true" data-toggle="modal" data-target="#build-url" onclick="Action.updateURL()">
 								URL
@@ -55,19 +58,6 @@
 								<div id="history" class="dropdown-menu">
 									<!--<a class="dropdown-item" href="#">Action</a>-->
 								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col">
-							<textarea id="expression-string" class="form-control" placeholder="Expression, e.g. 3d6" rows="7"></textarea>
-						</div>
-					</div>
-					<div id="bottom-toolbar" class="row">
-						<div id="help-buttons" class="col">
-							<div class="btn-group" role="group">
-								<button type="button" class="btn btn-sm" onclick="Help.tableofcontents('Recipes', Help.recipesContent)">Recipes</button>
-								<button type="button" class="btn btn-sm" onclick="Help.tableofcontents('Reference', Help.referenceContent)">Reference</button>
 							</div>
 						</div>
 						<div class="col">
@@ -93,6 +83,20 @@
 										Advanced
 									</a>
 								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<textarea id="expression-string" class="form-control" placeholder="Expression, e.g. 3d6" rows="7"></textarea>
+						</div>
+					</div>
+					<div id="bottom-toolbar" class="row">
+						<div id="help-buttons" class="col">
+							<div class="btn-group" role="group">
+								<button type="button" class="btn btn-sm" onclick="Help.startTutorial()">Tutorial</button>
+								<button type="button" class="btn btn-sm" onclick="Help.tableofcontents('Recipes', Help.recipesContent)">Recipes</button>
+								<button type="button" class="btn btn-sm" onclick="Help.tableofcontents('Reference', Help.referenceContent)">Reference</button>
 							</div>
 						</div>
 					</div>

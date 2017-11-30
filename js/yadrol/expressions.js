@@ -707,6 +707,7 @@ class Append extends Expression {
 				for (var v of source) {
 					target.push(v);
 				}
+				break;
 			}
 			default: throw new Error('cannot append to: ' + target);
 		}

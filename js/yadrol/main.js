@@ -356,6 +356,7 @@ class Action {
 			RollOutput.rollRecords();
 			Action.addToHistory(expressionString);
 			localStorage.setItem('run', 'true');
+			localStorage.setItem('global-scope', ValueConverter.valueString(yadrolApp.globalScope, yadrolApp.globalScope.variables));
 		}
 		catch (e) {
 			Alert.error(e);
@@ -583,6 +584,16 @@ new StartOption('mode', 'sample', StartOption.stringValue, function() {
 		Action.setMode(this.finalValue());
 	}
 });
+new StartOption('global-scope', undefined, StartOption.expressionValue, function() {
+	var gs = this.finalValue();
+	if (gs === undefined) {
+
+	}
+	else {
+		console.log(gs);
+		yadrolApp.globalScope.variables = gs;
+	}
+});
 new StartOption('run', false, StartOption.booleanValue, function() {
 	if (StartOption.urlExpression()) {
 		if (this.urlValue) {
@@ -608,7 +619,7 @@ new StartOption('help-page', undefined, StartOption.numberValue, function() {
 			Help.page(val);
 		}
 	}
-})
+});
 
 $(document).ready(function() {
 	SamplesCharter.clear();

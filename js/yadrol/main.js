@@ -560,7 +560,10 @@ new StartOption('expr', '', StartOption.stringValue, function() {
 	Action.setExpressionString(this.finalValue());
 });
 new StartOption('history', [], StartOption.expressionValue, function() {
-	this.finalValue().reverse().forEach(Action.addToHistory);
+	var h = this.finalValue();
+	if (h) {
+		h.reverse().forEach(Action.addToHistory);
+	}
 });
 new StartOption('seen-tutorial', false, StartOption.booleanValue, function() {
 	if ((!StartOption.urlExpression()) && (!this.finalValue())) {

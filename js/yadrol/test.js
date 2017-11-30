@@ -263,7 +263,7 @@ $(document).ready(function() {
 	new TestConversion([], 'list', []),
 	new TestConversion([42, 'foo'], 'list', [42,'foo']),
 	new TestConversion([], 'map', new YadrolMap()),
-	new TestConversion([42, 'foo'], 'map', new YadrolMap([['0', 42], ['1', 'foo']]))
+	new TestConversion([42, 'foo'], 'map', new YadrolMap([['_0', 42], ['_1', 'foo']]))
     ]).table();
 
     new TestGroup('Convert map', [
@@ -282,7 +282,7 @@ $(document).ready(function() {
     ]).table();
     
     new TestGroup('Lexer', [
-	new TestLexer(' \t\r\n#le comment', []),
+	new TestLexer(' \t\r\n//le comment', []),
 	new TestLexer('d6', ['DICE_NUMBER']),
 	new TestLexer('dX', ['DICE_UPPER']),
 	new TestLexer('dx', ['IDENTIFIER']),
@@ -320,8 +320,8 @@ $(document).ready(function() {
 	new TestLexer('string', ['CONVERT']),
 	new TestLexer('boolean', ['CONVERT']),
 	new TestLexer('number list map', ['CONVERT', 'CONVERT', 'CONVERT']),
-	new TestLexer('sorted', ['REORDER']),
-	new TestLexer('reversed shuffled', ['REORDER', 'REORDER']),
+	new TestLexer('sort', ['REORDER']),
+	new TestLexer('reverse shuffle', ['REORDER', 'REORDER']),
 	new TestLexer('or', ['OR']),
 	new TestLexer('and', ['AND']),
 	new TestLexer('not', ['NOT']),
@@ -401,8 +401,8 @@ $(document).ready(function() {
 	new TestParseEvaluate('6 * 7', 'native', 42),
 	new TestParseEvaluate('126 / 3', 'native', 42),
 	new TestParseEvaluate('343 % 43', 'native', 42),
-	new TestParseEvaluate('0 .. 4', 'native', [0,1,2,3]),
-	new TestParseEvaluate('0 .. 4 << 4 .. 6', 'native', [0,1,2,3,4,5]),
+	new TestParseEvaluate('0 .. 4', 'native', [0,1,2,3,4]),
+	new TestParseEvaluate('0 .. 4 << 5 .. 6', 'native', [0,1,2,3,4,5,6]),
 	new TestParseEvaluate('x = 44; x - 2', 'native', 42),
 	new TestParseEvaluate('x = {foo: true, bar: 42}; x.bar', 'native', 42),
 	new TestParseEvaluate('x = {foo: true, bar: 42}; x["bar"]', 'native', 42),
@@ -417,8 +417,8 @@ $(document).ready(function() {
 	new TestParseEvaluate('last of [17, 1, 42, 33]', 'native', 33),	
 	new TestParseEvaluate('highest 2 of [17, 1, 42, 33]', 'native', [42, 33]),	
 	new TestParseEvaluate('lowest 2 of [17, 1, 42, 33]', 'native', [17, 1]),	
-	new TestParseEvaluate('sorted [17, 1, 42, 33]', 'native', [1, 17, 33, 42]),	
-	new TestParseEvaluate('sorted [17, 1, [true], 42, false, 33]', 'native', [false, 1, 17, 33, 42, [true]]),	
+	new TestParseEvaluate('sort [17, 1, 42, 33]', 'native', [1, 17, 33, 42]),	
+	new TestParseEvaluate('sort [17, 1, [true], 42, false, 33]', 'native', [false, 1, 17, 33, 42, [true]]),	
 	new TestParseEvaluate('for x in [17, 1, 42, 33] if x % 2 == 0', 'native', [42]),
 	new TestParseEvaluate('x*2 for x in [17, 1, 42, 33]', 'native', [34, 2, 84, 66]),	
 	new TestParseEvaluate('x *2 for x in [17, 1, 42, 33] if x % 2 == 0', 'native', [84]),

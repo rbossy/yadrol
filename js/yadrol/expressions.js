@@ -485,7 +485,7 @@ class Expression {
 	}
 
 	_toStringNoParen(stringer) {
-		throw 'unimplemented _toStringNoParen(stringer)';
+		throw new Error('unimplemented _toStringNoParen(stringer)');
 	}
 
 	requiresSpaceAsDiceNumber() {
@@ -1582,6 +1582,15 @@ class Import extends Expression {
 			throw new Error(xmlHttp.statusText);
 		}
 		return xmlHttp.responseText;
+	}
+
+	_toStringNoParen(stringer) {
+		stringer.keyword("import").space();
+		if (this.name !== undefined) {
+			stringer.identifier(this.name).space()
+				.operator(' = ')
+		}
+		stringer.literal(this.address);
 	}
 }
 Import.CACHE = new YadrolMap();

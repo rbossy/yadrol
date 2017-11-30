@@ -2,7 +2,7 @@ var yadrolApp = new YadrolApp();
 
 class Alert {
 	static alert(level, message) {
-		$('#output-container').prepend('<div class="row alert alert-'+level+' alert-dismissible" role="alert">'+message+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+		$('#output-container').prepend('<div class="row alert alert-'+level+' alert-dismissible" role="alert">'+message.replace(/\n/g, '<br>')+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 	}
 
 	static error(message) {
@@ -359,7 +359,7 @@ class Action {
 			localStorage.setItem('global-scope', ValueConverter.valueString(yadrolApp.globalScope, yadrolApp.globalScope.variables));
 		}
 		catch (e) {
-			Alert.error(e);
+			Alert.error(e.message);
 			console.log(e);
 		}
 	}

@@ -253,7 +253,7 @@ class ValueConverter {
 
 	static _toFunctionConverter(type) {
 		return function(scope, value) {
-			return new YadrolFunction(scope, [], new YadrolMap(), ValueConverter.expressionConverter[type](scope, value));
+			return new YadrolFunction(scope, new YadrolMap(), ValueConverter.expressionConverter[type](scope, value));
 		};
 	}
 
@@ -274,7 +274,6 @@ class ValueConverter {
 	static valueString(scope, value) {
 		var expr = ValueConverter._convertToExpression(scope, value);
 		if (valueType(value) === 'function') {
-			console.log(value.parentScope);
 			return expr.toString(new ExpressionStringer(value.parentScope));
 		}
 		return expr.toString();

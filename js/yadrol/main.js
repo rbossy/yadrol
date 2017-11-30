@@ -147,7 +147,14 @@ class RollOutput {
 		return Element.row('dice-row', col);
 	}
 
+	static silentDice(drec) {
+		return Element.row('dice-row');
+	}
+
 	static diceRecord(drec) {
+		if (valueType(drec.diceType) === 'function') {
+			return RollOutput.silentDice(drec);
+		}
 		switch (drec.diceType) {
 			case 4: case 6: case 8: case 10: case 12: case 20:
 			return RollOutput.iconDice(drec);
@@ -160,7 +167,7 @@ class RollOutput {
 		var klass = first ? ' first-roll-record' : '';
 		return Element.row('roll-record' + klass,
 			Element.col(
-				Element.card('success', rec.name, yadrolApp.valueString(rec.result), rec.diceRecords.map(RollOutput.diceRecord))
+				Element.card('success', rec.name, yadrolApp.valueString(rec.result), ...rec.diceRecords.map(RollOutput.diceRecord))
 			)
 		);
 	}

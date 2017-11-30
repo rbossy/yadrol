@@ -1180,7 +1180,8 @@ Help.referenceContent = [
 						'Nested outputs are an error, <em>expr</em> cannot contain an output expression.',
 						'Output expressions can be followed with the <span class="cm-AS">as</span> clause with a string literal and/or a type.',
 						'The string literal specifies the application the label of the displayed result, by default the application will label the result with a string representation of <em>expr</em>.',
-						'The <em>type</em> indicates that the result must be converted to the specified type. By default, <em>expr</em> is evaluated as a number in&nbsp;<img class="output-mode-icon" src="'+Action.modes.roll.icon+'">Roll and&nbsp;<img class="output-mode-icon" src="'+Action.modes.sample.icon+'">Sample modes. In&nbsp;<img class="output-mode-icon" src="'+Action.modes.advanced.icon+'">Advanced mode, <em>expr</em> is not converted and evaluated as its native type.'
+						'The <em>type</em> indicates that the result must be converted to the specified type. By default, <em>expr</em> is evaluated as a number in&nbsp;<img class="output-mode-icon" src="'+Action.modes.roll.icon+'">Roll and&nbsp;<img class="output-mode-icon" src="'+Action.modes.sample.icon+'">Sample modes. In&nbsp;<img class="output-mode-icon" src="'+Action.modes.advanced.icon+'">Advanced mode, <em>expr</em> is not converted and evaluated as its native type.',
+						'Output expressions return undef'
 					)
 				)
 			)
@@ -1188,8 +1189,24 @@ Help.referenceContent = [
 	}
 },
 {
-	title: 'Import', // import
-	body: function() { return ''; }
+	title: 'Import',
+	body: function() {
+		return [
+			Element.row('help-row',
+				Element.col(
+					Element.card('default', 'Import', undefined,
+						Element.highlight('import "address"'),
+						Element.highlight('import name = "address"'),
+						'Retrives a source specified by <span class="cm-STR">address</span>, evaluates the content of this source in a new global scope, then merges this scope to the current scope.',
+						'The <span class="cm-STR">address</span> must be an URL to a file that contains a top-level expression (hard breaks allowed).',
+						'Within a single session, imports are cached, subsequent imports of an already imported address will not fetch the source again.',
+						'If <em>name</em> is given, then the imported scope will not be merged but assigned as a map to the specified variable.',
+						'Import expressions return undef.'
+					)
+				)
+			)
+		]
+	}
 },
 ];
 

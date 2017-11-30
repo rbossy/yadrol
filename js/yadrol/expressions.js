@@ -1577,6 +1577,9 @@ class Import extends Expression {
 		var xmlHttp = new XMLHttpRequest();
 		xmlHttp.open('GET', address, false); /* false for synchronous request */
 		xmlHttp.send(null);
+		if (xmlHttp.status != 200) {
+			throw new Error(xmlHttp.statusText);
+		}
 		return xmlHttp.responseText;
 	}
 }

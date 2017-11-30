@@ -29,9 +29,9 @@
 "number"	return 'CONVERT';
 "list"		return 'CONVERT';
 "map"		return 'CONVERT';
-"sorted"	return 'REORDER';
-"reversed"	return 'REORDER';
-"shuffled"	return 'REORDER';
+"sort"	return 'REORDER';
+"reverse"	return 'REORDER';
+"shuffle"	return 'REORDER';
 "or"		return 'OR';
 "and"		return 'AND';
 "not"		return 'NOT';
@@ -95,7 +95,7 @@
 
 %left BREAK
 %left SEMICOLON
-%nonassoc IMPORT OUTPUT AS 
+%nonassoc IMPORT OUTPUT
 %nonassoc ASSIGN
 %nonassoc IF WHILE LIMIT FOR
 %left OR

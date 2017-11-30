@@ -630,8 +630,6 @@ Help.referenceContent = [
 						'Assignment works the same way: the value is assigned to the variable in the innermost scope where the variable name was defined.',
 					)
 				),
-			),
-			Element.row('help-row',
 				Element.col(
 					Element.card('default', 'Spawning scopes', undefined,
 						'Scopes are spawned in the following constructs:',
@@ -640,6 +638,22 @@ Help.referenceContent = [
 							'<strong>Loops</strong>: loop bodies and conditions are evaluated in their own scope, the loop variable (for-loops) is set in this scope, the parent scope is the scope where the loop was initiated.',
 							'<strong>Import</strong>: imported files are evaluated in their own scope, this scope has no parent.',
 						)
+					)
+				)
+			),
+			Element.row('help-row',
+				Element.col(
+					Element.card('default', 'Inoking scopes', undefined,
+						Element.highlight('local'),
+						Element.highlight('outer'),
+						Element.highlight('global'),
+						'These expressions return a scope as a map:',
+						Element.ul(
+							'<span class="cm-SCOPE">local</span>: returns the current scope (local variables).',
+							'<span class="cm-SCOPE"></span>: returns the parent scope.',
+							'<span class="cm-SCOPE"></span>: returns the global scope.',
+						),
+						'Changes made in the map will be visible immediately in the corresponding scope, and conversely.'
 					)
 				)
 			)
@@ -1070,20 +1084,108 @@ Help.referenceContent = [
 	}
 },
 {
-	title: 'List tools', // count append reorder
-	body: function() { return ''; }
+	title: 'List tools',
+	body: function() {
+		return [
+			Element.row('help-row',
+				Element.col(
+					Element.card('default', 'Count', undefined,
+						Element.highlight('# $expr$'),
+						Element.highlight('count $expr$'),
+						'Evaluates <em>expr</em> and returns the number of elements depending on the type:',
+						Element.ul(
+							'<strong>undef</strong>: returns zero.',
+							'<strong>string</strong>, <strong>boolean</strong>, <strong>number</strong>: returns 1.',
+							'<strong>list</strong>: returns the number of elements in the list.',
+							'<strong>map</strong>: returns the number of entries in the map.',
+						),
+						'Counting a function is an error.'
+					)
+				),
+				Element.col(
+					Element.card('default', 'Append', undefined,
+						Element.highlight('$target$ << $source$'),
+						'Evaluates <em>source</em> and <em>target</em>, appends the result of <em>target</em> to <em>target</em>, then returns <em>source</em>.',
+						'If <em>target</em> is a list, then <em>source</em> is evaluated as a list, and all items are appended at the end of <em>target</em>.',
+						'If <em>target</em> is a map, then <em>source</em> is evaluated as a map, and each entry is added to <em>target</em>. If an entry key already exists in <em>target</em>, then the value is overwritten.'
+					)
+				),
+				Element.col(
+					Element.card('default', 'Reorder', undefined,
+						Element.highlight('sort $expr$'),
+						Element.highlight('reverse $expr$'),
+						Element.highlight('shuffle $expr$'),
+						'Evaluates <em>expr</em> as a list, changes the order of items in place and returns it.',
+						'The order depends on the selector:',
+						Element.ul(
+							'<strong>sort</strong>: sort items according to the natural order.',
+							'<strong>reverse</strong>: reverse the items (first becomes last, etc.)',
+							'<strong>shuffle</strong>: place the items in a random order.'
+						)
+					)
+				)
+			)
+		];
+	}
 },
 {
-	title: 'Range', // two directions
-	body: function() { return ''; }
+	title: 'Range',
+	body: function() {
+		return [
+			Element.row('help-row',
+				Element.col(
+					Element.card('default', 'Range', undefined,
+						Element.highlight('$start$ .. $end$'),
+						'Evaluates <em>start</em> and <em>end</em> as numbers, then returns a list containing all numbers between <em>start</em> and <em>end</em>, inclusive.',
+						'If <em>start</em> is higher than <em>end</em>, then the items in the list are in reverse order.'
+					)
+				)
+			)
+		];
+	}
 },
 {
 	title: 'Conversion', // conversion
-	body: function() { return ''; }
+	body: function() {
+		return [
+			Element.row('help-row',
+				Element.col(
+					Element.card('default', 'Conversion', undefined,
+						Element.highlight('$type$ $expr$'),
+						Help.placeholder('type', Element.highlight('string boolean number list map')),
+						'Forces the evaluation of <em>expr</em> as the specified <em>type</em>.'
+					)
+				)
+			)
+		]
+	}
 },
 {
-	title: 'Output', // roll sample
-	body: function() { return ''; }
+	title: 'Output',
+	body: function() {
+		return [
+			Element.row('help-row',
+				Element.col(
+					Element.card('default', 'Output', undefined,
+						Element.highlight('roll $expr$'),
+						Element.highlight('roll $expr$ as $type$ "label"'),
+						Element.highlight('sample $expr$'),
+						Element.highlight('sample $expr$ as $type$ "label"'),
+						Help.placeholder('type', Element.highlight('string boolean number list map')),
+						'Indicates to the Yadrol application that the evaluation of <em>expr</em> must be recorded and displayed.',
+						Element.ul(
+							'<span class="cm-OUTPUT">roll</span> indicates a single evaluation. The result should be displayed and the dice rolls recorded.',
+							'<span class="cm-OUTPUT">sample</span> indeicates a repeated evaluation. The distribution of the results should be displayed but the dice rolls should not be recorded.',
+						),
+						'Nested outputs are an error, <em>expr</em> cannot contain an output expression.',
+						'Output expressions can be followed with the <span class="cm-AS">as</span> clause with a string literal and/or a type.',
+						'The string literal specifies the application the label of the displayed result, by default the application will label the result with a string representation of <em>expr</em>.',
+						'The <em>type</em> indicates that the result must be converted to the specified type. By default, <em>expr</em> is evaluated as a number in&nbsp;<img class="output-mode-icon" src="'+Action.modes.roll.icon+'">Roll and&nbsp;<img class="output-mode-icon" src="'+Action.modes.sample.icon+'">Sample modes. In&nbsp;<img class="output-mode-icon" src="'+Action.modes.advanced.icon+'">Advanced mode, <em>expr</em> is not converted and evaluated as its native type.'
+					)
+				)
+			)
+		]
+	}
 },
 {
 	title: 'Import', // import

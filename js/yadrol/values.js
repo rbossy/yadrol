@@ -243,6 +243,10 @@ class ValueConverter {
 		return new ContainerConstructor(Location.NONE, value.map(function(v) { return ValueConverter._convertToExpression(scope, v); }), valueType(value));
 	}
 
+	static _convertToLambda(scope, value) {
+		return new Lambda(Location.NONE, value.args.map(function(v) { return ValueConverter._convertToExpression(scope, v); }), value.body);
+	}
+
 	static _convertToExpression(scope, value) {
 		return ValueConverter.expressionConverter[valueType(value)](scope, value);
 	}
@@ -269,8 +273,11 @@ class ValueConverter {
 
 	static valueString(scope, value) {
 		var expr = ValueConverter._convertToExpression(scope, value);
-		var result = expr.toString();
-		return result;
+		if (valueType(value) === 'function') {
+			console.log(value.parentScope);
+			return expr.toString(new ExpressionStringer(value.parentScope));
+		}
+		return expr.toString();
 	}
 }
 ValueConverter.expressionConverter = {
@@ -280,7 +287,7 @@ ValueConverter.expressionConverter = {
 	'number': ValueConverter._convertToConstant,
 	'list': ValueConverter._convertToContainerConstructor,
 	'map': ValueConverter._convertToContainerConstructor,
-	'function': ValueConverter._convertToSelf
+	'function': ValueConverter._convertToLambda
 }
 ValueConverter.CONVERTER = {
 	'undefined': {

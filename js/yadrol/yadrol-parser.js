@@ -117,7 +117,7 @@ case 11:
  this.$ = new ContainerConstructor(Location.fromLexer(yy.sourceFile, _$[$0-2], _$[$0]), new YadrolMap($$[$0-1]), 'map'); 
 break;
 case 12:
- var scope = new Scope(); $$[$0-4].forEach(function(a) { a[1] = a[1].evaluate(scope); }); this.$ = new Lambda(Location.fromLexer(yy.sourceFile, _$[$0-6], _$[$0]), $$[$0-4], $$[$0-1]); 
+ this.$ = new Lambda(Location.fromLexer(yy.sourceFile, _$[$0-6], _$[$0]), new YadrolMap($$[$0-4]), $$[$0-1]); 
 break;
 case 13:
  this.$ = new Variable(Location.fromLexer(yy.sourceFile, _$[$0], _$[$0]), yytext); 

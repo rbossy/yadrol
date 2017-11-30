@@ -154,7 +154,7 @@ expression
   { $$ = new ContainerConstructor(Location.fromLexer(yy.sourceFile, @1, @3), new YadrolMap($2), 'map'); }
 
 | FUN LPAREN lambdaArgs RPAREN LCURLY expression RCURLY
-  { var scope = new Scope(); $3.forEach(function(a) { a[1] = a[1].evaluate(scope); }); $$ = new Lambda(Location.fromLexer(yy.sourceFile, @1, @7), $3, $6); }
+  { $$ = new Lambda(Location.fromLexer(yy.sourceFile, @1, @7), new YadrolMap($3), $6); }
 
 | IDENTIFIER
   { $$ = new Variable(Location.fromLexer(yy.sourceFile, @1, @1), yytext); }

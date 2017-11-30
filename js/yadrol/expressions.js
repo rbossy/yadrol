@@ -89,12 +89,13 @@ class ExpressionStringer {
 	}
 
 	literal(lit) {
-		this._append(lit);
+		this._append(String(lit).replace(/\n/g, '\\n').replace(/"/g, '\\"'));
 		return this;
 	}
 
 	doubleQuote() {
-		return this.literal('"');
+		this._append('"');
+		return this;
 	}
 
 	identifier(id) {
@@ -602,7 +603,7 @@ class Lambda extends Expression {
 	}
 
 	nativeEvaluator(scope) {
-		return new YadrolFunction(scope, this.args, this.body);
+		return new YadrolFunction(scope, this.args.map(function(e) { return e.evaluate(scope); }), this.body);
 	}
 
 	_toStringNoParen(stringer) {
@@ -1067,7 +1068,7 @@ class Die extends UnaryOperator {
 	compute(operand) {
 		var type = valueType(operand);
 		if (!Die.ROLLER.hasOwnProperty(type)) {
-			throw 'cannot roll ' + type;
+			throw new Error('cannot roll ' + type);
 		}
 		var result = Die.ROLLER[type](operand);
 		this.recordLogger.recordDice(operand, [result]);
@@ -1590,7 +1591,7 @@ class Import extends Expression {
 			stringer.identifier(this.name).space()
 				.operator(' = ')
 		}
-		stringer.literal(this.address);
+		stringer.expression(this.address);
 	}
 }
 Import.CACHE = new YadrolMap();

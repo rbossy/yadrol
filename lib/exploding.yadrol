@@ -1,0 +1,55 @@
+X = fun(T) {
+  fun() {
+    repeat (x=dT) if x == T
+  }
+}
+
+---
+
+X4 = X(4);
+X6 = X(6);
+X8 = X(8);
+X10 = X(10);
+X12 = X(12);
+X20 = X(20)
+
+---
+
+XX = fun(T) {
+  fun() {
+    repeat (x=dT) while x == T
+  }
+}
+
+---
+
+XX4 = XX(4);
+XX6 = XX(6);
+XX8 = XX(8);
+XX10 = XX(10);
+XX12 = XX(12);
+XX20 = XX(20)
+
+---
+
+I = fun(T) {
+  fun() {
+    r = dT;
+    if r == 1
+    then 1 - dT
+    else (
+      if r == T
+      then T + dT
+      else r
+    )
+  }
+}
+
+---
+
+I4 = I(4);
+I6 = I(6);
+I8 = I(8);
+I10 = I(10);
+I12 = I(12);
+I20 = I(20)

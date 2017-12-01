@@ -21,6 +21,7 @@
 	<script src="js/plottable.min.js"></script>
 	<script src="js/codemirror.js"></script>
 	<script src="js/yadrol/help.js"></script>
+	<script src="js/yadrol/libs.js"></script>
 	<script src="js/yadrol/main.js"></script>
 </head>
 <body>
@@ -55,7 +56,7 @@
 								<button class="btn btn-sm btn-info dropdown-toggle" type="button" data-toggle="dropdown">
 									Libraries
 								</button>
-								<div class="dropdown-menu">
+								<div id="libraries" class="dropdown-menu">
 									<!--<a class="dropdown-item" href="#">Action</a>-->
 								</div>
 							</div>
@@ -106,6 +107,7 @@
 							<div class="btn-group" role="group">
 								<button type="button" class="btn btn-sm" onclick="Help.startTutorial()">Tutorial</button>
 								<button type="button" class="btn btn-sm" onclick="Help.tableofcontents('Recipes', Help.recipesContent)">Recipes</button>
+								<button type="button" class="btn btn-sm" onclick="Help.tableofcontents('Libraries', Libs.libsContent)">Libraries</button>
 								<button type="button" class="btn btn-sm" onclick="Help.tableofcontents('Reference', Help.referenceContent)">Reference</button>
 							</div>
 						</div>

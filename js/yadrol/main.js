@@ -620,6 +620,7 @@ new StartOption('help', undefined, StartOption.stringValue, function() {
 	switch (this.finalValue()) {
 		case 'Recipes': Help.tableofcontents('Recipes', Help.recipesContent); break;
 		case 'Reference': Help.tableofcontents('Reference', Help.referenceContent); break;
+		case 'Libraries': Help.tableofcontents('Libraries', Libs.libsContent); break;
 	}
 });
 new StartOption('help-page', undefined, StartOption.numberValue, function() {
@@ -634,6 +635,7 @@ new StartOption('help-page', undefined, StartOption.numberValue, function() {
 $(document).ready(function() {
 	SamplesCharter.clear();
 	Action.initCodeMirror();
+	Libs.init();
 	StartOption.load();
 });
 

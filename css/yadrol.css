@@ -36,7 +36,15 @@ html {
     margin-bottom: 3mm;
 }
 
-.history-button {
+#output-mode-button {
+    width: 3em !important;
+}
+
+#toolbar button {
+    width: 6em;
+}
+
+.history-close-button {
     cursor: pointer;
 }
 

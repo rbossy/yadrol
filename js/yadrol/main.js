@@ -282,7 +282,7 @@ class Action {
 		}
 		yadrolApp.setDefaultOutputMode(modeObj.outputMode);
 		yadrolApp.setDefaultType(modeObj.evaluationType);
-		$('#output-mode').html('<img class="output-mode-icon" src="' + modeObj.icon + '">' + modeObj.label);
+		$('#run-button').html('<img class="output-mode-icon" src="' + modeObj.icon + '">' + modeObj.label);
 		Action.currentMode = modeObj.key;
 		localStorage.setItem('mode', modeObj.key);
 		if (andRun) {
@@ -329,7 +329,7 @@ class Action {
 		$('#history').prepend(
 			$('<span class="dropdown-item"></span>').append(
 				Element.tryit(expr),
-				$('<span class="history-button float-right">&times;<span>')
+				$('<span class="history-close-button float-right">&times;<span>')
 				.click(Action.removeFromHistory)
 			)
 		);
@@ -415,8 +415,8 @@ class Action {
 		Action.codeMirror.on('changes', function(changeObj) {
 			var expr = changeObj.getValue().trim();
 			var disable = (expr === '');
-			$('#output-mode').attr('disabled', disable);
-			$('#url-button').attr('disabled', disable);
+			$('#run-button').attr('disabled', disable);
+			$('#output-mode-button').attr('disabled', disable);
 			localStorage.setItem('expr', expr);
 			localStorage.removeItem('run');
 		});

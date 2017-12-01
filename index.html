@@ -37,11 +37,11 @@
 		</div>
 
 		<div id="content" class="row">
-			<div class="col-5">
+			<div class="col-6">
 				<div id="input-container" class="container-fluid">
 					<div id="toolbar" class="row">
 						<div class="col">
-							<button id="url-button" class="btn btn-sm btn-info" type="button" disabled="true" data-toggle="modal" data-target="#settings" onclick="Action.updateURL()">
+							<button class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#settings" onclick="Action.updateURL()">
 								Settings
 							</button>
 						</div>
@@ -49,6 +49,16 @@
 							<button id="url-button" class="btn btn-sm btn-info" type="button" disabled="true" data-toggle="modal" data-target="#build-url" onclick="Action.updateURL()">
 								URL
 							</button>
+						</div>
+						<div class="col">
+							<div class="dropdown">
+								<button class="btn btn-sm btn-info dropdown-toggle" type="button" data-toggle="dropdown">
+									Libraries
+								</button>
+								<div class="dropdown-menu">
+									<!--<a class="dropdown-item" href="#">Action</a>-->
+								</div>
+							</div>
 						</div>
 						<div class="col">
 							<div class="dropdown">
@@ -61,12 +71,12 @@
 							</div>
 						</div>
 						<div class="col">
-							<div id="run-button" class="btn-group dropdown float-right">
-								<button id="output-mode" type="button" disabled="true" class="btn btn-secondary btn-md" onclick="Action.run()">
+							<div class="btn-group dropdown float-right">
+								<button id="run-button" type="button" disabled="true" class="btn btn-secondary btn-md" onclick="Action.run()">
 									<img class="output-mode-icon" src="icons/buttons/graph4.svg">
 									Sample
 								</button>
-								<button type="button" class="btn btn-secondary btn-md dropdown-toggle" data-toggle="dropdown">
+								<button id="output-mode-button" type="button" disabled="true" class="btn btn-secondary btn-md dropdown-toggle" data-toggle="dropdown">
 									<span class="caret"></span>
 								</button>
 								<div id="output-modes-menu" class="dropdown-menu">
@@ -102,7 +112,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-7">
+			<div class="col-6">
 				<div id="output-container" class="container-fluid">
 					<div class="row">
 						<div class="col">

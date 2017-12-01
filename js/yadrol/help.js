@@ -97,7 +97,7 @@ Help.tutorial = new Tour({
 		onShow: function(tour) { Action.setExpressionString('3d6'); }
 	},
 	{
-		element: "#output-mode",
+		element: "#run-button",
 		backdrop: true,
 		title: "Run the simulation",
 		content: "<p>To run the simulation, click this button.</p>",

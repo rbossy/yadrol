@@ -362,8 +362,10 @@ class Action {
 			SamplesCharter.createGraph();
 			RollOutput.rollRecords();
 			Action.addToHistory(expressionString);
+			/*
 			localStorage.setItem('run', 'true');
-			/*localStorage.setItem('global-scope', ValueConverter.valueString(yadrolApp.globalScope, yadrolApp.globalScope.variables));*/
+			localStorage.setItem('global-scope', ValueConverter.valueString(yadrolApp.globalScope, yadrolApp.globalScope.variables));
+			*/
 		}
 		catch (e) {
 			console.log(e);

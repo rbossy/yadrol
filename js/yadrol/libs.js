@@ -91,6 +91,63 @@ Libs.libsContent = [
 						'This library offers functions for resolving actions and combat turns, and useful mnemonics for difficulties and weapons damage.'
 					)
 				),
+				Element.col(
+					Element.card('default', 'Difficulty', 'Difficulties and Ranges',
+						Element.highlight('Difficulty.Easy'),
+						Element.highlight('Difficulty.Moderate'),
+						Element.highlight('Difficulty.Hard'),
+						Element.highlight('Difficulty.Formidable'),
+						Element.highlight('Difficulty.Mighty'),
+						Element.highlight('Difficulty.Thongorean'),
+						Element.highlight('Range.PointBlank'),
+						Element.highlight('Range.Close'),
+						Element.highlight('Range.Medium'),
+						Element.highlight('Range.Long'),
+						Element.highlight('Range.Distant'),
+						Element.highlight('Range.Extreme'),
+						'These are mnemonics for standard difficulties and ranges. Wherever a difficulty is required, these mnemonic hold appropriate number values.'
+					)
+				),
+				Element.col(
+					Element.card('default', 'Weapons', undefined,
+						Element.highlight('Weapon.Fist'),
+						Element.highlight('Weapon.Dagger'),
+						Element.highlight('Weapon.Sword'),
+						Element.highlight('Weapon.Axe'),
+						Element.highlight('Weapon.Club'),
+						Element.highlight('Weapon.Mace'),
+						Element.highlight('Weapon.Spear'),
+						Element.highlight('Weapon.Flail'),
+						Element.highlight('Weapon.ValkarthanSword'),
+						Element.highlight('Weapon.GreatAxe'),
+						Element.highlight('Weapon.Staff'),
+						Element.highlight('Weapon.Sling'),
+						Element.highlight('Weapon.ShortBow'),
+						Element.highlight('Weapon.Bow'),
+						Element.highlight('Weapon.Crossbow'),
+						Element.highlight('Weapon.Warbow'),
+						'These mnemonics are functions that emulate weapon damages. Wherever a weapon damage is required, these mnemonics hold appropriate functions.'
+					)
+				)
+			),
+			Element.row('help-row',
+				Element.col(
+					Element.card('default', 'Action resilution', undefined,
+						Element.highlight('Resolve($Ability$, $Difficulty$)'),
+						'The <span class="cm-IDENTIFIER">Resolve</span> function rolls the appropriate dice to resolve an action, then returns a boolean indicating the success of the action.',
+						'The parameters <em>Ability</em> and <em>Difficulty</em> represent respectively the score of the character in the appropriate ability, and the difficulty of the action.',
+						'Difficulty or range mnemonics can be used for <em>Difficulty</em>. If <em>Difficulty</em> is omitted, then the default is a Moderate difficulty.'
+					)
+				),
+				Element.col(
+					Element.card('default', 'Combat strike', undefined,
+						Element.highlight('Attack($Melee$, $Defense$, $Damage$, $Difficulty$)'),
+						'The <span class="cm-IDENTIFIER">Attack</span> function simulates a strike from a character, then returns the amount of damage (zero if the strike fails).',
+						'The <em>Melee</em> and <em>Defense</em> parameters represent respectively the score of the character in Melee (or Shoot) end the score of the opponent in Defense.',
+						'The <em>Weapon</em> parameter should be a function that returns the amount of damage if the strike succeeds. By default the character strikes with a sword.',
+						'The <em>Difficulty</em> parameter represents the difficulty, by default it is Moderate.'
+					)
+				)
 			)
 		];
 	}

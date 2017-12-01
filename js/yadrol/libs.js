@@ -30,11 +30,11 @@ Libs.libsContent = [
 				Element.col(
 					Element.card('default', '', undefined,
 					)
-				)
-			)
+				),
+			),
 		];
 	}
-}
+},
 */
 {
 	title: 'Exploding & Imploding dice',
@@ -78,5 +78,21 @@ Libs.libsContent = [
 			)
 		];
 	}
-}
+},
+{
+	title: 'Barbarians of Lemuria',
+	address: 'lib/BoL.yadrol',
+	body: function() {
+		return [
+			Element.row('help-row',
+				Element.col(
+					Element.card('default', 'About', undefined,
+						'Barbarians of Lemuria is an excellent Sword & Sorcery game by Simon Washbourne with a simple resolution mechanics.',
+						'This library offers functions for resolving actions and combat turns, and useful mnemonics for difficulties and weapons damage.'
+					)
+				),
+			)
+		];
+	}
+},
 ];

@@ -1,0 +1,46 @@
+Difficulty = {
+  Easy: 1,
+  Moderate: 0,
+  Hard: -1,
+  Formidable: -2,
+  Mighty: -3,
+  Thongorean: -4
+};
+
+Range = {
+  PointBlank: Difficulty.Easy,
+  Close: Difficulty.Moderate,
+  Medium: Difficulty.Hard,
+  Long: Difficulty.Formidable,
+  Distant: Difficulty.Mighty	,
+  Extreme: Difficulty.Thongorean
+};
+
+Weapon = {
+  Fist: fun() { d3 },
+  Dagger: fun() { d6 + 1 },
+  Sword: fun() { d4 },
+  Axe: fun() { d6 + 1 },
+  Club: fun() { d6 - 1 },
+  Mace: fun() { d6 },
+  Spear: fun() { d6 },
+  Flail: fun() { d8 },
+  ValkarthanSword: fun() { d8 },
+  GreatAxe: fun() { d8 },
+  Staff: fun() { d6 },
+  Sling: fun() { d4 },
+  ShortBow: fun() { d6 },
+  Bow: fun() { d6 + 1 },
+  Crossbow: fun() { d8 },
+  Warbow: fun() { d10 }
+};
+
+Resolve = fun(Ability, Diff: Difficulty.Moderate) {
+  2d6 + Ability + Diff >= 9
+};
+
+Attack = fun(Melee, Defense, Damage: Weapon.Sword, Diff: Difficulty.Moderate) {
+  if Resolve(Melee, Diff - Defense)
+  then Damage()
+  else 0
+};

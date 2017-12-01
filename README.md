@@ -26,4 +26,6 @@ The `server.py` script requires Python >= 2.7, though you can use any other HTTP
 
 Be careful not to expose your `.git/` directory since it may contain sensitive information.
 
-## Enjoy!
+## Contribute
+
+Use [GitHub's issues](https://github.com/phatonin/yadrol/issues) to ask for help, suggestions, feature requests, or just praises to the author.

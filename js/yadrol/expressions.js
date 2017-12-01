@@ -228,6 +228,10 @@ class Location {
 	static none() {
 		return Location.NONE;
 	}
+
+	toString() {
+		return this.source + ':' + this.begin.line + ':' + this.begin.offset;
+	}
 }
 Location.NONE = new Location('<<none>>', new Position(0, 0, 0), new Position(0, 0, 0));
 
@@ -1112,7 +1116,7 @@ class Dice extends BinaryOperator {
 			return diceType.call([n], new YadrolMap());
 		}
 		if (n <= 0) {
-			throw 'invalid dice number';
+			throw new Error('invalid dice number');
 		}
 		var result = [];
 		var roller = Die.ROLLER[type]
@@ -1411,20 +1415,20 @@ class Subscript extends Expression {
 		var subType = valueType(subscript);
 		switch (subType) {
 			case 'undefined': {
-				throw 'invalid subscript: undefined';
+				throw new Error('invalid subscript: undefined at ' + this.location);
 			}
 			case 'string': {
 				if (valueType(container) != 'map') {
-					throw 'invalid container for string subscript';
+					throw new Error('invalid container for string subscript at ' + this.location);
 				}
 				return Subscript.reassignOwner(container, container.get(subscript));
 			}
 			case 'boolean': {
-				throw 'invalid subscript: ' + subscript;
+				throw new Error('invalid subscript: ' + subscript);
 			}
 			case 'number': {
 				if (valueType(container) != 'list') {
-					throw 'invalid container for number subscript';
+					throw new Error('invalid container for number subscript at ' + this.location);
 				}
 				if (subscript < 0) {
 					subscript += container.length;

@@ -263,7 +263,7 @@ class RecordLogger {
 
 	_record(ctor, name, expression, type, scope) {
 		if (this.currentOutputRecord !== undefined) {
-			throw new Error('nested output');
+			throw new YadrolEvaluationError(expression, 'nested output\n' + expression.errorString() + '\nnested in ' + this.currentOutputRecord.expression.errorString());
 		}
 		var rec = new ctor(name, expression, type);
 		this.currentOutputRecord = rec;
@@ -442,6 +442,13 @@ class SampleRecord extends OutputRecord {
 	}
 }
 
+class YadrolEvaluationError extends Error {
+	constructor(expression, ...args) {
+		super(...args);
+		this.expression = expression;
+	}
+}
+
 class Expression {
 	constructor(location, prec, type) {
 		if (!(location instanceof Location)) {
@@ -468,7 +475,11 @@ class Expression {
 	}
 
 	assign(scope, value) {
-		throw 'cannot assign';
+		throw new YadrolEvaluationError(this, 'cannot assign to ' + this.errorString());
+	}
+
+	errorString() {
+		return '(' + this.location + ') ' + this.toString();
 	}
 
 	toString(stringer, precedence) {
@@ -651,7 +662,7 @@ class UnaryOperator extends Expression {
 	}
 
 	compute(operand) {
-		throw 'unimplemented compute(operand)';
+		throw new Error('unimplemented compute(operand)');
 	}
 
 	_toStringNoParen(stringer) {
@@ -682,7 +693,7 @@ class BinaryOperator extends Expression {
 	}
 
 	compute(left, right) {
-		throw 'unimplemented compute(left, right)';
+		throw new Error('unimplemented compute(left, right)');
 	}
 
 	_toStringNoParen(stringer) {
@@ -714,7 +725,7 @@ class Append extends Expression {
 				}
 				break;
 			}
-			default: throw new Error('cannot append to: ' + target);
+			default: throw new YadrolEvaluationError(this, 'cannot append to ' + this.target.errorString());
 		}
 		return target;
 	}
@@ -1020,7 +1031,7 @@ class Count extends UnaryOperator {
 			case 'undefined': return 0;
 			case 'list': return operand.length;
 			case 'map': return operand.size;
-			case 'function': throw 'cannot count function';
+			case 'function': throw new YadrolEvaluationError(this, 'cannot count function ' + this.operand.errorString());
 			default: return 1;
 		}
 	}
@@ -1072,7 +1083,7 @@ class Die extends UnaryOperator {
 	compute(operand) {
 		var type = valueType(operand);
 		if (!Die.ROLLER.hasOwnProperty(type)) {
-			throw new Error('cannot roll ' + type);
+			throw new YadrolEvaluationError(this, 'cannot roll ' + type + ': ' + this.operand.errorString());
 		}
 		var result = Die.ROLLER[type](operand);
 		this.recordLogger.recordDice(operand, [result]);
@@ -1110,13 +1121,13 @@ class Dice extends BinaryOperator {
 	compute(n, diceType) {
 		var type = valueType(diceType);
 		if (!Die.ROLLER.hasOwnProperty(type)) {
-			throw 'cannot roll ' + type;
+			throw new YadrolEvaluationError(this, 'cannot roll ' + type + ': ' + this.right.errorString());
 		}
 		if ((type === 'function') && (diceType.args.length > 0)) {
 			return diceType.call([n], new YadrolMap());
 		}
 		if (n <= 0) {
-			throw new Error('invalid dice number');
+			throw new YadrolEvaluationError(this, 'invalid dice number ' + n + ': ' + this.right.errorString());
 		}
 		var result = [];
 		var roller = Die.ROLLER[type]
@@ -1170,7 +1181,7 @@ class ForLoop extends Expression {
 				result.append = ForLoop.mapAppend;
 				return result;
 			}
-			default: throw 'illegal loop: ' + container;
+			default: throw new YadrolEvaluationError(this, 'illegal loop container: ' + this.container.errorString());
 		}
 	}
 
@@ -1415,20 +1426,20 @@ class Subscript extends Expression {
 		var subType = valueType(subscript);
 		switch (subType) {
 			case 'undefined': {
-				throw new Error('invalid subscript: undefined at ' + this.location);
+				throw new YadrolEvaluationError(this, 'invalid subscript undefined: ' + this.subscript.errorString());
 			}
 			case 'string': {
 				if (valueType(container) != 'map') {
-					throw new Error('invalid container for string subscript at ' + this.location);
+					throw new YadrolEvaluationError(this, 'invalid container for string subscript: ' + this.errorString());
 				}
 				return Subscript.reassignOwner(container, container.get(subscript));
 			}
 			case 'boolean': {
-				throw new Error('invalid subscript: ' + subscript);
+				throw new YadrolEvaluationError(this, 'invalid subscript ' + subscript + ': ' + this.subscript.errorString());
 			}
 			case 'number': {
 				if (valueType(container) != 'list') {
-					throw new Error('invalid container for number subscript at ' + this.location);
+					throw new YadrolEvaluationError(this, 'invalid container for number subscript: ' + this.errorString());
 				}
 				if (subscript < 0) {
 					subscript += container.length;
@@ -1440,7 +1451,7 @@ class Subscript extends Expression {
 				return subscript.map(function(i) { return this._compute(container, i); }, this);
 			}
 			case 'function': {
-				throw 'invalid subscript ' + subscript;
+				throw new YadrolEvaluationError(this, 'invalid subscript (function): ' + this.subscript.errorString());
 			}
 		}
 	}
@@ -1455,21 +1466,21 @@ class Subscript extends Expression {
 		var subType = valueType(subscript);
 		switch (subType) {
 			case 'undefined': {
-				throw 'invalid subscript undefined';
+				throw new YadrolEvaluationError(this, 'invalid subscript undefined: ' + this.subscript.errorString());
 			}
 			case 'string': {
 				if (valueType(container) != 'map') {
-					throw 'invalid container for string subscript';
+					throw new YadrolEvaluationError(this, 'invalid container for string subscript: ' + this.errorString());
 				}
 				container.set(subscript, value);
 				break;
 			}
 			case 'boolean': {
-				throw 'invalid subscript ' + subscript;
+				throw new YadrolEvaluationError(this, 'invalid subscript ' + subscript + ': ' + this.subscript.errorString());
 			}
 			case 'number': {
 				if (valueType(container) != 'list') {
-					throw 'invalid container for number subscript';
+					throw new YadrolEvaluationError(this, 'invalid container for number subscript: ' + this.errorString());
 				}
 				if (subscript < 0) {
 					subscript += container.length;
@@ -1487,7 +1498,7 @@ class Subscript extends Expression {
 				break;
 			}
 			case 'function': {
-				throw 'invalid subscript ' + subscript;
+				throw new YadrolEvaluationError(this, 'invalid subscript (function): ' + this.subscript.errorString());
 			}
 		}
 	}
@@ -1579,12 +1590,11 @@ class Import extends Expression {
 	}
 
 	static _retrieveInput(address) {
-		console.log(address);
 		var xmlHttp = new XMLHttpRequest();
 		xmlHttp.open('GET', address, false); /* false for synchronous request */
 		xmlHttp.send(null);
 		if (xmlHttp.status != 200) {
-			throw new Error(xmlHttp.statusText);
+			throw new YadrolEvaluationError(this, 'could not retrieve import address ' + address + ', server returned: ' + xmlHttp.statusText);
 		}
 		return xmlHttp.responseText;
 	}

@@ -417,6 +417,7 @@ class Action {
 			var disable = (expr === '');
 			$('#run-button').attr('disabled', disable);
 			$('#output-mode-button').attr('disabled', disable);
+			$('#url-button').attr('disabled', disable);
 			localStorage.setItem('expr', expr);
 			localStorage.removeItem('run');
 		});

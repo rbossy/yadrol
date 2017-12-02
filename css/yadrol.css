@@ -36,12 +36,19 @@ html {
     margin-bottom: 3mm;
 }
 
+#run-button {
+    width: 8em !important;
+    height: 2.5em !important;
+}
+
 #output-mode-button {
-    width: 3em !important;
+    width: 2em !important;
+    height: 2.5em !important;
 }
 
 #toolbar button {
-    width: 6em;
+    width: 4em;
+    height: 2em;
 }
 
 .history-close-button {

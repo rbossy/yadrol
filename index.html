@@ -8,6 +8,7 @@
 	<link href="css/codemirror.css" rel="stylesheet">
 	<link href="css/yadrol.css" rel="stylesheet">
 	<link href="css/yadrol-editor.css" rel="stylesheet">
+    <link href="css/entypo-plus.css" rel="stylesheet">
 	<script src="js/yadrol/values.js"></script>
 	<script src="js/yadrol/yadrol-parser.js"></script>
 	<script src="js/yadrol/parseutils.js"></script>
@@ -32,7 +33,9 @@
 			</div>
 			<div class="col">
 				<div class="btn-group float-right" role="group">
-					<button type="button" class="btn" data-toggle="modal" data-target="#about" data-toggle="tooltip" data-placement="bottom" title="Credits">About</button>
+					<button type="button" class="btn" data-toggle="modal" data-target="#about" data-toggle="tooltip" data-placement="bottom" title="About Yadrol - Credits">
+						<span class="icon-info-with-circle"></span>
+					</button>
 				</div>
 			</div>
 		</div>
@@ -42,19 +45,19 @@
 				<div id="input-container" class="container-fluid">
 					<div id="toolbar" class="row">
 						<div class="col">
-							<button class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#settings" onclick="Action.updateURL()">
-								Settings
+							<button class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#settings" onclick="Action.updateURL()" data-toggle="tooltip" title="Settings">
+								<span class="icon-cog"></span>
 							</button>
 						</div>
 						<div class="col">
-							<button id="url-button" class="btn btn-sm btn-info" type="button" disabled="true" data-toggle="modal" data-target="#build-url" onclick="Action.updateURL()">
-								URL
+							<button id="url-button" class="btn btn-sm btn-info" type="button" disabled="true" data-toggle="modal" data-target="#build-url" data-toggle="tooltip" title="Shareable URL" onclick="Action.updateURL()">
+								<span class="icon-link"></span>
 							</button>
 						</div>
 						<div class="col">
-							<div class="dropdown">
+							<div class="dropdown" data-toggle="tooltip" title="Import library">
 								<button class="btn btn-sm btn-info dropdown-toggle" type="button" data-toggle="dropdown">
-									Libraries
+									<span class="icon-bowl"></span>
 								</button>
 								<div id="libraries" class="dropdown-menu">
 									<!--<a class="dropdown-item" href="#">Action</a>-->
@@ -62,16 +65,16 @@
 							</div>
 						</div>
 						<div class="col">
-							<div class="dropdown">
+							<div class="dropdown" data-toggle="tooltip" title="History">
 								<button id="history-button" class="btn btn-sm btn-info dropdown-toggle" type="button" data-toggle="dropdown" disabled="disabled">
-									History
+									<span class="icon-back-in-time"></span>
 								</button>
 								<div id="history" class="dropdown-menu">
 									<!--<a class="dropdown-item" href="#">Action</a>-->
 								</div>
 							</div>
 						</div>
-						<div class="col">
+						<div class="col-4">
 							<div class="btn-group dropdown float-right">
 								<button id="run-button" type="button" disabled="true" class="btn btn-secondary btn-md" onclick="Action.run()">
 									<img class="output-mode-icon" src="icons/buttons/graph4.svg">
@@ -256,6 +259,9 @@
 					<p>
 						<img height="40ex" src="icons/dice/d8.svg"> <img height="40ex" src="icons/dice/d10.svg"> <img height="40ex" src="icons/dice/d12.svg"> <img height="40ex" src="icons/dice/d20.svg"> by <a target="_new" href="https://thenounproject.com/mvalstar/">Mike Valstar</a> [<a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC 3.0 BY</a>].
 					</p>
+					<p>
+						<span class="icon-info-with-circle icon-cog icon-link icon-bowl icon-back-in-time"></span> from <a href="http://www.entypo.com/">Entypo+</a> collection by <a href="http://www.danielbruce.se/">Daniel Bruce</a> [CC BY-SA 4.0].
+					</p>
 					<hr>
 					<h4>Libraries</h4>
 					<p>
@@ -266,6 +272,9 @@
 					</p>
 					<p>
 						Layout was made this neat, thanks to <a target="_new" href="http://getbootstrap.com/">Bootstrap</a> by the <a href="https://github.com/orgs/twbs/people">Bootstrap core team</a> [<a href="https://github.com/twbs/bootstrap/blob/master/LICENSE">MIT license</a>].
+					</p>
+					<p>
+						The Minty theme comes from the <a href="https://bootswatch.com/">Bootswatch</a> collection by <a href="https://thomaspark.co/">Thomas Park</a> [<a href="https://github.com/thomaspark/bootswatch/blob/master/LICENSE">MIT license</a>].
 					</p>
 					<p>
 						Beautiful charts rendered with <a href="http://plottablejs.org/">Plottable</a> by <a href="https://www.palantir.com/">Palantir Technologies</a> [<a href="https://github.com/palantir/plottable/blob/develop/LICENSE">MIT license</a>] and <a href="https://d3js.org/">d3js</a> by <a href="https://bost.ocks.org/mike/">Mike Bostock</a> [<a href="https://github.com/d3/d3/blob/master/LICENSE">BSD 3-clause license</a>].

@@ -45,18 +45,13 @@
 				<div id="input-container" class="container-fluid">
 					<div id="toolbar" class="row">
 						<div class="col">
-							<button class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#settings" onclick="Action.updateURL()" data-toggle="tooltip" title="Settings">
+							<button class="btn btn-sm btn-primary" type="button" data-toggle="modal" data-target="#settings" onclick="Action.updateURL()" data-toggle="tooltip" title="Settings">
 								<span class="icon-cog"></span>
 							</button>
 						</div>
 						<div class="col">
-							<button id="url-button" class="btn btn-sm btn-info" type="button" disabled="true" data-toggle="modal" data-target="#build-url" data-toggle="tooltip" title="Shareable URL" onclick="Action.updateURL()">
-								<span class="icon-link"></span>
-							</button>
-						</div>
-						<div class="col">
 							<div class="dropdown" data-toggle="tooltip" title="Import library">
-								<button class="btn btn-sm btn-info dropdown-toggle" type="button" data-toggle="dropdown">
+								<button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
 									<span class="icon-bowl"></span>
 								</button>
 								<div id="libraries" class="dropdown-menu">
@@ -66,13 +61,18 @@
 						</div>
 						<div class="col">
 							<div class="dropdown" data-toggle="tooltip" title="History">
-								<button id="history-button" class="btn btn-sm btn-info dropdown-toggle" type="button" data-toggle="dropdown" disabled="disabled">
+								<button id="history-button" class="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown" disabled="disabled">
 									<span class="icon-back-in-time"></span>
 								</button>
 								<div id="history" class="dropdown-menu">
 									<!--<a class="dropdown-item" href="#">Action</a>-->
 								</div>
 							</div>
+						</div>
+						<div class="col">
+							<button id="url-button" class="btn btn-sm btn-primary" type="button" disabled="true" data-toggle="modal" data-target="#build-url" data-toggle="tooltip" title="Shareable URL" onclick="Action.updateURL()">
+								<span class="icon-link"></span>
+							</button>
 						</div>
 						<div class="col-4">
 							<div class="btn-group dropdown float-right">
@@ -108,10 +108,18 @@
 					<div id="bottom-toolbar" class="row">
 						<div id="help-buttons" class="col">
 							<div class="btn-group" role="group">
-								<button type="button" class="btn btn-sm" onclick="Help.startTutorial()">Tutorial</button>
-								<button type="button" class="btn btn-sm" onclick="Help.tableofcontents('Recipes', Help.recipesContent)">Recipes</button>
-								<button type="button" class="btn btn-sm" onclick="Help.tableofcontents('Libraries', Libs.libsContent)">Libraries</button>
-								<button type="button" class="btn btn-sm" onclick="Help.tableofcontents('Reference', Help.referenceContent)">Reference</button>
+								<button type="button" class="btn btn-sm btn-info" onclick="Help.startTutorial()">
+									Tutorial
+								</button>
+								<button type="button" class="btn btn-sm btn-info" onclick="Help.tableofcontents('Recipes', Help.recipesContent)">
+									Recipes
+								</button>
+								<button type="button" class="btn btn-sm btn-info" onclick="Help.tableofcontents('Libraries', Libs.libsContent)">
+									Libraries
+								</button>
+								<button type="button" class="btn btn-sm btn-info" onclick="Help.tableofcontents('Reference', Help.referenceContent)">
+									Reference
+								</button>
 							</div>
 						</div>
 					</div>
@@ -126,15 +134,15 @@
 									<div class="col"></div>
 									<div class="col">
 										<div id="y-button-group" class="btn-group" data-toggle="buttons">
-											<label class="btn btn-sm btn-info active">
+											<label class="btn btn-sm btn-primary active">
 												<input type="radio" name="y-value" onchange="Action.setY('relativeAtLeast')" autocomplete="off" checked>
 												At Least
 											</label>
-											<label class="btn btn-sm btn-info">
+											<label class="btn btn-sm btn-primary">
 												<input type="radio" name="y-value" onchange="Action.setY('relative')" autocomplete="off">
 												Exact
 											</label>
-											<label class="btn btn-sm btn-info">
+											<label class="btn btn-sm btn-primary">
 												<input type="radio" name="y-value" onchange="Action.setY('relativeAtMost')" autocomplete="off">
 												At Most
 											</label>
@@ -143,15 +151,15 @@
 									<div class="col"></div>
 									<div class="col">
 										<div id="centrum-button-group" class="btn-group" data-toggle="buttons">
-											<label class="btn btn-sm btn-info active">
+											<label class="btn btn-sm btn-primary active">
 												<input type="radio" name="centrum-value" onchange="Action.setCentrum('mean')" autocomplete="off" checked>
 												Mean
 											</label>
-											<label class="btn btn-sm btn-info">
+											<label class="btn btn-sm btn-primary">
 												<input type="radio" name="centrum-value" onchange="Action.setCentrum('mode')" autocomplete="off">
 												Mode
 											</label>
-											<label class="btn btn-sm btn-info">
+											<label class="btn btn-sm btn-primary">
 												<input type="radio" name="centrum-value" onchange="Action.setCentrum('median')" autocomplete="off">
 												Median
 											</label>

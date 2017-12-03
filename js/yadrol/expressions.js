@@ -1401,7 +1401,7 @@ class Sign extends UnaryOperator {
 }
 Sign.PLUS = new OperatorSymbol('+', Precedence.SIGN, Precedence.BEST, false);
 Sign.PLUS.compute = function(operand) { return operand; }
-Sign.MINUS = new OperatorSymbol('', Precedence.SIGN, Precedence.BEST, false);
+Sign.MINUS = new OperatorSymbol('-', Precedence.SIGN, Precedence.BEST, false);
 Sign.MINUS.compute = function(operand) { return -operand; }
 
 class Subscript extends Expression {

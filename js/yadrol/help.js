@@ -147,13 +147,6 @@ Help.tutorial = new Tour({
 		onHide: function(tour) { $('#output-modes-menu').hide(); },
 	},
 	{
-		element: "#history-button",
-		backdrop: true,
-		title: "History of expressions.",
-		content: "<p>Yadrol keeps an history of simulated rolls. This button gives you access to your previous expressions.</p>",
-		placement: 'bottom'
-	},
-	{
 		element: "#url-button",
 		backdrop: true,
 		title: "Share your simulations.",
@@ -161,15 +154,37 @@ Help.tutorial = new Tour({
 		placement: 'right'
 	},
 	{
+		element: "#history-button",
+		backdrop: true,
+		title: "History of expressions.",
+		content: "<p>Yadrol keeps an history of simulated rolls. This button recalls your previous expressions.</p>",
+		placement: 'right'
+	},
+	{
+		element: "#library-button",
+		backdrop: true,
+		title: "Import Libraries.",
+		content: "<p>This button allows you to import predefined libraries of mechanics.</p>",
+		placement: 'right'
+	},
+	{
+		element: "#settings-button",
+		backdrop: true,
+		title: "Settings.",
+		content: "<p>Here are some settings to customize Yadrol.</p>",
+		placement: 'right'
+	},
+	{
 		element: "#help-buttons",
 		backdrop: true,
 		title: "Help!",
-		content: "<p>These buttons show help pages. <em>Recipes</em> are expressions for the most used mechanics, and <em>Reference</em> contains all Yadrol constructs.</p>",
+		content: "<p>These buttons show help pages. <em>Tutorial</em> invokes this tour. <em>Recipes</em> are expressions for the most used mechanics. <em>Libraries</em> contains help on predefined libraries. And <em>Reference</em> contains all Yadrol constructs.</p>",
 		placement: 'right'
 	},
 	{
 		orphan: true,
 		backdrop: true,
+	   	template: '<div class="popover" role="tooltip"> <div class="arrow"></div> <h3 class="popover-header bg-info"></h3> <div class="popover-body"></div> <div class="popover-navigation"> <div class="btn-group"> <button class="btn btn-sm btn-info" data-role="prev">&laquo; Prev</button> <button class="btn btn-sm btn-info" data-role="next">Next &raquo;</button> <button class="btn btn-sm btn-secondary" data-role="pause-resume" data-pause-text="Pause" data-resume-text="Resume">Pause</button> </div> <button class="btn btn-sm btn-info" data-role="end">Le\'s go!</button> </div> </div>',
 		title: "That's it! And now?",
 		content: '<p>This is the end of the Yadrol introduction tutorial.</p> <p><strong>Enjoy!</strong></p>'
 	}

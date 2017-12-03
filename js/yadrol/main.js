@@ -139,10 +139,36 @@ class RollOutput {
 		);
 	}
 
+	static diceIcon(diceType, r) {
+		return '<img height="60px" src="icons/dice/d'+diceType+'_'+r+'.svg">'
+	}
+
+	static iconDice100(drec) {
+		var col = Element.col();
+		for (var r of drec.result) {
+			var tens = r === 100 ? 0 : Math.floor(r / 10);
+			var units = r % 10;
+			col.append(
+				RollOutput.diceIcon('10', tens),
+				RollOutput.diceIcon('10', units)
+			);
+		}
+		return Element.row('dice-row', col);
+	}
+
+	static iconDiceFudge(drec) {
+		var col = Element.col();
+		for (var r of drec.result) {
+			var face = r === 0 ? '0' : (r > 0 ? '+' : '-');
+			col.append(RollOutput.diceIcon('F', face));
+		}
+		return Element.row('dice-row', col);
+	}
+
 	static iconDice(drec) {
 		var col = Element.col();
 		for (var r of drec.result) {
-			col.append('<img height="60px" src="icons/dice/d'+drec.diceType+'_'+r+'.svg">');
+			col.append(RollOutput.diceIcon(drec.diceType, r));
 		}
 		return Element.row('dice-row', col);
 	}
@@ -155,11 +181,16 @@ class RollOutput {
 		if (valueType(drec.diceType) === 'function') {
 			return RollOutput.silentDice(drec);
 		}
+		if (ValueComparator.equal(drec.diceType, [-1, 0, 1]) || ValueComparator.equal(drec.diceType, [-1, -1, 0, 0, 1, 1])) {
+			return RollOutput.iconDiceFudge(drec);
+		}
 		switch (drec.diceType) {
 			case 4: case 6: case 8: case 10: case 12: case 20:
-			return RollOutput.iconDice(drec);
+				return RollOutput.iconDice(drec);
+			case 100:
+				return RollOutput.iconDice100(drec);
 			default:
-			return RollOutput.defaultDice(drec);
+				return RollOutput.defaultDice(drec);
 		}
 	}
 

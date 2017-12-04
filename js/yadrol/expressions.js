@@ -1016,7 +1016,7 @@ class Convert extends Expression {
 	}
 
 	_toStringNoParen(stringer) {
-		stringer.keyword(this.type).space().expression(this.operand, Precedence.SUBSCRIPT);
+		stringer.keyword(this.nativeType).space().expression(this.operand, Precedence.SUBSCRIPT);
 	}
 }
 

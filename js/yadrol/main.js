@@ -49,7 +49,7 @@ class Element {
 				$('<h5></h5>').text(title)
 			);
 		if (subtitle) {
-			header.append($('<h6></h6>').text(subtitle));
+			header.append($('<h6></h6>').html(subtitle));
 		}
 		return $('<div class="card border-'+klass+'"></div>')
 			.append(
@@ -198,7 +198,7 @@ class RollOutput {
 		var klass = first ? ' first-roll-record' : '';
 		return Element.row('roll-record' + klass,
 			Element.col(
-				Element.card('success', rec.name, yadrolApp.valueString(rec.result), ...rec.diceRecords.map(RollOutput.diceRecord))
+				Element.card('success', rec.name, yadrolApp.valueString(rec.result).replace(/\n/g, '\n<br>').replace(/ /g, '&nbsp;'), ...rec.diceRecords.map(RollOutput.diceRecord))
 			)
 		);
 	}

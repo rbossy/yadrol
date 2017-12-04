@@ -24,13 +24,49 @@ var Precedence = {
 }
 
 class ExpressionStringer {
-	constructor(scope) {
+	constructor(scope, indentUnit = '    ', newline = '\n') {
 		this.result = '';
 		this.scope = scope;
+		this.indentUnit = indentUnit;
+		this.newline = newline;
+		this.indent = '';
+	}
+
+	_indent() {
+		this._append(this.indent);
+	}
+
+	_redent() {
+		this.indent += this.indentUnit;
+	}
+
+	_undent() {
+		this.indent = this.indent.slice(0, -(this.indentUnit.length));
 	}
 
 	_append(s) {
 		this.result += s;
+	}
+
+	_newline() {
+		this._append(this.newline);
+	}
+
+	openObject() {
+		this._newline();
+		this._redent();
+		this._indent();
+	}
+
+	nextItem() {
+		this._newline();
+		this._indent();
+	}
+
+	closeObject() {
+		this._newline();
+		this._undent();
+		this._indent();
 	}
 
 	lparen() {
@@ -162,6 +198,9 @@ class ExpressionStringer {
 	}
 
 	expressionMap(expressions, args) {
+		if (!args) {
+			this.openObject();
+		}
 		var first = true;
 		for (var entry of expressions.entries()) {
 			if (first) {
@@ -169,6 +208,9 @@ class ExpressionStringer {
 			}
 			else {
 				this.comma().space();
+				if (!args) {
+					this.nextItem();
+				}
 			}
 			this.identifier(entry[0]);
 			var value = entry[1];
@@ -179,6 +221,9 @@ class ExpressionStringer {
 				args = false;
 			}
 			this.colon().space().expression(value, Precedence.SEQUENCE);
+		}
+		if (!args) {
+			this.closeObject();
 		}
 		return this;
 	}

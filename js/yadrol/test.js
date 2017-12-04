@@ -360,7 +360,7 @@ $(document).ready(function() {
 	new TestLexer('"cool beer"', ["STR_START", "STR_CONST", "STR_END"]),
 	new TestLexer('"cool\\nbeer"', ["STR_START", "STR_CONST", "STR_NL", "STR_CONST", "STR_END"]),
 	new TestLexer('"cool and \\"cool\\""', ["STR_START", "STR_CONST", "STR_DQ", "STR_CONST", "STR_DQ", "STR_END"]),
-	new TestLexer('"cool{beer}"', ["STR_START", "STR_CONST", "STR_VAR", "STR_END"]),
+	new TestLexer('"cool{beer}"', ["STR_START", "STR_CONST", "STR_END"]),
 	new TestLexer('1+2', ['NUMBER', 'PLUS', 'NUMBER']),
 	new TestLexer('2d6+1', ['NUMBER', 'DICE_NUMBER', 'PLUS', 'NUMBER']),
 	new TestLexer('1*2==foo', ['NUMBER', 'MULT', 'NUMBER', 'NUM_COMP', 'IDENTIFIER'])
@@ -379,7 +379,7 @@ $(document).ready(function() {
 	new TestParseEvaluate('undef', 'native', undefined),
 	new TestParseEvaluate('""', 'native', ''),
 	new TestParseEvaluate('"foo"', 'native', 'foo'),
-	new TestParseEvaluate('v="foo"; "{v}"', 'native', 'foo'),
+	/*new TestParseEvaluate('v="foo"; "{v}"', 'native', 'foo'),*/
 	new TestParseEvaluate('false', 'native', false),
 	new TestParseEvaluate('true', 'native', true),
 	new TestParseEvaluate('0', 'native', 0),
@@ -438,6 +438,6 @@ $(document).ready(function() {
 	new TestParseAndString('Yd6'),
 	new TestParseAndString('YdX'),
 	new TestParseAndString('Yd type'),
- 	new TestParseAndString('x = {foo: true, bar: 42}; x["bar"]'),
+ 	new TestParseAndString('x = {\n    foo: true, \n    bar: 42\n}; x["bar"]'),
    ]).table();
 });

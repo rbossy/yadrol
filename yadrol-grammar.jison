@@ -88,9 +88,7 @@
 <string>"\""    this.popState(); return 'STR_END';
 <string>\\n     return 'STR_NL';
 <string>\\\"    return 'STR_DQ';
-<string>\\\{    return 'STR_LCURLY';
-<string>"{"[A-Z_a-z]\w*"}" return 'STR_VAR';
-<string>[^\\\"{]* return 'STR_CONST';
+<string>[^\\\"]* return 'STR_CONST';
 
 /lex
 
@@ -373,8 +371,6 @@ string
 stringElement
 : STR_NL { $$ = new Constant(Location.fromLexer(yy.sourceFile, @1), '\n'); }
 | STR_DQ { $$ = new Constant(Location.fromLexer(yy.sourceFile, @1), '"'); }
-| STR_LCURLY { $$ = new Constant(Location.fromLexer(yy.sourceFile, @1), '{'); }
-| STR_VAR { $$ = new Variable(Location.fromLexer(yy.sourceFile, @1), $1.slice(1, $1.length - 1)); }
 | STR_CONST { $$ = new Constant(Location.fromLexer(yy.sourceFile, @1), $1); }
 ;
 

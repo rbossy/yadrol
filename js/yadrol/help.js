@@ -333,6 +333,20 @@ Help.recipesContent = [
 			)
 		];
 	}
+},
+{
+	title: 'Advanced output',
+	body: function() {
+		return [
+			Element.row('help-row',
+				Element.col(
+					Element.card('info', 'D&D Character', 'Instantly roll a character',
+						Element.tryit('Ability = fun() { number (3d6) }\n---\n{ STR: Ability(), DEX: Ability(), CON: Ability(), INT: Ability(), WIS: Ability(), CHA: Ability() }', 'advanced')
+					)
+				)
+			)
+		];
+	}
 }
 ];
 Help.referenceContent = [

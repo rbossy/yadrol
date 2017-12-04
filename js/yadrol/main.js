@@ -77,7 +77,7 @@ class Element {
 					);
 					continue;
 				}
-				result.append(yadrolParser.lexer.yytext.replace('\n', '<br>'));
+				result.append(yadrolParser.lexer.yytext.replace('\n', '\n<br>'));
 				continue;
 			}
 			if (tokId === yadrolParser.symbols_.EOF) {

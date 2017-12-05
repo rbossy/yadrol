@@ -1222,8 +1222,8 @@ class ForLoop extends Expression {
 				return result;
 			}
 			case 'map': {
-				var result = new ForLoopMapResult();
-				result.append = ForLoop.mapAppend;
+				var result = new YadrolMap();
+				result.append = ForLoop._mapAppend;
 				return result;
 			}
 			default: throw new YadrolEvaluationError(this, 'illegal loop container: ' + this.container.errorString());
@@ -1249,6 +1249,7 @@ class ForLoop extends Expression {
 		var container = this.container.evaluate(scope);
 		var result = this._initResult(container);
 		var loopScope = this._createScope(scope);
+		console.log(loopScope);
 		var it = container.entries();
 		while (true) {
 			var n = it.next();

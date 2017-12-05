@@ -1016,7 +1016,7 @@ class GeneralComparison extends BinaryOperator {
 	}
 
 	compute(left, right) {
-		var c = compare(left, right);
+		var c = ValueComparator.compare(left, right);
 		return this.operator.compare(c);
 	}
 }
@@ -1249,7 +1249,6 @@ class ForLoop extends Expression {
 		var container = this.container.evaluate(scope);
 		var result = this._initResult(container);
 		var loopScope = this._createScope(scope);
-		console.log(loopScope);
 		var it = container.entries();
 		while (true) {
 			var n = it.next();

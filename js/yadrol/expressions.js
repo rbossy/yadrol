@@ -1161,7 +1161,7 @@ class Draw extends UnaryOperator {
 	}
 
 	_toStringNoParen(stringer) {
-		stringer.keyword('draw').space().keyword('from')
+		stringer.keyword('draw').space().keyword('from').space()
 		.expression(this.operand, this.operator.operandPrecedence);
 	}
 }
@@ -1182,7 +1182,7 @@ class DrawMultiple extends BinaryOperator {
 	_toStringNoParen(stringer) {
 		stringer.keyword('draw').space()
 		.expression(this.left, this.operator.operandPrecedence).space()
-		.keyword('from')
+		.keyword('from').space()
 		.expression(this.right, this.operator.operandPrecedence);
 	}
 }

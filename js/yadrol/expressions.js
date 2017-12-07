@@ -523,6 +523,10 @@ class Expression {
 		throw new YadrolEvaluationError(this, 'cannot assign to ' + this.errorString());
 	}
 
+	hasOutput() {
+		return false;
+	}
+
 	errorString() {
 		return '(' + this.location + ') ' + this.toString();
 	}
@@ -639,6 +643,15 @@ class ContainerConstructor extends Expression {
 		}
 	}
 
+	hasOutput() {
+		for (var e of this.values.entries()) {
+			if (e[1].hasOutput()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	_toStringNoParen(stringer) {
 		switch(this.nativeType) {
 			case 'list': stringer.lbracket().expressionList(this.values).rbracket(); break;
@@ -664,6 +677,15 @@ class Lambda extends Expression {
 
 	nativeEvaluator(scope) {
 		return new YadrolFunction(scope, this.args.map(function(e) { return e.evaluate(scope); }), this.body);
+	}
+
+	hasOutput() {
+		for (var e of this.args.entries()) {
+			if (e[1].hasOutput()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	_toStringNoParen(stringer) {
@@ -710,6 +732,10 @@ class UnaryOperator extends Expression {
 		throw new Error('unimplemented compute(operand)');
 	}
 
+	hasOutput() {
+		return this.operand.hasOutput();
+	}
+
 	_toStringNoParen(stringer) {
 		stringer.unaryOperator(this.operator.symbol, this.operand, this.operator.operandPrecedence, this.operator.space);
 	}
@@ -739,6 +765,10 @@ class BinaryOperator extends Expression {
 
 	compute(left, right) {
 		throw new Error('unimplemented compute(left, right)');
+	}
+
+	hasOutput() {
+		return this.left.hasOutput() || this.right.hasOutput();
 	}
 
 	_toStringNoParen(stringer) {
@@ -773,6 +803,10 @@ class Append extends Expression {
 			default: throw new YadrolEvaluationError(this, 'cannot append to ' + this.target.errorString());
 		}
 		return target;
+	}
+
+	hasOutput() {
+		return this.target.hasOutput() || this.source.hasOutput();
 	}
 
 	_toStringNoParen(stringer) {
@@ -905,6 +939,10 @@ class BooleanAnd extends Expression {
 		return false;
 	}
 
+	hasOutput() {
+		return this.left.hasOutput() || this.right.hasOutput();
+	}
+
 	_toStringNoParen(stringer) {
 		stringer.expression(this.left, Precedence.NOT).space()
 		.operator('and').space()
@@ -924,6 +962,10 @@ class BooleanOr extends Expression {
 			return true;
 		}
 		return this.right.evaluate(scope, 'boolean');
+	}
+
+	hasOutput() {
+		return this.left.hasOutput() || this.right.hasOutput();
 	}
 
 	_toStringNoParen(stringer) {
@@ -959,6 +1001,20 @@ class Call extends Expression {
 		return fun.call(posArgs, namedArgs);
 	}
 
+	hasOutput() {
+		for (var e of this.posArgs) {
+			if (e.hasOutput()) {
+				return true;
+			}
+		}
+		for (var e of this.namedArgs.entries()) {
+			if (e[1].hasOutput()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	_toStringNoParen(stringer) {
 		stringer.expression(this.fun, Precedence.SUBSCRIPT)
 		.lparen()
@@ -985,6 +1041,10 @@ class Assign extends Expression {
 		var rvalue = this.rvalue.evaluate(scope);
 		this.lvalue.assign(scope, rvalue);
 		return rvalue;
+	}
+
+	hasOutput() {
+		return this.lvalue.hasOutput() || this.rvalue.hasOutput();
 	}
 
 	_toStringNoParen(stringer) {
@@ -1040,6 +1100,10 @@ class Conditional extends Expression {
 		return this.ifFalse.evaluate(scope);
 	}
 
+	hasOutput() {
+		return this.condition.hasOutput() || this.ifTrue.hasOutput() || this.ifFalse.hasOutput();
+	}
+
 	_toStringNoParen(stringer) {
 		stringer.keyword('if').space()
 		.expression(this.condition, Precedence.OR).space()
@@ -1058,6 +1122,10 @@ class Convert extends Expression {
 
 	nativeEvaluator(scope) {
 		return this.operand.evaluate(scope, this.nativeType);
+	}
+
+	hasOutput() {
+		return this.operand.hasOutput();
 	}
 
 	_toStringNoParen(stringer) {
@@ -1204,6 +1272,10 @@ class ForLoop extends Expression {
 		this.out = out;
 		this.container = container;
 		this.condition = condition;
+	}
+
+	hasOutput() {
+		return this.out.hasOutput() || this.container.hasOutput() || this.condition.hasOutput();
 	}
 
 	static _listAppend(key, value) {
@@ -1384,6 +1456,10 @@ class Repeat extends Expression {
 		return result;
 	}
 
+	hasOutput() {
+		return this.expression.hasOutput() || this.condition.hasOutput();
+	}
+
 	_toStringNoParen(stringer) {
 		if (this.conditionBefore) {
 			stringer.keyword('while').space()
@@ -1458,6 +1534,10 @@ class Subscript extends Expression {
 
 	nativeEvaluator(scope) {
 		return this._compute(this.container.evaluate(scope), this.subscript.evaluate(scope));
+	}
+
+	hasOutput() {
+		return this.container.hasOutput() || this.subscript.hasOutput();
 	}
 
 	static reassignOwner(container, value) {
@@ -1568,6 +1648,10 @@ class Output extends Expression {
 
 	nativeEvaluator(scope) {
 		this.selector.call(this, scope);
+	}
+
+	hasOutput() {
+		return true;
 	}
 
 	_toStringNoParen(stringer) {

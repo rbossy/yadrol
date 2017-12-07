@@ -1,0 +1,7 @@
+Suits = fun () { ["Clubs", "Diamonds", "Hearts", "Spades"] }
+;
+Values = fun() { (1 .. 10) << [ "Jake", "Queen", "King" ] }
+;
+Card = fun(value, suit) { { value: value, suit: suit } }
+;
+Deck = fun() { result = []; (((result << [Card(value, suit)]) for value in Values()) for suit in Suits()); result }

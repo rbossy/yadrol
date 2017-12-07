@@ -152,4 +152,38 @@ Libs.libsContent = [
 		];
 	}
 },
+{
+	title: 'Cards',
+	address: 'lib/cards.yadrol',
+	body: function() {
+		return [
+			Element.row('help-row',
+				Element.col(
+					Element.card('info', 'Suits and Values', undefined,
+						Element.highlight('Suits()'),
+						Element.highlight('Values()'),
+						'The function <span class="cm-IDENTIFIER">Suits</span> returns the list of the four suits represented as strings.',
+						'The function <span class="cm-IDENTIFIER">Values</span> returns a list of the thirteen values. The nominal values are represented as numbers from 1 to 10, and face values are represented as strings.'
+					)
+				),
+				Element.col(
+					Element.card('info', 'Cards and Decks', undefined,
+						Element.highlight('Card($value$, $suit$)'),
+						Element.highlight('Deck()'),
+						'The function <span class="cm-IDENTIFIER">Card</span> returns a card represented as a map with two entries. The entriy keys are <span class="cm-STR">"value"</span> and <span class="cm-STR">"suit"</span>.',
+						'The function <span class="cm-IDENTIFIER">Deck</span> returns a list of 52 cards.',
+					)
+				),
+				Element.col(
+					Element.card('info', 'Draw a card', 'from a shuffled deck',
+						Element.highlight('shuffle Deck()'),
+						'Creates a shuffled deck.',
+						Element.highlight('deck = shuffle Deck()\n---\ndraw from deck'),
+						'Shuffles a deck and draws one card. <span class="cm-IDENTIFIER">deck</span> has one fewer cards.'
+					)
+				)
+			),
+		];
+	}
+},
 ];

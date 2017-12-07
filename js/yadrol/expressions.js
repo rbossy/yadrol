@@ -1757,10 +1757,15 @@ class Variable extends Expression {
 		if (stringer.scope !== undefined) {
 			if (stringer.scope.has(this.name)) {
 				var value = stringer.scope.get(this.name);
-				if (valueType(value) != 'function') {
-					var valueExpr = ValueConverter._convertToExpression(stringer.scope, value);
-					stringer.expression(valueExpr, Precedence.ATOM);
-					return;
+				switch (valueType(value)) {
+					case 'undefined':
+					case 'boolean':
+					case 'string':
+					case 'number': {
+						var valueExpr = ValueConverter._convertToExpression(stringer.scope, value);
+						stringer.expression(valueExpr, Precedence.ATOM);
+						return;
+					}
 				}
 			}
 		}

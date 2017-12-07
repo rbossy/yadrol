@@ -75,6 +75,7 @@
 "local"		return 'SCOPE';
 "outer"		return 'SCOPE';
 "global"	return 'SCOPE';
+"this"    return 'THIS';
 "undef"		return 'UNDEF';
 "false"		return 'BOOLEAN';
 "true"		return 'BOOLEAN';
@@ -159,6 +160,9 @@ expression
 
 | SCOPE
   { $$ = new ScopeVariables(Location.fromLexer(yy.sourceFile, @1, @1), ScopeVariables[yytext.toUpperCase()]); }
+
+| THIS
+  { $$ = new This(Location.fromLexer(yy.sourceFile, @1, @1)); }
 
 | expression DOT IDENTIFIER
   { $$ = new Subscript(Location.fromLexer(yy.sourceFile, @1, @3), $1, new Constant(Location.fromLexer(yy.sourceFile, @3, @3), $3)); }

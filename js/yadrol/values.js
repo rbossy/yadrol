@@ -1,10 +1,11 @@
 'use strict';
 
 class Scope {
-	constructor(parent, variables) {
+	constructor(parent, variables, thisObject) {
 		this.parent = parent;
 		this.depth = parent == null ? 0 : parent.depth + 1;
 		this.variables = variables || new YadrolMap();
+		this.thisObject = thisObject;
 	}
 
 	_lookup(name) {
@@ -58,10 +59,7 @@ class YadrolFunction {
 		this._applyPositionalArgs(variables, posArgs);
 		this._applyNamedArgs(variables, namedArgs);
 		this._setDefaults(variables);
-		if (this.owner !== undefined) {
-			variables.set(YadrolFunction.OWNER_VARIABLE, this.owner);
-		}
-		return new Scope(this.parentScope, variables);
+		return new Scope(this.parentScope, variables, this.owner);
 	}
 
 	_setDefaults(variables) {
@@ -99,7 +97,6 @@ class YadrolFunction {
 		}
 	}
 }
-YadrolFunction.OWNER_VARIABLE = 'this';
 
 class YadrolMap extends Map {
 	constructor(iterable) {

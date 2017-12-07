@@ -1482,6 +1482,20 @@ class Repeat extends Expression {
 	}
 }
 
+class This extends Expression {
+	constructor(location) {
+		super(location, Precedence.ATOM, 'native');
+	}
+
+	nativeEvaluator(scope) {
+		return scope.thisObject;
+	}
+
+	_toStringNoParen(stringer) {
+		stringer.keyword('this');
+	}
+}
+
 class ScopeVariables extends Expression {
 	constructor(location, selector) {
 		super(location, selector.precedence, 'map', selector.getScopeVariables);

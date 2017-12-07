@@ -1115,7 +1115,7 @@ class DrawMultiple extends BinaryOperator {
 		stringer.keyword('draw').space()
 		.expression(this.left, this.operator.operandPrecedence).space()
 		.keyword('from')
-		.expression(this.operand, this.operator.operandPrecedence);
+		.expression(this.right, this.operator.operandPrecedence);
 	}
 }
 

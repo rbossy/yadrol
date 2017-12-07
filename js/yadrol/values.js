@@ -58,7 +58,9 @@ class YadrolFunction {
 		this._applyPositionalArgs(variables, posArgs);
 		this._applyNamedArgs(variables, namedArgs);
 		this._setDefaults(variables);
-		variables.set(YadrolFunction.OWNER_VARIABLE, this.owner);
+		if (this.owner !== undefined) {
+			variables.set(YadrolFunction.OWNER_VARIABLE, this.owner);
+		}
 		return new Scope(this.parentScope, variables);
 	}
 
@@ -131,7 +133,6 @@ var valueType = function(value) {
 		if (value instanceof YadrolFunction)
 			return 'function';
 	}
-	console.log(value);
 	throw new Error('unhandled data type: ' + value);
 }
 

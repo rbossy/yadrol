@@ -43,11 +43,16 @@ class Element {
 		return $('<ul></ul>').append(items.map(function(i) { return $('<li></li>').html(i); }));
 	}
 
-	static card(klass, title, subtitle, ...content) {
-		var header = $('<div class="card-header bg-'+klass+'"></div>')
-			.append(
-				$('<h5></h5>').text(title)
+	static card(klass, title, subtitle, close, ...content) {
+		var header = $('<div class="card-header bg-'+klass+'"></div>');
+		if (close) {
+			header.append(
+				$('<button type="button" class="close" onclick="$(this).parents(\'.card\').remove()">&times;</button>')
 			);
+		}
+		header.append(
+			$('<h5></h5>').text(title)
+		);
 		if (subtitle) {
 			header.append($('<h6></h6>').html(subtitle));
 		}
@@ -198,7 +203,7 @@ class RollOutput {
 		var klass = first ? ' first-roll-record' : '';
 		return Element.row('roll-record' + klass,
 			Element.col(
-				Element.card('success', rec.name, yadrolApp.valueString(rec.result).replace(/\n/g, '\n<br>').replace(/ /g, '&nbsp;'), ...rec.diceRecords.map(RollOutput.diceRecord))
+				Element.card('success', rec.name, yadrolApp.valueString(rec.result).replace(/\n/g, '\n<br>').replace(/ /g, '&nbsp;'), true, ...rec.diceRecords.map(RollOutput.diceRecord))
 			)
 		);
 	}

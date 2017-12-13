@@ -28,7 +28,7 @@ Libs.libsContent = [
 		return [
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', '', undefined,
+					Element.card('info', '', undefined, false,
 					)
 				),
 			),
@@ -43,7 +43,7 @@ Libs.libsContent = [
 		return [
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Exploding dice', undefined,
+					Element.card('info', 'Exploding dice', undefined, false,
 						Element.highlight('dX4'),
 						Element.highlight('dX6'),
 						Element.highlight('dX8'),
@@ -54,7 +54,7 @@ Libs.libsContent = [
 					)
 				),
 				Element.col(
-					Element.card('info', 'Wild dice', undefined,
+					Element.card('info', 'Wild dice', undefined, false,
 						Element.highlight('dXX4'),
 						Element.highlight('dXX6'),
 						Element.highlight('dXX8'),
@@ -65,7 +65,7 @@ Libs.libsContent = [
 					)
 				),
 				Element.col(
-					Element.card('info', 'Exploding-imploding dice', undefined,
+					Element.card('info', 'Exploding-imploding dice', undefined, false,
 						Element.highlight('dI4'),
 						Element.highlight('dI6'),
 						Element.highlight('dI8'),
@@ -86,13 +86,13 @@ Libs.libsContent = [
 		return [
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'About', undefined,
+					Element.card('info', 'About', undefined, false,
 						'Barbarians of Lemuria is an excellent Sword & Sorcery game by Simon Washbourne with a simple resolution mechanics.',
 						'This library offers functions for resolving actions and combat turns, and useful mnemonics for difficulties and weapons damage.'
 					)
 				),
 				Element.col(
-					Element.card('info', 'Difficulty', 'Difficulties and Ranges',
+					Element.card('info', 'Difficulty', 'Difficulties and Ranges', false,
 						Element.highlight('Difficulty.Easy'),
 						Element.highlight('Difficulty.Moderate'),
 						Element.highlight('Difficulty.Hard'),
@@ -109,7 +109,7 @@ Libs.libsContent = [
 					)
 				),
 				Element.col(
-					Element.card('info', 'Weapons', undefined,
+					Element.card('info', 'Weapons', undefined, false,
 						Element.highlight('Weapon.Fist'),
 						Element.highlight('Weapon.Dagger'),
 						Element.highlight('Weapon.Sword'),
@@ -132,7 +132,7 @@ Libs.libsContent = [
 			),
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Action resilution', undefined,
+					Element.card('info', 'Action resilution', undefined, false,
 						Element.highlight('Resolve($Ability$, $Difficulty$)'),
 						'The <span class="cm-IDENTIFIER">Resolve</span> function rolls the appropriate dice to resolve an action, then returns a boolean indicating the success of the action.',
 						'The parameters <em>Ability</em> and <em>Difficulty</em> represent respectively the score of the character in the appropriate ability, and the difficulty of the action.',
@@ -140,7 +140,7 @@ Libs.libsContent = [
 					)
 				),
 				Element.col(
-					Element.card('info', 'Combat strike', undefined,
+					Element.card('info', 'Combat strike', undefined, false,
 						Element.highlight('Attack($Melee$, $Defense$, $Damage$, $Difficulty$)'),
 						'The <span class="cm-IDENTIFIER">Attack</span> function simulates a strike from a character, then returns the amount of damage (zero if the strike fails).',
 						'The <em>Melee</em> and <em>Defense</em> parameters represent respectively the score of the character in Melee (or Shoot) end the score of the opponent in Defense.',
@@ -159,7 +159,7 @@ Libs.libsContent = [
 		return [
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Suits and Values', undefined,
+					Element.card('info', 'Suits and Values', undefined, false,
 						Element.highlight('Suits()'),
 						Element.highlight('Values()'),
 						'The function <span class="cm-IDENTIFIER">Suits</span> returns the list of the four suits represented as strings.',
@@ -167,7 +167,7 @@ Libs.libsContent = [
 					)
 				),
 				Element.col(
-					Element.card('info', 'Cards and Decks', undefined,
+					Element.card('info', 'Cards and Decks', undefined, false,
 						Element.highlight('Card($value$, $suit$)'),
 						Element.highlight('Deck()'),
 						'The function <span class="cm-IDENTIFIER">Card</span> returns a card represented as a map with two entries. The entriy keys are <span class="cm-STR">"value"</span> and <span class="cm-STR">"suit"</span>.',
@@ -175,7 +175,7 @@ Libs.libsContent = [
 					)
 				),
 				Element.col(
-					Element.card('info', 'Draw a card', 'from a shuffled deck',
+					Element.card('info', 'Draw a card', 'from a shuffled deck', false,
 						Element.highlight('shuffle Deck()'),
 						'Creates a shuffled deck.',
 						Element.highlight('deck = shuffle Deck()\n---\ndraw from deck'),

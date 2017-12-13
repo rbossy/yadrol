@@ -197,21 +197,21 @@ Help.recipesContent = [
 		return [
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Dungeons & Dragons', 'Naturally...', Element.tryit('d20', 'roll'))
+					Element.card('info', 'Dungeons & Dragons', 'Naturally...', false, Element.tryit('d20', 'roll'))
 				),
 				Element.col(
-					Element.card('info', 'BRP', 'Basic RolePlaying', Element.tryit('d100', 'roll'))
+					Element.card('info', 'BRP', 'Basic RolePlaying', false, Element.tryit('d100', 'roll'))
 				),
 				Element.col(
-					Element.card('info', 'Seldom used d8', 'Unfortunately', Element.tryit('d8', 'roll'))
+					Element.card('info', 'Seldom used d8', 'Unfortunately', false, Element.tryit('d8', 'roll'))
 				),
 			),
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'd13', 'does exist', 'in the hyperdimensional irrational space. Not a problem for Yadrol', Element.tryit('d13', 'roll'))
+					Element.card('info', 'd13', 'does exist', 'in the hyperdimensional irrational space. Not a problem for Yadrol', false, Element.tryit('d13', 'roll'))
 				),
 				Element.col(
-					Element.card('info', 'Barbarians of Lemuria', 'by Simon Washbourne', Element.tryit('2d6', 'roll'))
+					Element.card('info', 'Barbarians of Lemuria', 'by Simon Washbourne', false, Element.tryit('2d6', 'roll'))
 				)
 			),
 		];
@@ -223,18 +223,18 @@ Help.recipesContent = [
 		return [
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Roll two dice', 'Keep highest', Element.tryit('highest of 2d10', 'roll'))
+					Element.card('info', 'Roll two dice', 'Keep highest', false, Element.tryit('highest of 2d10', 'roll'))
 				),
 				Element.col(
-					Element.card('info', 'Roll two dice', 'Keep lowest', Element.tryit('lowest of 2d10', 'roll'))
+					Element.card('info', 'Roll two dice', 'Keep lowest', false, Element.tryit('lowest of 2d10', 'roll'))
 				),
 			),
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Roll three dice', 'Keep the two highest', Element.tryit('highest 2 of 3d6', 'roll'))
+					Element.card('info', 'Roll three dice', 'Keep the two highest', false, Element.tryit('highest 2 of 3d6', 'roll'))
 				),
 				Element.col(
-					Element.card('info', 'Roll three dice', 'Keep the two lowest', Element.tryit('lowest 2 of 3d6', 'roll'))
+					Element.card('info', 'Roll three dice', 'Keep the two lowest', false, Element.tryit('lowest 2 of 3d6', 'roll'))
 				),
 			),
 		];
@@ -246,10 +246,10 @@ Help.recipesContent = [
 		return [
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'World of Darkness', 'Bucketful of dice', Element.tryit('count (for x in 6d10 if x>=7)', 'roll'))
+					Element.card('info', 'World of Darkness', 'Bucketful of dice', false, Element.tryit('count (for x in 6d10 if x>=7)', 'roll'))
 				),
 				Element.col(
-					Element.card('info', 'Count 1s', 'Because one is glorious', Element.tryit('#(for x in 4d6 if x==1)', 'roll'))
+					Element.card('info', 'Count 1s', 'Because one is glorious', false, Element.tryit('#(for x in 4d6 if x==1)', 'roll'))
 				)
 			)
 		]
@@ -261,13 +261,13 @@ Help.recipesContent = [
 		return [
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Exploding die', 'The nice kind', Element.tryit('repeat (x=d6) if x==6', 'sample')),
+					Element.card('info', 'Exploding die', 'The nice kind', false, Element.tryit('repeat (x=d6) if x==6', 'sample')), false,
 				),
 				Element.col(
-					Element.card('info', 'Wild die', 'The savage kind', Element.tryit('repeat (x=d6) while x==6', 'sample')),
+					Element.card('info', 'Wild die', 'The savage kind', false, Element.tryit('repeat (x=d6) while x==6', 'sample')), false,
 				),
 				Element.col(
-					Element.card('info', 'Reroll 1s', 'Because one is infamous', Element.tryit('last of repeat (x=d6) if x==1', 'sample')),
+					Element.card('info', 'Reroll 1s', 'Because one is infamous', false, Element.tryit('last of repeat (x=d6) if x==1', 'sample')), false,
 				),
 			)
 		]
@@ -279,10 +279,10 @@ Help.recipesContent = [
 		return [
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Fudge dice', 'Also: FATE', Element.tryit('4d[-1, -1, 0, 0, 1, 1]', 'sample'))
+					Element.card('info', 'Fudge dice', 'Also: FATE', false, Element.tryit('4d[-1, -1, 0, 0, 1, 1]', 'sample'))
 				),
 				Element.col(
-					Element.card('info', 'Shorter Fudge dice', 'With equivalent results', Element.tryit('4d[-1, 0, 1]', 'sample'))
+					Element.card('info', 'Shorter Fudge dice', 'With equivalent results', false, Element.tryit('4d[-1, 0, 1]', 'sample'))
 				),
 			)
 		];
@@ -294,15 +294,15 @@ Help.recipesContent = [
 		return [
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'A mediocre barbarian', 'strikes with a sword', Element.tryit('if 2d6>=9 then d6+1 else 0', 'roll'))
+					Element.card('info', 'A mediocre barbarian', 'strikes with a sword', false, Element.tryit('if 2d6>=9 then d6+1 else 0', 'roll'))
 				),
 				Element.col(
-					Element.card('info', 'A more sensible barbarian', 'strikes with a sword', Element.tryit('Melee=2;\nDefense=1;\nif 2d6+Melee-Defense>=9 then d6+1 else 0', 'roll'))
+					Element.card('info', 'A more sensible barbarian', 'strikes with a sword', false, Element.tryit('Melee=2;\nDefense=1;\nif 2d6+Melee-Defense>=9 then d6+1 else 0', 'roll'))
 				),
 			),
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'A more sensible barbarian', 'strikes with a sword', Element.tryit('BoL = fun(Melee, Defense) { if 2d6+Melee-Defense>=9 then d6+1 else 0 }\n---\nBoL(3, 0)', 'roll'))
+					Element.card('info', 'A more sensible barbarian', 'strikes with a sword', false, Element.tryit('BoL = fun(Melee, Defense) { if 2d6+Melee-Defense>=9 then d6+1 else 0 }\n---\nBoL(3, 0)', 'roll'))
 				),
 			)
 		];
@@ -314,21 +314,21 @@ Help.recipesContent = [
 		return [
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Explicit mode', 'Overrides UI mode', Element.tryit('sample d20', 'roll'))
+					Element.card('info', 'Explicit mode', 'Overrides UI mode', false, Element.tryit('sample d20', 'roll'))
 				),
 				Element.col(
-					Element.card('info', 'Compare two graphs', 'For science!', Element.tryit('sample d20; sample 3d6', 'roll'))
+					Element.card('info', 'Compare two graphs', 'For science!', false, Element.tryit('sample d20; sample 3d6', 'roll'))
 				),
 				Element.col(
-					Element.card('info', 'Roll and roll', 'roll is like sample', Element.tryit('roll d20; roll 3d6', 'sample'))
+					Element.card('info', 'Roll and roll', 'roll is like sample', false, Element.tryit('roll d20; roll 3d6', 'sample'))
 				),
 			),
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Ad&D Strength', 'Keep rolling until hitting a 18', Element.tryit('if (roll 3d6)==18 then (roll d100) else undef', 'roll'))
+					Element.card('info', 'Ad&D Strength', 'Keep rolling until hitting a 18', false, Element.tryit('if (roll 3d6)==18 then (roll d100) else undef', 'roll'))
 				),
 				Element.col(
-					Element.card('info', 'Effect of dice pool size', 'in Roll & Keep', Element.tryit('(sample highest 2 of Nd6) for N in 2..7', 'sample'))
+					Element.card('info', 'Effect of dice pool size', 'in Roll & Keep', false, Element.tryit('(sample highest 2 of Nd6) for N in 2..7', 'sample'))
 				),
 			)
 		];
@@ -340,7 +340,7 @@ Help.recipesContent = [
 		return [
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'D&D Character', 'Instantly roll a character',
+					Element.card('info', 'D&D Character', 'Instantly roll a character', false,
 						Element.tryit('Ability = fun() { number (3d6) }\n---\n{ STR: Ability(), DEX: Ability(), CON: Ability(), INT: Ability(), WIS: Ability(), CHA: Ability() }', 'advanced')
 					)
 				)
@@ -356,26 +356,26 @@ Help.referenceContent = [
 		return [
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Undef', undefined,
+					Element.card('info', 'Undef', undefined, false,
 						Element.highlight('undef'),
 						'Undef type has a single value: <em>undef</em>.'
 					)
 				),
 				Element.col(
-					Element.card('info', 'Boolean', undefined,
+					Element.card('info', 'Boolean', undefined, false,
 						Element.highlight('false'),
 						Element.highlight('true'),
 						'Boolean type has two values: <em>false</em> and <em>true</em>.'
 					)
 				),
 				Element.col(
-					Element.card('info', 'String', undefined,
+					Element.card('info', 'String', undefined, false,
 						Element.highlight('"..."'),
 						'String values are sequence of Unicode characters.'
 					)
 				),
 				Element.col(
-					Element.card('info', 'Number', undefined,
+					Element.card('info', 'Number', undefined, false,
 					 	$('<code class="cm-NUM">[+-]?[0-9]+</code>'),
 						'In Yadrol, numbers are signed integer values.'
 					)
@@ -383,13 +383,13 @@ Help.referenceContent = [
 			),
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'List', undefined,
+					Element.card('info', 'List', undefined, false,
 						Element.highlight('[ $expr$, $expr$, $...$ ]'),
 						'Lists are ordered collections of expressions of any type.'
 					)
 				),
 				Element.col(
-					Element.card('info', 'Map', undefined, 
+					Element.card('info', 'Map', undefined, false,
 						Element.highlight('{ name: $expr$, name: $expr$, $...$ }'),
 						'Maps are ordered collections of named expressions of any type.', 'In a map, entry keys are unique.'
 					)
@@ -397,7 +397,7 @@ Help.referenceContent = [
 			),
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Function', undefined,
+					Element.card('info', 'Function', undefined, false,
 						Element.highlight('fun (name: $value$, name: $value$, $...$) { $body$ }'),
 						'Functions are expressions that can be called and evaluated with a specific set of parameters.',
 						'Function expressions are also referred as <em>lambda</em> expressions.',
@@ -414,42 +414,42 @@ Help.referenceContent = [
 		return [
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Different types', undefined,
+					Element.card('info', 'Different types', undefined, false,
 						'Two values of different types are ordered as follows:',
 						'undef < string < boolean < number < list < map < function'
 					)
 				),
 				Element.col(
-					Element.card('info', 'Strings', undefined,
+					Element.card('info', 'Strings', undefined, false,
 						'Strings are compared according to their exicographical order.'
 					)
 				),
 				Element.col(
-					Element.card('info', 'Booleans', undefined,
+					Element.card('info', 'Booleans', undefined, false,
 						'false is lower than true.'
 					)
 				),
 			),
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Numbers', undefined,
+					Element.card('info', 'Numbers', undefined, false,
 						'Numbers are compared according to their natural order.'
 					)
 				),
 				Element.col(
-					Element.card('info', 'Lists', undefined,
+					Element.card('info', 'Lists', undefined, false,
 						'Lists are compared by their first item. If their first items are equal, then the second items are compared, etc.'
 					)
 				),
 			),
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Maps', undefined,
+					Element.card('info', 'Maps', undefined, false,
 						'Maps are compared by their first entry: their keys are compared, if they are equal, then their values are compared. If the first entries are equal, then the second entry is compared, etc.'
 					)
 				),
 				Element.col(
-					Element.card('info', 'Functions', undefined,
+					Element.card('info', 'Functions', undefined, false,
 						'Functions have an unspecified but stable order.'
 					)
 				)
@@ -648,20 +648,20 @@ Help.referenceContent = [
 		return [
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Dynamic scoping', undefined,
+					Element.card('info', 'Dynamic scoping', undefined, false,
 						'Variables need not to be declared, they are declared within the scope of their first assignment.',
 						'Function and loop scopes are dynamic: the scope is created at runtime.'
 					)
 				),
 				Element.col(
-					Element.card('info', 'Parent scope', undefined,
+					Element.card('info', 'Parent scope', undefined, false,
 						'Variable values are searched within the current scope. If no variable of the specified name was found, then it is searched in the current\'s scope parent scope. The scope parents are searched until the global scope (which has no parent) is reached.',
 						'If no variabe is found in the global scope, then its value is undef.',
 						'Assignment works the same way: the value is assigned to the variable in the innermost scope where the variable name was defined.',
 					)
 				),
 				Element.col(
-					Element.card('info', 'Spawning scopes', undefined,
+					Element.card('info', 'Spawning scopes', undefined, false,
 						'Scopes are spawned in the following constructs:',
 						Element.ul(
 							'<strong>Function call</strong>: a function body is evaluated in its own scope, arguments are set in this scope, the parent scope is the scope where the lambda was evaluated.',
@@ -673,7 +673,7 @@ Help.referenceContent = [
 			),
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Inoking scopes', undefined,
+					Element.card('info', 'Inoking scopes', undefined, false,
 						Element.highlight('local'),
 						Element.highlight('outer'),
 						Element.highlight('global'),
@@ -696,13 +696,13 @@ Help.referenceContent = [
 		return [
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Whitespaces', 'don\'t count',
+					Element.card('info', 'Whitespaces', 'don\'t count', false,
 						'Whitespaces always terminate a token.',
 						'All whitespace characters are equivalent: there is no difference between a space and a newline.'
 					)
 				),
 				Element.col(
-					Element.card('info', 'Comments', undefined,
+					Element.card('info', 'Comments', undefined, false,
 						Element.highlight('// this is a comment'),
 						'Comments run until the end of the line.'
 					)
@@ -717,7 +717,7 @@ Help.referenceContent = [
 		return [
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Identifiers', undefined,
+					Element.card('info', 'Identifiers', undefined, false,
 						Element.highlight('$[A-Z_a-z][0-9A-Z_a-z]*$'),
 						'Identifiers are used in the following constructs:',
 						Element.ul(
@@ -730,7 +730,7 @@ Help.referenceContent = [
 					)
 				),
 				Element.col(
-					Element.card('info', 'Variables', undefined,
+					Element.card('info', 'Variables', undefined, false,
 						Element.highlight('name'),
 						'A variable is named with an identifier.',
 						'The value returned is that of the innermost scope that contains a value for a variable of the specified name. If none is found, then undef.'
@@ -746,7 +746,7 @@ Help.referenceContent = [
 		return [
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Function call', undefined,
+					Element.card('info', 'Function call', undefined, false,
 						Element.highlight('$fun_expr$ ( $pos_args$ , $named_args$ )'),
 						Help.placeholder('fun_expr', 'an expression evluated as a function'),
 						Help.placeholder('pos_args', Element.highlight('$expr$ , $expr$ , $...$')),
@@ -766,7 +766,7 @@ Help.referenceContent = [
 		return [
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Bracket form', undefined,
+					Element.card('info', 'Bracket form', undefined, false,
 						Element.highlight('$container$ [ $sub$ ]'),
 						'Evaluates <em>container</em> and <em>sub</em>, then returns the part of <em>container</em> specified by <em>sub</em>.',
 						'The part depends on the type of <em>sub</em>:',
@@ -780,7 +780,7 @@ Help.referenceContent = [
 					)
 				),
 				Element.col(
-					Element.card('info', 'Dot form', undefined,
+					Element.card('info', 'Dot form', undefined, false,
 						Element.highlight('$container$ . name'),
 						'This is equivalent to:',
 						Element.highlight('$container$ [ "name" ]')
@@ -796,20 +796,20 @@ Help.referenceContent = [
 		return [
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Assign to variable', undefined,
+					Element.card('info', 'Assign to variable', undefined, false,
 						Element.highlight('name = $rvalue$'),
 						'Evaluates <em>rvalue</em> and set the variable to the result.',
 						'If the variable is already set in the current scope or in one of its parents, then the variable is overwritten. Otherwise the value is set to the variable in the current scope.'
 					)
 				),
 				Element.col(
-					Element.card('info', 'Assign to list constructor', undefined,
+					Element.card('info', 'Assign to list constructor', undefined, false,
 						Element.highlight('[ $expr$ , $expr$ , $...$ ] = $rvalue$'),
 						'Evaluates <em>rvalue</em> as a list then assign each item of the result to the corresponding <em>expr</em> in the list constructor.'
 					)
 				),
 				Element.col(
-					Element.card('info', 'Assign to map constructor', undefined,
+					Element.card('info', 'Assign to map constructor', undefined, false,
 						Element.highlight('{ name : $expr$ , name : $expr$ , $...$ } = $rvalue$'),
 						'Evaluates <em>rvalue</em> as a map then assign each entry of the result to the corresponding <em>expr</em> in the map constructor.'
 					)
@@ -824,14 +824,14 @@ Help.referenceContent = [
 		return [
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Soft sequence', undefined,
+					Element.card('info', 'Soft sequence', undefined, false,
 						Element.highlight('$expr$ ; $expr$ ; $...$'),
 						'Evaluates all <em>expr</em> in the specified order, then returns the result of the last expression.',
 						'Soft sequences are allowed in sub-expressions.'
 					)
 				),
 				Element.col(
-					Element.card('info', 'Hard sequence', undefined,
+					Element.card('info', 'Hard sequence', undefined, false,
 						Element.highlight('$expr$\n---\n$expr$\n---\n$expr$'),
 						'Evaluates all <em>expr</em> in the specified order, then returns the result of the last expression.',
 						'Hard sequences are only allowed at top-level. Hard sequences cannot occur in sub-expressions',
@@ -848,7 +848,7 @@ Help.referenceContent = [
 		return [
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Conditional', undefined,
+					Element.card('info', 'Conditional', undefined, false,
 						Element.highlight('if $cond$ then $expr_true$ else $expr_false$'),
 						'Evaluates <em>cond</em> as a boolean. If the result is true, then evaluates <em>expr_true</em>. Otherwise evaluates <em>expr_false</em>',
 						'The else clause is mandatory.'
@@ -864,7 +864,7 @@ Help.referenceContent = [
 		return [
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Element selection', undefined,
+					Element.card('info', 'Element selection', undefined, false,
 						Element.highlight('for $loop_vars$ in $container$ if $cond$'),
 						Help.placeholder('loop_vars', Element.highlight('name')),
 						Help.placeholder('loop_vars', Element.highlight('index , name')),
@@ -875,7 +875,7 @@ Help.referenceContent = [
 					)
 				),
 				Element.col(
-					Element.card('info', 'Element mapping', undefined,
+					Element.card('info', 'Element mapping', undefined, false,
 						Element.highlight('$out$ for $loop_vars$ in $container$'),
 						Help.placeholder('loop_vars', Element.highlight('name')),
 						Help.placeholder('loop_vars', Element.highlight('index , name')),
@@ -888,7 +888,7 @@ Help.referenceContent = [
 			),
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Element mapping', undefined,
+					Element.card('info', 'Element mapping', undefined, false,
 						Element.highlight('$out$ for $loop_vars$ in $container$ if $cond$'),
 						Help.placeholder('loop_vars', Element.highlight('name')),
 						Help.placeholder('loop_vars', Element.highlight('index , name')),
@@ -908,7 +908,7 @@ Help.referenceContent = [
 		return [
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Pre-repeat', undefined,
+					Element.card('info', 'Pre-repeat', undefined, false,
 						Element.highlight('while $cond$ repeat $expr$ $limit$'),
 						Help.placeholder('limit', 'nothing or <span class="cm-LIMIT">limit</span> <span class="cm-NUM">num</span>'),
 						'Repeatedly evaluates <em>cond</em> as a boolean, then <em>expr</em> if the result is true, stops when <em>cond</em> is false.',
@@ -918,7 +918,7 @@ Help.referenceContent = [
 					)
 				),
 				Element.col(
-					Element.card('info', 'Post-repeat', undefined,
+					Element.card('info', 'Post-repeat', undefined, false,
 						Element.highlight('repeat $expr$ while $cond$ $limit$'),
 						Help.placeholder('limit', 'nothing or <span class="cm-LIMIT">limit</span> <span class="cm-NUM">num</span>'),
 						'Repeatedly evaluates <em>expr</em>, then <em>cond</em> as a boolean, stops when <em>cond</em> is false.',
@@ -928,7 +928,7 @@ Help.referenceContent = [
 					)
 				),
 				Element.col(
-					Element.card('info', 'Post-repeat', undefined,
+					Element.card('info', 'Post-repeat', undefined, false,
 						Element.highlight('repeat $expr$ if $cond$'),
 						'This form is equivalent to:',
 						Element.highlight('repeat $expr$ while $cond$ limit 1')
@@ -944,19 +944,19 @@ Help.referenceContent = [
 		return [
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Or', undefined,
+					Element.card('info', 'Or', undefined, false,
 						Element.highlight('$left$ or $right$'),
 						'Evaluates <em>left</em> as a boolean. If the result is false, then evaluates <em>right</em>.'
 					)
 				),
 				Element.col(
-					Element.card('info', 'And', undefined,
+					Element.card('info', 'And', undefined, false,
 						Element.highlight('$left$ and $right$'),
 						'Evaluates <em>left</em> as a boolean. If the result is true, then evaluates <em>right</em>.'
 					)
 				),
 				Element.col(
-					Element.card('info', 'Not', undefined,
+					Element.card('info', 'Not', undefined, false,
 						Element.highlight('not $expr$'),
 						'Evaluates <em>expr</em> as a boolean, and returns the opposite value.'
 					)
@@ -971,14 +971,14 @@ Help.referenceContent = [
 		return [
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'General comparison', undefined,
+					Element.card('info', 'General comparison', undefined, false,
 						Element.highlight('$left$ === $right$'),
 						Element.highlight('$left$ !== $right$'),
 						'Evaluates <em>left</em> and <em>right</em> and returns a boolean indicating either the results are identical or not.'
 					)
 				),
 				Element.col(
-					Element.card('info', 'Numeric comparison', undefined,
+					Element.card('info', 'Numeric comparison', undefined, false,
 						Element.highlight('$left$ == $right$'),
 						Element.highlight('$left$ != $right$'),
 						Element.highlight('$left$ < $right$'),
@@ -998,7 +998,7 @@ Help.referenceContent = [
 		return [
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Binary', undefined,
+					Element.card('info', 'Binary', undefined, false,
 						Element.highlight('$left$ + $right$'),
 						Element.highlight('$left$ - $right$'),
 						Element.highlight('$left$ * $right$'),
@@ -1009,7 +1009,7 @@ Help.referenceContent = [
 					)
 				),
 				Element.col(
-					Element.card('info', 'Unary', undefined,
+					Element.card('info', 'Unary', undefined, false,
 						Element.highlight('+ $expr$'),
 						Element.highlight('- $expr$'),
 						'Evaluates <em>expr</em> as a number, then applies the specified sign.'
@@ -1025,7 +1025,7 @@ Help.referenceContent = [
 		return [
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Single die', undefined,
+					Element.card('info', 'Single die', undefined, false,
 						Element.highlight('d $die$'),
 						'Evaluates <em>die</em> and rolls a die of this type. The process of the roll depends on the type of <em>die</em>:',
 						Element.ul(
@@ -1043,7 +1043,7 @@ Help.referenceContent = [
 					)
 				),
 				Element.col(
-					Element.card('info', 'Multiple dice', undefined,
+					Element.card('info', 'Multiple dice', undefined, false,
 						Element.highlight('$n$ d $die$'),
 						'Evaluates <em>n</em> as a number and evaluates <em>die</em>, then rolls the dice <em>n</em> times. The result is a list of size <em>n</em> containing the results of the rolls.',
 						'If <em>die</em> is a function that accepts at least one argument, then this function is called only once with <em>n</em> as a single argument.',
@@ -1067,13 +1067,13 @@ Help.referenceContent = [
 		return [
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Single draw', undefined,
+					Element.card('info', 'Single draw', undefined, false,
 						Element.highlight('draw from $expr$'),
 						'Evaluates <em>expr</em> as a list, removes the first item and returns this item. Returns undef if <em>expr</em> is empty.'
 					)
 				),
 				Element.col(
-					Element.card('info', 'Multiple draw', undefined,
+					Element.card('info', 'Multiple draw', undefined, false,
 						Element.highlight('draw $n$ from $expr$'),
 						'Evaluates <em>n</em> as a number and <em>expr</em> as a list, removes the <em>n</em> first items from <em>expr</em> and returns a list containing these elements.',
 						'If <em>expr</em> has fewer items than <em>n</em> then returns a list containing all items and <em>expr</em> is emptied.'
@@ -1089,7 +1089,7 @@ Help.referenceContent = [
 		return [
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Single best', undefined,
+					Element.card('info', 'Single best', undefined, false,
 						Element.highlight('$selector$ of $expr$'),
 						Help.placeholder('selector', Element.highlight('highest lowest first last')),
 						'Evaluates <em>expr</em> as a list then returns the item specified by <em>selector</em>.',
@@ -1102,7 +1102,7 @@ Help.referenceContent = [
 					)
 				),
 				Element.col(
-					Element.card('info', 'Multiple best', undefined,
+					Element.card('info', 'Multiple best', undefined, false,
 						Element.highlight('$selector$ $n$ of $expr$'),
 						Help.placeholder('selector', Element.highlight('highest lowest first last')),
 						'Evaluates <em>n</em> as a number and <em>expr</em> as a list then returns a list of items specified by <em>selector</em>.',
@@ -1119,7 +1119,7 @@ Help.referenceContent = [
 		return [
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Count', undefined,
+					Element.card('info', 'Count', undefined, false,
 						Element.highlight('# $expr$'),
 						Element.highlight('count $expr$'),
 						'Evaluates <em>expr</em> and returns the number of elements depending on the type:',
@@ -1133,7 +1133,7 @@ Help.referenceContent = [
 					)
 				),
 				Element.col(
-					Element.card('info', 'Append', undefined,
+					Element.card('info', 'Append', undefined, false,
 						Element.highlight('$target$ << $source$'),
 						'Evaluates <em>source</em> and <em>target</em>, appends the result of <em>target</em> to <em>target</em>, then returns <em>source</em>.',
 						'If <em>target</em> is a list, then <em>source</em> is evaluated as a list, and all items are appended at the end of <em>target</em>.',
@@ -1141,7 +1141,7 @@ Help.referenceContent = [
 					)
 				),
 				Element.col(
-					Element.card('info', 'Reorder', undefined,
+					Element.card('info', 'Reorder', undefined, false,
 						Element.highlight('sort $expr$'),
 						Element.highlight('reverse $expr$'),
 						Element.highlight('shuffle $expr$'),
@@ -1164,7 +1164,7 @@ Help.referenceContent = [
 		return [
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Range', undefined,
+					Element.card('info', 'Range', undefined, false,
 						Element.highlight('$start$ .. $end$'),
 						'Evaluates <em>start</em> and <em>end</em> as numbers, then returns a list containing all numbers between <em>start</em> and <em>end</em>, inclusive.',
 						'If <em>start</em> is higher than <em>end</em>, then the items in the list are in reverse order.'
@@ -1180,7 +1180,7 @@ Help.referenceContent = [
 		return [
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Conversion', undefined,
+					Element.card('info', 'Conversion', undefined, false,
 						Element.highlight('$type$ $expr$'),
 						Help.placeholder('type', Element.highlight('string boolean number list map')),
 						'Forces the evaluation of <em>expr</em> as the specified <em>type</em>.'
@@ -1196,7 +1196,7 @@ Help.referenceContent = [
 		return [
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Output', undefined,
+					Element.card('info', 'Output', undefined, false,
 						Element.highlight('roll $expr$'),
 						Element.highlight('roll $expr$ as $type$ "label"'),
 						Element.highlight('sample $expr$'),
@@ -1224,7 +1224,7 @@ Help.referenceContent = [
 		return [
 			Element.row('help-row',
 				Element.col(
-					Element.card('info', 'Import', undefined,
+					Element.card('info', 'Import', undefined, false,
 						Element.highlight('import "address"'),
 						Element.highlight('import name = "address"'),
 						'Retrives a source specified by <span class="cm-STR">address</span>, evaluates the content of this source in a new global scope, then merges this scope to the current scope.',

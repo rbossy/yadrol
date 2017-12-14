@@ -1673,7 +1673,7 @@ class Output extends Expression {
 		.expression(this.expression, Precedence.ASSIGN).space()
 		.keyword('as').space()
 		.keyword(this.type).space()
-		.string(this.name);
+		.doubleQuote().literal(this.name).doubleQuote();
 	}
 
 	_getName(scope) {

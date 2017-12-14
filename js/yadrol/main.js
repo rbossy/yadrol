@@ -405,6 +405,24 @@ class Action {
 		}
 		catch (e) {
 			console.log(e);
+			if (e instanceof YadrolEvaluationError) {
+				var loc = e.expression.location;
+				if (loc.source === 'textbox') {
+					Action.codeMirror.markText(
+						{ line: loc.begin.line-1, ch: loc.begin.offset },
+						{ line: loc.end.line-1, ch: loc.end.offset },
+						{ className: 'cm-ERR', clearOnEnter: true }
+					);
+				}
+			}
+			if (e.hash && e.hash.loc) {
+				var loc = e.hash.loc;
+				Action.codeMirror.markText(
+					{ line: loc.first_line-1, ch: loc.first_column },
+					{ line: loc.last_line-1, ch: loc.last_column },
+					{ className: 'cm-ERR', clearOnEnter: true }
+				);
+			}
 			Alert.error(e.message);
 		}
 	}

@@ -227,3 +227,7 @@
     font-style: italic;
     text-decoration: underline;
 }
+
+.cm-ERR {
+    border-bottom: solid red 3px;
+}

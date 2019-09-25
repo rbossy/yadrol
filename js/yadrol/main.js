@@ -428,7 +428,7 @@ class Action {
 	}
 
 	static updateURL() {
-		var query = '?expr=' + Action.codeMirror.getValue().trim();
+		var query = '?expr=' + encodeURIComponent(Action.codeMirror.getValue().trim());
 		if ($('#url-include-mode').prop('checked')) {
 			query += '&mode=' + Action.currentMode;
 		}
